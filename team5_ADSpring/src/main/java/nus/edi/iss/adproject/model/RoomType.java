@@ -21,6 +21,7 @@ public class RoomType {
 		this.roomType = roomType;
 		this.description = description;
 		this.imageURL = imageURL;
+	}
 	
 	public long getid() {	
 		return id;
