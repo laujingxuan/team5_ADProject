@@ -9,8 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import nus.edu.iss.simulated.model.DailyAttractionDetail;
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 import nus.edu.iss.simulated.model.RoomType;
+import nus.edu.iss.simulated.repository.DailyAttractionDetailRepo;
 import nus.edu.iss.simulated.repository.DailyRoomTypeDetailRepo;
 
 @SpringBootApplication
@@ -18,6 +20,9 @@ public class SimulatedApiApplication {
 
 	@Autowired
 	DailyRoomTypeDetailRepo roomRepo;
+	
+	@Autowired
+	DailyAttractionDetailRepo dapRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SimulatedApiApplication.class, args);
@@ -35,6 +40,13 @@ public class SimulatedApiApplication {
 			roomRepo.save(roomTypeDetail2);
 			DailyRoomTypeDetail roomTypeDetail3 = new DailyRoomTypeDetail(RoomType.SINGLE, LocalDate.of(2021, 2, 23), 300, 7, 1);
 			roomRepo.save(roomTypeDetail3);
+			DailyAttractionDetail dap1 = new DailyAttractionDetail("zoo",LocalDate.of(2021, 1, 23) , 10);
+			dapRepo.save(dap1);
+			DailyAttractionDetail dap2 = new DailyAttractionDetail("art science museum",LocalDate.of(2021, 1, 23) , 10);
+			dapRepo.save(dap2);
+			DailyAttractionDetail dap3 = new DailyAttractionDetail("MBS",LocalDate.of(2021, 1, 23) , 10);
+			dapRepo.save(dap3);
+			
 			};
 	}
 }

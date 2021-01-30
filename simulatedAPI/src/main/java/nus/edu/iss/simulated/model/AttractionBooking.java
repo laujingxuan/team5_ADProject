@@ -1,40 +1,35 @@
-package nus.edu.iss.adproject.model;
+package nus.edu.iss.simulated.model;
+
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class Cart {
+public class AttractionBooking {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
-	private Product product;
+	private String attractionName;
 	
 	private int quantity;
 	
-	@ManyToOne
-	private User user;
-	
-	
-	
+	private LocalDate date;
 
-	public Cart() {
+	public AttractionBooking() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cart(long id, Product product, int quantity, User user) {
+	public AttractionBooking(String attractionName, int quantity, LocalDate date) {
 		super();
-		this.id = id;
-		this.product = product;
+		this.attractionName = attractionName;
 		this.quantity = quantity;
-		this.user = user;
+		this.date = date;
 	}
 
 	public long getId() {
@@ -45,12 +40,12 @@ public class Cart {
 		this.id = id;
 	}
 
-	public Product getProduct() {
-		return product;
+	public String getAttractionName() {
+		return attractionName;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setAttractionName(String attractionName) {
+		this.attractionName = attractionName;
 	}
 
 	public int getQuantity() {
@@ -61,16 +56,13 @@ public class Cart {
 		this.quantity = quantity;
 	}
 
-	public User getUser() {
-		return user;
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-
-
+	public void setDate(LocalDate date) {
+		this.date = date;
+	} 
 	
 	
 
