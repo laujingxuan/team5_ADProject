@@ -1,5 +1,7 @@
 package nus.edu.iss.simulated.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 import nus.edu.iss.simulated.model.HotelBooking;
 import nus.edu.iss.simulated.nonEntityModel.DateTypeQuery;
+import nus.edu.iss.simulated.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.simulated.service.DailyRoomTypeDetailService;
 import nus.edu.iss.simulated.service.HotelBookingService;
 
@@ -34,23 +37,34 @@ public class HotelController {
 		return new ResponseEntity<HotelBooking>(hotelBookSer.findBookingById(id), HttpStatus.OK);
 	}
 	
-	//findRoomDetailsByType&Date
-	@GetMapping("/room")
-	public ResponseEntity<DailyRoomTypeDetail>findRoomDetailsByTypeDate(@RequestBody DateTypeQuery input){
-		System.out.println(input.getDate());
-		System.out.println(input.getRoomType());
-		return new ResponseEntity<DailyRoomTypeDetail>(dailyRoomSer.findRoomDetailByDateAndType(input.getDate(), input.getRoomType()), HttpStatus.OK);
-	}
-	
-	//findRoomDetailsByType&Month
-	
-	//predictBookingCancellationRate
-	
 	//createNewHotelBooking
 	@PostMapping("/booking")
 	public ResponseEntity<HotelBooking> newBooking (@RequestBody HotelBooking hotelBooking) {
 		return new ResponseEntity<HotelBooking>(hotelBookSer.createBooking(hotelBooking), HttpStatus.OK);
 	}
+	
+	//findRoomDetailsByType&Date (Retrieve successfully)
+//	{
+//		"roomType": "SINGLE",
+//	    "date": "30/01/2021"
+//	}
+	@GetMapping("/room/date")
+	public ResponseEntity<DailyRoomTypeDetail>findRoomDetailsByTypeDate(@RequestBody DateTypeQuery input){
+		return new ResponseEntity<DailyRoomTypeDetail>(dailyRoomSer.findRoomDetailByDateAndType(input.getDate(), input.getRoomType()), HttpStatus.OK);
+	}
+	
+	//findRoomDetailsByType&Month (Retrieve successfully)
+//	{
+//		"roomType": "SINGLE",
+//	    "month": 1
+//	}
+	@GetMapping("/room/month")
+	public ResponseEntity<List<DailyRoomTypeDetail>>findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
+		return new ResponseEntity<List<DailyRoomTypeDetail>>(dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType()), HttpStatus.OK);
+	}
+	
+	//predictBookingCancellationRate
+	//Need to connect to machine learning API
 	
 	
 	

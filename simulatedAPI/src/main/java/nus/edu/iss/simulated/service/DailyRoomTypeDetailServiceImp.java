@@ -25,7 +25,7 @@ public class DailyRoomTypeDetailServiceImp implements DailyRoomTypeDetailService
 	}
 
 	@Override
-	public List<DailyRoomTypeDetail> findRoomDetailsByMonthAndType(String monthNum, RoomType roomType) {
+	public List<DailyRoomTypeDetail> findRoomDetailsByMonthAndType(int monthNum, RoomType roomType) {
 		return roomRepo.findByMonthAndRoomType(monthNum, roomType);
 	}
 

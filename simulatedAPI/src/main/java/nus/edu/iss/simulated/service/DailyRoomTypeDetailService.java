@@ -10,5 +10,5 @@ public interface DailyRoomTypeDetailService {
 
 	public DailyRoomTypeDetail findRoomDetailByDateAndType(LocalDate date, RoomType roomType);
 	
-	public List<DailyRoomTypeDetail> findRoomDetailsByMonthAndType(String monthNum, RoomType roomType);
+	public List<DailyRoomTypeDetail> findRoomDetailsByMonthAndType(int monthNum, RoomType roomType);
 }

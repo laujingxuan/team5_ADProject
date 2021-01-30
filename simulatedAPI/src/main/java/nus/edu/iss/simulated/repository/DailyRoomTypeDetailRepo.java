@@ -14,6 +14,6 @@ public interface DailyRoomTypeDetailRepo extends JpaRepository<DailyRoomTypeDeta
 
 	public DailyRoomTypeDetail findByDateAndRoomType(LocalDate date, RoomType roomType);
 	
-	@Query("SELECT r FROM DailyRoomTypeDetail r WHERE r.roomType = :roomType AND FUNC('MONTH', r.date) = :monthNum ")
-	public List<DailyRoomTypeDetail> findByMonthAndRoomType(@Param("month") String monthNum, @Param("roomType") RoomType roomType);
+	@Query("SELECT r FROM DailyRoomTypeDetail r WHERE r.roomType = :roomType AND MONTH(r.date) = :monthNum ")
+	public List<DailyRoomTypeDetail> findByMonthAndRoomType(@Param("monthNum") int monthNum, @Param("roomType") RoomType roomType);
 }

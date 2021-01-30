@@ -1,6 +1,13 @@
 package nus.edu.iss.simulated.nonEntityModel;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import nus.edu.iss.simulated.model.RoomType;
 
@@ -9,10 +16,11 @@ public class DateTypeQuery {
 	private LocalDate date;
 	private RoomType roomType;
 	
-	public DateTypeQuery(LocalDate date, RoomType roomType) {
+	public DateTypeQuery(String date, RoomType roomType) {
 		super();
-		this.date = date;
 		this.roomType = roomType;
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		this.date = LocalDate.parse(date, df);
 	}
 
 	public LocalDate getDate() {
