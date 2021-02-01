@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Discount {
 	@Id
@@ -18,9 +20,13 @@ public class Discount {
 	private Product product;
 	
 	private int discount_rate;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date from_date;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date to_date;	
 	
+	@ManyToOne
+	private Hotel hotel;
 	
 	
 	public Discount() {
@@ -65,6 +71,14 @@ public class Discount {
 	}
 	public void setTo_date(Date to_date) {
 		this.to_date = to_date;
+	}	
+	
+	
+	public Hotel getHotel() {
+		return hotel;
+	}
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	@Override
 	public String toString() {
