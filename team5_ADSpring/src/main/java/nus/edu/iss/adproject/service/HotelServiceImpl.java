@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.adproject.model.Hotel;
-import nus.edu.iss.adproject.repository.HotelRepo;
+import nus.edu.iss.adproject.repository.HotelRepository;
 
 @Service
 @Transactional
 public class HotelServiceImpl implements HotelService{
 	@Autowired
-	private HotelRepo hotel_repo;
+	private HotelRepository hotelrepo;
 	
 	@Override
 	public void save(Hotel x) {
@@ -24,19 +24,18 @@ public class HotelServiceImpl implements HotelService{
 
 	@Override
 	public Hotel findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Hotel> findAll() {
-		return hotel_repo.findAll();
+		return hotelrepo.findById(id).get();
 	}
 
 	@Override
 	public void delete(Hotel x) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override 
+	public List<Hotel> findAll(){
+		return hotelrepo.findAll();
 	}
 
 }

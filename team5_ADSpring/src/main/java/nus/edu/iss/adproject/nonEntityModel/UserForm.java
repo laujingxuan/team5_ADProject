@@ -1,4 +1,4 @@
-package nus.edu.iss.adproject.nonEntityModel;
+package nus.edu.iss.adproject.NonEntityModel;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

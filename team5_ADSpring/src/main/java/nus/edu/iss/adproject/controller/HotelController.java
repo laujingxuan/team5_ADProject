@@ -1,31 +1,30 @@
 
 package nus.edu.iss.adproject.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-import nus.edu.iss.adproject.repository.HotelRepo;
+import nus.edu.iss.adproject.model.Hotel;
+import nus.edu.iss.adproject.service.HotelService;
 
 @Controller
 @RequestMapping("/hotel")
 public class HotelController {
 	@Autowired
-	private HotelRepo hotel_repo;
+	private HotelService hotelservice;
 	
 	@GetMapping("/list")
 	public String viewUser(Model model, HttpSession session) {
-		
 		return "discountForm";
 	}
-
-	@Autowired
-	private HotelService hotelservice;
 
 	@GetMapping("/Hotel")
 	public String gethotel(Model model){
@@ -36,15 +35,9 @@ public class HotelController {
 	@GetMapping("/Map/{id}")
 	public String getMap(Model model,@PathVariable("id") long id )
 	{
-		model.addAttribute("hotels",hotelservice.OptionalFindById(id));
+		model.addAttribute("hotels",hotelservice.findById(id));
 		return "Map";
 	}
-//	@GetMapping("/edit/{id}")
-//	public String showEditForm(Model model, @PathVariable("id") Long id) {
-//		model.addAttribute("supplier", supplier_svc.findAll());
-//		model.addAttribute("product", product_svc.findById(id));
-//		return "productform";
-//	}
 
 
 }

@@ -25,7 +25,7 @@ public class Hotel {
 //	Hotel Miramar, Singapore (1.288710, 103.837372
 	
     private String name;
-   // private String location;
+    private String location;
     private double lat;
     private double longi;
     private double rate;
@@ -37,25 +37,19 @@ public class Hotel {
     
     @OneToMany(mappedBy = "hotel")
     private List<Discount> discount;
-    
-    
-    public Hotel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	
 	public Hotel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-    
-	public Hotel(String name, double lat, double longi, double rate, int numberOfRestaurants, String country_City,
-
-			String emenities, String quality, String description) {
+	
+	public Hotel(List<RoomType> roomType, String name, String location, double lat, double longi, double rate,
+			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
+			List<Discount> discount) {
 		super();
+		this.roomType = roomType;
 		this.name = name;
+		this.location = location;
 		this.lat = lat;
 		this.longi = longi;
 		this.rate = rate;
@@ -64,13 +58,13 @@ public class Hotel {
 		this.emenities = emenities;
 		this.quality = quality;
 		this.description = description;
+		this.discount = discount;
 	}
 
 
-	
 	public long getId() {
 		return id;
-
+	}
 
 	public List<RoomType> getRoomType() {
 		return roomType;
@@ -83,14 +77,6 @@ public class Hotel {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public List<RoomType> getRoomType() {
-		return roomType;
-	}
-
-	public void setRoomType(List<RoomType> roomType) {
-		this.roomType = roomType;
 	}
 
 	public String getName() {
@@ -107,7 +93,8 @@ public class Hotel {
 
 	public void setLocation(String location) {
 		this.location = location;
-
+	}
+		
 	public double getLat() {
 		return lat;
 	}
