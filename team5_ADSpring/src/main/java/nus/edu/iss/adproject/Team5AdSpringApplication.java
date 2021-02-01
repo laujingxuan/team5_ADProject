@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.TravelPackage;
 import nus.edu.iss.adproject.repository.TravelPackageRepository;
+
+
 
 @SpringBootApplication
 public class Team5AdSpringApplication {
@@ -21,6 +24,7 @@ public class Team5AdSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Team5AdSpringApplication.class, args);
 	}
+	
 
 //	//Only run during the first time for data insertion
 //	@Bean
