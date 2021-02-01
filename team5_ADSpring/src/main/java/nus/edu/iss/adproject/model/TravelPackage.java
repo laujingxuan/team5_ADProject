@@ -17,14 +17,13 @@ public class TravelPackage {
 	
 	private int numAttractions;
 	
-	@NotNull
 	private double discountPercent;
 	
 	public TravelPackage() {
 		super();
 	}
 
-	public TravelPackage(int numNights, int numAttractions, @NotNull double discountPercent) {
+	public TravelPackage(int numNights, int numAttractions, double discountPercent) {
 		super();
 		this.numNights = numNights;
 		this.numAttractions = numAttractions;
@@ -53,6 +52,10 @@ public class TravelPackage {
 
 	public void setDiscountPercent(double discountPercent) {
 		this.discountPercent = discountPercent;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getId() {
