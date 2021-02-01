@@ -28,7 +28,7 @@ public class RoomType {
 
 
 
-	public RoomType(long id, Product product, Hotel hotel, String roomType, String description, String imageURL) {
+	public RoomType(long id, Product product,Hotel hotel,  String roomType, String description, String imageURL) {
 		super();
 		this.id = id;
 		this.product = product;
