@@ -9,18 +9,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Hotel {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+	@Id 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    public long id;
 	
 	@OneToMany(mappedBy = "hotel")
 	private List< RoomType> roomType;
-	
+//	Marina Bay Sands Hotel, Singapore (1.282302, 103.858528)
+//	Swissôtel The Stamford, Singapore (1.293354, 103.853561)
+//	Hotel Miramar, Singapore (1.288710, 103.837372
 	
     private String name;
-    private String location;
+   // private String location;
+    private double lat;
+    private double longi;
     private double rate;
     private int numberOfRestaurants;
     private String country_City;
@@ -37,11 +44,20 @@ public class Hotel {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+	public Hotel() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-	public Hotel(String name, String location, double rate, int numberOfRestaurants, String country_City,
+    
+	public Hotel(String name, double lat, double longi, double rate, int numberOfRestaurants, String country_City,
+
 			String emenities, String quality, String description) {
+		super();
 		this.name = name;
-		this.location = location;
+		this.lat = lat;
+		this.longi = longi;
 		this.rate = rate;
 		this.numberOfRestaurants = numberOfRestaurants;
 		this.country_City = country_City;
@@ -50,9 +66,19 @@ public class Hotel {
 		this.description = description;
 	}
 
+
 	
 	public long getId() {
 		return id;
+
+
+	public List<RoomType> getRoomType() {
+		return roomType;
+	}
+
+	public void setRoomType(List<RoomType> roomType) {
+		this.roomType = roomType;
+
 	}
 
 	public void setId(long id) {
@@ -81,6 +107,22 @@ public class Hotel {
 
 	public void setLocation(String location) {
 		this.location = location;
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLongi() {
+		return longi;
+	}
+
+	public void setLongi(double longi) {
+		this.longi = longi;
+
 	}
 
 	public double getRate() {
@@ -130,9 +172,16 @@ public class Hotel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
 
+
+	@Override
+	public String toString() {
+		return "Hotel [name=" + name + ", lat=" + lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants="
+				+ numberOfRestaurants + ", country_City=" + country_City + ", emenities=" + emenities + ", quality="
+				+ quality + ", description=" + description + "]";
+	}
+
+	
 	public List<Discount> getDiscount() {
 		return discount;
 	}
@@ -142,13 +191,6 @@ public class Hotel {
 		this.discount = discount;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Hotel [name=" + name + ", location=" + location + ", rate=" + rate + ", numberOfRestaurants="
-				+ numberOfRestaurants + ", country_City=" + country_City + ", emenities=" + emenities + ", quality="
-				+ quality + ", description=" + description + "]";
-	}
 	
 	
 	
