@@ -65,8 +65,5 @@ public class HotelController {
 	
 	//predictBookingCancellationRate
 	//Need to connect to machine learning API
-	
-	
-	
-	
+
 }
