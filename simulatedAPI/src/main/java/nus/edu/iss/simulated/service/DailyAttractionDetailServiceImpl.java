@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.simulated.model.DailyAttractionDetail;
@@ -15,7 +16,7 @@ import nus.edu.iss.simulated.repository.DailyAttractionDetailRepo;
 public class  DailyAttractionDetailServiceImpl implements DailyAttractionDetailService{
 	
 
-	
+	@Autowired
 	private DailyAttractionDetailRepo dapRepo;
 
 

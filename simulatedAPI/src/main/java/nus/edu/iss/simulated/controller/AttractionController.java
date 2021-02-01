@@ -33,7 +33,7 @@ public class AttractionController {
 	private DailyAttractionDetailService dailyAttractionDetailServ;
 	
 	
-	@GetMapping("bookings/{id}")
+	@GetMapping("booking/{id}")
 	public ResponseEntity<AttractionBooking> findbookingById(@PathVariable Long id){
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.findBookingById(id),HttpStatus.OK);
 		
