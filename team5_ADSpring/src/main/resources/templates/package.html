@@ -14,6 +14,7 @@
 	</div>
 	<form action="" th:object="${TPWrapper}" th:action="@{/package/update}" method="post" class="form-horizontal">
       	<table class="table">
+      		<tr><th>Number of Nights</th><th></th><th>Number of Attractions</th><th></th><th>Discount Percentage (%)</th></tr>
       		<tr th:each="package, stat : *{travelPackages}">
 				<td th:text=${package.getId()}>Number</td>
 				<td><input type="number" th:field="*{travelPackages[__${stat.index}__].numNights}" th:value = "${package.getNumNights()}"></td>
