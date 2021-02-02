@@ -1,6 +1,7 @@
 package nus.edu.iss.adproject.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -43,11 +42,11 @@ public class Hotel {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Hotel(List<RoomType> roomType, String name, String location, double lat, double longi, double rate,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
-			List<Discount> discount) {
+	public Hotel(String name, String location, double lat, double longi, double rate,
+			int numberOfRestaurants, String country_City, String emenities, String quality, String description) {
 		super();
-		this.roomType = roomType;
+		this.roomType = new ArrayList<RoomType>();
+		this.discount = new ArrayList<Discount>();
 		this.name = name;
 		this.location = location;
 		this.lat = lat;
@@ -58,7 +57,6 @@ public class Hotel {
 		this.emenities = emenities;
 		this.quality = quality;
 		this.description = description;
-		this.discount = discount;
 	}
 
 

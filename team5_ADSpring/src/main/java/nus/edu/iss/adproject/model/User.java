@@ -21,12 +21,19 @@ public class User {
 	private long points; 
 	
 	public User() { }
-	public User(long id, String name, String password, RoleType role, String email, long points) {
+	public User(String name, String password, RoleType role, String email, long points) {
 		this.userName = name;
 		this.password = password;
 		this.role = role;
 		this.email = email;
 		this.points = points;
+	}
+	
+	public User(String name, String password, RoleType role, String email) {
+		this.userName = name;
+		this.password = password;
+		this.role = role;
+		this.email = email;
 	}
 	
 	public User(String userName, String password, RoleType role) {

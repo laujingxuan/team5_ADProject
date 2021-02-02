@@ -48,7 +48,7 @@ public class HotelController {
 //		"roomType": "SINGLE",
 //	    "date": "30/01/2021"
 //	}
-	@GetMapping("/room/date")
+	@PostMapping("/room/date")
 	public ResponseEntity<DailyRoomTypeDetail>findRoomDetailsByTypeDate(@RequestBody DateTypeQuery input){
 		return new ResponseEntity<DailyRoomTypeDetail>(dailyRoomSer.findRoomDetailByDateAndType(input.getDate(), input.getRoomType()), HttpStatus.OK);
 	}
@@ -58,7 +58,7 @@ public class HotelController {
 //		"roomType": "SINGLE",
 //	    "month": 1
 //	}
-	@GetMapping("/room/month")
+	@PostMapping("/room/month")
 	public ResponseEntity<List<DailyRoomTypeDetail>>findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
 		return new ResponseEntity<List<DailyRoomTypeDetail>>(dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType()), HttpStatus.OK);
 	}

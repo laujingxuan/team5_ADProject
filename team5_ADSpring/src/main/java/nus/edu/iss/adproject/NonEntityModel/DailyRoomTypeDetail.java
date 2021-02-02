@@ -1,22 +1,9 @@
-package nus.edu.iss.simulated.model;
+package nus.edu.iss.adproject.NonEntityModel;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
-@Entity
-public class DailyRoomTypeDetail {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DailyRoomTypeDetail{
     private long id;
 	
 	private String roomType;

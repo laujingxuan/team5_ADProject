@@ -1,6 +1,7 @@
 package nus.edu.iss.adproject.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,24 +25,22 @@ public class Booking {
 	
 	private int amountPaid;
 	
-	private Date bookingDate;
+	private LocalDate bookingDate;
 	
 	private int travelPackageDiscount;
-	
-	
 
 	public Booking() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Booking(long id, User user, int amountPaid, Date bookingDate, int travelPackageDiscount) {
+	public Booking(User user, int amountPaid, LocalDate bookingDate, int travelPackageDiscount) {
 		super();
-		this.id = id;
 		this.user = user;
 		this.amountPaid = amountPaid;
 		this.bookingDate = bookingDate;
 		this.travelPackageDiscount = travelPackageDiscount;
+		bookingDetails = new ArrayList<BookingDetails>();
 	}
 
 	public long getId() {
@@ -68,11 +67,11 @@ public class Booking {
 		this.amountPaid = amountPaid;
 	}
 
-	public Date getBookingDate() {
+	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
 
-	public void setBookingDate(Date bookingDate) {
+	public void setBookingDate(LocalDate bookingDate) {
 		this.bookingDate = bookingDate;
 	}
 
@@ -84,6 +83,8 @@ public class Booking {
 		this.travelPackageDiscount = travelPackageDiscount;
 	}
 	
-	
+	public int getNumTransactions() {
+		return bookingDetails.size();
+	}
 
 }

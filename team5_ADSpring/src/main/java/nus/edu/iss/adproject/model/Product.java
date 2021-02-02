@@ -3,16 +3,21 @@ package nus.edu.iss.adproject.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import nus.edu.iss.adproject.NonEntityModel.ProductType;
 
 @Entity
 public class Product {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private Long type;
+	private ProductType type;
 	
 	@OneToMany(mappedBy = "product" )
 	private List<Discount> discount;
@@ -20,14 +25,17 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private List<ProductReview> productReview;
 	
-	@OneToMany(mappedBy = "product")
-	private List<Attraction> attraction;
+	@OneToOne(mappedBy = "product")
+	private Attraction attraction;
 	
 	@OneToOne(mappedBy = "product")
 	private RoomType roomType;
 	
-	
-	public Product(Long type) {
+	public Product() {
+		super();
+	}
+
+	public Product(ProductType type) {
 		super();
 		this.type = type;
 	}
@@ -36,11 +44,11 @@ public class Product {
 		return id;
 	}
 
-	public Long getType() {
+	public ProductType getType() {
 		return type;
 	}
 
-	public void setType(Long type) {
+	public void setType(ProductType type) {
 		this.type = type;
 	}
 

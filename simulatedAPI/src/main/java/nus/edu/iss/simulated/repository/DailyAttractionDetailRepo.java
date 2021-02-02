@@ -8,8 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import nus.edu.iss.simulated.model.DailyAttractionDetail;
-import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
-import nus.edu.iss.simulated.model.RoomType;
 
 public interface DailyAttractionDetailRepo extends JpaRepository<DailyAttractionDetail, Long> {
 

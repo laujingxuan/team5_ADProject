@@ -1,4 +1,4 @@
-package nus.edu.iss.simulated.model;
+package nus.edu.iss.adproject.NonEntityModel;
 
 import java.time.LocalDate;
 
@@ -7,10 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
 public class HotelBooking {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
 	private String roomType;

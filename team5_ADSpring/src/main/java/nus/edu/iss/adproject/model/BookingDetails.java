@@ -23,17 +23,23 @@ public class BookingDetails {
 	
 	private String attractionBookingId;
 	
-	private int NumOfGuest;
+	private int numOfGuest;
 	
-	private int Price;
+	private double price;
 	
-	
-
-	public BookingDetails(long id, int numOfGuest, int price) {
+	public BookingDetails() {
 		super();
-		this.id = id;
-		NumOfGuest = numOfGuest;
-		Price = price;
+	}
+
+	public BookingDetails(Booking booking, Product product, String hotelBookingId, String attractionBookingId,
+			int numOfGuest, double price) {
+		super();
+		this.booking = booking;
+		this.product = product;
+		this.hotelBookingId = hotelBookingId;
+		this.attractionBookingId = attractionBookingId;
+		this.numOfGuest = numOfGuest;
+		this.price = price;
 	}
 
 	public long getId() {
@@ -44,23 +50,59 @@ public class BookingDetails {
 		this.id = id;
 	}
 
+	public Booking getBooking() {
+		return booking;
+	}
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public String getHotelBookingId() {
+		return hotelBookingId;
+	}
+
+	public void setHotelBookingId(String hotelBookingId) {
+		this.hotelBookingId = hotelBookingId;
+	}
+
+	public String getAttractionBookingId() {
+		return attractionBookingId;
+	}
+
+	public void setAttractionBookingId(String attractionBookingId) {
+		this.attractionBookingId = attractionBookingId;
+	}
+
 	public int getNumOfGuest() {
-		return NumOfGuest;
+		return numOfGuest;
 	}
 
 	public void setNumOfGuest(int numOfGuest) {
-		NumOfGuest = numOfGuest;
+		this.numOfGuest = numOfGuest;
 	}
 
-	public int getPrice() {
-		return Price;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setPrice(int price) {
-		Price = price;
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "BookingDetails [id=" + id + ", booking=" + booking + ", product=" + product + ", hotelBookingId="
+				+ hotelBookingId + ", attractionBookingId=" + attractionBookingId + ", numOfGuest=" + numOfGuest
+				+ ", price=" + price + "]";
 	}
 	
-	
-	
-
 }

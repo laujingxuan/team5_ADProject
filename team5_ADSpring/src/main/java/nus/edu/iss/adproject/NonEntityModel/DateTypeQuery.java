@@ -1,4 +1,4 @@
-package nus.edu.iss.simulated.nonEntityModel;
+package nus.edu.iss.adproject.NonEntityModel;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,17 +8,11 @@ public class DateTypeQuery {
 	private LocalDate date;
 	private String roomType;
 	
-//	public DateTypeQuery(String date, String roomType) {
-//		super();
-//		this.roomType = roomType;
-//		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//		this.date = LocalDate.parse(date, df);
-//	}
-
 	public DateTypeQuery(LocalDate date, String roomType) {
 		super();
-		this.date = date;
 		this.roomType = roomType;
+//		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		this.date = date;
 	}
 
 	public LocalDate getDate() {
