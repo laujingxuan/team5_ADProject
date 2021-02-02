@@ -20,13 +20,16 @@ public class Discount {
 	private Product product;
 	
 	private int discount_rate;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat (pattern="yyyy-MM-dd")
 	private Date from_date;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@DateTimeFormat (pattern="yyyy-MM-dd")
 	private Date to_date;	
 	
 	@ManyToOne
 	private Hotel hotel;
+	
+	@ManyToOne
+	private Attraction attraction;
 	
 	
 	public Discount() {
@@ -79,6 +82,13 @@ public class Discount {
 	}
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
+	}	
+	
+	public Attraction getAttraction() {
+		return attraction;
+	}
+	public void setAttraction(Attraction attraction) {
+		this.attraction = attraction;
 	}
 	@Override
 	public String toString() {

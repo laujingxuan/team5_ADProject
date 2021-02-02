@@ -1,9 +1,12 @@
 package nus.edu.iss.adproject.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -22,9 +25,12 @@ public class Attraction {
 	@OneToOne
 	private Product product;
 	
+	 @OneToMany(mappedBy = "attraction")
+	 private List<Discount> discount;
+	
 	
 	public Attraction() { }
-	public Attraction(long id, String name, double price, String location, String rating, String description,
+	public Attraction(String name, double price, String location, String rating, String description,
 			String country_city) {
 		this.name = name;
 		this.price = price;
@@ -73,6 +79,21 @@ public class Attraction {
 	}
 	public void setCountry_city(String country_city) {
 		this.country_city = country_city;
+	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	public List<Discount> getDiscount() {
+		return discount;
+	}
+	public void setDiscount(List<Discount> discount) {
+		this.discount = discount;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

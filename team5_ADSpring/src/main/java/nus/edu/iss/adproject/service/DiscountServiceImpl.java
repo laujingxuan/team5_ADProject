@@ -18,7 +18,7 @@ public class DiscountServiceImpl implements DiscountService {
 
 	@Override
 	public void save(Discount x) {
-		// TODO Auto-generated method stub
+		discount_repo.save(x);
 		
 	}
 

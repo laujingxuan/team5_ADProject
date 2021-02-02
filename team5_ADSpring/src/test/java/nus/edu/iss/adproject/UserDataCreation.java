@@ -20,7 +20,10 @@ public class UserDataCreation {
 	
 	@Test
 	public void adduser() {
-		urepo.save(new User("admin1","admin1",RoleType.PLATFORMMANAGER));
+		urepo.save(new User("admin1","admin",RoleType.ATTRACTIONMANAGER));
+		urepo.save(new User("admin","admin",RoleType.HOTELMANAGER));
+		urepo.save(new User("admin2","admin",RoleType.HOTELMANAGER));
+		urepo.save(new User("admin3","admin",RoleType.ATTRACTIONMANAGER));
 		
 		
 //		ArrayList<User> user =new ArrayList<User>();
