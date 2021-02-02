@@ -34,6 +34,7 @@ public class HotelController {
 	//findBookingById
 	@GetMapping("/booking/{id}")
 	public ResponseEntity<HotelBooking> findBookingById (@PathVariable("id") Long id) {
+		System.out.println(id);
 		return new ResponseEntity<HotelBooking>(hotelBookSer.findBookingById(id), HttpStatus.OK);
 	}
 	

@@ -40,6 +40,22 @@ public class Product {
 		this.type = type;
 	}
 
+	public List<Discount> getDiscount() {
+		return discount;
+	}
+
+	public List<ProductReview> getProductReview() {
+		return productReview;
+	}
+
+	public Attraction getAttraction() {
+		return attraction;
+	}
+
+	public RoomType getRoomType() {
+		return roomType;
+	}
+
 	public Long getId() {
 		return id;
 	}

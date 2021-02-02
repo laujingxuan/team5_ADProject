@@ -1,19 +1,32 @@
 package nus.edu.iss.adproject;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import nus.edu.iss.adproject.NonEntityModel.ProductType;
+import nus.edu.iss.adproject.model.Attraction;
+import nus.edu.iss.adproject.model.Booking;
+import nus.edu.iss.adproject.model.BookingDetails;
+import nus.edu.iss.adproject.model.Hotel;
+import nus.edu.iss.adproject.model.Product;
+import nus.edu.iss.adproject.model.RoleType;
+import nus.edu.iss.adproject.model.RoomType;
+import nus.edu.iss.adproject.model.TravelPackage;
+import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.repository.AttractionRepository;
 import nus.edu.iss.adproject.repository.BookingDetailsRepo;
 import nus.edu.iss.adproject.repository.BookingRepo;
 import nus.edu.iss.adproject.repository.HotelRepository;
 import nus.edu.iss.adproject.repository.ProductRepo;
+import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.repository.TravelPackageRepository;
 import nus.edu.iss.adproject.repository.UserRepository;
 
@@ -43,29 +56,14 @@ public class Team5AdSpringApplication {
 	@Autowired
 	private HotelRepository htRepo;
 	
+	@Autowired
+	private RoomTypeRepo roomTypeRepo;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Team5AdSpringApplication.class, args);
 	}
 	
 	//https://howtodoinjava.com/spring-boot2/resttemplate/spring-restful-client-resttemplate-example/
-//	@Autowired
-//	CloseableHttpClient httpClient;
-//	 
-//	@Bean
-//	public RestTemplate restTemplate() {
-//	 
-//	    RestTemplate restTemplate = new RestTemplate(clientHttpRequestFactory());
-//	    return restTemplate;
-//	}
-//	 
-//	@Bean
-//	public HttpComponentsClientHttpRequestFactory clientHttpRequestFactory() {
-//	 
-//	    HttpComponentsClientHttpRequestFactory clientHttpRequestFactory 
-//	                            = new HttpComponentsClientHttpRequestFactory();
-//	    clientHttpRequestFactory.setHttpClient(httpClient);
-//	    return clientHttpRequestFactory;
-//	}
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 	 
@@ -105,19 +103,30 @@ public class Team5AdSpringApplication {
 //			
 //			Product product1 = new Product(ProductType.ATTRACTION);
 //			productRepo.save(product1);
-//			Attraction attraction1 = new Attraction("zoo", 75, "Singapore Jalan 1", 4, "Zoo with animals", "Singapore", product1);
+//			Attraction attraction1 = new Attraction("zoo", 75, "Singapore Jalan 1", 4, "Zoo with animals", "Singapore", product1, "http://localhost:8081/api/attraction/booking/");
 //			attractionRepo.save(attraction1);
 //			
-//			BookingDetails bookDetail1 = new BookingDetails(booking1, attraction1.getProduct(), "12345", "23456", 4, 300);
-//			BookingDetails bookDetail2 = new BookingDetails(booking1, attraction1.getProduct(), "22345", "23457", 3, 250);
-//			BookingDetails bookDetail3 = new BookingDetails(booking1, attraction1.getProduct(), "32345", "23458", 5, 400);
+//			Product room1 = new Product(ProductType.HOTEL);
+//			Product room2 = new Product(ProductType.HOTEL);
+//			productRepo.save(room1);
+//			productRepo.save(room2);
+//			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://localhost:8081/api/hotel/");
+//			htRepo.save(hotel1);
+//			RoomType singleRoom = new RoomType(room1, hotel1, "SINGLE", "Single bed room", "http:...");
+//			RoomType doubleRoom = new RoomType(room2, hotel1, "DOUBLE", "Double bed room", "http:...");
+//			roomTypeRepo.save(singleRoom);
+//			roomTypeRepo.save(doubleRoom);
+////		    htRepo.save(new Hotel("Swissôtel The Stamford ","Singapore", 1.293354,103.853561, 260.0, 8, "SG","aa", "best", "we try to be home"));
+////		    htRepo.save(new Hotel("Hotel Miramar ","Singapore", 1.288710,103.837372, 260.0, 8, "SG","aa", "best", "we try to be home"));
+//			
+//			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300);
+//			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250);
+//			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400);
+//			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100);
 //			bookDetRepo.save(bookDetail1);
 //			bookDetRepo.save(bookDetail2);
 //			bookDetRepo.save(bookDetail3);
-			
-//			htRepo.save(new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home"));
-//		    htRepo.save(new Hotel("Swissôtel The Stamford ","Singapore", 1.293354,103.853561, 260.0, 8, "SG","aa", "best", "we try to be home"));
-//		    htRepo.save(new Hotel("Hotel Miramar ","Singapore", 1.288710,103.837372, 260.0, 8, "SG","aa", "best", "we try to be home"));
+//			bookDetRepo.save(bookDetail4);
 //		};
 //	}
 }

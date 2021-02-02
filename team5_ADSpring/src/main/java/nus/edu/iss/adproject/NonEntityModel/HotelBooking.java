@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-public class HotelBooking {
+public class HotelBooking implements BookingWrapper{
     private long id;
 	
 	private String roomType;

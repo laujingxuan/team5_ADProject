@@ -19,9 +19,6 @@ public class Hotel {
 	
 	@OneToMany(mappedBy = "hotel")
 	private List< RoomType> roomType;
-//	Marina Bay Sands Hotel, Singapore (1.282302, 103.858528)
-//	Swissôtel The Stamford, Singapore (1.293354, 103.853561)
-//	Hotel Miramar, Singapore (1.288710, 103.837372
 	
     private String name;
     private String location;
@@ -33,6 +30,7 @@ public class Hotel {
     private String emenities;
     private String quality;
     private String description;
+    private String API_URL;
     
     @OneToMany(mappedBy = "hotel")
     private List<Discount> discount;
@@ -43,7 +41,7 @@ public class Hotel {
 	}
 	
 	public Hotel(String name, String location, double lat, double longi, double rate,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description) {
+			int numberOfRestaurants, String country_City, String emenities, String quality, String description, String API_URL) {
 		super();
 		this.roomType = new ArrayList<RoomType>();
 		this.discount = new ArrayList<Discount>();
@@ -57,8 +55,17 @@ public class Hotel {
 		this.emenities = emenities;
 		this.quality = quality;
 		this.description = description;
+		this.API_URL = API_URL;
 	}
 
+
+	public String getAPI_URL() {
+		return API_URL;
+	}
+
+	public void setAPI_URL(String aPI_URL) {
+		API_URL = aPI_URL;
+	}
 
 	public long getId() {
 		return id;

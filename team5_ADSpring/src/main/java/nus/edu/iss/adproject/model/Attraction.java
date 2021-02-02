@@ -18,6 +18,7 @@ public class Attraction {
 	private double rating;
 	private String description;
 	private String country_city;
+	private String API_URL;
 	
 	@OneToOne
 	private Product product;
@@ -26,7 +27,7 @@ public class Attraction {
 	public Attraction() { }	
 	
 	public Attraction(String name, double price, String location, double rating, String description,
-			String country_city, Product product) {
+			String country_city, Product product, String API_URL) {
 		super();
 		this.name = name;
 		this.price = price;
@@ -35,6 +36,15 @@ public class Attraction {
 		this.description = description;
 		this.country_city = country_city;
 		this.product = product;
+		this.API_URL = API_URL;
+	}
+
+	public String getAPI_URL() {
+		return API_URL;
+	}
+
+	public void setAPI_URL(String aPI_URL) {
+		API_URL = aPI_URL;
 	}
 
 	public Product getProduct() {

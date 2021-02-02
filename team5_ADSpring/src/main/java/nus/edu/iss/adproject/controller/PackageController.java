@@ -28,6 +28,6 @@ public class PackageController {
 	@PostMapping("/update")
 	public String updatePackages(@ModelAttribute("TPWrapper") TravelPackageWrapper wrapper) {
 		tpService.updatePackage(wrapper.getTravelPackages());
-		return "redirect:/package/list";
+		return "redirect:/booking/list";
 	}
 }
