@@ -3,14 +3,19 @@
 <head>
 <meta charset="ISO-8859-1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <div th:fragment="header" id="header">
 </div>
 <div th:fragment="menu" id="menu">
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgba(255, 99, 71, 0.5)">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(255, 138, 141)">
     <a class="navbar-brand" href="#" th:href="@{/}">TravelSG</a>
-   
+   <div class="search-container">
+    <form action="/action_page.php">
+      <input type="text" placeholder="Search.." name="search">    
+    </form>
+  </div>
     <div class="collapse navbar-collapse" id="navbarNav">
     
       <ul class="navbar-nav ml-auto">	

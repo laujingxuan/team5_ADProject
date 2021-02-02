@@ -49,7 +49,6 @@ public class UserController {
 		binder.addValidators(userFormValidator);
 	}
 	
-	//only admin can add
 	@GetMapping("/add")
 	public String addUser(Model model, HttpSession session) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
@@ -59,6 +58,15 @@ public class UserController {
 		model.addAttribute("path", "/user/validate");
 		model.addAttribute("userForm", new UserForm());
 		return "editUser";
+	}
+	
+	@GetMapping("/signup")
+	public String signUp(Model model, HttpSession session) {
+		
+		model.addAttribute("roleType", RoleType.values());
+		model.addAttribute("path", "/user/validate");
+		model.addAttribute("userForm", new UserForm());
+		return "signUpForm";
 	}
 	
 	@PostMapping("/validate")
