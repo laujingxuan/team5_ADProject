@@ -5,7 +5,24 @@
   <meta charset="ISO-8859-1">
 
     <title>Map</title>
-    <script
+    
+  </head>
+  <body>
+    <h3>My Google Maps Location for Hotel</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <table>
+    	
+    	<tr   >
+				<td th:text="${hotels.lat}">ID</td>
+				<td th:text="${hotels.longi}">ID</td>
+				
+				</tr>
+    </table>
+    <input type="hidden" th:value="${hotels.lat}" name="lagid" />
+    <input type="hidden" th:value="${hotels.longi}" name="longid" />
+  </body>
+  <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpxdpcFNzbG8ax4DS3VS2dDs4oKZnTmXg&callback=initMap&libraries=&v=weekly"
       defer
     ></script>
@@ -18,16 +35,21 @@
         /* The width is the width of the web page */
       }
     </style>
-    <script >
-      // Initialize and add the map
+    <script  >
+    
+    //console.log(latnum);
+      // Initialize and add the map th="{ht:$hotels}"
       function initMap() {
-        // The location of Uluru
-      
-//  var latnum = [["${hotels.lat}"]];
-    //var lngnum = [["${hotels.longi}"]];
-  
-
-        const uluru = { lat: 1.293354, lng: 103.853561 };
+        // The location of Uluru   
+   var latnumb = document.getElementsByName("lagid")[0].value;
+	var lngnumb = document.getElementsByName("longid")[0].value;
+       
+    	
+    	alert(latnumb);
+    	var latnum = parseFloat(latnumb);
+    	var lngnum =parseFloat(lngnumb);
+    	//var lngnum=parseFloat(lngnumb);
+        const uluru = { lat: latnum, lng: lngnum};
         // The map, centered at Uluru
         const map = new google.maps.Map(document.getElementById("map"), {
           zoom: 20,
@@ -40,11 +62,11 @@
         });
       }
     </script>
-  </head>
-  <body>
-    <h3>My Google Maps Location for Hotel</h3>
-    <!--The div element for the map -->
-    <div id="map"></div>
-  
-  </body>
+ <!--     //var latnumb = "${hotels.lat}";
+       // var latn=toString(latnumb);
+       // var latnb=parseFloat(latn);
+       // var latnumb= document.getElementById("${htoels.lat}").value;
+    	//var lngnumb = [[${longi}]];
+    	//alert(latnumb);
+    	//var latnum=parseFloat(latnumb); -->
 </html>

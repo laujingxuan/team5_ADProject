@@ -14,6 +14,6 @@ public interface HotelService {
 	
 	List<Hotel> findAll();
 
-	public Optional<Hotel> OptionalFindById(Long id);
+	public Optional<Hotel> findById(Long id);
 
 }
