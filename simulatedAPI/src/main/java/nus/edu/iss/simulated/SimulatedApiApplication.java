@@ -35,6 +35,7 @@ public class SimulatedApiApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
+			//Single room from 15/1/2021 to 30/1/2021 created
 			DailyRoomTypeDetail roomTypeDetail = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 30), 300, 20, 1);
 			roomRepo.save(roomTypeDetail);
 			DailyRoomTypeDetail roomTypeDetail1 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 25), 300, 15, 1);
@@ -43,6 +44,27 @@ public class SimulatedApiApplication {
 			roomRepo.save(roomTypeDetail2);
 			DailyRoomTypeDetail roomTypeDetail3 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 23), 300, 7, 1);
 			roomRepo.save(roomTypeDetail3);
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 15), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 16), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 17), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 18), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 19), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 20), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 21), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 22), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 24), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 26), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 27), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 28), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 29), 300, 7, 1));
+			
+			//Double room from 15/1/2021 to 20/1/2021 created
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 15), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 16), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 17), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 18), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 19), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 20), 300, 7, 1));
 			
 			HotelBooking booking1 = new HotelBooking("SINGLE", 1, 3, "No breakfast", 300, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 2, 15), LocalDate.of(2021, 2, 20));
 			hotelRepo.save(booking1);

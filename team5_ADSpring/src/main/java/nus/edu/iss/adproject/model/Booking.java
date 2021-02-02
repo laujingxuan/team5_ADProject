@@ -23,8 +23,6 @@ public class Booking {
 	@OneToMany(mappedBy = "booking")
 	private List<BookingDetails> bookingDetails;
 	
-	private int amountPaid;
-	
 	private LocalDate bookingDate;
 	
 	private int travelPackageDiscount;
@@ -34,10 +32,9 @@ public class Booking {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Booking(User user, int amountPaid, LocalDate bookingDate, int travelPackageDiscount) {
+	public Booking(User user, LocalDate bookingDate, int travelPackageDiscount) {
 		super();
 		this.user = user;
-		this.amountPaid = amountPaid;
 		this.bookingDate = bookingDate;
 		this.travelPackageDiscount = travelPackageDiscount;
 		bookingDetails = new ArrayList<BookingDetails>();
@@ -59,14 +56,6 @@ public class Booking {
 		this.user = user;
 	}
 
-	public int getAmountPaid() {
-		return amountPaid;
-	}
-
-	public void setAmountPaid(int amountPaid) {
-		this.amountPaid = amountPaid;
-	}
-
 	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
@@ -86,5 +75,21 @@ public class Booking {
 	public int getNumTransactions() {
 		return bookingDetails.size();
 	}
+	
+	public double getTotalPrice() {
+		double output = 0;
+		
+		for (BookingDetails b: bookingDetails) {
+			output += b.getPrice();
+		}
+		return output;
+	}
 
+	@Override
+	public String toString() {
+		return "Booking [id=" + id + ", user=" + user + ", bookingDetails=" + bookingDetails + ", bookingDate="
+				+ bookingDate + ", travelPackageDiscount=" + travelPackageDiscount + "]";
+	}
+
+	
 }

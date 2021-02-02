@@ -8,4 +8,5 @@ public interface TravelPackageService {
 
 	public List<TravelPackage> retrieveAll();
 	public void updatePackage(List<TravelPackage> travelPackages);
+	public int getDiscount(int numNights, int numAttractions);
 }

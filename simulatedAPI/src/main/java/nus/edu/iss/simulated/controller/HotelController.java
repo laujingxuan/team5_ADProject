@@ -1,7 +1,5 @@
 package nus.edu.iss.simulated.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 import nus.edu.iss.simulated.model.HotelBooking;
+import nus.edu.iss.simulated.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.simulated.nonEntityModel.DateTypeQuery;
 import nus.edu.iss.simulated.nonEntityModel.MonthTypeQuery;
+import nus.edu.iss.simulated.nonEntityModel.MultipleDateQuery;
 import nus.edu.iss.simulated.service.DailyRoomTypeDetailService;
 import nus.edu.iss.simulated.service.HotelBookingService;
 
@@ -54,14 +54,19 @@ public class HotelController {
 		return new ResponseEntity<DailyRoomTypeDetail>(dailyRoomSer.findRoomDetailByDateAndType(input.getDate(), input.getRoomType()), HttpStatus.OK);
 	}
 	
+	@PostMapping("/room/period")
+	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypePeriod(@RequestBody MultipleDateQuery input){
+		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);
+	}
+	
 	//findRoomDetailsByType&Month (Retrieve successfully)
 //	{
 //		"roomType": "SINGLE",
 //	    "month": 1
 //	}
 	@PostMapping("/room/month")
-	public ResponseEntity<List<DailyRoomTypeDetail>>findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
-		return new ResponseEntity<List<DailyRoomTypeDetail>>(dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType()), HttpStatus.OK);
+	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
+		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType())), HttpStatus.OK);
 	}
 	
 	//predictBookingCancellationRate

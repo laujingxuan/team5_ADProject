@@ -11,4 +11,8 @@ public interface BookingService {
 	public List<Booking> retrieveUserBooking(User user);
 	
 	public List<BookingDetails> retrieveDetailsByBookingId(Long id);
+	
+	public Booking saveBooking(Booking booking);
+
+	public BookingDetails saveBookingDetails(BookingDetails bookD);
 }

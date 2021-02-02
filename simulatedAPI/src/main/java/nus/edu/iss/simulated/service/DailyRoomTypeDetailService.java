@@ -10,4 +10,6 @@ public interface DailyRoomTypeDetailService {
 	public DailyRoomTypeDetail findRoomDetailByDateAndType(LocalDate date, String roomType);
 	
 	public List<DailyRoomTypeDetail> findRoomDetailsByMonthAndType(int monthNum, String roomType);
+	
+	public List<DailyRoomTypeDetail> findRoomDetailsByPeriodAndType(LocalDate startD, LocalDate endD, String roomType);
 }

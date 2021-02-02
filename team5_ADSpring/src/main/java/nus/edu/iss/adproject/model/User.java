@@ -1,9 +1,13 @@
 package nus.edu.iss.adproject.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import nus.edu.iss.adproject.NonEntityModel.UserForm;
 
@@ -20,6 +24,9 @@ public class User {
 	private String email;
 	private long points; 
 	
+	@OneToMany(mappedBy="user")
+	private List<Cart> carts;
+	
 	public User() { }
 	public User(String name, String password, RoleType role, String email, long points) {
 		this.userName = name;
@@ -27,6 +34,7 @@ public class User {
 		this.role = role;
 		this.email = email;
 		this.points = points;
+		this.carts = new ArrayList<Cart>();
 	}
 	
 	public User(String name, String password, RoleType role, String email) {
@@ -34,6 +42,7 @@ public class User {
 		this.password = password;
 		this.role = role;
 		this.email = email;
+		this.carts = new ArrayList<Cart>();
 	}
 	
 	public User(String userName, String password, RoleType role) {
@@ -41,6 +50,7 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 		this.role = role;
+		this.carts = new ArrayList<Cart>();
 	}
 	
 	public User(UserForm userForm) {
@@ -48,6 +58,7 @@ public class User {
 		this.userName=userForm.getUserName();
 		this.password=userForm.getPassword();
 		this.role=userForm.getRole();
+		this.carts = new ArrayList<Cart>();
 	}
 	
 	
@@ -84,6 +95,12 @@ public class User {
 	}
 	public void setPoints(long points) {
 		this.points = points;
+	}
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + ", email="
+				+ email + ", points=" + points + "]";
 	}
 	
 	

@@ -32,5 +32,15 @@ public class BookingServiceImp implements BookingService {
 	public List<BookingDetails> retrieveDetailsByBookingId(Long id) {
 		return bookRepoDet.findDetailsById(id);
 	}
+
+	@Override
+	public Booking saveBooking(Booking booking) {
+		return bookRepo.save(booking);
+	}
+	
+	@Override
+	public BookingDetails saveBookingDetails(BookingDetails bookD) {
+		return bookRepoDet.save(bookD);
+	}
 	
 }

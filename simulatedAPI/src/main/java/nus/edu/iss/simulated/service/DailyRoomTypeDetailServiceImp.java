@@ -1,6 +1,7 @@
 package nus.edu.iss.simulated.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -26,6 +27,19 @@ public class DailyRoomTypeDetailServiceImp implements DailyRoomTypeDetailService
 	@Override
 	public List<DailyRoomTypeDetail> findRoomDetailsByMonthAndType(int monthNum, String roomType) {
 		return roomRepo.findByMonthAndRoomType(monthNum, roomType);
+	}
+	
+	@Override
+	public List<DailyRoomTypeDetail> findRoomDetailsByPeriodAndType(LocalDate startD, LocalDate endD, String roomType) {
+		
+		List<DailyRoomTypeDetail> output = new ArrayList<>();
+		while (endD.isEqual(startD) || endD.isAfter(startD)) {
+			output.add(findRoomDetailByDateAndType(startD, roomType));
+			System.out.println("startD" + startD);
+			System.out.println("endD" + endD);
+			startD = startD.plusDays(1);
+		}
+		return output;
 	}
 
 }
