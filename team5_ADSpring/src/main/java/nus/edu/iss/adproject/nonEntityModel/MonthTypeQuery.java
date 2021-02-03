@@ -1,4 +1,4 @@
-package nus.edu.iss.adproject.NonEntityModel;
+package nus.edu.iss.adproject.nonEntityModel;
 
 public class MonthTypeQuery {
 	

@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="ISO-8859-1">
+
+    <title>Map</title>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpxdpcFNzbG8ax4DS3VS2dDs4oKZnTmXg&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <style type="text/css">
+      /* Set the size of the div element that contains the map   */
+      #map {
+        height: 400px;
+        /* The height is 400 pixels */
+        width: 100%;
+        /* The width is the width of the web page */
+      }
+    </style>
+    <script >
+	    
+      // Initialize and add the map
+      function initMap() {
+        // The location of Uluru
+      	var latnum = /*[[${hotels.lat}]]*/ 'default';
+	  	var lngnum = /*[[${hotels.longi}]]*/ 'default';
+	  	alert(latnum);
+	  	alert(lngnum);
+
+		const uluru = { lat: latnum, lng: lngnum };
+        // The map, centered at Uluru
+        const map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 20,
+          center: uluru,
+        });
+        // The marker, positioned at Uluru
+        const marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h3>My Google Maps Location for Hotel</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+  
+  </body>
+</html>
