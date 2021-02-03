@@ -89,7 +89,7 @@ public class HotelController {
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("hotel", hotelservice.findById(id));
-		return "productForm";
+		return "hotel-form";
 	}
 
 	@GetMapping("/save")
