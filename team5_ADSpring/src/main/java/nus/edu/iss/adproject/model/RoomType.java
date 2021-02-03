@@ -18,24 +18,26 @@ public class RoomType {
 	@OneToOne
 	private Product product;
 	
-	@ManyToOne
-	private Hotel hotel;
-	
+//	@ManyToOne
+	//private Hotel hotel;
+	private String htel;
 	
 	private String roomType;
 	private String description;
 	private String imageURL;
+	private double price;
 
 
 
-	public RoomType(long id, Product product,Hotel hotel,  String roomType, String description, String imageURL) {
+	public RoomType(String htel,  String roomType, String description, String imageURL, double price) {
 		super();
-		this.id = id;
-		this.product = product;
-		this.hotel = hotel;
+	
+	//	this.product = product;
+		this.htel = htel;
 		this.roomType = roomType;
 		this.description = description;
 		this.imageURL = imageURL;
+		this.price=price;
 	}
 	public RoomType() {
 		super();
@@ -53,12 +55,12 @@ public class RoomType {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	public Hotel getHotel() {
-		return hotel;
-	}
-	public void setHotel(Hotel hotel) {
-		this.hotel = hotel;
-	}
+//	public Hotel getHotel() {
+//		return hotel;
+//	}
+//	public void setHotel(Hotel hotel) {
+//		this.hotel = hotel;
+//	}
 	public String getRoomType() {
 		return roomType;
 	}
@@ -76,6 +78,17 @@ public class RoomType {
 	}
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
+	}public String getHtel() {
+		return htel;
+	}
+	public void setHtel(String htel) {
+		this.htel = htel;
+	}
+	public double getprice() {
+		return price;
+	}
+	public void setprice(double price) {
+		this.price = price;
 	}
 	
 	

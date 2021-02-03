@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import nus.edu.iss.adproject.model.Hotel;
+import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.repository.HotelRepository;
+import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.service.HotelService;
+import nus.edu.iss.adproject.service.RoomTypeService;
 
 @Controller
 @RequestMapping("/list")
 public class HotelController {
 	@Autowired
 	private HotelService hotelservice;
+
 	@GetMapping("/Hotel")
 	public String gethotel(Model model){
 		List<Hotel> hotel=  hotelservice.findAll();
@@ -33,17 +37,24 @@ public class HotelController {
         if (val.isPresent()) {
             System.out.println(val.get());
         } else {
-            System.out.printf("No city found with id %d%n", id);
+            System.out.printf("No hotels found with id %d%n", id);
         }
-        double a= val.get().getLat();
-        double b = val.get().getLongi();
-      //  System.out.println(a);
+     
 		System.out.print(hotelservice.findById(id));
 		model.addAttribute("hotels",val.get());
-		//model.addAttribute("lati", a);
-		//model.addAttribute("longi",b);
+		
 		return "Map";
 	}
+	
+	
+
+//
+//	@RequestMapping(value="/SimilarRoom", method=RequestMethod.POST, params="action=Similar_Room")
+//	public String Similar() {
+//		return "SimilarRoom";
+//	}
+	
+	
 
 
 }
