@@ -19,7 +19,7 @@ public class DailyRoomTypeDetail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
-	private RoomType roomType;
+	private String roomType;
 	private LocalDate date;
 	private double dailyPrice;
 	private double numVacancies;
@@ -30,7 +30,7 @@ public class DailyRoomTypeDetail {
 		// TODO Auto-generated constructor stub
 	}
 
-	public DailyRoomTypeDetail(RoomType roomType, LocalDate date, double dailyPrice, double numVacancies,
+	public DailyRoomTypeDetail(String roomType, LocalDate date, double dailyPrice, double numVacancies,
 			double numCancellations) {
 		super();
 		this.roomType = roomType;
@@ -40,11 +40,11 @@ public class DailyRoomTypeDetail {
 		this.numCancellations = numCancellations;
 	}
 
-	public RoomType getRoomType() {
+	public String getRoomType() {
 		return roomType;
 	}
 
-	public void setRoomType(RoomType roomType) {
+	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
 

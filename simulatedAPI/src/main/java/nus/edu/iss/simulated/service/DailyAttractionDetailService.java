@@ -13,14 +13,16 @@ import nus.edu.iss.simulated.repository.DailyAttractionDetailRepo;
 
 public interface DailyAttractionDetailService {
 	
-	public List<DailyAttractionDetail> findAttractionDetailByName(String Name);
+//	public List<DailyAttractionDetail> findAttractionDetailByName(AttractionName attractionName);
 	
 	public DailyAttractionDetail findAttractionDetailById(long id);
 	
-	public List<DailyAttractionDetail> findAttractionDetailByMonth(int monthNum);
+	public List<DailyAttractionDetail> findAttractionDetailByMonthAndAttractionName
+	(int monthNum);
 	
 
-	public List<DailyAttractionDetail> findAttractionDetailByDate(LocalDate date);
+	public DailyAttractionDetail findAttractionDetailByDateAndAttractionName
+	(LocalDate date,String attractionName);
 	
 
 }

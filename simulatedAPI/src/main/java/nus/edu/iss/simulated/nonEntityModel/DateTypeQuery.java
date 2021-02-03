@@ -9,19 +9,36 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-import nus.edu.iss.simulated.model.RoomType;
+
+
 
 public class DateTypeQuery {
 
 	private LocalDate date;
-	private RoomType roomType;
+	private String roomType;
+	private String attractionName;
 	
-	public DateTypeQuery(String date, RoomType roomType) {
+
+
+	public DateTypeQuery(String date, String roomType,String attractionName ) {
 		super();
 		this.roomType = roomType;
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		this.date = LocalDate.parse(date, df);
+		this.attractionName = attractionName;
 	}
+	
+
+
+	public String getAttractionName() {
+		return attractionName;
+	}
+
+	public void setAttractionName(String attractionName) {
+		this.attractionName = attractionName;
+	}
+
+
 
 	public LocalDate getDate() {
 		return date;
@@ -31,11 +48,11 @@ public class DateTypeQuery {
 		this.date = date;
 	}
 
-	public RoomType getRoomType() {
+	public String getRoomType() {
 		return roomType;
 	}
 
-	public void setRoomType(RoomType roomType) {
+	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
 
