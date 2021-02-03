@@ -23,4 +23,23 @@ public class ProductServiceImpl implements ProductService {
 	}
 		
 	
+	@Transactional
+	public List<Product> listAllSearchAttractions(String keyword){
+		System.out.println(keyword);
+		if(keyword!=null) {
+			return prepo.search1(keyword);
+		}
+		return prepo.findAll();
+	}
+	
+	@Transactional
+	public List<Product> listAllSearchHotels(String keyword){
+		System.out.println(keyword);
+		if(keyword!=null) {
+			return prepo.search2(keyword);
+		}
+		return prepo.findAll();
+	}
+	
+	
 }

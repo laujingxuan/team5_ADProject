@@ -27,7 +27,7 @@ public class RoomType {
 	private String imageURL;
 
 	public RoomType() { }
-	public RoomType(Product product,Hotel hotel,double price, String roomType, String description, String imageURL) {
+	public RoomType(Product product,Hotel hotel, double price, String roomType, String description, String imageURL) {
 		this.product = product;
 		this.hotel = hotel;
 		this.price = price;
@@ -78,5 +78,13 @@ public class RoomType {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "RoomType [id=" + id + ", product=" + product + ", hotel=" + hotel + ", price=" + price + ", roomType="
+				+ roomType + ", description=" + description + ", imageURL=" + imageURL + "]";
+	}
+	
 	
 }

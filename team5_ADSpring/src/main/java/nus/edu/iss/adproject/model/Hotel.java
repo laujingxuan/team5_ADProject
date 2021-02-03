@@ -132,5 +132,14 @@ public class Hotel {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return "Hotel [id=" + id + ", roomType=" + roomType + ", name=" + name + ", location=" + location + ", lat="
+				+ lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants=" + numberOfRestaurants
+				+ ", country_City=" + country_City + ", emenities=" + emenities + ", quality=" + quality
+				+ ", description=" + description + ", discount=" + discount + "]";
+	}
+	
+	
 	
 }

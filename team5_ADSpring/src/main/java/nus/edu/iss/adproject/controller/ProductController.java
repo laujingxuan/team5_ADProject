@@ -36,8 +36,13 @@ public class ProductController {
 	
 	
 	@GetMapping("/list")
-	public String listProductForm(Model model) {
-		model.addAttribute("product", prepo.findAll());
+	public String listProductForm(Model model, @Param("keyword") String keyword) {
+		List<Product> listattractions = pservice.listAllSearchAttractions(keyword);
+		List<Product> listhotels = pservice.listAllSearchHotels(keyword);
+		model.addAttribute("product", listattractions);
+		model.addAttribute("product", listhotels);
+		model.addAttribute("keyword", keyword); 
+		
 		return "productslist";
 	}
 	

@@ -23,8 +23,8 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private List<ProductReview> productReview;
 	
-	@OneToMany(mappedBy = "product")
-	private List<Attraction> attraction;
+	@OneToOne(mappedBy = "product")
+	private Attraction attraction;
 	
 	@OneToOne(mappedBy = "product")
 	private RoomType roomType;
