@@ -29,5 +29,18 @@ public class TravelPackageServiceImp implements TravelPackageService {
 		}
 		return;
 	}
-
+	
+	@Override
+	public int getDiscount(int numNights, int numAttractions) {
+		List<TravelPackage> tpList = retrieveAll();
+		int discount = 0;
+		for (TravelPackage tp: tpList) {
+			if (numNights >= tp.getNumNights() && numAttractions >= tp.getNumAttractions()) {
+				if (tp.getDiscountPercent()>discount) {
+					discount = tp.getDiscountPercent();
+				}
+			}
+		}
+		return discount;
+	}
 }

@@ -1,15 +1,15 @@
 package nus.edu.iss.adproject.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -18,11 +18,16 @@ public class Hotel {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     public long id;
 	
+
 	@OneToMany(mappedBy = "hotel")
 	private List< RoomType> roomType;
+
+	//@OneToMany(mappedBy = "hotel")
+	//private List< RoomType> roomType;
 //	Marina Bay Sands Hotel, Singapore (1.282302, 103.858528)
 //	Swissôtel The Stamford, Singapore (1.293354, 103.853561)
 //	Hotel Miramar, Singapore (1.288710, 103.837372
+
 	
     private String name;
     private String location;
@@ -34,20 +39,24 @@ public class Hotel {
     private String emenities;
     private String quality;
     private String description;
+    private String API_URL;
     
     @OneToMany(mappedBy = "hotel")
     private List<Discount> discount;
+    
+    @ManyToOne
+    private User user;
 	
 	public Hotel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Hotel(List<RoomType> roomType, String name, String location, double lat, double longi, double rate,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
-			List<Discount> discount) {
+	public Hotel(String name, String location, double lat, double longi, double rate,
+			int numberOfRestaurants, String country_City, String emenities, String quality, String description, String API_URL) {
 		super();
-		this.roomType = roomType;
+		this.roomType = new ArrayList<RoomType>();
+		this.discount = new ArrayList<Discount>();
 		this.name = name;
 		this.location = location;
 		this.lat = lat;
@@ -58,9 +67,17 @@ public class Hotel {
 		this.emenities = emenities;
 		this.quality = quality;
 		this.description = description;
-		this.discount = discount;
+		this.API_URL = API_URL;
+	}
+	
+	
+	public String getAPI_URL() {
+		return API_URL;
 	}
 
+	public void setAPI_URL(String aPI_URL) {
+		API_URL = aPI_URL;
+	}
 
 	public long getId() {
 		return id;
@@ -78,6 +95,15 @@ public class Hotel {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+//	public List<RoomType> getRoomType() {
+//		return roomType;
+//	}
+//
+//	public void setRoomType(List<RoomType> roomType) {
+//		this.roomType = roomType;
+//	}
+
 
 	public String getName() {
 		return name;
@@ -178,7 +204,11 @@ public class Hotel {
 		this.discount = discount;
 	}
 
-	
-	
-	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}	
 }

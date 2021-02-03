@@ -1,19 +1,18 @@
 package nus.edu.iss.simulated.nonEntityModel;
 
-import nus.edu.iss.simulated.model.RoomType;
 
 public class MonthTypeQuery {
 	
 	private int month;
-	private RoomType roomType;
-	
-	
-	public MonthTypeQuery(int month, RoomType roomType) {
+	private String roomType;
+
+
+	public MonthTypeQuery(int month, String roomType) {
+
 		super();
 		this.month = month;
 		this.roomType = roomType;
 	}
-
 
 	public int getMonth() {
 		return month;
@@ -25,12 +24,12 @@ public class MonthTypeQuery {
 	}
 
 
-	public RoomType getRoomType() {
+	public String getRoomType() {
 		return roomType;
 	}
 
 
-	public void setRoomType(RoomType roomType) {
+	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
 

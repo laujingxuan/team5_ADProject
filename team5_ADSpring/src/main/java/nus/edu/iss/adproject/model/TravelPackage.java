@@ -17,13 +17,13 @@ public class TravelPackage {
 	
 	private int numAttractions;
 	
-	private double discountPercent;
+	private int discountPercent;
 	
 	public TravelPackage() {
 		super();
 	}
 
-	public TravelPackage(int numNights, int numAttractions, double discountPercent) {
+	public TravelPackage(int numNights, int numAttractions, int discountPercent) {
 		super();
 		this.numNights = numNights;
 		this.numAttractions = numAttractions;
@@ -46,11 +46,11 @@ public class TravelPackage {
 		this.numAttractions = numAttractions;
 	}
 
-	public double getDiscountPercent() {
+	public int getDiscountPercent() {
 		return discountPercent;
 	}
 
-	public void setDiscountPercent(double discountPercent) {
+	public void setDiscountPercent(int discountPercent) {
 		this.discountPercent = discountPercent;
 	}
 

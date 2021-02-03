@@ -13,7 +13,7 @@ public class HotelBooking {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
-	private RoomType roomType;
+	private String roomType;
 	private int numRooms;
 	private int numGuests;
 	private String remarks;
@@ -26,7 +26,7 @@ public class HotelBooking {
 		super();
 	}
 	
-	public HotelBooking(RoomType roomType, int numRooms, int numGuests, String remarks, double price, LocalDate bookingDate,
+	public HotelBooking(String roomType, int numRooms, int numGuests, String remarks, double price, LocalDate bookingDate,
 			LocalDate startDate, LocalDate endDate) {
 		super();
 		this.roomType = roomType;
@@ -39,11 +39,11 @@ public class HotelBooking {
 		this.endDate = endDate;
 	}
 
-	public RoomType getRoomType() {
+	public String getRoomType() {
 		return roomType;
 	}
 
-	public void setRoomType(RoomType roomType) {
+	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
 
