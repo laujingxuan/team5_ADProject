@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
 
+
 @Entity
 public class User {
 	@Id

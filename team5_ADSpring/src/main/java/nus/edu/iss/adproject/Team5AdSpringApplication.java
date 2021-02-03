@@ -1,7 +1,11 @@
 package nus.edu.iss.adproject;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.time.Duration;
 import java.time.LocalDate;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +16,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
+import nus.edu.iss.adproject.model.Hotel;
+import nus.edu.iss.adproject.model.Product;
+import nus.edu.iss.adproject.model.RoomType;
+import nus.edu.iss.adproject.model.TravelPackage;
+import nus.edu.iss.adproject.repository.AttractionRepository;
+import nus.edu.iss.adproject.repository.HotelRepository;
+import nus.edu.iss.adproject.repository.ProductRepo;
+import nus.edu.iss.adproject.repository.RoomTypeRepo;
+
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Cart;
@@ -32,6 +45,7 @@ import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.TravelPackage;
 import nus.edu.iss.adproject.repository.AttractionRepository;
+
 import nus.edu.iss.adproject.repository.TravelPackageRepository;
 import nus.edu.iss.adproject.repository.UserRepository;
 
@@ -44,6 +58,18 @@ public class Team5AdSpringApplication {
 	private TravelPackageRepository tpRepo;
 	
 	@Autowired
+
+	private HotelRepository hrepo;
+	
+	@Autowired
+	private ProductRepo prepo;
+	
+	@Autowired
+	private AttractionRepository arepo;
+	
+	@Autowired
+	private RoomTypeRepo rrepo;
+
 	private UserRepository userRepo;
 	
 	@Autowired
@@ -66,7 +92,6 @@ public class Team5AdSpringApplication {
 	
 	@Autowired
 	private CartRepository cartRepo;
-
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Team5AdSpringApplication.class, args);
@@ -147,6 +172,7 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail4);
 		};
 	}
+
 }
 //	//Only run during the first time for data insertion
 	/*

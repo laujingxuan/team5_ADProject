@@ -18,6 +18,7 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+
 	private ProductType type;
 	
 	@OneToMany(mappedBy = "product" )
@@ -32,13 +33,25 @@ public class Product {
 	@OneToOne(mappedBy = "product")
 	private RoomType roomType;
 	
+
+	
+
+
 	public Product() {
 		super();
 	}
 
 	public Product(ProductType type) {
+
 		super();
 		this.type = type;
+	}
+	
+	
+
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public List<Discount> getDiscount() {
@@ -61,11 +74,9 @@ public class Product {
 		return id;
 	}
 
-	public ProductType getType() {
-		return type;
-	}
 
 	public void setType(ProductType type) {
+
 		this.type = type;
 	}
 

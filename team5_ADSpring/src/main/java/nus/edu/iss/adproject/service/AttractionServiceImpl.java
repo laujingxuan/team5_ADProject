@@ -1,3 +1,4 @@
+
 package nus.edu.iss.adproject.service;
 
 import java.util.List;
@@ -10,14 +11,14 @@ import org.springframework.stereotype.Service;
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.repository.AttractionRepository;
 
+
 @Service
 @Transactional
-public class AttractionServiceImpl implements AttractionService {
+public class AttractionServiceImpl implements AttractionService{
 	@Autowired
-	private AttractionRepository attraction_repo;
-
+	private AttractionRepository arepo;
 	
-	@Override
+    @Override
 	public void save(Attraction x) {
 		// TODO Auto-generated method stub
 		
@@ -25,13 +26,7 @@ public class AttractionServiceImpl implements AttractionService {
 
 	@Override
 	public Attraction findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Attraction> findAll() {
-		return attraction_repo.findAll();
+		return arepo.findById(id).get();
 	}
 
 	@Override
@@ -39,10 +34,24 @@ public class AttractionServiceImpl implements AttractionService {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override 
+	public List<Attraction> findAll(){
+		return arepo.findAll();
+	}
+	
+	@Override
+	public Attraction findAttractionByProductId(Long id) {
+		return arepo.findAttractionByProductId(id);
+	}
+  
 
 	@Override
 	public List<Attraction> findByUserId(Long userId) {
-		return attraction_repo.findByUserId(userId);
+		return arepo.findByUserId(userId);
 	}
 
+
 }
+
+

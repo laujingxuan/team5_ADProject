@@ -15,7 +15,6 @@ public class Attraction {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	
 	private String name;
 	private double price;
 	private String location;
@@ -29,10 +28,10 @@ public class Attraction {
 	
 	@OneToOne
 	private Product product;
+
 	
 	 @OneToMany(mappedBy = "attraction")
 	 private List<Discount> discount;
-	
 	
 
 	public Attraction() { }	
@@ -48,7 +47,17 @@ public class Attraction {
 		this.description = description;
 		this.country_city = country_city;
 		this.product = product;
-		this.API_URL = API_URL;
+
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		 this.product = product;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getAPI_URL() {
@@ -98,6 +107,7 @@ public class Attraction {
 	public void setCountry_city(String country_city) {
 		this.country_city = country_city;
 	}
+
 	public Product getProduct() {
 		return product;
 	}
@@ -121,3 +131,4 @@ public class Attraction {
 	}
 	
 }
+
