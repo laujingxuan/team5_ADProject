@@ -11,7 +11,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-import nus.edu.iss.adproject.NonEntityModel.ProductType;
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
@@ -22,6 +21,7 @@ import nus.edu.iss.adproject.model.RoleType;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.TravelPackage;
 import nus.edu.iss.adproject.model.User;
+import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.repository.AttractionRepository;
 import nus.edu.iss.adproject.repository.BookingDetailsRepo;
 import nus.edu.iss.adproject.repository.BookingRepo;

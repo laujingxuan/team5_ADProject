@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import nus.edu.iss.adproject.NonEntityModel.TravelPackageWrapper;
+import nus.edu.iss.adproject.nonEntityModel.TravelPackageWrapper;
 import nus.edu.iss.adproject.service.TravelPackageService;
 
 @Controller

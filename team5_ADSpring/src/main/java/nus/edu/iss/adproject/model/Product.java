@@ -9,7 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import nus.edu.iss.adproject.NonEntityModel.ProductType;
+import nus.edu.iss.adproject.nonEntityModel.ProductType;
+
 
 @Entity
 public class Product {

@@ -13,7 +13,7 @@
 		<h3>Booking Details</h3>
 	</div>
 	<div th:each="detail:${bookingDetails}" class="py-3">
-		<table th:if="${detail.key.product.type == T(nus.edu.iss.adproject.NonEntityModel.ProductType).HOTEL}">
+		<table th:if="${detail.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
  			<tr ><td th:text = "${detail.key.product.roomType.hotel.name} + ': ' + ${detail.key.product.roomType.roomType} + ' Room'">Hotel</td></tr> 
 			<tr>
 				<td>Number of rooms: </td>

@@ -11,6 +11,13 @@ public class MonthTypeQuery {
 		this.month = month;
 		this.roomType = roomType;
 	}
+	
+	
+
+	public MonthTypeQuery(int month) {
+		super();
+		this.month = month;
+	}
 
 
 	public int getMonth() {
