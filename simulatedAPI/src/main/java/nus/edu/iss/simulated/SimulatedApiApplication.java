@@ -9,9 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import nus.edu.iss.simulated.model.AttractionBooking;
+import nus.edu.iss.simulated.model.DailyAttractionDetail;
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 import nus.edu.iss.simulated.model.HotelBooking;
 import nus.edu.iss.simulated.repository.AttractionBookingRepo;
+import nus.edu.iss.simulated.repository.DailyAttractionDetailRepo;
 import nus.edu.iss.simulated.repository.DailyRoomTypeDetailRepo;
 import nus.edu.iss.simulated.repository.HotelBookingRepo;
 
@@ -26,6 +28,9 @@ public class SimulatedApiApplication {
 	
 	@Autowired
 	private AttractionBookingRepo attractionRepo;
+	
+	@Autowired
+	private DailyAttractionDetailRepo dailyAttractRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SimulatedApiApplication.class, args);
@@ -75,6 +80,9 @@ public class SimulatedApiApplication {
 			
 			AttractionBooking attraction1 = new AttractionBooking("Zoo",5,LocalDate.of(2021, 1, 15));
 			attractionRepo.save(attraction1);
+			
+			DailyAttractionDetail attractDetail1 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 15), 50);
+			dailyAttractRepo.save(attractDetail1);
 		};
 //			BookingDetails bookDetail1 = new BookingDetails(booking1, attraction1.getProduct(), "1", "23456", 4, 300);
 //			BookingDetails bookDetail2 = new BookingDetails(booking1, attraction1.getProduct(), "2", "23457", 3, 250);

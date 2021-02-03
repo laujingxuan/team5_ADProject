@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
+import nus.edu.iss.simulated.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.simulated.repository.DailyRoomTypeDetailRepo;
 
 @Service
@@ -33,13 +34,22 @@ public class DailyRoomTypeDetailServiceImp implements DailyRoomTypeDetailService
 	public List<DailyRoomTypeDetail> findRoomDetailsByPeriodAndType(LocalDate startD, LocalDate endD, String roomType) {
 		
 		List<DailyRoomTypeDetail> output = new ArrayList<>();
-		while (endD.isEqual(startD) || endD.isAfter(startD)) {
+		//15th to 16th only one day and only needs to know 15th price
+		while (endD.minusDays(1).isEqual(startD) || endD.minusDays(1).isAfter(startD)) {
 			output.add(findRoomDetailByDateAndType(startD, roomType));
 			System.out.println("startD" + startD);
 			System.out.println("endD" + endD);
 			startD = startD.plusDays(1);
 		}
 		return output;
+	}
+
+	@Override
+	public Boolean UpdateVacanciesQuantity(DailyRoomDetailWrapper updated) {
+		for (DailyRoomTypeDetail d : updated.getDailyList()) {
+			roomRepo.save(d);
+		}
+		return true;
 	}
 
 }

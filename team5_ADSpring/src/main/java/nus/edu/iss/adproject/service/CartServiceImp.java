@@ -23,7 +23,7 @@ public class CartServiceImp implements CartService {
 	}
 	
 	@Override
-	public void deleteCarts(Cart cart) {
+	public void deleteCart(Cart cart) {
 		cartRepo.delete(cart);
 		return;
 	}

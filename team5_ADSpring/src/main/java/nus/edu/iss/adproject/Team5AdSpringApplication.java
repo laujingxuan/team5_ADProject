@@ -108,7 +108,7 @@ public class Team5AdSpringApplication {
 			
 			Product product1 = new Product(ProductType.ATTRACTION);
 			productRepo.save(product1);
-			Attraction attraction1 = new Attraction("zoo", 75, "Singapore Jalan 1", 4, "Zoo with animals", "Singapore", product1, "http://localhost:8081/api/attraction/booking/");
+			Attraction attraction1 = new Attraction("zoo", 75, "Singapore Jalan 1", 4, "Zoo with animals", "Singapore", product1, "http://localhost:8081/api/attraction/");
 			attractionRepo.save(attraction1);
 			
 			Product room1 = new Product(ProductType.HOTEL);
@@ -124,7 +124,7 @@ public class Team5AdSpringApplication {
 //		    htRepo.save(new Hotel("Swissôtel The Stamford ","Singapore", 1.293354,103.853561, 260.0, 8, "SG","aa", "best", "we try to be home"));
 //		    htRepo.save(new Hotel("Hotel Miramar ","Singapore", 1.288710,103.837372, 260.0, 8, "SG","aa", "best", "we try to be home"));
 			
-			Cart cart1 = new Cart(product1, 2, LocalDate.of(2021, 1, 15), customer1);
+			Cart cart1 = new Cart(product1, 3, LocalDate.of(2021, 1, 15), customer1);
 			Cart cart2 = new Cart(room1, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 17),2, "No lunch", customer1);
 			Cart cart3 = new Cart(room2, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 20),4, "4 lunch", customer1);
 			Cart cart4 = new Cart(room1, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 16),2, "2 lunch",customer1);

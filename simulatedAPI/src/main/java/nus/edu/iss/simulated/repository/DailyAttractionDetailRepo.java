@@ -18,6 +18,6 @@ public interface DailyAttractionDetailRepo extends JpaRepository<DailyAttraction
 	
 	
 	@Query("SELECT r FROM DailyAttractionDetail r WHERE r.date = :date ")
-	public List<DailyAttractionDetail> findbyDate(@Param("date") LocalDate date);
+	public DailyAttractionDetail findbyDate(@Param("date") LocalDate date);
 	
 }

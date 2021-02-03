@@ -15,6 +15,11 @@ public class DateTypeQuery {
 		this.date = date;
 	}
 
+	public DateTypeQuery(LocalDate date) {
+		super();
+		this.date = date;
+	}
+
 	public LocalDate getDate() {
 		return date;
 	}

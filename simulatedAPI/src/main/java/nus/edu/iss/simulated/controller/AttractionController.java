@@ -33,29 +33,32 @@ public class AttractionController {
 	private DailyAttractionDetailService dailyAttractionDetailServ;
 	
 	
-	@GetMapping("booking/{id}")
+	@GetMapping("/booking/{id}")
 	public ResponseEntity<AttractionBooking> findbookingById(@PathVariable Long id){
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.findBookingById(id),HttpStatus.OK);
 	}
 	
-	@PostMapping("booking")
+	@PostMapping("/booking")
 	public ResponseEntity<AttractionBooking> newBooking(@RequestBody AttractionBooking attractionBooking){
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.createBooking(attractionBooking),HttpStatus.OK);
 	}
 	
-	@GetMapping("/booking/date")
-	public ResponseEntity<List<DailyAttractionDetail>> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
-		return new ResponseEntity<List<DailyAttractionDetail>>
+	@PostMapping("/booking/date")
+	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
+		return new ResponseEntity<DailyAttractionDetail>
 		(dailyAttractionDetailServ.findAttractionDetailByDate(input.getDate()),HttpStatus.OK);
 	}
+	
 	@GetMapping("/booking/month")
 	public ResponseEntity<List<DailyAttractionDetail>> findAttractionDetailByMonth(@RequestBody MonthTypeQuery input){
 		return new ResponseEntity<List<DailyAttractionDetail>>
 		(dailyAttractionDetailServ.findAttractionDetailByMonth(input.getMonth()),HttpStatus.OK);
 	}
 	
-	
-	
-	
+	@PostMapping("/booking/update")
+	public ResponseEntity<Boolean> updateTicketQuantity(@RequestBody DailyAttractionDetail updated){
+		return new ResponseEntity<Boolean>
+		(dailyAttractionDetailServ.UpdateTicketQuantity(updated),HttpStatus.OK);
+	}
 
 }

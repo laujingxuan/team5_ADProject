@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import nus.edu.iss.simulated.model.DailyAttractionDetail;
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 import nus.edu.iss.simulated.model.HotelBooking;
 import nus.edu.iss.simulated.nonEntityModel.DailyRoomDetailWrapper;
@@ -59,14 +60,15 @@ public class HotelController {
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);
 	}
 	
-	//findRoomDetailsByType&Month (Retrieve successfully)
-//	{
-//		"roomType": "SINGLE",
-//	    "month": 1
-//	}
 	@PostMapping("/room/month")
 	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType())), HttpStatus.OK);
+	}
+	
+	@PostMapping("/room/update")
+	public ResponseEntity<Boolean> updateVacanciesQuantity(@RequestBody DailyRoomDetailWrapper updated){
+		return new ResponseEntity<Boolean>
+		(dailyRoomSer.UpdateVacanciesQuantity(updated),HttpStatus.OK);
 	}
 	
 	//predictBookingCancellationRate

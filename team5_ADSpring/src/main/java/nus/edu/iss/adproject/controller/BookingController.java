@@ -18,8 +18,10 @@ import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.NonEntityModel.AttractionBooking;
 import nus.edu.iss.adproject.NonEntityModel.BookingWrapper;
+import nus.edu.iss.adproject.NonEntityModel.DailyAttractionDetail;
 import nus.edu.iss.adproject.NonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.NonEntityModel.DailyRoomTypeDetail;
+import nus.edu.iss.adproject.NonEntityModel.DateTypeQuery;
 import nus.edu.iss.adproject.NonEntityModel.HotelBooking;
 import nus.edu.iss.adproject.NonEntityModel.MultipleDateQuery;
 import nus.edu.iss.adproject.NonEntityModel.ProductType;
@@ -27,7 +29,6 @@ import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Cart;
 import nus.edu.iss.adproject.model.User;
-import nus.edu.iss.adproject.repository.BookingDetailsRepo;
 import nus.edu.iss.adproject.service.BookingService;
 import nus.edu.iss.adproject.service.CartService;
 import nus.edu.iss.adproject.service.SessionService;
@@ -72,7 +73,7 @@ public class BookingController {
 			RestTemplate restTemplate = new RestTemplate();
 			BookingWrapper booking;
 			if (b.getProduct().getType() == ProductType.ATTRACTION) {
-				uri = b.getProduct().getAttraction().getAPI_URL() + "{id}";
+				uri = b.getProduct().getAttraction().getAPI_URL() + "booking/{id}";
 				booking = restTemplate.getForObject(uri, AttractionBooking.class, params);
 			}else {
 				uri = b.getProduct().getRoomType().getHotel().getAPI_URL()+ "booking/{id}";	
@@ -85,67 +86,109 @@ public class BookingController {
 		return "bookingDetails";
 	}
 	
+	//need to change to post mapping
 	@GetMapping("/makeBook")
-	public String makeBooking(HttpSession session) {
+	public String makeBooking(HttpSession session, Model model) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
 		List<Cart> carts = cartService.retrieveByUserId(user.getId());
-		System.out.println(1);
 		Booking newBooking = createBooking(carts,user);
 		System.out.println(newBooking);
 		for (Cart cart: carts) {
 			if (cart.getProduct().getType()==ProductType.HOTEL) {
-				double beforeDiscountPrice = getTotalNightPrice(cart);
+				//check the room availabilities and total prices for room
+				String roomPrice = checkVacanciesAndTotalNightPrice(cart);
+				if (roomPrice == null) {
+					//not enough rooms
+					model.addAttribute("error", cart.getProduct().getRoomType().getHotel() + " has insufficient" + cart.getProduct().getRoomType().getRoomType() + ". Sorry");
+					return "error";
+				}
+				//get the total price by multiplying number of nights and number of rooms
+				double beforeDiscountPrice = Double.parseDouble(roomPrice);
 				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
-				System.out.println(2);
 				//hotel side will be storing before discount price while we store after discount price;
 				HotelBooking hotelBook = new HotelBooking(cart.getProduct().getRoomType().getRoomType(),cart.getQuantity(),cart.getNumGuests(),cart.getRemarks(), beforeDiscountPrice, newBooking.getBookingDate(), cart.getStartDate(), cart.getEndDate());
-				System.out.println(3);
 				String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL() + "booking";
 				RestTemplate restTemplate = new RestTemplate();
 				HotelBooking returnBooking = restTemplate.postForObject( uri, hotelBook, HotelBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice);
 				bookService.saveBookingDetails(newDetail);
-				System.out.println(4);
 			}else {
-				//code for cart is attraction
+				if (checkAndUpdateAttractionAPIQuantityLeft(cart)==false) {
+					//Not enough tickets
+					model.addAttribute("error", cart.getProduct().getAttraction().getName() + " has insufficient tickets. Sorry");
+					return "error";
+				};
+				//creating booking details in our database and hotel booking in the api
+				double beforeDiscountPrice = cart.getProduct().getAttraction().getPrice() * cart.getQuantity();
+				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
+				AttractionBooking attractBook = new AttractionBooking(cart.getProduct().getAttraction().getName(),cart.getQuantity(),cart.getStartDate());
+				String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking";
+				RestTemplate restTemplate = new RestTemplate();
+				AttractionBooking returnBooking = restTemplate.postForObject(uri, attractBook, AttractionBooking.class);
+				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getQuantity(), afterDiscountPrice);
+				bookService.saveBookingDetails(newDetail);
+				
 			}
-			
+			//remove from cart since alr added into booking
+			cartService.deleteCart(cart);
 		}
-		
-////	testing for calling API with post request===> success
-//		model.addAttribute("test", result);
-		return "testing";
+		return "redirect:/booking/list";
 	}
 	
-	public double getTotalNightPrice(Cart cart) {
+	public boolean checkAndUpdateAttractionAPIQuantityLeft(Cart cart) {
+		String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking/date";
+		DateTypeQuery query = new DateTypeQuery(cart.getStartDate());
+		RestTemplate restTemplate = new RestTemplate();
+		DailyAttractionDetail daily = restTemplate.postForObject(uri, query, DailyAttractionDetail.class);
+		if (daily.getQuantityLeft()<cart.getQuantity()) {
+			//not enough tickets
+			return false;
+		}
+		daily.setQuantityLeft(daily.getQuantityLeft()-cart.getQuantity());
+		//update the ticket quantity in the attraction API
+		String url = cart.getProduct().getAttraction().getAPI_URL()+ "booking/update";
+		Boolean output = restTemplate.postForObject(url, daily, Boolean.class);
+		return output;
+	}	
+	
+	public String checkVacanciesAndTotalNightPrice(Cart cart) {
 		String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
 	    RestTemplate restTemplate = new RestTemplate();
 //	    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 //	    DateTypeQuery query = new DateTypeQuery(LocalDate.parse("25/01/2021", df),"SINGLE");
 	    MultipleDateQuery query = new MultipleDateQuery(cart.getStartDate(), cart.getEndDate(), cart.getProduct().getRoomType().getRoomType());
-	    System.out.println(query);
 	    DailyRoomDetailWrapper result = restTemplate.postForObject( uri, query, DailyRoomDetailWrapper.class);
-	    System.out.println(result);
 	    double total = 0;
     	for (DailyRoomTypeDetail daily: result.getDailyList()) {
-	    	total += daily.getDailyPrice();
+    		//check if there is sufficient rooms
+    		if (daily.getNumVacancies() < cart.getQuantity()) {
+    			return null;
+    		}
+    		daily.setNumVacancies(daily.getNumVacancies() - cart.getQuantity());
+	    	total += daily.getDailyPrice()*cart.getQuantity();
 	    }
-		return total;
+    	
+    	//Update the HotelAPI on the updated quantity of rooms
+    	String url = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/update";
+    	Boolean check = restTemplate.postForObject(url, result, Boolean.class);
+    	return Double.toString(total);
 	}
 	
 	public Booking createBooking(List<Cart> carts, User user) {
 		Booking newBooking;
-		//Checking number of attractions and nights
+		//Checking number of attractions and nights to determine the discount package
 		int numNights = 0;
 		int numAttractions = 0;
 		for (Cart cart: carts) {
 			if (cart.getProduct().getType()==ProductType.HOTEL) {
+				//number of days for each room
 				long days = cart.getStartDate().until(cart.getEndDate(), ChronoUnit.DAYS);
-				System.out.println(days);
-				numNights += (int)days;
+				//number of rooms * number of days
+				numNights += cart.getQuantity() * (int)days;
 			}else {
-				numAttractions += 1;
+				//number of tickets for 1 attraction
+				numAttractions += cart.getQuantity();
 			}
 		}
 		int tp = travelPacService.getDiscount(numNights, numAttractions);
