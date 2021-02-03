@@ -1,6 +1,5 @@
 package nus.edu.iss.adproject.model;
 
-import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,8 @@ import javax.persistence.OneToOne;
 
 @Entity 
 public class RoomType {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id 
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
 	@OneToOne
@@ -21,26 +21,21 @@ public class RoomType {
 	@ManyToOne
 	private Hotel hotel;
 	
-	
+	private double price;
 	private String roomType;
 	private String description;
 	private String imageURL;
 
-
-
-	public RoomType(long id, Product product,Hotel hotel,  String roomType, String description, String imageURL) {
-		super();
-		this.id = id;
+	public RoomType() { }
+	public RoomType(Product product,Hotel hotel,double price, String roomType, String description, String imageURL) {
 		this.product = product;
 		this.hotel = hotel;
+		this.price = price;
 		this.roomType = roomType;
 		this.description = description;
 		this.imageURL = imageURL;
 	}
-	public RoomType() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 	public long getId() {
 		return id;
 	}
@@ -77,7 +72,11 @@ public class RoomType {
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
-	
-	
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
 	
 }

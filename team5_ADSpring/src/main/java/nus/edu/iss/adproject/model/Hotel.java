@@ -1,6 +1,7 @@
 package nus.edu.iss.adproject.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -38,16 +37,11 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private List<Discount> discount;
 	
-	public Hotel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Hotel(List<RoomType> roomType, String name, String location, double lat, double longi, double rate,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
-			List<Discount> discount) {
-		super();
-		this.roomType = roomType;
+	public Hotel() {}
+	public Hotel(String name, String location, double lat, double longi, double rate, int numberOfRestaurants, String country_City,
+			String emenities, String quality, String description) {
+		this.roomType = new ArrayList<RoomType>();
+		this.discount = new ArrayList<Discount>();
 		this.name = name;
 		this.location = location;
 		this.lat = lat;
@@ -58,126 +52,84 @@ public class Hotel {
 		this.emenities = emenities;
 		this.quality = quality;
 		this.description = description;
-		this.discount = discount;
 	}
 
-
-	public long getId() {
-		return id;
-	}
-
+	
 	public List<RoomType> getRoomType() {
 		return roomType;
 	}
-
 	public void setRoomType(List<RoomType> roomType) {
 		this.roomType = roomType;
-
 	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getLocation() {
 		return location;
 	}
-
 	public void setLocation(String location) {
 		this.location = location;
 	}
-		
 	public double getLat() {
 		return lat;
 	}
-
 	public void setLat(double lat) {
 		this.lat = lat;
 	}
-
 	public double getLongi() {
 		return longi;
 	}
-
 	public void setLongi(double longi) {
 		this.longi = longi;
-
 	}
-
 	public double getRate() {
 		return rate;
 	}
-
 	public void setRate(double rate) {
 		this.rate = rate;
 	}
-
 	public int getNumberOfRestaurants() {
 		return numberOfRestaurants;
 	}
-
 	public void setNumberOfRestaurants(int numberOfRestaurants) {
 		this.numberOfRestaurants = numberOfRestaurants;
 	}
-
 	public String getCountry_City() {
 		return country_City;
 	}
-
 	public void setCountry_City(String country_City) {
 		this.country_City = country_City;
 	}
-
 	public String getEmenities() {
 		return emenities;
 	}
-
 	public void setEmenities(String emenities) {
 		this.emenities = emenities;
 	}
-
 	public String getQuality() {
 		return quality;
 	}
-
 	public void setQuality(String quality) {
 		this.quality = quality;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-	@Override
-	public String toString() {
-		return "Hotel [name=" + name + ", lat=" + lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants="
-				+ numberOfRestaurants + ", country_City=" + country_City + ", emenities=" + emenities + ", quality="
-				+ quality + ", description=" + description + "]";
-	}
-
-	
 	public List<Discount> getDiscount() {
 		return discount;
 	}
-
-
 	public void setDiscount(List<Discount> discount) {
 		this.discount = discount;
 	}
-
+	public long getId() {
+		return id;
+	}
 	
 	
 	
