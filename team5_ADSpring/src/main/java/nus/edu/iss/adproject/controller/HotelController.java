@@ -13,31 +13,59 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.edu.iss.adproject.model.Hotel;
+import nus.edu.iss.adproject.model.RoomType;
+import nus.edu.iss.adproject.repository.HotelRepository;
+import nus.edu.iss.adproject.repository.RoomTypeRepo;
+
 import nus.edu.iss.adproject.service.HotelService;
+import nus.edu.iss.adproject.service.RoomTypeService;
 
 @Controller
 @RequestMapping("/hotel")
 public class HotelController {
 	@Autowired
 	private HotelService hotelservice;
-	
+
 	@GetMapping("/list")
 	public String viewUser(Model model, HttpSession session) {
 		return "discountForm";
 	}
 
+
 	@GetMapping("/Hotel")
 	public String gethotel(Model model){
 		List<Hotel> hotel=  hotelservice.findAll();
+		System.out.print(hotel);
 		model.addAttribute("Hotels",hotel);
 		 return "Hotel";
 	}
 	@GetMapping("/Map/{id}")
 	public String getMap(Model model,@PathVariable("id") long id )
 	{
-		model.addAttribute("hotels",hotelservice.findById(id));
+
+		var val = hotelservice.findById(id);
+        if (val.isPresent()) {
+            System.out.println(val.get());
+        } else {
+            System.out.printf("No hotels found with id %d%n", id);
+        }
+     
+		System.out.print(hotelservice.findById(id));
+		model.addAttribute("hotels",val.get());
+		
 		return "Map";
 	}
+	
+	
+
+//
+//	@RequestMapping(value="/SimilarRoom", method=RequestMethod.POST, params="action=Similar_Room")
+//	public String Similar() {
+//		return "SimilarRoom";
+//	}
+	
+	
+
 
 
 }

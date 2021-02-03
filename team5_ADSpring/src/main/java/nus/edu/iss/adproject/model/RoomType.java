@@ -18,11 +18,14 @@ public class RoomType {
 	@OneToOne
 	private Product product;
 	
+
 	@ManyToOne
 	private Hotel hotel;
+
 	private String roomType;
 	private String description;
 	private String imageURL;
+
 
 	public RoomType(Product product, Hotel hotel,  String roomType, String description, String imageURL) {
 		super();
@@ -71,8 +74,8 @@ public class RoomType {
 	}
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
-	}
-	
+
+
 	
 	
 }

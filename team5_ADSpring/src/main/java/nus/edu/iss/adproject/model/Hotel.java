@@ -17,8 +17,16 @@ public class Hotel {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     public long id;
 	
+
 	@OneToMany(mappedBy = "hotel")
 	private List< RoomType> roomType;
+
+	//@OneToMany(mappedBy = "hotel")
+	//private List< RoomType> roomType;
+//	Marina Bay Sands Hotel, Singapore (1.282302, 103.858528)
+//	Swissôtel The Stamford, Singapore (1.293354, 103.853561)
+//	Hotel Miramar, Singapore (1.288710, 103.837372
+
 	
     private String name;
     private String location;
@@ -83,6 +91,15 @@ public class Hotel {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+//	public List<RoomType> getRoomType() {
+//		return roomType;
+//	}
+//
+//	public void setRoomType(List<RoomType> roomType) {
+//		this.roomType = roomType;
+//	}
+
 
 	public String getName() {
 		return name;

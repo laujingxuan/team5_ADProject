@@ -1,3 +1,4 @@
+
 package nus.edu.iss.adproject.service;
 
 import java.util.List;
@@ -38,4 +39,16 @@ public class HotelServiceImpl implements HotelService{
 		return hotelrepo.findAll();
 	}
 
+		@Override 
+	public List<Hotel> findAll(){
+		return hotelrepo.findAll();
+	}
+
+	@Override
+	public Optional<Hotel> findById(Long id) {
+		// TODO Auto-generated method stub
+		return hotelrepo.findById(id);
+	}
+
 }
+
