@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
+import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Cart;
+import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.AttractionBooking;
 import nus.edu.iss.adproject.nonEntityModel.BookingWrapper;
@@ -110,31 +112,35 @@ public class BookingController {
 				};
 			}
 		}
+		System.out.println(1);
 		Booking newBooking = createBooking(carts,user);
 		//perform update of quantity and generate the booking details
 		for (Cart cart: carts) {
 			if (cart.getProduct().getType()==ProductType.HOTEL) {
+				System.out.println("Hotel");
 				//check the total prices for room
 				double beforeDiscountPrice = updateHotelAPIAndGetTotalNightPrice(cart);
 				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
 				//hotel side will be storing before discount price while we store after discount price;
 				HotelBooking hotelBook = new HotelBooking(cart.getProduct().getRoomType().getRoomType(),cart.getQuantity(),cart.getNumGuests(),cart.getRemarks(), beforeDiscountPrice, newBooking.getBookingDate(), cart.getStartDate(), cart.getEndDate());
-				String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL() + "booking";
+				final String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL() + "booking";
 				RestTemplate restTemplate = new RestTemplate();
 				HotelBooking returnBooking = restTemplate.postForObject( uri, hotelBook, HotelBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice);
 				bookService.saveBookingDetails(newDetail);
+				System.out.println(2);
 			}else {
-				updateAttractionAPIQuantityLeft(cart);
 				//creating booking details in our database and attraction booking in the api
-				double beforeDiscountPrice = cart.getProduct().getAttraction().getPrice() * cart.getQuantity();
+				System.out.println("Attraction");
+				double beforeDiscountPrice = updateAttractionAPIQuantityLeftAndGetTotalPrice(cart);
 				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
 				AttractionBooking attractBook = new AttractionBooking(cart.getProduct().getAttraction().getName(),cart.getQuantity(),cart.getStartDate());
-				String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking";
+				final String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking";
 				RestTemplate restTemplate = new RestTemplate();
 				AttractionBooking returnBooking = restTemplate.postForObject(uri, attractBook, AttractionBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getQuantity(), afterDiscountPrice);
 				bookService.saveBookingDetails(newDetail);
+				System.out.println(3);
 			}
 			//remove from cart since alr added into booking
 			cartService.deleteCart(cart);
@@ -143,7 +149,7 @@ public class BookingController {
 	}
 	
 	public boolean checkAttractionQuantityLeft(Cart cart) {
-		String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking/date";
+		final String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking/date";
 		DateTypeQuery query = new DateTypeQuery(cart.getStartDate());
 		RestTemplate restTemplate = new RestTemplate();
 		DailyAttractionDetail daily = restTemplate.postForObject(uri, query, DailyAttractionDetail.class);
@@ -155,14 +161,12 @@ public class BookingController {
 	}
 	
 	public boolean checkRoomVacancies(Cart cart) {
-		String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
+		final String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
 	    RestTemplate restTemplate = new RestTemplate();
 	    MultipleDateQuery query = new MultipleDateQuery(cart.getStartDate(), cart.getEndDate(), cart.getProduct().getRoomType().getRoomType());
 	    DailyRoomDetailWrapper result = restTemplate.postForObject( uri, query, DailyRoomDetailWrapper.class);
     	for (DailyRoomTypeDetail daily: result.getDailyList()) {
     		//check if there is sufficient rooms
-    		System.out.println(daily.getNumVacancies());
-    		System.out.println(cart.getQuantity());
     		if (daily.getNumVacancies() < cart.getQuantity()) {
     			return false;
     		}
@@ -171,20 +175,32 @@ public class BookingController {
 	}
 	
 	
-	public boolean updateAttractionAPIQuantityLeft(Cart cart) {
-		String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking/date";
+	public double updateAttractionAPIQuantityLeftAndGetTotalPrice(Cart cart) {
+		final String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking/date";
 		DateTypeQuery query = new DateTypeQuery(cart.getStartDate());
 		RestTemplate restTemplate = new RestTemplate();
 		DailyAttractionDetail daily = restTemplate.postForObject(uri, query, DailyAttractionDetail.class);
 		daily.setQuantityLeft(daily.getQuantityLeft()-cart.getQuantity());
 		//update the ticket quantity in the attraction API
-		String url = cart.getProduct().getAttraction().getAPI_URL()+ "booking/update";
+		final String url = cart.getProduct().getAttraction().getAPI_URL()+ "booking/update";
 		Boolean output = restTemplate.postForObject(url, daily, Boolean.class);
-		return output;
+		
+		//calculate the price based on the original price and discount percentage;
+		Attraction attraction = cart.getProduct().getAttraction();
+		double discount_rate = 0;
+		//check every discount under the attraction and get the largest applicable discount
+		for (int i = 0; i < attraction.getDiscount().size(); i++) {
+			if (cart.getStartDate().isAfter(attraction.getDiscount().get(i).getFrom_date()) && cart.getStartDate().isBefore(attraction.getDiscount().get(i).getTo_date())) {
+				if (attraction.getDiscount().get(i).getDiscount_rate()>discount_rate) {
+					discount_rate = attraction.getDiscount().get(i).getDiscount_rate();
+				}
+			}
+		}
+		return cart.getProduct().getAttraction().getPrice() * cart.getQuantity() * (100-discount_rate)/100;
 	}	
 	
 	public double updateHotelAPIAndGetTotalNightPrice(Cart cart) {
-		String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
+		final String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
 	    RestTemplate restTemplate = new RestTemplate();
 //	    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 //	    DateTypeQuery query = new DateTypeQuery(LocalDate.parse("25/01/2021", df),"SINGLE");
@@ -193,11 +209,20 @@ public class BookingController {
 	    double total = 0;
     	for (DailyRoomTypeDetail daily: result.getDailyList()) {
     		daily.setNumVacancies(daily.getNumVacancies() - cart.getQuantity());
-	    	total += daily.getDailyPrice()*cart.getQuantity();
+    		Hotel hotel = cart.getProduct().getRoomType().getHotel();
+    		double discount_rate = 0;
+    		for(int i = 0; i < hotel.getDiscount().size(); i++) {
+    			if(daily.getDate().isAfter(hotel.getDiscount().get(i).getFrom_date()) && daily.getDate().isBefore(hotel.getDiscount().get(i).getTo_date())){
+    				if(hotel.getDiscount().get(i).getDiscount_rate()>discount_rate) {
+    					discount_rate = hotel.getDiscount().get(i).getDiscount_rate();
+    				}
+    			}
+    		}
+	    	total += daily.getDailyPrice()*cart.getQuantity()*(100-discount_rate)/100;
 	    }
     	
     	//Update the HotelAPI on the updated quantity of rooms
-    	String url = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/update";
+    	final String url = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/update";
     	Boolean check = restTemplate.postForObject(url, result, Boolean.class);
     	return total;
 	}

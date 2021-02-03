@@ -25,8 +25,6 @@ public class ProductReview {
 	
 	private String photoUrl;
 	
-	
-
 	public ProductReview(long id, int rating, String message, String photoUrl) {
 		super();
 		this.id = id;

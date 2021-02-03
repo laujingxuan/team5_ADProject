@@ -3,7 +3,6 @@ package nus.edu.iss.adproject.nonEntityModel;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import nus.edu.iss.adproject.model.RoleType;
 import nus.edu.iss.adproject.model.User;
 
 

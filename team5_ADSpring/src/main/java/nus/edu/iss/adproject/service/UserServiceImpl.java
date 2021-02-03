@@ -9,8 +9,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nus.edu.iss.adproject.model.RoleType;
 import nus.edu.iss.adproject.model.User;
+import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.repository.UserRepository;
 
 

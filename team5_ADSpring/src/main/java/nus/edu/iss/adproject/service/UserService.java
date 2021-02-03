@@ -3,7 +3,7 @@ package nus.edu.iss.adproject.service;
 import java.util.ArrayList;
 
 import nus.edu.iss.adproject.model.User;
-import nus.edu.iss.adproject.model.RoleType;
+import nus.edu.iss.adproject.nonEntityModel.RoleType;
 
 
 

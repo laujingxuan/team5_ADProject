@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import nus.edu.iss.adproject.model.RoleType;
 import nus.edu.iss.adproject.model.User;
+import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.repository.UserRepository;
 
 

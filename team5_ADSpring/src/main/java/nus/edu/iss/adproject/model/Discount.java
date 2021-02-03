@@ -17,9 +17,6 @@ public class Discount {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@ManyToOne
-	private Product product;
-	
 	private int discount_rate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate from_date;
@@ -37,20 +34,14 @@ public class Discount {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Discount(long id, Product product, int discount_rate, LocalDate from_date, LocalDate to_date) {
+	public Discount(long id, int discount_rate, LocalDate from_date, LocalDate to_date) {
 		super();
 		this.id = id;
-		this.product = product;
 		this.discount_rate = discount_rate;
 		this.from_date = from_date;
 		this.to_date = to_date;
 	}
-	public Product getProduct() {
-		return product;
-	}
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+
 	public long getId() {
 		return id;
 	}
@@ -77,7 +68,6 @@ public class Discount {
 		this.to_date = to_date;
 	}	
 	
-	
 	public Hotel getHotel() {
 		return hotel;
 	}
@@ -93,9 +83,9 @@ public class Discount {
 	}
 	@Override
 	public String toString() {
-		return "Discount [id=" + id + ", product_id=" + product + ", discount_rate=" + discount_rate + ", from_date="
-				+ from_date + ", to_date=" + to_date + "]";
+		return "Discount [id=" + id + ", discount_rate=" + discount_rate + ", from_date=" + from_date + ", to_date="
+				+ to_date + ", hotel=" + hotel + ", attraction=" + attraction + "]";
 	}
-	
+
 	
 }

@@ -28,4 +28,8 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 	public RoomType findById(Long id) {
 		return rrepo.findById(id).get();
 	}
+	
+	public List<RoomType> findAll(){
+		return rrepo.findAll();
+	}
 }

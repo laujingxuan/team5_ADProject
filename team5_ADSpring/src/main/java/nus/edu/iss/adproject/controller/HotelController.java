@@ -84,7 +84,7 @@ public class HotelController {
 		System.out.println(room);
 		model.addAttribute("roomtype", room);
 		return "roomdetail";
-
+	}
 
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {

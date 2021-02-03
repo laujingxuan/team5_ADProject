@@ -46,7 +46,6 @@ public class Hotel {
     
     @ManyToOne
     private User user;
-	
 
 	public Hotel() {
 		super();
@@ -84,7 +83,6 @@ public class Hotel {
 		return id;
 	}
 
-	
 	public List<RoomType> getRoomType() {
 		return roomType;
 	}
@@ -164,19 +162,6 @@ public class Hotel {
 		this.discount = discount;
 	}
 
-	public long getId() {
-		return id;
-	}
-	
-	
-	@Override
-	public String toString() {
-		return "Hotel [id=" + id + ", roomType=" + roomType + ", name=" + name + ", location=" + location + ", lat="
-				+ lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants=" + numberOfRestaurants
-				+ ", country_City=" + country_City + ", emenities=" + emenities + ", quality=" + quality
-				+ ", description=" + description + ", discount=" + discount + "]";
-	}
-	
 
 	public User getUser() {
 		return user;
@@ -185,4 +170,14 @@ public class Hotel {
 	public void setUser(User user) {
 		this.user = user;
 	}	
+	
+
+	
+	@Override
+	public String toString() {
+		return "Hotel [id=" + id + ", roomType=" + roomType + ", name=" + name + ", location=" + location + ", lat="
+				+ lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants=" + numberOfRestaurants
+				+ ", country_City=" + country_City + ", emenities=" + emenities + ", quality=" + quality
+				+ ", description=" + description + ", discount=" + discount + "]";
+	}
 }

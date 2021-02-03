@@ -1,5 +1,8 @@
 package nus.edu.iss.adproject.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
+import nus.edu.iss.adproject.nonEntityModel.DailyAttractionDetail;
+import nus.edu.iss.adproject.nonEntityModel.DailyDetailWrapper;
+import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
+import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
+import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.repository.ProductRepo;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.HotelService;
@@ -98,11 +107,11 @@ public class ProductController {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		MonthTypeQuery roomtype = new MonthTypeQuery(1,"single");
-		DailyRoomTypeDetailWrapper result =  restTemplate.postForObject(hotel1, roomtype,DailyRoomTypeDetailWrapper.class);
-		System.out.println(result.getDailydetails());
+		DailyRoomDetailWrapper result =  restTemplate.postForObject(hotel1, roomtype, DailyRoomDetailWrapper.class);
+		System.out.println(result.getDailyList());
 		List<String> dates = new ArrayList<>() ;
 		
-		List<DailyRoomTypeDetail> list = result.getDailydetails();
+		List<DailyRoomTypeDetail> list = result.getDailyList();
 		for(DailyRoomTypeDetail d : list) {
 			if(d.getNumVacancies()> 0) {
 				LocalDate date = d.getDate();
@@ -116,8 +125,7 @@ public class ProductController {
 		return "hotel-roomType-availble-date";
 	}
 }
-	
-}
+
 
 
 

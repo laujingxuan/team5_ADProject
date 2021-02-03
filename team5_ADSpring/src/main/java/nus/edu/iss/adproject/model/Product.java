@@ -21,9 +21,6 @@ public class Product {
 
 	private ProductType type;
 	
-	@OneToMany(mappedBy = "product" )
-	private List<Discount> discount;
-	
 	@OneToMany(mappedBy = "product")
 	private List<ProductReview> productReview;
 	
@@ -32,30 +29,14 @@ public class Product {
 	
 	@OneToOne(mappedBy = "product")
 	private RoomType roomType;
-	
-
-	
-
 
 	public Product() {
 		super();
 	}
 
 	public Product(ProductType type) {
-
 		super();
 		this.type = type;
-	}
-	
-	
-
-	public Product() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public List<Discount> getDiscount() {
-		return discount;
 	}
 
 	public List<ProductReview> getProductReview() {
@@ -74,6 +55,9 @@ public class Product {
 		return id;
 	}
 
+	public ProductType getType() {
+		return type;
+	}
 
 	public void setType(ProductType type) {
 
@@ -84,7 +68,5 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", type=" + type + "]";
 	}
-	
-	
 	
 }

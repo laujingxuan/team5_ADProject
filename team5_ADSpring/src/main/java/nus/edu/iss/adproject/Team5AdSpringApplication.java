@@ -30,11 +30,11 @@ import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Cart;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
-import nus.edu.iss.adproject.model.RoleType;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.TravelPackage;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
+import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.repository.AttractionRepository;
 import nus.edu.iss.adproject.repository.BookingDetailsRepo;
 import nus.edu.iss.adproject.repository.BookingRepo;
@@ -70,6 +70,7 @@ public class Team5AdSpringApplication {
 	@Autowired
 	private RoomTypeRepo rrepo;
 
+	@Autowired
 	private UserRepository userRepo;
 	
 	@Autowired

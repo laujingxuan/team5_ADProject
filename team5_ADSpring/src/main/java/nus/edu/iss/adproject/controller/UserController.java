@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
-
-import nus.edu.iss.adproject.model.RoleType;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
 import nus.edu.iss.adproject.service.SessionService;

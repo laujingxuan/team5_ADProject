@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
 
 
