@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import nus.edu.iss.adproject.nonEntityModel.UserForm;
+//import nus.edu.iss.adproject.nonEntityModel.UserForm;
 
 
 
@@ -16,32 +16,32 @@ public class User {
 	private long id;
 	private String userName;
 	private String password;
-	private RoleType role;
+//	private RoleType role;
 	private String email;
 	private long points; 
 	
 	public User() { }
-	public User(long id, String name, String password, RoleType role, String email, long points) {
+	public User(long id, String name, String password, String email, long points) {//, RoleType role
 		this.userName = name;
 		this.password = password;
-		this.role = role;
+//		this.role = role;
 		this.email = email;
 		this.points = points;
 	}
 	
-	public User(String userName, String password, RoleType role) {
+	public User(String userName, String password) { //RoleType role
 		super();
 		this.userName = userName;
 		this.password = password;
-		this.role = role;
+//		this.role = role;
 	}
 	
-	public User(UserForm userForm) {
-		this.id=userForm.getId();
-		this.userName=userForm.getUserName();
-		this.password=userForm.getPassword();
-		this.role=userForm.getRole();
-	}
+//	public User(UserForm userForm) {
+//		this.id=userForm.getId();
+//		this.userName=userForm.getUserName();
+//		this.password=userForm.getPassword();
+//		this.role=userForm.getRole();
+//	}
 	
 	
 	public long getId() {
@@ -60,12 +60,12 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public RoleType getRole() {
-		return role;
-	}
-	public void setRole(RoleType role) {
-		this.role = role;
-	}
+//	public RoleType getRole() {
+//		return role;
+//	}
+//	public void setRole(RoleType role) {
+//		this.role = role;
+//	}
 	public String getEmail() {
 		return email;
 	}
