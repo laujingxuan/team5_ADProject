@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 
+
 public interface DailyRoomTypeDetailRepo extends JpaRepository<DailyRoomTypeDetail,Long> {
 
 	public DailyRoomTypeDetail findByDateAndRoomType(LocalDate date, String roomType);

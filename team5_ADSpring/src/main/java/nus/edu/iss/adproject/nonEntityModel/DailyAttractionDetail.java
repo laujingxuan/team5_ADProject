@@ -1,17 +1,13 @@
-package nus.edu.iss.simulated.model;
+package nus.edu.iss.adproject.nonEntityModel;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity
+
 public class DailyAttractionDetail {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
 	private String name;
@@ -19,18 +15,26 @@ public class DailyAttractionDetail {
 	private LocalDate date;
 	
 	private int quantityLeft;
-
+	
+	
+//	//private Map<String,List<String>> data;
+//
 	public DailyAttractionDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public DailyAttractionDetail(String name, LocalDate date, int quantityLeft) {
+
+
+	public DailyAttractionDetail(long id, String name, LocalDate date, int quantityLeft) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.date = date;
 		this.quantityLeft = quantityLeft;
 	}
+
+
 
 	public long getId() {
 		return id;
@@ -61,6 +65,14 @@ public class DailyAttractionDetail {
 
 	public void setQuantityLeft(int quantityLeft) {
 		this.quantityLeft = quantityLeft;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "DailyAttractionDetail [id=" + id + ", name=" + name + ", date=" + date + ", quantityLeft="
+				+ quantityLeft + "]";
 	}
 	
 	

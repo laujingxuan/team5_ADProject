@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import nus.edu.iss.adproject.model.User;
-import nus.edu.iss.adproject.model.RoleType;
+//import nus.edu.iss.adproject.model.RoleType;
 
 
 public interface UserRepository extends JpaRepository<User, Long> {

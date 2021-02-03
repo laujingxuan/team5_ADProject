@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
+
 import nus.edu.iss.simulated.nonEntityModel.DailyRoomDetailWrapper;
+
 import nus.edu.iss.simulated.repository.DailyRoomTypeDetailRepo;
 
 @Service

@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
+
 import nus.edu.iss.simulated.nonEntityModel.DailyRoomDetailWrapper;
+
 
 public interface DailyRoomTypeDetailService {
 
@@ -15,4 +17,5 @@ public interface DailyRoomTypeDetailService {
 	public List<DailyRoomTypeDetail> findRoomDetailsByPeriodAndType(LocalDate startD, LocalDate endD, String roomType);
 	
 	public Boolean UpdateVacanciesQuantity(DailyRoomDetailWrapper updated);
+
 }

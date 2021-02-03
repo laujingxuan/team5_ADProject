@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 import nus.edu.iss.adproject.NonEntityModel.UserForm;
 
 
@@ -20,7 +21,7 @@ public class User {
 	private long id;
 	private String userName;
 	private String password;
-	private RoleType role;
+//	private RoleType role;
 	private String email;
 	private long points; 
 	
@@ -28,10 +29,12 @@ public class User {
 	private List<Cart> carts;
 	
 	public User() { }
+
 	public User(String name, String password, RoleType role, String email, long points) {
+
 		this.userName = name;
 		this.password = password;
-		this.role = role;
+//		this.role = role;
 		this.email = email;
 		this.points = points;
 		this.carts = new ArrayList<Cart>();
@@ -45,10 +48,11 @@ public class User {
 		this.carts = new ArrayList<Cart>();
 	}
 	
-	public User(String userName, String password, RoleType role) {
+	public User(String userName, String password) { //RoleType role
 		super();
 		this.userName = userName;
 		this.password = password;
+
 		this.role = role;
 		this.carts = new ArrayList<Cart>();
 	}
@@ -78,12 +82,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public RoleType getRole() {
-		return role;
-	}
-	public void setRole(RoleType role) {
-		this.role = role;
-	}
+
 	public String getEmail() {
 		return email;
 	}

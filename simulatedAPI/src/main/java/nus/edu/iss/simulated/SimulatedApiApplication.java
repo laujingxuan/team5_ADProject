@@ -9,9 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import nus.edu.iss.simulated.model.AttractionBooking;
+
 import nus.edu.iss.simulated.model.DailyAttractionDetail;
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 import nus.edu.iss.simulated.model.HotelBooking;
+
 import nus.edu.iss.simulated.repository.AttractionBookingRepo;
 import nus.edu.iss.simulated.repository.DailyAttractionDetailRepo;
 import nus.edu.iss.simulated.repository.DailyRoomTypeDetailRepo;
@@ -32,6 +34,12 @@ public class SimulatedApiApplication {
 	@Autowired
 	private DailyAttractionDetailRepo dailyAttractRepo;
 	
+	@Autowired
+	AttractionBookingRepo attractionRepo ;
+	
+	@Autowired
+	DailyAttractionDetailRepo dapRepo;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(SimulatedApiApplication.class, args);
 	}
@@ -40,7 +48,9 @@ public class SimulatedApiApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
+
 			//Single room from 15/1/2021 to 30/1/2021 created
+
 			DailyRoomTypeDetail roomTypeDetail = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 30), 300, 20, 1);
 			roomRepo.save(roomTypeDetail);
 			DailyRoomTypeDetail roomTypeDetail1 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 25), 300, 15, 1);
@@ -49,6 +59,21 @@ public class SimulatedApiApplication {
 			roomRepo.save(roomTypeDetail2);
 			DailyRoomTypeDetail roomTypeDetail3 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 23), 300, 7, 1);
 			roomRepo.save(roomTypeDetail3);
+
+			
+			AttractionBooking attractionbooking1 = new AttractionBooking("birdPark",20,LocalDate.of(2021, 2, 23));
+			attractionRepo.save(attractionbooking1);
+			
+			DailyAttractionDetail dap1 = new DailyAttractionDetail("birdPark",LocalDate.of(2021, 1, 23) , 10);
+			dapRepo.save(dap1);
+			
+			DailyAttractionDetail dap2 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 21) , 10);
+			dapRepo.save(dap2);
+			
+			DailyAttractionDetail dap3 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 22) , 10);
+			dapRepo.save(dap3);
+			
+		
 			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 15), 300, 7, 1));
 			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 16), 300, 7, 1));
 			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 17), 300, 7, 1));
@@ -87,5 +112,6 @@ public class SimulatedApiApplication {
 //			BookingDetails bookDetail1 = new BookingDetails(booking1, attraction1.getProduct(), "1", "23456", 4, 300);
 //			BookingDetails bookDetail2 = new BookingDetails(booking1, attraction1.getProduct(), "2", "23457", 3, 250);
 //			BookingDetails bookDetail3 = new BookingDetails(booking1, attraction1.getProduct(), "3", "23458", 5, 400);
+
 	}
 }
