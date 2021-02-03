@@ -127,7 +127,7 @@ public class Team5AdSpringApplication {
 			Cart cart1 = new Cart(product1, 3, LocalDate.of(2021, 1, 15), customer1);
 			Cart cart2 = new Cart(room1, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 17),2, "No lunch", customer1);
 			Cart cart3 = new Cart(room2, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 20),4, "4 lunch", customer1);
-			Cart cart4 = new Cart(room1, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 16),2, "2 lunch",customer1);
+			Cart cart4 = new Cart(room1, 4, LocalDate.of(2021, 1, 19), LocalDate.of(2021, 1, 23),2, "2 lunch",customer1);
 			cartRepo.save(cart1);
 			cartRepo.save(cart2);
 			cartRepo.save(cart3);

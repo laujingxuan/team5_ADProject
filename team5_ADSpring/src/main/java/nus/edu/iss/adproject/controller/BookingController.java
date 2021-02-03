@@ -92,19 +92,30 @@ public class BookingController {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
 		List<Cart> carts = cartService.retrieveByUserId(user.getId());
-		Booking newBooking = createBooking(carts,user);
-		System.out.println(newBooking);
+		//check through every cart items and ensure sufficient vacancies/tickets
 		for (Cart cart: carts) {
 			if (cart.getProduct().getType()==ProductType.HOTEL) {
 				//check the room availabilities and total prices for room
-				String roomPrice = checkVacanciesAndTotalNightPrice(cart);
-				if (roomPrice == null) {
+				if (checkRoomVacancies(cart) == false) {
 					//not enough rooms
-					model.addAttribute("error", cart.getProduct().getRoomType().getHotel() + " has insufficient" + cart.getProduct().getRoomType().getRoomType() + ". Sorry");
+					model.addAttribute("error", cart.getProduct().getRoomType().getHotel().getName() + " has insufficient " + cart.getProduct().getRoomType().getRoomType() + " room. Sorry");
 					return "error";
 				}
-				//get the total price by multiplying number of nights and number of rooms
-				double beforeDiscountPrice = Double.parseDouble(roomPrice);
+
+			}else {
+				if (checkAttractionQuantityLeft(cart)== false) {
+					//Not enough tickets
+					model.addAttribute("error", cart.getProduct().getAttraction().getName() + " has insufficient tickets. Sorry");
+					return "error";
+				};
+			}
+		}
+		Booking newBooking = createBooking(carts,user);
+		//perform update of quantity and generate the booking details
+		for (Cart cart: carts) {
+			if (cart.getProduct().getType()==ProductType.HOTEL) {
+				//check the total prices for room
+				double beforeDiscountPrice = updateHotelAPIAndGetTotalNightPrice(cart);
 				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
 				//hotel side will be storing before discount price while we store after discount price;
 				HotelBooking hotelBook = new HotelBooking(cart.getProduct().getRoomType().getRoomType(),cart.getQuantity(),cart.getNumGuests(),cart.getRemarks(), beforeDiscountPrice, newBooking.getBookingDate(), cart.getStartDate(), cart.getEndDate());
@@ -114,12 +125,8 @@ public class BookingController {
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice);
 				bookService.saveBookingDetails(newDetail);
 			}else {
-				if (checkAndUpdateAttractionAPIQuantityLeft(cart)==false) {
-					//Not enough tickets
-					model.addAttribute("error", cart.getProduct().getAttraction().getName() + " has insufficient tickets. Sorry");
-					return "error";
-				};
-				//creating booking details in our database and hotel booking in the api
+				updateAttractionAPIQuantityLeft(cart);
+				//creating booking details in our database and attraction booking in the api
 				double beforeDiscountPrice = cart.getProduct().getAttraction().getPrice() * cart.getQuantity();
 				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
 				AttractionBooking attractBook = new AttractionBooking(cart.getProduct().getAttraction().getName(),cart.getQuantity(),cart.getStartDate());
@@ -128,7 +135,6 @@ public class BookingController {
 				AttractionBooking returnBooking = restTemplate.postForObject(uri, attractBook, AttractionBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getQuantity(), afterDiscountPrice);
 				bookService.saveBookingDetails(newDetail);
-				
 			}
 			//remove from cart since alr added into booking
 			cartService.deleteCart(cart);
@@ -136,7 +142,7 @@ public class BookingController {
 		return "redirect:/booking/list";
 	}
 	
-	public boolean checkAndUpdateAttractionAPIQuantityLeft(Cart cart) {
+	public boolean checkAttractionQuantityLeft(Cart cart) {
 		String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking/date";
 		DateTypeQuery query = new DateTypeQuery(cart.getStartDate());
 		RestTemplate restTemplate = new RestTemplate();
@@ -145,6 +151,31 @@ public class BookingController {
 			//not enough tickets
 			return false;
 		}
+		return true;
+	}
+	
+	public boolean checkRoomVacancies(Cart cart) {
+		String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
+	    RestTemplate restTemplate = new RestTemplate();
+	    MultipleDateQuery query = new MultipleDateQuery(cart.getStartDate(), cart.getEndDate(), cart.getProduct().getRoomType().getRoomType());
+	    DailyRoomDetailWrapper result = restTemplate.postForObject( uri, query, DailyRoomDetailWrapper.class);
+    	for (DailyRoomTypeDetail daily: result.getDailyList()) {
+    		//check if there is sufficient rooms
+    		System.out.println(daily.getNumVacancies());
+    		System.out.println(cart.getQuantity());
+    		if (daily.getNumVacancies() < cart.getQuantity()) {
+    			return false;
+    		}
+	    }
+    	return true;
+	}
+	
+	
+	public boolean updateAttractionAPIQuantityLeft(Cart cart) {
+		String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking/date";
+		DateTypeQuery query = new DateTypeQuery(cart.getStartDate());
+		RestTemplate restTemplate = new RestTemplate();
+		DailyAttractionDetail daily = restTemplate.postForObject(uri, query, DailyAttractionDetail.class);
 		daily.setQuantityLeft(daily.getQuantityLeft()-cart.getQuantity());
 		//update the ticket quantity in the attraction API
 		String url = cart.getProduct().getAttraction().getAPI_URL()+ "booking/update";
@@ -152,7 +183,7 @@ public class BookingController {
 		return output;
 	}	
 	
-	public String checkVacanciesAndTotalNightPrice(Cart cart) {
+	public double updateHotelAPIAndGetTotalNightPrice(Cart cart) {
 		String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
 	    RestTemplate restTemplate = new RestTemplate();
 //	    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -161,10 +192,6 @@ public class BookingController {
 	    DailyRoomDetailWrapper result = restTemplate.postForObject( uri, query, DailyRoomDetailWrapper.class);
 	    double total = 0;
     	for (DailyRoomTypeDetail daily: result.getDailyList()) {
-    		//check if there is sufficient rooms
-    		if (daily.getNumVacancies() < cart.getQuantity()) {
-    			return null;
-    		}
     		daily.setNumVacancies(daily.getNumVacancies() - cart.getQuantity());
 	    	total += daily.getDailyPrice()*cart.getQuantity();
 	    }
@@ -172,7 +199,7 @@ public class BookingController {
     	//Update the HotelAPI on the updated quantity of rooms
     	String url = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/update";
     	Boolean check = restTemplate.postForObject(url, result, Boolean.class);
-    	return Double.toString(total);
+    	return total;
 	}
 	
 	public Booking createBooking(List<Cart> carts, User user) {
