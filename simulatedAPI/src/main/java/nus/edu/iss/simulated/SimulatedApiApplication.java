@@ -33,9 +33,7 @@ public class SimulatedApiApplication {
 	
 	@Autowired
 	private DailyAttractionDetailRepo dailyAttractRepo;
-	
-	@Autowired
-	AttractionBookingRepo attractionRepo ;
+
 	
 	@Autowired
 	DailyAttractionDetailRepo dapRepo;

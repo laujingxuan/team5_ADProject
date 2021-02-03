@@ -1,4 +1,4 @@
-package nus.edu.iss.adproject.nonEntityModel;
+package nus.edu.iss.adproject.NonEntityModel;
 
 public class MonthTypeQuery {
 	
@@ -14,13 +14,10 @@ public class MonthTypeQuery {
 	
 	
 
-
 	public MonthTypeQuery(int month) {
 		super();
 		this.month = month;
 	}
-
-
 
 
 	public int getMonth() {

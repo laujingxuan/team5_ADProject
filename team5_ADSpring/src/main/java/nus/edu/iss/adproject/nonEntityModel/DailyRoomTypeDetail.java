@@ -1,4 +1,4 @@
-package nus.edu.iss.adproject.nonEntityModel;
+package nus.edu.iss.adproject.NonEntityModel;
 
 import java.io.Serializable;
 import java.time.LocalDate;

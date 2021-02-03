@@ -65,7 +65,7 @@ public class HotelController {
 	public ResponseEntity<DailyRoomTypeDetailWrapper> findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
 		return new ResponseEntity<DailyRoomTypeDetailWrapper>
 		(new DailyRoomTypeDetailWrapper (dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType())), HttpStatus.OK);
-
+	}
 	@PostMapping("/room/period")
 	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypePeriod(@RequestBody MultipleDateQuery input){
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);

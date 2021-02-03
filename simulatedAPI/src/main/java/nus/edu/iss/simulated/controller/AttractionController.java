@@ -49,10 +49,16 @@ public class AttractionController {
 //	    "attractionName": "birdPark"
 //	}
 	
-	@PostMapping( value = "/booking/date")
+//	@PostMapping( value = "/booking/date")
+//	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
+//		return new ResponseEntity<DailyAttractionDetail>
+//		(dailyAttractionDetailServ.findAttractionDetailByDateAndAttractionName(input.getDate(),input.getAttractionName()),HttpStatus.OK);
+//	}
+	
+	@PostMapping("/booking/date")
 	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
 		return new ResponseEntity<DailyAttractionDetail>
-		(dailyAttractionDetailServ.findAttractionDetailByDateAndAttractionName(input.getDate(),input.getAttractionName()),HttpStatus.OK);
+		(dailyAttractionDetailServ.findAttractionDetailByDate(input.getDate()),HttpStatus.OK);
 	}
 	
 //	{ for month postman request body 
@@ -63,12 +69,8 @@ public class AttractionController {
 	public ResponseEntity<DailyDetailWrapper> findAttractionDetailByMonth(@RequestBody MonthTypeQuery input){
 		return new ResponseEntity<DailyDetailWrapper>
 		(new DailyDetailWrapper(dailyAttractionDetailServ.findAttractionDetailByMonthAndAttractionName(input.getMonth())),HttpStatus.OK);
-
-	@PostMapping("/booking/date")
-	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
-		return new ResponseEntity<DailyAttractionDetail>
-		(dailyAttractionDetailServ.findAttractionDetailByDate(input.getDate()),HttpStatus.OK);
 	}
+
 	
 	@PostMapping("/booking/update")
 	public ResponseEntity<Boolean> updateTicketQuantity(@RequestBody DailyAttractionDetail updated){

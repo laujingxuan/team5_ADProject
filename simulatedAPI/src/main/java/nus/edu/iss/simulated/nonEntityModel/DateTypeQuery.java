@@ -23,7 +23,7 @@ public class DateTypeQuery {
 		this.date = date;
 		this.roomType = roomType;
 		//DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		this.date = LocalDate.parse(date, df);
+		//this.date = LocalDate.parse(date, df);
 	}
 
 	public LocalDate getDate() {
