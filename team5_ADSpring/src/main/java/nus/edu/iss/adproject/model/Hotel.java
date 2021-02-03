@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,6 +38,9 @@ public class Hotel {
     
     @OneToMany(mappedBy = "hotel")
     private List<Discount> discount;
+    
+    @ManyToOne
+    private User user;
 	
 	public Hotel() {
 		super();
@@ -60,7 +64,24 @@ public class Hotel {
 		this.description = description;
 		this.discount = discount;
 	}
+	
+	
 
+
+	public Hotel(String name, String location, double lat, double longi, double rate, int numberOfRestaurants,
+			String country_City, String emenities, String quality, String description) {
+		super();
+		this.name = name;
+		this.location = location;
+		this.lat = lat;
+		this.longi = longi;
+		this.rate = rate;
+		this.numberOfRestaurants = numberOfRestaurants;
+		this.country_City = country_City;
+		this.emenities = emenities;
+		this.quality = quality;
+		this.description = description;
+	}
 
 	public long getId() {
 		return id;
@@ -178,7 +199,11 @@ public class Hotel {
 		this.discount = discount;
 	}
 
-	
-	
-	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}	
 }

@@ -40,4 +40,9 @@ public class AttractionServiceImpl implements AttractionService {
 		
 	}
 
+	@Override
+	public List<Attraction> findByUserId(Long userId) {
+		return attraction_repo.findByUserId(userId);
+	}
+
 }

@@ -1,9 +1,12 @@
 package nus.edu.iss.adproject.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
 
@@ -19,6 +22,12 @@ public class User {
 	private RoleType role;
 	private String email;
 	private long points; 
+	
+	@OneToMany(mappedBy = "user")
+	private List<Attraction> attraction;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Hotel> hotel;
 	
 	public User() { }
 	public User(long id, String name, String password, RoleType role, String email, long points) {
@@ -77,6 +86,21 @@ public class User {
 	}
 	public void setPoints(long points) {
 		this.points = points;
+	}
+	public List<Attraction> getAttraction() {
+		return attraction;
+	}
+	public void setAttraction(List<Attraction> attraction) {
+		this.attraction = attraction;
+	}
+	public List<Hotel> getHotel() {
+		return hotel;
+	}
+	public void setHotel(List<Hotel> hotel) {
+		this.hotel = hotel;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	

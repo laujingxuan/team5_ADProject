@@ -24,8 +24,7 @@ public class DiscountServiceImpl implements DiscountService {
 
 	@Override
 	public Discount findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return discount_repo.findById(id).get();
 	}
 
 	@Override
@@ -36,8 +35,18 @@ public class DiscountServiceImpl implements DiscountService {
 
 	@Override
 	public void delete(Discount x) {
-		// TODO Auto-generated method stub
+		discount_repo.delete(x);
 		
+	}
+
+	@Override
+	public List<Discount> findDiscountByHotelUserId(Long userId) {
+		return discount_repo.findHotelByUserId(userId);
+	}
+
+	@Override
+	public List<Discount> findDiscountByAttractionUserId(Long userId) {
+		return discount_repo.findAttractionByUserId(userId);
 	}
 
 }

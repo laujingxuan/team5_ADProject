@@ -15,7 +15,7 @@
 <body>
 <br/>
 	<h3>Set Discount for <span th:text="${name}"></span></h3><br/>
-	<form action="#" th:object="${discount}" th:action="@{/discount/save}" method="POST">
+	<form action="#" th:object="${discount}" th:action="@{/discount/save}" method="get">
 	
 		<table  class="table table-borderless">
 			<tr>
@@ -23,12 +23,32 @@
 					<input type="hidden" th:field="*{id}">
 				</td>				
 			</tr>
-			<tr>
+			<tr>			
 				<td><label th:text="${name}"></label></td>
-				<td>
-					<select class="form-control" name="id" id="id" th:field="${product}">
-                    	<option th:each="pro : ${product}" th:value="${pro.id}" th:text="${pro.name}"></option>
-                    </select>
+				<td th:if="${not #lists.isEmpty(hotel)}" >
+					<!-- <span th:if="${#lists.size(hotel) == 1} ">
+						<span th:each="hotel : ${hotel}">
+							<span th:text="${hotel.name}" th:field="${hotel}"> Name </span>
+						</span>
+					</span> -->
+					<!-- <span th:unless="${#lists.size(hotel) == 1} "> -->
+						<select class="form-control" name="id" id="id" th:field="*{hotel}">
+                    		<option th:each="hotel : ${hotel}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
+                    	</select>
+					<!-- </span>	 -->				
+			    </td>
+			    <td th:if="${not #lists.isEmpty(attraction)}">
+			    	<!-- <div th:if="${#lists.size(attraction) == 1} ">
+						<span th:each="attraction : ${attraction}">
+							<span th:text="${attraction.name}"> Name </span>
+						</span>
+					</div> -->
+			    	<!-- <div th:unless="${#lists.size(attraction) == 1} "> -->
+						<select class="form-control" name="id" id="id" th:field="*{attraction}">
+	                    	<option th:each="attraction : ${attraction}" th:value="${attraction.id}" th:text="${attraction.name}"></option>
+	                    </select>
+                    <!-- </div> -->
+                    
 			    </td>
 			</tr>
 			<tr>
