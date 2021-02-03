@@ -15,38 +15,10 @@
 <div th:replace="layout/layout.html :: menu" ></div>
 <br/>
 <div class = "container">
-
-		<h3>Sign Up</h3>
-
-	<form action="" th:object="${userForm}" th:action="${path}" method="POST" class="form-horizontal">
-      	<table class="table">	
-			<tr>
-				<td>User Name:</td>
-				<td><input type="text" th:field="*{userName}" value="*{userName}" placeholder="User Name"></td>			
-			</tr>
-			
-			<tr>
-				<td>Email:</td>
-				<td><input type="text" th:field="*{email}" value="*{email}" placeholder="Email"></td>
-				<td></td>
-			</tr>
-			
-			<tr>
-				<td>Password:</td>
-				<td><input type="password" th:field="*{password}" placeholder="Password"></td>
-				<td><div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div></td>
-			</tr>
-			<tr>
-				<td>Confirm Password:</td>
-				<td><input type="password" th:field="*{confPassword}" placeholder="Password"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td colspan="3"><button type="submit" value="Sign Up" class="btn btn-primary">Sign Up</button></td>
-				
-			</tr>
-		</table>
-	</form>
+	<div>
+		<h3>You have signed up successfully!</h3>
+		<h4 style="text-align:center"><a href="@{/user/login}">Click here to login</a></h4>
+	</div>
 </div>
 <div th:replace="layout/layout.html :: footer"></div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

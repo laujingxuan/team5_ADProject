@@ -14,6 +14,8 @@ public class UserForm {
 	@NotNull
     private String userName;
 	@NotNull
+	private String email;
+	@NotNull
 	@Size(min=2,max=30)
 	private String password;
 	@NotNull
@@ -25,10 +27,11 @@ public class UserForm {
 		super();
 	}
 
-	public UserForm(long id, String userName, String password, String confPassword, RoleType role) {
+	public UserForm(long id, String userName, String email,String password, String confPassword, RoleType role) {
 		super();
 		this.id = id;
 		this.userName = userName;
+		this.email=email;
 		this.password = password;
 		this.confPassword = confPassword;
 		this.role = role;
@@ -37,6 +40,7 @@ public class UserForm {
 	public UserForm(User user) {
 		this.id=user.getId();
 		this.userName=user.getUserName();
+		this.email=user.getEmail();
 		this.password=user.getPassword();
 		this.role=user.getRole();
 	}
@@ -53,6 +57,15 @@ public class UserForm {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getPassword() {
 		return password;
 	}

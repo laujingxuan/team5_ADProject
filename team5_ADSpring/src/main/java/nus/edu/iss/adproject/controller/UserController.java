@@ -71,14 +71,13 @@ public class UserController {
 	
 	@PostMapping("/validate")
 	public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
-		model.addAttribute("roleType", RoleType.values());
 		model.addAttribute("path", "/user/validate");
-		if (bindingResult.hasErrors()) {
-			return "editUser";
-		}
+//		if (bindingResult.hasErrors()) {
+//			return "signUpForm";
+//		}
 		User user = new User(userForm);
 		user_svc.save(user);
-		return "redirect:/";
+		return "signup_success";
 	}
 	
 	//only admin can retrieve the list

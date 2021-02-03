@@ -39,6 +39,7 @@ public class User {
 	public User(UserForm userForm) {
 		this.id=userForm.getId();
 		this.userName=userForm.getUserName();
+		this.email = userForm.getEmail();
 		this.password=userForm.getPassword();
 		this.role=userForm.getRole();
 	}
