@@ -6,4 +6,6 @@ public interface HotelBookingService {
 
 	public HotelBooking findBookingById(long Id);
 	public HotelBooking createBooking(HotelBooking hotelBooking);
+	
+
 }

@@ -19,7 +19,12 @@ public interface DailyAttractionDetailRepo extends JpaRepository<DailyAttraction
 	public List<DailyAttractionDetail> findByMonthandAttractionName
 	(@Param("monthNum") int monthNum );
 	
+
 	@Query("SELECT r FROM DailyAttractionDetail r WHERE r.date = :date AND r.name = :attractionName " )
 	public DailyAttractionDetail findbyDateAndAttractionName(@Param("date")LocalDate date ,String attractionName);
+
+	@Query("SELECT r FROM DailyAttractionDetail r WHERE r.date = :date ")
+	public DailyAttractionDetail findbyDate(@Param("date") LocalDate date);
+
 	
 }

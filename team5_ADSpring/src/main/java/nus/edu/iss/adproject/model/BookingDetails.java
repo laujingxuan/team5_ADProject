@@ -19,21 +19,24 @@ public class BookingDetails {
 	@ManyToOne
 	private Product product; 
 	
-	private String hotelBookingId;
+	private String APIBookingId;
 	
-	private String attractionBookingId;
+	private int numOfGuest;
 	
-	private int NumOfGuest;
+	private double price;
 	
-	private int Price;
-	
-	
-
-	public BookingDetails(long id, int numOfGuest, int price) {
+	public BookingDetails() {
 		super();
-		this.id = id;
-		NumOfGuest = numOfGuest;
-		Price = price;
+	}
+
+	public BookingDetails(Booking booking, Product product, String APIBookingId,
+			int numOfGuest, double price) {
+		super();
+		this.booking = booking;
+		this.product = product;
+		this.APIBookingId = APIBookingId;
+		this.numOfGuest = numOfGuest;
+		this.price = price;
 	}
 
 	public long getId() {
@@ -44,23 +47,53 @@ public class BookingDetails {
 		this.id = id;
 	}
 
+	public Booking getBooking() {
+		return booking;
+	}
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+
+	public String getAPIBookingId() {
+		return APIBookingId;
+	}
+
+	public void setAPIBookingId(String aPIBookingId) {
+		APIBookingId = aPIBookingId;
+	}
+
 	public int getNumOfGuest() {
-		return NumOfGuest;
+		return numOfGuest;
 	}
 
 	public void setNumOfGuest(int numOfGuest) {
-		NumOfGuest = numOfGuest;
+		this.numOfGuest = numOfGuest;
 	}
 
-	public int getPrice() {
-		return Price;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setPrice(int price) {
-		Price = price;
+	public void setPrice(double price) {
+		this.price = price;
 	}
-	
-	
-	
 
+	@Override
+	public String toString() {
+		return "BookingDetails [id=" + id + ", booking=" + booking + ", product=" + product + ", APIBookingId="
+				+ APIBookingId + ", numOfGuest=" + numOfGuest + ", price=" + price + "]";
+	}
+
+
+	
 }

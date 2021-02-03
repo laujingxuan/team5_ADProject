@@ -1,33 +1,18 @@
 package nus.edu.iss.simulated.nonEntityModel;
 
 
-
 public class MonthTypeQuery {
 	
 	private int month;
 	private String roomType;
-	private String attractionName;
-	
 
 
+	public MonthTypeQuery(int month, String roomType) {
 
-	public MonthTypeQuery(int month, String roomType, String attractionName) {
 		super();
 		this.month = month;
 		this.roomType = roomType;
-		this.attractionName = attractionName;
 	}
-
-
-	public String getAttractionName() {
-		return attractionName;
-	}
-
-
-	public void setAttractionName(String attractionName) {
-		this.attractionName = attractionName;
-	}
-
 
 	public int getMonth() {
 		return month;

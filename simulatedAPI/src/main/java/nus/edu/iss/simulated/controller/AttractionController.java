@@ -32,24 +32,24 @@ public class AttractionController {
 	private DailyAttractionDetailService dailyAttractionDetailServ;
 	
 	
-	@GetMapping("booking/{id}")
+	@GetMapping("/booking/{id}")
 	public ResponseEntity<AttractionBooking> findbookingById(@PathVariable Long id){
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.findBookingById(id),HttpStatus.OK);
-		
 	}
 	
-	@PostMapping("booking")
+	@PostMapping("/booking")
 	public ResponseEntity<AttractionBooking> newBooking(@RequestBody AttractionBooking attractionBooking){
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.createBooking(attractionBooking),HttpStatus.OK);
 	}
 	
+
 	
 //	{for date postman request body 
 //	    "date" : "23/01/2021",
 //	    "attractionName": "birdPark"
 //	}
 	
-	@PostMapping( value = "/booking/date", consumes = "application/json", produces = "application/json")
+	@PostMapping( value = "/booking/date")
 	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
 		return new ResponseEntity<DailyAttractionDetail>
 		(dailyAttractionDetailServ.findAttractionDetailByDateAndAttractionName(input.getDate(),input.getAttractionName()),HttpStatus.OK);
@@ -59,14 +59,21 @@ public class AttractionController {
 //	    "month" : 1,
 //	    "attractionName": "birdPark"
 //	}
-	@PostMapping(value = "/booking/month", consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/booking/month")
 	public ResponseEntity<DailyDetailWrapper> findAttractionDetailByMonth(@RequestBody MonthTypeQuery input){
 		return new ResponseEntity<DailyDetailWrapper>
 		(new DailyDetailWrapper(dailyAttractionDetailServ.findAttractionDetailByMonthAndAttractionName(input.getMonth())),HttpStatus.OK);
+
+	@PostMapping("/booking/date")
+	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
+		return new ResponseEntity<DailyAttractionDetail>
+		(dailyAttractionDetailServ.findAttractionDetailByDate(input.getDate()),HttpStatus.OK);
 	}
 	
-	
-	
-	
+	@PostMapping("/booking/update")
+	public ResponseEntity<Boolean> updateTicketQuantity(@RequestBody DailyAttractionDetail updated){
+		return new ResponseEntity<Boolean>
+		(dailyAttractionDetailServ.UpdateTicketQuantity(updated),HttpStatus.OK);
+	}
 
 }

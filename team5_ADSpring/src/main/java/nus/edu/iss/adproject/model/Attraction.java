@@ -15,26 +15,50 @@ public class Attraction {
 	private String name;
 	private double price;
 	private String location;
-	private String rating;
+	private double rating;
 	private String description;
 	private String country_city;
+	private String API_URL;
 	
 	@OneToOne
 	private Product product;
 	
 	
-	public Attraction() { }
-	public Attraction(long id, String name, double price, String location, String rating, String description,
-			String country_city) {
+	public Attraction() { }	
+	
+	public Attraction(String name, double price, String location, double rating, String description,
+			String country_city, Product product, String API_URL) {
+		super();
 		this.name = name;
 		this.price = price;
 		this.location = location;
 		this.rating = rating;
 		this.description = description;
 		this.country_city = country_city;
+		this.product = product;
+		this.API_URL = API_URL;
 	}
-	
-	
+
+	public String getAPI_URL() {
+		return API_URL;
+	}
+
+	public void setAPI_URL(String aPI_URL) {
+		API_URL = aPI_URL;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -56,10 +80,10 @@ public class Attraction {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getRating() {
+	public double getRating() {
 		return rating;
 	}
-	public void setRating(String rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
 	public String getDescription() {

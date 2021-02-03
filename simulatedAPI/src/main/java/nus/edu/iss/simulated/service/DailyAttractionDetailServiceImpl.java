@@ -36,8 +36,14 @@ public class  DailyAttractionDetailServiceImpl implements DailyAttractionDetailS
 
 
 	@Override
-	public DailyAttractionDetail findAttractionDetailByDateAndAttractionName
-	(LocalDate date,String attractionName) {
+	public DailyAttractionDetail findAttractionDetailByDate(LocalDate date) {
+		// TODO Auto-generated method stub
+		return dapRepo.findbyDate(date);
+	}
+	
+	
+	@Override
+	public List<DailyAttractionDetail> findAttractionDetailByName(String name) {
 		// TODO Auto-generated method stub
 		return dapRepo.findbyDateAndAttractionName(date,attractionName);
 	}
@@ -49,6 +55,11 @@ public class  DailyAttractionDetailServiceImpl implements DailyAttractionDetailS
 //		return dapRepo.findDailyAttractionDetailByName(attractionName);
 //	}
 
-
+	@Override
+	public Boolean UpdateTicketQuantity(DailyAttractionDetail updated) {
+		dapRepo.save(updated);
+		return true;
+	}
+	
 
 }
