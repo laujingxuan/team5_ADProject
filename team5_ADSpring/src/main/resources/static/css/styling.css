@@ -24,10 +24,9 @@ h1{
 }	
 	
 h3 { 
-	font: italic normal 1.4em georgia, sans-serif;
 	letter-spacing: 1px; 
 	margin-bottom: 0; 
-	color: #7D775C;
+	color:rgb(255, 138, 141);	
 	text-align: center;
 	}
 
@@ -83,4 +82,25 @@ tbody tr:hover td
 
 .alignRight{
 	text-align: right;
+}
+
+.search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  
+.search-container button:hover {
+  background: #ccc;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+  height: 100;
 }
