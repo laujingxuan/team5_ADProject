@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -129,9 +130,6 @@ public class User {
 	}
 	public void setHotel(List<Hotel> hotel) {
 		this.hotel = hotel;
-	}
-	public void setId(long id) {
-		this.id = id;
 	}
 	
 	@Override

@@ -20,7 +20,6 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public void save(Hotel x) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -37,17 +36,6 @@ public class HotelServiceImpl implements HotelService{
 	@Override 
 	public List<Hotel> findAll(){
 		return hotelrepo.findAll();
-	}
-
-		@Override 
-	public List<Hotel> findAll(){
-		return hotelrepo.findAll();
-	}
-
-	@Override
-	public Optional<Hotel> findById(Long id) {
-		// TODO Auto-generated method stub
-		return hotelrepo.findById(id);
 	}
 
 	@Override

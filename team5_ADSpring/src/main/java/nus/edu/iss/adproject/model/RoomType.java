@@ -74,8 +74,5 @@ public class RoomType {
 	}
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
-
-
-	
-	
+	}
 }

@@ -59,18 +59,6 @@ public class Attraction {
 		API_URL = aPI_URL;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public long getId() {
 		return id;
 	}
