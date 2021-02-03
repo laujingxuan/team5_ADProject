@@ -22,6 +22,7 @@ import nus.edu.iss.adproject.nonEntityModel.DailyDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
+import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.repository.ProductRepo;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.HotelService;
@@ -46,10 +47,10 @@ public class ProductController {
 	
 	@GetMapping("/list")
 	public String listProductForm(Model model, @Param("keyword") String keyword) {
-		List<Product> listattractions = pservice.listAllSearchAttractions(keyword);
+		List<Product> listproducts = pservice.listAllSearchAttractions(keyword);
 		List<Product> listhotels = pservice.listAllSearchHotels(keyword);
-		model.addAttribute("product", listattractions);
-		model.addAttribute("product", listhotels);
+		listproducts.addAll(listhotels);
+		model.addAttribute("product", listproducts);
 		model.addAttribute("keyword", keyword); 
 		
 		return "productslist";
@@ -60,7 +61,8 @@ public class ProductController {
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
 		Product product = pservice.findProductById(id);
 		model.addAttribute("product", product);
-		if(product.getType().equals("Attraction")) {
+		System.out.println(product.getType());
+		if(product.getType().equals(ProductType.ATTRACTION)) {
 			Attraction attraction = aservice.findAttractionByProductId(id);
 			model.addAttribute("attraction", attraction);
 			return "attractiondetail";

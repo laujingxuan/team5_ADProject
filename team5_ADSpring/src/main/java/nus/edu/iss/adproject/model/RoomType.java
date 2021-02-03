@@ -73,9 +73,12 @@ public class RoomType {
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
+
 	@Override
 	public String toString() {
-		return "RoomType [id=" + id + ", product=" + product + ", hotel=" + hotel + ", roomType=" + roomType
+		return "RoomType [id=" + id + ", roomType=" + roomType
 				+ ", description=" + description + ", imageURL=" + imageURL + "]";
 	}
+
+	
 }
