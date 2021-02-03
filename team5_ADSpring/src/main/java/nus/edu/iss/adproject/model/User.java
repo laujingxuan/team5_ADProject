@@ -1,6 +1,5 @@
 package nus.edu.iss.adproject.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
-
 
 @Entity
 public class User {
@@ -23,8 +21,16 @@ public class User {
 	private String email;
 	private long points; 
 	
+
 	@OneToMany(mappedBy="user")
 	private List<Cart> carts;
+
+	@OneToMany(mappedBy = "user")
+	private List<Attraction> attraction;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Hotel> hotel;
+
 	
 	public User() { }
 
@@ -111,6 +117,21 @@ public class User {
 	}
 	public void setPoints(long points) {
 		this.points = points;
+	}
+	public List<Attraction> getAttraction() {
+		return attraction;
+	}
+	public void setAttraction(List<Attraction> attraction) {
+		this.attraction = attraction;
+	}
+	public List<Hotel> getHotel() {
+		return hotel;
+	}
+	public void setHotel(List<Hotel> hotel) {
+		this.hotel = hotel;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	@Override

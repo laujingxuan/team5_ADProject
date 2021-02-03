@@ -50,5 +50,11 @@ public class HotelServiceImpl implements HotelService{
 		return hotelrepo.findById(id);
 	}
 
+	@Override
+	public List<Hotel> findByUserId(Long userId) {
+		return hotelrepo.findByUserId(userId);
+	}
+
+	
 }
 
