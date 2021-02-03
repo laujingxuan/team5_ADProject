@@ -1,9 +1,9 @@
 package nus.edu.iss.adproject.nonEntityModel;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class DailyRoomTypeDetail {
-
+public class DailyRoomTypeDetail{
     private long id;
 	
 	private String roomType;
@@ -17,11 +17,9 @@ public class DailyRoomTypeDetail {
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public DailyRoomTypeDetail(long id, String roomType, LocalDate date, double dailyPrice, double numVacancies,
+	public DailyRoomTypeDetail(String roomType, LocalDate date, double dailyPrice, double numVacancies,
 			double numCancellations) {
 		super();
-		this.id = id;
 		this.roomType = roomType;
 		this.date = date;
 		this.dailyPrice = dailyPrice;

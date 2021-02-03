@@ -1,10 +1,6 @@
 package nus.edu.iss.adproject.nonEntityModel;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-
-
 
 public class DailyAttractionDetail {
 
@@ -15,26 +11,18 @@ public class DailyAttractionDetail {
 	private LocalDate date;
 	
 	private int quantityLeft;
-	
-	
-//	//private Map<String,List<String>> data;
-//
+
 	public DailyAttractionDetail() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-	public DailyAttractionDetail(long id, String name, LocalDate date, int quantityLeft) {
+	public DailyAttractionDetail(String name, LocalDate date, int quantityLeft) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.date = date;
 		this.quantityLeft = quantityLeft;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -43,6 +31,7 @@ public class DailyAttractionDetail {
 	public void setId(long id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
@@ -67,12 +56,9 @@ public class DailyAttractionDetail {
 		this.quantityLeft = quantityLeft;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "DailyAttractionDetail [id=" + id + ", name=" + name + ", date=" + date + ", quantityLeft="
-				+ quantityLeft + "]";
+		return "DailyAttractionDetail [id=" + id + ", name=" + name + ", quantityLeft=" + quantityLeft + "]";
 	}
 	
 	

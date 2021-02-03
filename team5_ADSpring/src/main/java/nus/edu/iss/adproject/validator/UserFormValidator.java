@@ -4,7 +4,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import nus.edu.iss.adproject.NonEntityModel.UserForm;
+import nus.edu.iss.adproject.nonEntityModel.UserForm;
+
 
 
 

@@ -1,44 +1,23 @@
 package nus.edu.iss.adproject.nonEntityModel;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import nus.edu.iss.adproject.model.RoomType;
-
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class MonthTypeQuery {
 	
 	private int month;
 	private String roomType;
 	
-	private String AttractionName;
 	
-	public MonthTypeQuery() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	public MonthTypeQuery(int month, String roomType) {
 		super();
 		this.month = month;
 		this.roomType = roomType;
 	}
+	
+	
 
 
 	public MonthTypeQuery(int month) {
 		super();
 		this.month = month;
-	}
-
-
-	public String getAttractionName() {
-		return AttractionName;
-	}
-
-
-
-	public void setAttractionName(String attractionName) {
-		AttractionName = attractionName;
 	}
 
 

@@ -3,50 +3,22 @@ package nus.edu.iss.adproject.nonEntityModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import nus.edu.iss.adproject.model.RoomType;
-
 public class DateTypeQuery {
 
 	private LocalDate date;
-	private RoomType roomType;
+	private String roomType;
 	
-	private String attractionName;
-	
-	public DateTypeQuery() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	
-	
-	public DateTypeQuery(LocalDate date, String attractionName) {
-		super();
-		this.date = date;
-		this.attractionName = attractionName;
-	}
-
-
-
-	public DateTypeQuery(String date, RoomType roomType) {
+	public DateTypeQuery(LocalDate date, String roomType) {
 		super();
 		this.roomType = roomType;
-		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		this.date = LocalDate.parse(date, df);
-	}
-	
-	
-
-	public String getAttractionName() {
-		return attractionName;
+//		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		this.date = date;
 	}
 
-
-
-	public void setAttractionName(String attractionName) {
-		this.attractionName = attractionName;
+	public DateTypeQuery(LocalDate date) {
+		super();
+		this.date = date;
 	}
-
-
 
 	public LocalDate getDate() {
 		return date;
@@ -56,11 +28,11 @@ public class DateTypeQuery {
 		this.date = date;
 	}
 
-	public RoomType getRoomType() {
+	public String getRoomType() {
 		return roomType;
 	}
 
-	public void setRoomType(RoomType roomType) {
+	public void setRoomType(String roomType) {
 		this.roomType = roomType;
 	}
 
