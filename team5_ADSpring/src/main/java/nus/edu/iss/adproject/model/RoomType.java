@@ -18,13 +18,16 @@ public class RoomType {
 	@OneToOne
 	private Product product;
 	
+
 	@ManyToOne
 	private Hotel hotel;
 	
 	private double price;
+
 	private String roomType;
 	private String description;
 	private String imageURL;
+
 
 	public RoomType() { }
 	public RoomType(Product product,Hotel hotel, double price, String roomType, String description, String imageURL) {
@@ -72,6 +75,7 @@ public class RoomType {
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
+
 	public double getPrice() {
 		return price;
 	}
@@ -87,4 +91,5 @@ public class RoomType {
 	}
 	
 	
+
 }

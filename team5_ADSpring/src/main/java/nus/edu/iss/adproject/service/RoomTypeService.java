@@ -9,5 +9,7 @@ public interface RoomTypeService {
 	List<RoomType> findRoomTypesByHotelId(Long id);
 
 	RoomType findById(Long id);
+  
+  	List<RoomType> findAll();
 
 }

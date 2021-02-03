@@ -9,13 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import nus.edu.iss.adproject.nonEntityModel.ProductType;
+
+
 @Entity
 public class Product {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	private String type;
+
+	private ProductType type;
 	
 	@OneToMany(mappedBy = "product" )
 	private List<Discount> discount;
@@ -29,8 +33,16 @@ public class Product {
 	@OneToOne(mappedBy = "product")
 	private RoomType roomType;
 	
+
 	
-	public Product(String type) {
+
+
+	public Product() {
+		super();
+	}
+
+	public Product(ProductType type) {
+
 		super();
 		this.type = type;
 	}
@@ -42,15 +54,29 @@ public class Product {
 		// TODO Auto-generated constructor stub
 	}
 
+	public List<Discount> getDiscount() {
+		return discount;
+	}
+
+	public List<ProductReview> getProductReview() {
+		return productReview;
+	}
+
+	public Attraction getAttraction() {
+		return attraction;
+	}
+
+	public RoomType getRoomType() {
+		return roomType;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
-	public String getType() {
-		return type;
-	}
 
-	public void setType(String type) {
+	public void setType(ProductType type) {
+
 		this.type = type;
 	}
 

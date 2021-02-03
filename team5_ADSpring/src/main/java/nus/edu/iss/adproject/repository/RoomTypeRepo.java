@@ -10,7 +10,13 @@ import nus.edu.iss.adproject.model.RoomType;
 
 public interface RoomTypeRepo extends JpaRepository<RoomType, Long> {
 	
+
 	@Query("Select r From RoomType r where r.hotel.id = :rid")
 	public List<RoomType> findRoomTypesByHotelId(@Param("rid") Long id);
 	
+	
+
+	public List<RoomType> findAll();
+
+
 }

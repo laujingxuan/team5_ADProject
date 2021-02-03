@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="ISO-8859-1">
+<title>Room Detail</title>
+</head>
+<body>
+	<form action="#" data-th-action="@{/list/SimilarRoom}" method="Get">
+		<table class=table>
+			<tr><td>
+			<tr>
+					<button type="submit" name="action" value="Details">Details</button>
+				</tr>
+				<tr>
+					<button type="submit" name="action" value="Room">Room</button>
+				</tr>
+				<tr><button type="submit" name="action" value=Available_Date>Available Date</button></tr>
+				<tr><button type="submit" name="action" value="Position">Position</button>
+				</tr>
+				<tr><button type="submit" name="action" value="Comments">Comments</button>
+				</tr>
+				<tr><button type="submit" name="action" value="Similar_room">Similar
+						Rooms</button></tr>
+	
+			</td>
+			</tr>
+				
+			<!-- <tr>
+				 Similar Room Types
+			</tr> -->
+			<tr th:each="Room:${Rooms}">
+			<!-- <td ><img height="128" th:src="@{/../static/images/theImage.png}+${Room.imageURL}" width="128" /></td> -->
+				<td ><img height="128" th:src="${Room.imageURL}" width="128" /></td>				
+					<td th:text="${Room.htel}">ID</td>					
+					<td th:text="${Room.roomType}">ID</td>
+					<td th:text="${Room.description}">ID</td>
+				 	<!-- <td th:text="${Room.price}">ID</td>  -->
+					<!-- <td><a href="Map.html" th:href="@{/list/Map/}+${hotel.id}">location</a></td> -->							
+			</tr>
+		<!-- 	<tr>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr> -->
+			
+		</table>
+	</form>
+</body>
+</html>

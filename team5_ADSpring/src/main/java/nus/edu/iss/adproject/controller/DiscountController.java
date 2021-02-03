@@ -1,6 +1,9 @@
 package nus.edu.iss.adproject.controller;
 
-import java.util.Iterator;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,10 +17,16 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
+import nus.edu.iss.adproject.model.User;
+import nus.edu.iss.adproject.service.AttractionService;
+import nus.edu.iss.adproject.service.AttractionServiceImpl;
 import nus.edu.iss.adproject.service.DiscountService;
 import nus.edu.iss.adproject.service.DiscountServiceImpl;
 import nus.edu.iss.adproject.service.HotelService;
@@ -34,9 +43,13 @@ public class DiscountController {
 	private HotelService hotel_svc;
 	
 	@Autowired
-	public void SetImplimentation(DiscountServiceImpl disc_impl, HotelServiceImpl hotel_impl) {
+	private AttractionService attraction_svc;
+	
+	@Autowired
+	public void SetImplimentation(DiscountServiceImpl disc_impl, HotelServiceImpl hotel_impl, AttractionServiceImpl attraction_impl) {
 		this.discount_svc = disc_impl;
 		this.hotel_svc = hotel_impl;
+		this.attraction_svc = attraction_impl;
 	}
 	
 	@InitBinder()
@@ -46,21 +59,70 @@ public class DiscountController {
 	
 	@GetMapping("/save")
 	public String saveDiscountForm(@ModelAttribute("discount") @Valid Discount discount, BindingResult bindingResult,
-			Model model) {
-		System.out.println("Save");
+			Model model,HttpSession session)  {
 		discount_svc.save(discount);
 		
-		model.addAttribute("hotel", hotel_svc.findAll());
+		/*
+		 * User user = (User) session.getAttribute("user"); if(user.getRole().toString()
+		 * == "HOTELMANAGER") { model.addAttribute("name", "Hotel");
+		 * model.addAttribute("product", hotel_svc.findAll()); } else
+		 * if(user.getRole().toString() == "ATTRACTIONMANAGER") {
+		 * model.addAttribute("name", "Attraction"); model.addAttribute("product",
+		 * attraction_svc.findAll()); }
+		 * 
+		 * model.addAttribute("discount", new Discount());
+		 */
+		return "forward:/discount/list";
+	}
+	
+	@GetMapping("/discounts")
+	public String viewDiscounts(Model model, HttpSession session) {		
+		User user = (User) session.getAttribute("user");
+		
+		List<Hotel> hotel = hotel_svc.findByUserId(user.getId());
+		List<Attraction> attraction = attraction_svc.findByUserId(user.getId());
+		if(hotel.size()> 0) {
+			model.addAttribute("name", "Hotel");
+			model.addAttribute("hotel", hotel);
+		} else if(attraction.size()>0) {
+			model.addAttribute("name", "Attraction");
+			model.addAttribute("attraction", attraction);
+		}		
 		model.addAttribute("discount", new Discount());
 		return "discountForm";
 	}
 	
-	@GetMapping("/discounts")
-	public String viewDiscounts(Model model, HttpSession session) {
-
-		
-		model.addAttribute("hotel", hotel_svc.findAll());
-		model.addAttribute("discount", new Discount());
+	@GetMapping("/edit/{id}")
+	public String showEditForm(Model model, @PathVariable("id") Long id) {
+		Discount discount = discount_svc.findById(id);
+		if(discount.getHotel()!=null) {
+			model.addAttribute("name", "Hotel");
+			model.addAttribute("hotel", hotel_svc.findByUserId(discount.getHotel().getUser().getId()));
+		} else if(discount.getAttraction()!=null) {
+			model.addAttribute("name", "Attraction");
+			model.addAttribute("attraction", attraction_svc.findByUserId(discount.getAttraction().getUser().getId()));
+		}
+		model.addAttribute("discount", discount_svc.findById(id));
 		return "discountForm";
+	}
+	
+	@GetMapping("/list")
+	public String listDiscountForm(Model model,HttpSession session) {	
+		User user = (User) session.getAttribute("user");
+		List<Discount> hotel_dis = discount_svc.findDiscountByHotelUserId(user.getId());
+		List<Discount> attraction_dis = discount_svc.findDiscountByAttractionUserId(user.getId());
+		if(hotel_dis.size()>0) {
+			model.addAttribute("discounts", hotel_dis);
+		} else if(attraction_dis.size()>0) {
+			model.addAttribute("discounts", attraction_dis);
+		}
+		return "discounts";
+	}
+	
+	@RequestMapping(value = "/delete/{id}")
+	public String deleteSupplier(@PathVariable("id") Long id, HttpSession session) {		
+		
+		discount_svc.delete(discount_svc.findById(id));
+		return "forward:/discount/list";
 	}
 }

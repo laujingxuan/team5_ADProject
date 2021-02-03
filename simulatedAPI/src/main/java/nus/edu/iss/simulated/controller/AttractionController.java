@@ -1,7 +1,5 @@
 package nus.edu.iss.simulated.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import nus.edu.iss.simulated.model.AttractionBooking;
 import nus.edu.iss.simulated.model.DailyAttractionDetail;
+import nus.edu.iss.simulated.model.DailyDetailWrapper;
 import nus.edu.iss.simulated.nonEntityModel.DateTypeQuery;
 import nus.edu.iss.simulated.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.simulated.service.AttractionBookingService;
@@ -33,30 +32,50 @@ public class AttractionController {
 	private DailyAttractionDetailService dailyAttractionDetailServ;
 	
 	
-	@GetMapping("booking/{id}")
+	@GetMapping("/booking/{id}")
 	public ResponseEntity<AttractionBooking> findbookingById(@PathVariable Long id){
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.findBookingById(id),HttpStatus.OK);
-		
 	}
 	
-	@PostMapping("booking")
+	@PostMapping("/booking")
 	public ResponseEntity<AttractionBooking> newBooking(@RequestBody AttractionBooking attractionBooking){
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.createBooking(attractionBooking),HttpStatus.OK);
 	}
 	
-	@GetMapping("/booking/date")
-	public ResponseEntity<List<DailyAttractionDetail>> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
-		return new ResponseEntity<List<DailyAttractionDetail>>
+
+	
+//	{for date postman request body 
+//	    "date" : "23/01/2021",
+//	    "attractionName": "birdPark"
+//	}
+	
+//	@PostMapping( value = "/booking/date")
+//	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
+//		return new ResponseEntity<DailyAttractionDetail>
+//		(dailyAttractionDetailServ.findAttractionDetailByDateAndAttractionName(input.getDate(),input.getAttractionName()),HttpStatus.OK);
+//	}
+	
+	@PostMapping("/booking/date")
+	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
+		return new ResponseEntity<DailyAttractionDetail>
 		(dailyAttractionDetailServ.findAttractionDetailByDate(input.getDate()),HttpStatus.OK);
 	}
-	@GetMapping("/booking/month")
-	public ResponseEntity<List<DailyAttractionDetail>> findAttractionDetailByMonth(@RequestBody MonthTypeQuery input){
-		return new ResponseEntity<List<DailyAttractionDetail>>
-		(dailyAttractionDetailServ.findAttractionDetailByMonth(input.getMonth()),HttpStatus.OK);
+	
+//	{ for month postman request body 
+//	    "month" : 1,
+//	    "attractionName": "birdPark"
+//	}
+	@PostMapping(value = "/booking/month")
+	public ResponseEntity<DailyDetailWrapper> findAttractionDetailByMonth(@RequestBody MonthTypeQuery input){
+		return new ResponseEntity<DailyDetailWrapper>
+		(new DailyDetailWrapper(dailyAttractionDetailServ.findAttractionDetailByMonthAndAttractionName(input.getMonth())),HttpStatus.OK);
 	}
+
 	
-	
-	
-	
+	@PostMapping("/booking/update")
+	public ResponseEntity<Boolean> updateTicketQuantity(@RequestBody DailyAttractionDetail updated){
+		return new ResponseEntity<Boolean>
+		(dailyAttractionDetailServ.UpdateTicketQuantity(updated),HttpStatus.OK);
+	}
 
 }

@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -20,20 +21,23 @@ public class Discount {
 	private Product product;
 	
 	private int discount_rate;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Date from_date;
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Date to_date;	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate from_date;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate to_date;	
 	
 	@ManyToOne
 	private Hotel hotel;
+	
+	@ManyToOne
+	private Attraction attraction;
 	
 	
 	public Discount() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Discount(long id, Product product, int discount_rate, Date from_date, Date to_date) {
+	public Discount(long id, Product product, int discount_rate, LocalDate from_date, LocalDate to_date) {
 		super();
 		this.id = id;
 		this.product = product;
@@ -60,16 +64,16 @@ public class Discount {
 	public void setDiscount_rate(int discount_rate) {
 		this.discount_rate = discount_rate;
 	}
-	public Date getFrom_date() {
+	public LocalDate getFrom_date() {
 		return from_date;
 	}
-	public void setFrom_date(Date from_date) {
+	public void setFrom_date(LocalDate from_date) {
 		this.from_date = from_date;
 	}
-	public Date getTo_date() {
+	public LocalDate getTo_date() {
 		return to_date;
 	}
-	public void setTo_date(Date to_date) {
+	public void setTo_date(LocalDate to_date) {
 		this.to_date = to_date;
 	}	
 	
@@ -79,6 +83,13 @@ public class Discount {
 	}
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
+	}	
+	
+	public Attraction getAttraction() {
+		return attraction;
+	}
+	public void setAttraction(Attraction attraction) {
+		this.attraction = attraction;
 	}
 	@Override
 	public String toString() {

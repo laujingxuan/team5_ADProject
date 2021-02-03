@@ -1,3 +1,4 @@
+
 package nus.edu.iss.adproject.service;
 
 import java.util.List;
@@ -43,5 +44,14 @@ public class AttractionServiceImpl implements AttractionService{
 	public Attraction findAttractionByProductId(Long id) {
 		return arepo.findAttractionByProductId(id);
 	}
+  
+
+	@Override
+	public List<Attraction> findByUserId(Long userId) {
+		return arepo.findByUserId(userId);
+	}
+
 
 }
+
+

@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+import nus.edu.iss.adproject.nonEntityModel.UserForm;
+
 import nus.edu.iss.adproject.model.RoleType;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
@@ -49,7 +52,6 @@ public class UserController {
 		binder.addValidators(userFormValidator);
 	}
 	
-	//only admin can add
 	@GetMapping("/add")
 	public String addUser(Model model, HttpSession session) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
@@ -61,16 +63,24 @@ public class UserController {
 		return "editUser";
 	}
 	
-	@PostMapping("/validate")
-	public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
+	@GetMapping("/signup")
+	public String signUp(Model model, HttpSession session) {
+		
 		model.addAttribute("roleType", RoleType.values());
 		model.addAttribute("path", "/user/validate");
-		if (bindingResult.hasErrors()) {
-			return "editUser";
-		}
+		model.addAttribute("userForm", new UserForm());
+		return "signUpForm";
+	}
+	
+	@PostMapping("/validate")
+	public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
+		model.addAttribute("path", "/user/validate");
+//		if (bindingResult.hasErrors()) {
+//			return "signUpForm";
+//		}
 		User user = new User(userForm);
 		user_svc.save(user);
-		return "redirect:/";
+		return "signup_success";
 	}
 	
 	//only admin can retrieve the list
@@ -151,3 +161,4 @@ public class UserController {
 		return "redirect:/user/users";
 	}
 }
+

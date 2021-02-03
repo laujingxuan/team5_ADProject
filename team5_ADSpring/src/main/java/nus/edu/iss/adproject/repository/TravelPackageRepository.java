@@ -6,4 +6,5 @@ import nus.edu.iss.adproject.model.TravelPackage;
 
 public interface TravelPackageRepository extends JpaRepository<TravelPackage, Long> {
 
+//	public TravelPackage findByNumNightsAndNumAttractions(int numNights, int numAttractions);
 }
