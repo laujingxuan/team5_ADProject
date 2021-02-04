@@ -146,16 +146,16 @@ public class ProductController {
 		return "ProductCreation";
 	}
 	
-	@GetMapping("/save")
-	public String saveProductForm(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
-			Model model) {
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("supplier", hservice.findAll());
-			return "ProductCreation";
-		}
-		RTrepo.save(product);
-		return "forward:/product/listproducts";
-  }
+//	@GetMapping("/save")
+//	public String saveProductForm(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
+//			Model model) {
+//		if (bindingResult.hasErrors()) {
+//			model.addAttribute("supplier", hservice.findAll());
+//			return "ProductCreation";
+//		}
+//		RTrepo.save(product);
+//		return "forward:/product/listproducts";
+//  }
 	
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
