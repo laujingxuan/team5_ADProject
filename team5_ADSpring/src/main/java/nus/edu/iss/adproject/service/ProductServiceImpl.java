@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.repository.ProductRepo;
 
@@ -15,6 +16,7 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	ProductRepo prepo;
+	
 	
 	
 	@Transactional

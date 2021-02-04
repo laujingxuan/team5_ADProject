@@ -35,7 +35,7 @@ public class HotelController {
 	}
 
 
-
+	@GetMapping("/Hotels")
 	public String gethotel(Model model){
 		List<Hotel> hotel=  hotelservice.findAll();
 		System.out.print(hotel);

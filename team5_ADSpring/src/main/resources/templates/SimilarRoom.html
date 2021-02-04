@@ -31,10 +31,11 @@
 			<tr th:each="Room:${Rooms}">
 			<!-- <td ><img height="128" th:src="@{/../static/images/theImage.png}+${Room.imageURL}" width="128" /></td> -->
 				<td ><img height="128" th:src="${Room.imageURL}" width="128" /></td>				
-					<td th:text="${Room.htel}">ID</td>					
+					<td th:text="${Room.Hotel.name}">ID</td>					
 					<td th:text="${Room.roomType}">ID</td>
 					<td th:text="${Room.description}">ID</td>
-				 	<!-- <td th:text="${Room.price}">ID</td>  -->
+				 	<td ><a href="Map.html" th:href="@{/hotel/Map/}+${Room.Hotel.id}" >location</a></td>
+				 	<td ><a href="roomdetail.html" th:href="@{/hotel/roomtypes/detail/}+${Room.id}" >Check Detail</a></td>
 					<!-- <td><a href="Map.html" th:href="@{/list/Map/}+${hotel.id}">location</a></td> -->							
 			</tr>
 		<!-- 	<tr>

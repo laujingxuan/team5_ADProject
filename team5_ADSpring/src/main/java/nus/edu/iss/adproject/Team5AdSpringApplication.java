@@ -143,15 +143,35 @@ public class Team5AdSpringApplication {
 			
 			Product room1 = new Product(ProductType.HOTEL);
 			Product room2 = new Product(ProductType.HOTEL);
+			Product room3 = new Product(ProductType.HOTEL);
+			Product room4 = new Product(ProductType.HOTEL);
+			Product room5 = new Product(ProductType.HOTEL);
 			productRepo.save(room1);
 			productRepo.save(room2);
+			productRepo.save(room3);
+			productRepo.save(room4);
+			productRepo.save(room5);
 			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://localhost:8081/api/hotel/");
+			Hotel hotel2 = new Hotel("Swissôtel The Stamford ",  "Singapore ",1.293354,103.853561 , 260.0, 8,"Sg","aa", "best", "we try to be home","http://localhost:8081/api/hotel/");
+			Hotel hotel3 = new Hotel("Hotel Miramar ", "Singapore",1.288710,103.837372 , 260.0, 8, "SG","aa", "best", "we try to be home","http://localhost:8081/api/hotel/");
 			htRepo.save(hotel1);
-			RoomType singleRoom = new RoomType(room1, hotel1, "SINGLE", "Single bed room", "http:...");
-			RoomType doubleRoom = new RoomType(room2, hotel1, "DOUBLE", "Double bed room", "http:...");
+			htRepo.save(hotel2);
+			htRepo.save(hotel3);
+			RoomType singleRoom = new RoomType(room1, hotel1, "SINGLE", "Single bed room", "https://a36c2e13a78ae1256a2f-1dc878dead8ec78a84e429cdf4c9df00.ssl.cf1.rackcdn.com/responsive/980/a36c2e13a78ae1256a2f-1dc878dead8ec78a84e429cdf4c9df00.ssl.cf1.rackcdn.com/u/park-hotel-hong-kong/room/Superior-Single-Room_mid.jpg");
+			RoomType singleRoom1 = new RoomType(room3, hotel1, "SINGLE", "Single bed room","https://media-cdn.tripadvisor.com/media/photo-s/0e/e5/f5/d2/small-single-room-at.jpg");
+			RoomType singleRoom2 = new RoomType(room4, hotel2, "SINGLE", "Single bed room","https://www.oyster.com/wp-content/uploads/sites/35/2019/05/single-room-v12936474-1440-1024x683.jpg");
+			RoomType singleRoom3 = new RoomType(room5, hotel3, "SINGLE", "Single bed room","https://setupmyhotel.com/images/Room-Type-Single-Room.jpg");
+			RoomType doubleRoom = new RoomType(room2, hotel1, "DOUBLE", "Double bed room", "https://cdn.traveltripper.io/site-assets/512_855_12327/media/2018-02-27-080021/large_ex-double-1.jpg");
+//			RoomType doubleRoom1 = new RoomType(room2, hotel2, "DOUBLE", "Double bed room", "https://www.hotel-solemare.com/photo/diapo1/13/_solemare_hotel_25720180717164604_550xautox75.jpg");
+//			RoomType doubleRoom2 = new RoomType(room2, hotel3, "DOUBLE", "Double bed room", "https://www.pavillon-monceau.com/files/hotel/pavillon-monceau/chambres/chambre_standard_.jpg");
 			roomTypeRepo.save(singleRoom);
+			roomTypeRepo.save(singleRoom1);
+			roomTypeRepo.save(singleRoom2);
+			roomTypeRepo.save(singleRoom3);
 			roomTypeRepo.save(doubleRoom);
-//		    htRepo.save(new Hotel("Swissôtel The Stamford ","Singapore", 1.293354,103.853561, 260.0, 8, "SG","aa", "best", "we try to be home"));
+//			roomTypeRepo.save(doubleRoom1);
+//			roomTypeRepo.save(doubleRoom2);
+////		    htRepo.save(new Hotel("Swissôtel The Stamford ","Singapore", 1.293354,103.853561, 260.0, 8, "SG","aa", "best", "we try to be home"));
 //		    htRepo.save(new Hotel("Hotel Miramar ","Singapore", 1.288710,103.837372, 260.0, 8, "SG","aa", "best", "we try to be home"));
 			
 			Cart cart1 = new Cart(product1, 3, LocalDate.of(2021, 1, 15), customer1);
