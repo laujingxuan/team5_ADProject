@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org/">
-<head><title>Product List</title></head>
+<head><title>Product List</title>
+	<style type="text/css">
+		td{
+   			text-align:center;
+   			vertical-align:middle;
+   			height:50px;
+		}
+	</style>
+</head>
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 	<div th:replace="layout/layout.html :: menu" ></div>
-	<h3>Product List</h3>
-		
-	<table>
+	<h6>&nbsp;</h6>
+	<h3 align="center"><b>Product List</b></h3>
+	<h6>&nbsp;</h6>
+	
+	<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto">
 		<tr>
-			<th>ID</th>
-			<th>Type</th>
-			<th>Detail Link</th>
+			<td><b>ID</b></td>
+			<td><b>Type</b></td>
+			<td><b>Detail Link</b></td>
 		</tr>
 		<tr th:each="product:${product}">
 			<td th:text="${product.id}">ID</td>
