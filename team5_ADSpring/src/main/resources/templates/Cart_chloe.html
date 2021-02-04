@@ -19,6 +19,7 @@
 			<th>Remarks</th>
 			<th>User ID</th>
 			<th>Product ID</th>
+			<th>Delete</th> 
 		</tr>
 		
 		<tr th:each="cartitem:${carts}">
@@ -32,6 +33,7 @@
 			<td th:if="${cartitem.remarks} eq null" >default remarks</td>
 			<td th:text="${cartitem.user.id}">2</td>
 			<td th:text="${cartitem.product.id}">2</td>		
+			<td><a th:href="@{/cart/delete/}+${cartitem.id}">Delete</a></td>
 		</tr>
 	</table>
 

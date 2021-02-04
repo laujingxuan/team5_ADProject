@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.edu.iss.adproject.model.Cart;
@@ -56,8 +57,7 @@ public class CartController {
     public String ListCartItems(Model model){    
     	//long userId = session_svc.getUserId();
     	long userId = 1;
-    	
-        List<Cart> carts = cart_svc.findByUserId(userId);  
+          List<Cart> carts = cart_svc.findByUserId(userId);  
         
         System.out.println(carts.size());
         
@@ -89,7 +89,15 @@ public class CartController {
         cart_svc.delete(item);
 
         return new JSONObject("{'status':'success'}");
-    }*/
+        }
+        */
+    
+	@GetMapping("/delete/{id}")
+	public String deleteMethod(Model model, @PathVariable("id") Long id) {
+		Cart cartitem = cart_svc.findById(id);
+		cart_svc.delete(cartitem);
+		return "forward:/cart/list";
+	}
 
     /*
     [HttpPost] 
