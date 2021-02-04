@@ -50,9 +50,6 @@ public class BookingController {
 	private CartService cartService;
 	
 	@Autowired
-	private RestTemplate restTemplate;
-	
-	@Autowired
 	private TravelPackageService travelPacService;
 	
 	@GetMapping("/list")
@@ -63,6 +60,7 @@ public class BookingController {
 		return "bookingList";
 	}
 	
+	//show Booking History
 	@GetMapping("/{id}")
 	public String showBookingDetails(@PathVariable("id") Long id, HttpSession session, Model model) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
@@ -88,7 +86,8 @@ public class BookingController {
 		return "bookingDetails";
 	}
 	
-	//need to change to post mapping
+	//need to change to post mapping	
+	//Show Booking Details
 	@GetMapping("/makeBook")
 	public String makeBooking(HttpSession session, Model model) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
@@ -112,26 +111,22 @@ public class BookingController {
 				};
 			}
 		}
-		System.out.println(1);
 		Booking newBooking = createBooking(carts,user);
 		//perform update of quantity and generate the booking details
 		for (Cart cart: carts) {
 			if (cart.getProduct().getType()==ProductType.HOTEL) {
-				System.out.println("Hotel");
 				//check the total prices for room
 				double beforeDiscountPrice = updateHotelAPIAndGetTotalNightPrice(cart);
 				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
-				//hotel side will be storing before discount price while we store after discount price;
+				//hotel side will be storing before package discount price while our side storing after package discount price;
 				HotelBooking hotelBook = new HotelBooking(cart.getProduct().getRoomType().getRoomType(),cart.getQuantity(),cart.getNumGuests(),cart.getRemarks(), beforeDiscountPrice, newBooking.getBookingDate(), cart.getStartDate(), cart.getEndDate());
 				final String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL() + "booking";
 				RestTemplate restTemplate = new RestTemplate();
 				HotelBooking returnBooking = restTemplate.postForObject( uri, hotelBook, HotelBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice);
 				bookService.saveBookingDetails(newDetail);
-				System.out.println(2);
 			}else {
 				//creating booking details in our database and attraction booking in the api
-				System.out.println("Attraction");
 				double beforeDiscountPrice = updateAttractionAPIQuantityLeftAndGetTotalPrice(cart);
 				double afterDiscountPrice = beforeDiscountPrice * (100-newBooking.getTravelPackageDiscount()) / 100;
 				AttractionBooking attractBook = new AttractionBooking(cart.getProduct().getAttraction().getName(),cart.getQuantity(),cart.getStartDate());
@@ -140,7 +135,6 @@ public class BookingController {
 				AttractionBooking returnBooking = restTemplate.postForObject(uri, attractBook, AttractionBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getQuantity(), afterDiscountPrice);
 				bookService.saveBookingDetails(newDetail);
-				System.out.println(3);
 			}
 			//remove from cart since alr added into booking
 			cartService.deleteCart(cart);

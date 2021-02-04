@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import nus.edu.iss.simulated.model.DailyAttractionDetail;
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
-import nus.edu.iss.simulated.model.DailyRoomTypeDetailWrapper;
 import nus.edu.iss.simulated.model.HotelBooking;
 import nus.edu.iss.simulated.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.simulated.nonEntityModel.DateTypeQuery;
@@ -46,26 +44,16 @@ public class HotelController {
 		return new ResponseEntity<HotelBooking>(hotelBookSer.createBooking(hotelBooking), HttpStatus.OK);
 	}
 	
-	//findRoomDetailsByType&Date (Retrieve successfully)
-//	{
-//		"roomType": "SINGLE",
-//	    "date": "30/01/2021"
-//	}
 	@PostMapping("/room/date")
 	public ResponseEntity<DailyRoomTypeDetail>findRoomDetailsByTypeDate(@RequestBody DateTypeQuery input){
 		return new ResponseEntity<DailyRoomTypeDetail>(dailyRoomSer.findRoomDetailByDateAndType(input.getDate(), input.getRoomType()), HttpStatus.OK);
 	}
-	
-	//findRoomDetailsByType&Month (Retrieve successfully)
-//	{
-//		"roomType": "SINGLE",
-//	    "month": 1
-//	}
+
 	
 	@PostMapping("/room/month")
-	public ResponseEntity<DailyRoomTypeDetailWrapper> findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
-		return new ResponseEntity<DailyRoomTypeDetailWrapper>
-		(new DailyRoomTypeDetailWrapper (dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType())), HttpStatus.OK);
+	public ResponseEntity<DailyRoomDetailWrapper> findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
+		return new ResponseEntity<DailyRoomDetailWrapper>
+		(new DailyRoomDetailWrapper (dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType())), HttpStatus.OK);
 	}
 	
 	@PostMapping("/room/period")
