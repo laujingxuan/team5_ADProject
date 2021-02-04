@@ -13,4 +13,7 @@ public interface SessionService {
 	public boolean isNotLoggedIn(HttpSession session);
 	public boolean hasNoPermission(HttpSession session);
 	public boolean hasPermission(HttpSession session);
+	
+	public long getUserId();
+	public User getUser();
 }
