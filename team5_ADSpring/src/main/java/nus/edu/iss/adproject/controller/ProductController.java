@@ -43,29 +43,10 @@ public class ProductController {
 	private ProductService pservice;
 	
 	@Autowired
-	private ProductRepo prepo;
-	
-	@Autowired
 	private AttractionService aservice;
 	
 	@Autowired
-	private HotelService hservice;
-	
-	@Autowired
-	private RoomTypeRepo RTrepo;
-	
-	
-	@GetMapping("/list")
-	public String listProductForm(Model model, @Param("keyword") String keyword) {
-		List<Product> listproducts = pservice.listAllSearchAttractions(keyword);
-		List<Product> listhotels = pservice.listAllSearchHotels(keyword);
-		listproducts.addAll(listhotels);
-		model.addAttribute("product", listproducts);
-		model.addAttribute("keyword", keyword); 
-		
-		return "productslist";
-	}
-	
+	private HotelService hservice;	
 	
 	@GetMapping("/detail/{id}")
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
@@ -82,8 +63,6 @@ public class ProductController {
 			return "hoteldetail";
 		}
 	}
-  
-  	@Autowired ProductRepo pRepo;
 	
 	@RequestMapping(value = "/available-date")
 	public String getAttractionAvailibleDate(Model model)  {

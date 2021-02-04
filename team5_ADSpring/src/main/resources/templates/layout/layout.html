@@ -55,10 +55,15 @@
                         <div class="advanced-search">
                             <button type="button" class="category-btn">Search</button>
                             <div class="input-group">
-                                <form action="" th:action="@{/}" method="POST" class="form-horizontal">
-									<input type="text" placeholder="What do you need?">
-									<button type="submit"><i class="ti-search"></i></button>
-                                </form>
+								<form th:action="@{/}" class="search">
+							   		<input type="text" name="keyword" id="keyword" th:value="${keyword}"/>
+							    		<button type="submit"><i class="ti-search"></i></button>
+<!-- 							    		<input type="button" value="Clear" id="btnClear" onclick="clearSearch()" /> -->
+								</form>                            
+<!--                                 <form action="" th:action="@{/}" method="POST" class="form-horizontal"> -->
+<!-- 									<input type="text" placeholder="What do you need?"> -->
+									
+<!--                                 </form> -->
                             </div>
                         </div>
                     </div>

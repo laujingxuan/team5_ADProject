@@ -89,14 +89,14 @@ public class Team5AdSpringApplication {
 //	            .build();
 //	}
 	
-	@Configuration
-	public class DefaultViewConfig implements WebMvcConfigurer {
-	    @Override
-	    public void addViewControllers(ViewControllerRegistry registry) {
-	        registry.addViewController("/").setViewName("/productslist.html");
-	        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-	    }
-	}
+//	@Configuration
+//	public class DefaultViewConfig implements WebMvcConfigurer {
+//	    @Override
+//	    public void addViewControllers(ViewControllerRegistry registry) {
+//	        registry.addViewController("/").setViewName("/productslist.html");
+//	        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//	    }
+//	}
 	
 
 	//Only run during the first time for data insertion
