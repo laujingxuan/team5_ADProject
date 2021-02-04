@@ -1,7 +1,8 @@
-package nus.edu.iss.simulated.model;
+package nus.edu.iss.simulated.nonEntityModel;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import nus.edu.iss.simulated.model.DailyAttractionDetail;
 
 public class DailyDetailWrapper {
 	private List<DailyAttractionDetail> dailyDetails;

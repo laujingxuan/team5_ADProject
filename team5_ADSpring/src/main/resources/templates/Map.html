@@ -1,13 +1,9 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-
-<title>Map</title>
-
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><title>Location</title></head>
+<head th:insert="layout/layout.html :: veryTop"></head>
 <body>
+<div th:replace="layout/layout.html :: menu" ></div>
 	<h3>My Google Maps Location for Hotel</h3>
 	<!--The div element for the map -->
 	<div id="map"></div>
@@ -21,6 +17,8 @@
 	</table>
 	<input type="hidden" th:value="${hotels.lat}" name="lagid" />
 	<input type="hidden" th:value="${hotels.longi}" name="longid" />
+<div th:replace="layout/layout.html :: footer"></div>
+<div th:replace="layout/layout.html :: javascript"></div>
 </body>
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpxdpcFNzbG8ax4DS3VS2dDs4oKZnTmXg&callback=initMap&libraries=&v=weekly"

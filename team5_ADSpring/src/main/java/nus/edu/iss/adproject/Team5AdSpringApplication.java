@@ -1,30 +1,18 @@
 package nus.edu.iss.adproject;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.time.Duration;
 import java.time.LocalDate;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import nus.edu.iss.adproject.model.Attraction;
-import nus.edu.iss.adproject.model.Hotel;
-import nus.edu.iss.adproject.model.Product;
-import nus.edu.iss.adproject.model.RoomType;
-import nus.edu.iss.adproject.model.TravelPackage;
-import nus.edu.iss.adproject.repository.AttractionRepository;
-import nus.edu.iss.adproject.repository.HotelRepository;
-import nus.edu.iss.adproject.repository.ProductRepo;
-import nus.edu.iss.adproject.repository.RoomTypeRepo;
-
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Cart;
@@ -42,14 +30,8 @@ import nus.edu.iss.adproject.repository.CartRepository;
 import nus.edu.iss.adproject.repository.HotelRepository;
 import nus.edu.iss.adproject.repository.ProductRepo;
 import nus.edu.iss.adproject.repository.RoomTypeRepo;
-import nus.edu.iss.adproject.model.RoomType;
-import nus.edu.iss.adproject.model.TravelPackage;
-import nus.edu.iss.adproject.repository.AttractionRepository;
-
 import nus.edu.iss.adproject.repository.TravelPackageRepository;
 import nus.edu.iss.adproject.repository.UserRepository;
-
-
 
 @SpringBootApplication
 public class Team5AdSpringApplication {
@@ -58,7 +40,6 @@ public class Team5AdSpringApplication {
 	private TravelPackageRepository tpRepo;
 	
 	@Autowired
-
 	private HotelRepository hrepo;
 	
 	@Autowired
@@ -98,15 +79,25 @@ public class Team5AdSpringApplication {
 		SpringApplication.run(Team5AdSpringApplication.class, args);
 	}
 	
-	//https://howtodoinjava.com/spring-boot2/resttemplate/spring-restful-client-resttemplate-example/
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-	 
-	    return builder
-	            .setConnectTimeout(Duration.ofMillis(3000))
-	            .setReadTimeout(Duration.ofMillis(3000))
-	            .build();
+//	//https://howtodoinjava.com/spring-boot2/resttemplate/spring-restful-client-resttemplate-example/
+//	@Bean
+//	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+//	 
+//	    return builder
+//	            .setConnectTimeout(Duration.ofMillis(3000))
+//	            .setReadTimeout(Duration.ofMillis(3000))
+//	            .build();
+//	}
+	
+	@Configuration
+	public class DefaultViewConfig implements WebMvcConfigurer {
+	    @Override
+	    public void addViewControllers(ViewControllerRegistry registry) {
+	        registry.addViewController("/").setViewName("/productslist.html");
+	        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+	    }
 	}
+	
 
 	//Only run during the first time for data insertion
 	@Bean

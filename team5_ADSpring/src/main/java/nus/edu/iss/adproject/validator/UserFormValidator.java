@@ -17,7 +17,6 @@ public class UserFormValidator implements Validator {
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		System.out.println("test");
 		UserForm u = (UserForm) target;
 		String password = u.getPassword();
 		String numRegex   = ".*[0-9].*";

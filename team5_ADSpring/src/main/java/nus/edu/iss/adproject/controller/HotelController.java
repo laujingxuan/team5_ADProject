@@ -29,19 +29,13 @@ public class HotelController {
 	@Autowired
 	private RoomTypeService rservice;
 	
-	@GetMapping("/list")
-	public String viewUser(Model model, HttpSession session) {
-		return "discountForm";
-	}
 
-
-
-	public String gethotel(Model model){
-		List<Hotel> hotel=  hotelservice.findAll();
-		System.out.print(hotel);
-		model.addAttribute("Hotels",hotel);
-		 return "Hotel";
-	}
+//	public String gethotel(Model model){
+//		List<Hotel> hotel=  hotelservice.findAll();
+//		System.out.print(hotel);
+//		model.addAttribute("Hotels",hotel);
+//		 return "Hotel";
+//	}
 
 	
 	@GetMapping("/Map/{id}")

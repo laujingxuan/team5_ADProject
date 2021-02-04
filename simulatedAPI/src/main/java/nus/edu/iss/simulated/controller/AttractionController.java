@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import nus.edu.iss.simulated.model.AttractionBooking;
 import nus.edu.iss.simulated.model.DailyAttractionDetail;
-import nus.edu.iss.simulated.model.DailyDetailWrapper;
+import nus.edu.iss.simulated.nonEntityModel.DailyDetailWrapper;
 import nus.edu.iss.simulated.nonEntityModel.DateTypeQuery;
 import nus.edu.iss.simulated.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.simulated.service.AttractionBookingService;

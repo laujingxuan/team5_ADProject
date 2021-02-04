@@ -19,7 +19,6 @@ public class UserForm {
 	private String password;
 	@NotNull
 	private String confPassword;
-	@NotNull
 	private RoleType role;
 
 	public UserForm() {
@@ -82,5 +81,11 @@ public class UserForm {
 	}
 	public void setRole(RoleType role) {
 		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "UserForm [id=" + id + ", userName=" + userName + ", email=" + email + ", password=" + password
+				+ ", confPassword=" + confPassword + ", role=" + role + "]";
 	}
 }
