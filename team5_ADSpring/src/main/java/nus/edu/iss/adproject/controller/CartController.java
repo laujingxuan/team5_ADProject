@@ -54,11 +54,20 @@ public class CartController {
 
     @GetMapping("/list")
     public String ListCartItems(Model model){    
-    	long userId = session_svc.getUserId();
+    	//long userId = session_svc.getUserId();
+    	long userId = 1;
     	
-        List<Cart> carts = cart_svc.findByUserId(userId);      
+        List<Cart> carts = cart_svc.findByUserId(userId);  
+        
+        System.out.println(carts.size());
+        
+        for (Cart c : carts) {
+        	System.out.println(c);
+        	System.out.println(c.toString());
+        }
+        	
         model.addAttribute("carts", carts);
-        return "Cart";
+        return "Cart_chloe";
     }
 
     /*
