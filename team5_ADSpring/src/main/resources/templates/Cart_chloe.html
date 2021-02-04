@@ -17,7 +17,10 @@
 			<th>Start Date</th>		
 			<th>End Date</th>
 			<th>Remarks</th>
+			<th>User ID</th>
+			<th>Product ID</th>
 		</tr>
+		
 		<tr th:each="cartitem:${carts}">
 			<td th:text="${cartitem.id}">1</td>
 			<td th:text="${cartitem.numGuests}">single</td>
@@ -27,6 +30,8 @@
 			<td th:if="${cartitem.endDate} eq null" >default end date</td>
 			<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
 			<td th:if="${cartitem.remarks} eq null" >default remarks</td>
+			<td th:text="${cartitem.user.id}">2</td>
+			<td th:text="${cartitem.product.id}">2</td>		
 		</tr>
 	</table>
 
