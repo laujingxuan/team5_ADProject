@@ -34,11 +34,12 @@ public class HotelController {
 		return "discountForm";
 	}
 
-	@GetMapping("/Hotel")
-	public String gethotel(Model model) {
-		List<Hotel> hotel = hotelservice.findAll();
-		model.addAttribute("Hotels", hotel);
-		return "Hotel";
+	@GetMapping("/Hotels")
+	public String gethotel(Model model){
+		List<Hotel> hotel=  hotelservice.findAll();
+		System.out.print(hotel);
+		model.addAttribute("Hotels",hotel);
+		 return "Hotel";
 	}
 
 

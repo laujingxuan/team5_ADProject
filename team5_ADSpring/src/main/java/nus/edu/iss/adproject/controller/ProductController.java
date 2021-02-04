@@ -21,6 +21,7 @@ import org.springframework.web.client.RestTemplate;
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
+import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.nonEntityModel.DailyAttractionDetail;
 import nus.edu.iss.adproject.nonEntityModel.DailyDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
@@ -28,9 +29,11 @@ import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.repository.ProductRepo;
+import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.ProductService;
+
 
 @Controller
 @RequestMapping("/product")
@@ -47,6 +50,9 @@ public class ProductController {
 	
 	@Autowired
 	private HotelService hservice;
+	
+	@Autowired
+	private RoomTypeRepo RTrepo;
 	
 	
 	@GetMapping("/list")
@@ -130,6 +136,26 @@ public class ProductController {
 		
 		return "hotel-roomType-availble-date";
 	}
+
+	@GetMapping("/create")
+	public String createProduct(Model model)
+	{
+		model.addAttribute("Hotels", hservice.findAll());
+		model.addAttribute("ProductType", ProductType.values());
+		model.addAttribute("product", new RoomType());
+		return "ProductCreation";
+	}
+	
+	@GetMapping("/save")
+	public String saveProductForm(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
+			Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("supplier", hservice.findAll());
+			return "ProductCreation";
+		}
+		RTrepo.save(product);
+		return "forward:/product/listproducts";
+  }
 	
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
@@ -149,6 +175,7 @@ public class ProductController {
 		return "forward:/product/list";
 	}
 }
+
 
 
 

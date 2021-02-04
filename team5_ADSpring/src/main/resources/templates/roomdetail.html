@@ -70,12 +70,16 @@
       <!--  
       <tr>
         <th>Price</th>
-        <td th:text="*{price}">Price</td>
+        <!-- <td th:text="*{price}">Price</td> -->
       </tr>	
       -->
       <tr>
         <th>Description</th>
         <td th:text="*{description}">Description</td>
+      </tr>
+      <tr>
+        <th>Similar Room</th>
+        <td ><a href="SimilarRoom.html" th:href="@{/Room/SimilarRoom/}+${roomtype.roomType}" >Check</a></td>
       </tr>
     </table>
     <div th:replace="layout/layout.html :: footer"></div>
