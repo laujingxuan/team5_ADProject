@@ -138,9 +138,11 @@ public class ProductController {
 	@GetMapping("/save")
 	public String saveProductForm(@ModelAttribute("attraction") @Valid Attraction attraction, BindingResult bindingResult,
 			Model model) {
+		
 		if (bindingResult.hasErrors()) {
-			return "productform";
+			return "product-form";
 		}
+		
 		aservice.save(attraction);
 		return "forward:/product/list";
 	}
