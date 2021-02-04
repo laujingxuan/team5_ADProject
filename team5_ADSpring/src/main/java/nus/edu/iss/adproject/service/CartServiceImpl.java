@@ -63,6 +63,7 @@ public class CartServiceImpl implements CartService {
 
             User user = user_svcimpl.findById(userId);
             //item.setUser(session_svc.getUser());
+            item.setUser(user);
             Product p = product_svcimpl.findProductById(productId);
             item.setProduct(p);
             item.setQuantity(1);
