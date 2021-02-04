@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org/">
-<head>
-<meta charset="ISO-8859-1">
-<title>Room Detail</title>
-</head>
+<head><title>Similar Rooms</title></head>
+<head th:insert="layout/layout.html :: veryTop"></head>
 <body>
+	<div th:replace="layout/layout.html :: menu" ></div>
 	<form action="#" data-th-action="@{/list/SimilarRoom}" method="Get">
 		<table class=table>
 			<tr><td>
@@ -49,5 +48,7 @@
 			
 		</table>
 	</form>
+	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>	
 </body>
 </html>

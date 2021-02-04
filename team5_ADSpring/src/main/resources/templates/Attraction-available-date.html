@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="layout/layout.html :: veryTop"></head>
 <head>
-
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -36,12 +36,11 @@ $(function() {
    });
 });
 </script>
-
-<meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<body>
 
+<body>
+<div th:replace="layout/layout.html :: menu" ></div>
 <h3>select your date and see attraction/hotel Status </h3>
 
 <form action="" th:action="@{/stock/report}" method="POST" class="form-horizontal">
@@ -66,7 +65,8 @@ $(function() {
   </table>
 </form>  
 
-
+<div th:replace="layout/layout.html :: footer"></div>
+<!-- <div th:replace="layout/layout.html :: javascript"></div> -->
 
 </body>
 </body>
