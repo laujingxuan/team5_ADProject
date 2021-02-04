@@ -10,14 +10,14 @@
 	crossorigin="anonymous">
 <script type="text/javascript" th:src="@{/js/layout.js}"></script>
 <link th:href="@{/css/styling.css}" rel="stylesheet">
-<title>Login</title>
+<title>Update Attraction</title>
 </head>
 <body>
 	<header th:insert="layout/layout.html :: header"></header>
 	<div th:replace="layout/layout.html :: menu"></div>
 	<br />
 	<h3>Update Attraction Details</h3>
-	<form action="#" th:object="${product}" th:action="@{/product/save}"
+	<form action="#" th:object="${attraction}" th:action="@{/product/save}"
 		method="get">
 		<table>
 
@@ -38,7 +38,7 @@
 
 			<tr>
 				<td>Country and city</td>
-				<td><input type="text" th:field="*{country_City}"></td>
+				<td><input type="text" th:field="*{country_city}"></td>
 			</tr>
 
 			<tr>

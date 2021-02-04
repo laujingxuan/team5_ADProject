@@ -131,17 +131,17 @@ public class ProductController {
 	
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("product", pservice.findProductById(id));
+		model.addAttribute("attraction", aservice.findById(id));
 		return "product-form";
 	}
 	
 	@GetMapping("/save")
-	public String saveProductForm(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
+	public String saveProductForm(@ModelAttribute("attraction") @Valid Attraction attraction, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
 			return "productform";
 		}
-		prepo.save(product);
+		aservice.save(attraction);
 		return "forward:/product/list";
 	}
 }
