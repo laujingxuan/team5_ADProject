@@ -1,6 +1,7 @@
 package nus.edu.iss.adproject.service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +30,12 @@ public class CartServiceImpl implements CartService {
 //	private BookingService booking_svc;
 	
 	@Autowired
+	private UserServiceImpl user_svcimpl;
+	
+	@Autowired
+	private ProductServiceImpl product_svcimpl;
+	
+	@Autowired
 	private SessionService session_svc;
 	
 	@Override
@@ -44,17 +51,22 @@ public class CartServiceImpl implements CartService {
 		return;
 		
 	}
-
-	public int add(Product p) {
-		long userId = session_svc.getUserId();
-		Cart item = findByUserIdAndProductId(userId, p.getId());
+	
+//	Product product, int quantity, LocalDate startDate,	User use
+	public int add(long productId) {
+		//long userId = session_svc.getUserId();
+		long userId = 1;
+		Cart item = findByUserIdAndProductId(userId, productId);
 		
         if (item == null) {
             item = new Cart();
 
-            item.setUser(session_svc.getUser());
+            User user = user_svcimpl.findById(userId);
+            //item.setUser(session_svc.getUser());
+            Product p = product_svcimpl.findProductById(productId);
             item.setProduct(p);
             item.setQuantity(1);
+            
         } else {
         	item.setQuantity(item.getQuantity() + 1);
         }

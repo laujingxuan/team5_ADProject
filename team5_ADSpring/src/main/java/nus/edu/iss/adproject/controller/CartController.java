@@ -52,6 +52,13 @@ public class CartController {
         
         return new JSONObject("{'status':'success', 'total': total}");
     }*/
+	
+	@GetMapping("/add/{id}")
+	public String AddItemToCart(Model model, @PathVariable("id") Long productId) {
+
+		int total = cart_svc.add(productId);
+		return "forward:/product/list";
+	}
 
     @GetMapping("/list")
     public String ListCartItems(Model model){    

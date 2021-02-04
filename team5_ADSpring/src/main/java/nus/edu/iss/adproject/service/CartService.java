@@ -9,6 +9,7 @@ public interface CartService extends IService<Cart>  {
 	public List<Cart> retrieveByUserId(Long userId);
 	public void deleteCart(Cart cart);
 	
+	public int add(long productId);
 	List<Cart> findByUserId(long userId);
 	Cart findByUserIdAndProductId(long userId, long productId);
 }
