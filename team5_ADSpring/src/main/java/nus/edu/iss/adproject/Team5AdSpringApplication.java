@@ -166,12 +166,6 @@ public class Team5AdSpringApplication {
 	}
 
 }
-//	//Only run during the first time for data insertion
-	/*
-	 * @Bean CommandLineRunner runner() { return args -> { TravelPackage tp1 = new
-	 * TravelPackage(2,3,5); tpRepo.save(tp1); TravelPackage tp2 = new
-	 * TravelPackage(5,3,7); tpRepo.save(tp2); TravelPackage tp3 = new
-	 * TravelPackage(7,3,10); tpRepo.save(tp3); }; }
-	 */
+
 	
 	

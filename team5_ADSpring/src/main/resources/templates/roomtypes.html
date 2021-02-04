@@ -12,14 +12,18 @@
 			<th>ID</th>
 			<th>Picture</th>
 			<th>RoomType</th>
+			<!-- 
 			<th>Price</th>
+			 -->
 			<th>Detail Link</th>
 		</tr>
 		<tr  th:each="roomtype:${roomtype}" >
 			<td th:text="${roomtype.id}">ID</td>
 			<td><img src="${roomtype.imageURL}">Picture</td>
 			<td th:text="${roomtype.roomType}">RoomType</td>
+			<!--
 			<td th:text="${roomtype.price}">Price</td>
+			 -->
 			<td><a href="roomdetail.html" th:href="@{/hotel/roomtypes/detail/}+${roomtype.id}">View Detail</a></td>
 		</tr>
 		
