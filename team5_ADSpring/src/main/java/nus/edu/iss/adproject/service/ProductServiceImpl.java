@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,7 @@ public class ProductServiceImpl implements ProductService {
 	ProductRepo prepo;
 	
 	
+	
 	@Transactional
 	public Product findProductById(Long id) {
 		return prepo.findById(id).get();
@@ -29,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 		if(keyword!=null) {
 			return prepo.search1(keyword);
 		}
-		return prepo.findAll();
+		return new ArrayList<Product>();
 	}
 	
 	@Transactional

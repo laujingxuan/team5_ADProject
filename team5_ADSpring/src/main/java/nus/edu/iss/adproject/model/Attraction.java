@@ -45,7 +45,7 @@ public class Attraction {
 		this.description = description;
 		this.country_city = country_city;
 		this.product = product;
-
+		this.API_URL = API_URL;
 	}
 
 	public Product getProduct() {

@@ -12,4 +12,8 @@ public interface RoomTypeService {
   
   	List<RoomType> findAll();
 
+	List<RoomType> findbyName(String roomT);
+
+	void save(RoomType x);
+
 }

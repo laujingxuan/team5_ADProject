@@ -34,14 +34,14 @@ public class HotelController {
 		return "discountForm";
 	}
 
-
-
+	@GetMapping("/Hotels")
 	public String gethotel(Model model){
 		List<Hotel> hotel=  hotelservice.findAll();
 		System.out.print(hotel);
 		model.addAttribute("Hotels",hotel);
 		 return "Hotel";
 	}
+
 
 	
 	@GetMapping("/Map/{id}")
@@ -89,7 +89,7 @@ public class HotelController {
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
 		model.addAttribute("hotel", hotelservice.findById(id));
-		return "productForm";
+		return "hotel-form";
 	}
 
 	@GetMapping("/save")

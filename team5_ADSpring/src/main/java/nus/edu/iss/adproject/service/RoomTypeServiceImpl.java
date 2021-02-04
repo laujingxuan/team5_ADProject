@@ -18,7 +18,10 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 	@Autowired
 	private RoomTypeRepo rrepo;
 	
-	
+	@Override
+	public void save(RoomType x) {
+		// TODO Auto-generated method stub
+	}
 	@Override
 	public List<RoomType> findRoomTypesByHotelId(Long id) {
 		return rrepo.findRoomTypesByHotelId(id);
@@ -31,5 +34,8 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 	
 	public List<RoomType> findAll(){
 		return rrepo.findAll();
+	}
+	public List<RoomType>  findbyName(String roomT){
+		return rrepo.findbyName(roomT);
 	}
 }

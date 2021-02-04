@@ -39,8 +39,6 @@ public class DailyRoomTypeDetailServiceImp implements DailyRoomTypeDetailService
 		//15th to 16th only one day and only needs to know 15th price
 		while (endD.minusDays(1).isEqual(startD) || endD.minusDays(1).isAfter(startD)) {
 			output.add(findRoomDetailByDateAndType(startD, roomType));
-			System.out.println("startD" + startD);
-			System.out.println("endD" + endD);
 			startD = startD.plusDays(1);
 		}
 		return output;
