@@ -87,9 +87,11 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [id=" + id + ", user=" + user + ", bookingDetails=" + bookingDetails + ", bookingDate="
-				+ bookingDate + ", travelPackageDiscount=" + travelPackageDiscount + "]";
+		return "Booking [user=" + user + ", bookingDetails=" + bookingDetails + ", bookingDate=" + bookingDate
+				+ ", travelPackageDiscount=" + travelPackageDiscount + "]";
 	}
+
+	
 
 	
 }

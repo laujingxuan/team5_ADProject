@@ -42,5 +42,10 @@ public class BookingServiceImp implements BookingService {
 	public BookingDetails saveBookingDetails(BookingDetails bookD) {
 		return bookRepoDet.save(bookD);
 	}
+
+	@Override
+	public List findGuestByMonth() {
+		return bookRepoDet.findGuestByMonth();
+	}
 	
 }

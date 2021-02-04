@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Dashboard</title>
+ <script type="text/javascript" src="/js/Chart.min.js"></script>
+  <script type="text/javascript" src="/js/Chart.js"></script>
+  <link th:href="@{/css/Chart.css}" rel="stylesheet">
+   <link th:href="@{/css/Chart.min.css}" rel="stylesheet">
+ </head>
+<body>
+<div class="container">
+    <div class="row" style="margin-top: 60px">
+
+		<div style="margin: 0 auto">
+	        <div class="chart-container" style="float: left; height:20vh; width:40vw">
+	            <canvas id="myChart"></canvas>
+	        </div>
+	        
+	        <div class="chart-container" style="float: right; height:20vh; width:40vw">	        	
+	            <canvas id="myChart1"></canvas>
+	        </div>
+		</div>
+    </div>
+
+</div>
+
+</body>
+
+       <script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+
+var htmldata = [[${data}]]
+console.log(htmldata);
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: Object.keys(htmldata),
+        datasets: [{
+            label: 'Number of guests',
+            /* data: [12, 19, 3, 5, 2, 3], */
+            data: Object.keys(htmldata).map(function(key) {return htmldata[key];}),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	 title: {
+             display: true,
+             text: 'Monthly Revenue'
+         },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var ctx1 = document.getElementById('myChart1').getContext('2d');
+var myChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: Object.keys(htmldata),
+        datasets: [{
+            label: 'Number of guests',
+            /* data: [12, 19, 3, 5, 2, 3], */
+            data: Object.keys(htmldata).map(function(key) {return htmldata[key];}),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	title: {
+            display: true,
+            text: 'Monthly Guest'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+/*]]>*/
+</script>
+</html>
