@@ -12,6 +12,7 @@ public class DailyAttractionDetail {
 	
 	private int quantityLeft;
 
+	
 	public DailyAttractionDetail() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -23,6 +24,8 @@ public class DailyAttractionDetail {
 		this.date = date;
 		this.quantityLeft = quantityLeft;
 	}
+	
+
 
 	public long getId() {
 		return id;
