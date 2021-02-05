@@ -1,22 +1,22 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>Product Creation</title>
-</head>
+<head><title>Login</title></head>
+<head th:insert="layout/layout.html :: veryTop"></head>
 <body>
-<form action="" th:object="${product}" th:action="@{/product/save}"
+<div th:replace="layout/layout.html :: menu" ></div>
+<form action="" th:object="${room}" th:action="@{/product/saveRoom}"
 		method="get">	
 		<table class="table">
-		 <tr>
+		<!--  <tr>
 				<td>Product Type: </td>
 				<td>
 					<select class="ProductType">
 						<option value = "HOTEL">Hotel</option>
-		                <option value = "ATTRACTION">Attraction</option>		                
+		              	<option value = "ATTRIACTION">Attraction</option>
 			        </select>
 			    </td>
-			  </tr>
+			  </tr> -->
 			<tr>
 				<td>
 					<input type="hidden" th:field="*{id}">
@@ -47,7 +47,11 @@
 				<td>ImageURL:</td>
 				<td><input type="text" th:field="*{imageURL}"></td>
 			</tr>
-			
+			<!-- </tr>
+		
+				<td>ProductId:</td>
+				<td><input type="text" th:text="${newP.id}" th:field="*{product}"></td>
+			</tr> -->
 			<tr>
 			<td>
 			</td>
@@ -58,5 +62,8 @@
 		</table>
 
 	</form>
+<div th:replace="layout/layout.html :: footer"></div>
+<div th:replace="layout/layout.html :: javascript"></div>
 </body>
 </html>
+

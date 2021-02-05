@@ -17,7 +17,9 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductRepo prepo;
 	
-	
+	public void save(Product x) {
+		prepo.save(x);
+	}
 	
 	@Transactional
 	public Product findProductById(Long id) {

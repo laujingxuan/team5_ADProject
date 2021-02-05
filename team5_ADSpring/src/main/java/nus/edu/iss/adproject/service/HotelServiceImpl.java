@@ -20,7 +20,7 @@ public class HotelServiceImpl implements HotelService{
 	
 	@Override
 	public void save(Hotel x) {
-		// TODO Auto-generated method stub
+		hotelrepo.save(x);
 	}
 
 	@Override
