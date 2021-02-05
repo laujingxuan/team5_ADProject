@@ -209,6 +209,7 @@ public class BookingController {
     		daily.setNumVacancies(daily.getNumVacancies() - cart.getQuantity());
     		Hotel hotel = cart.getProduct().getRoomType().getHotel();
     		double discount_rate = 0;
+    		//getting the largest discount rate for that day (The special discount set by the hotel manager)
     		for(int i = 0; i < hotel.getDiscount().size(); i++) {
     			if(daily.getDate().isAfter(hotel.getDiscount().get(i).getFrom_date()) && daily.getDate().isBefore(hotel.getDiscount().get(i).getTo_date())){
     				if(hotel.getDiscount().get(i).getDiscount_rate()>discount_rate) {

@@ -1,10 +1,12 @@
 package nus.edu.iss.adproject.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.adproject.model.Booking;
@@ -41,6 +43,18 @@ public class BookingServiceImp implements BookingService {
 	@Override
 	public BookingDetails saveBookingDetails(BookingDetails bookD) {
 		return bookRepoDet.save(bookD);
+	}
+	
+	@Override
+	public List<Booking> findLatestBookingsByUser(User user){
+		return bookRepo.findFiveLatestBookingsByUserId(user.getId(), PageRequest.of(0, 5));
+	}
+	
+	@Override
+	public List<Booking> findPastOneMonthBookings(){
+		LocalDate todayDate = LocalDate.now();
+		LocalDate oneMonthBefore = todayDate.minusMonths(1);
+		return bookRepo.findByBookingDateBetween(oneMonthBefore, todayDate);
 	}
 	
 }

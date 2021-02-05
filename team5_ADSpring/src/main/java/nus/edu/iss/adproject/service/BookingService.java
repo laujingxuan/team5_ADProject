@@ -15,4 +15,8 @@ public interface BookingService {
 	public Booking saveBooking(Booking booking);
 
 	public BookingDetails saveBookingDetails(BookingDetails bookD);
+
+	public List<Booking> findLatestBookingsByUser(User user);
+
+	public List<Booking> findPastOneMonthBookings();
 }
