@@ -8,12 +8,12 @@
 		<div class = "row">
 			<h3>Booking History</h3>
 		</div>
-		<div th:each="booking:${BookingsList}" class="py-3">
-			<table>
+		<div th:each="booking:${BookingsList}" class="py-3 row">
+			<table class="table">
 				<tr><td th:text=${booking.getBookingDate()}>Date</td></tr>
 				<tr>
-					<td>Amount Paid</td>
-					<td th:text=${booking.getTotalPrice()}>Total</td>
+					<td style="width:30%">Amount Paid</td>
+					<td th:text=${booking.getTotalPrice()} style="width:30%">Total</td>
 				</tr>
 				<tr>
 					<td>Travel Package Discount (%)</td>

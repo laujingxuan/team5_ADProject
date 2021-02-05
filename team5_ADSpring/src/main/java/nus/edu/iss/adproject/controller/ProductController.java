@@ -5,7 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
@@ -46,9 +52,6 @@ public class ProductController {
 	private ProductService pservice;
 	
 	@Autowired
-	private ProductRepo prepo;
-	
-	@Autowired
 	private AttractionService aservice;
 	
 	@Autowired
@@ -71,7 +74,6 @@ public class ProductController {
 		return "productslist";
 	}
 	
-	
 	@GetMapping("/detail/{id}")
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
 		Product product = pservice.findProductById(id);
@@ -88,19 +90,21 @@ public class ProductController {
 		}
 	}
   
-  
-	
-	@RequestMapping(value = "/available-date")
-	public String getAttractionAvailibleDate(Model model)  {
 
-			String attraction1 =  "http://localhost:8081/api/attraction/booking/month";
+	@RequestMapping(value = "/available-date/{id}")
+	public String getAttractionAvailibleDate(Model model,@PathVariable("id")Long id)  {
+			Product p = pservice.findProductById(id);
+			String URL = p.getAttraction().getAPI_URL()+ "booking/month";
+			double price = p.getAttraction().getPrice();
+			//System.out.println(price);
+			//String attraction1 =  "http://localhost:8081/api/attraction/booking/month";
+
 			RestTemplate restTemplate = new RestTemplate();
 			
-			MonthTypeQuery month = new MonthTypeQuery(1);
+			MonthTypeQuery month = new MonthTypeQuery(1);	
 			
-			DailyDetailWrapper result =  restTemplate.postForObject(attraction1, month,DailyDetailWrapper.class);
-			
-			//System.out.println(result.getDailyDetails());
+			DailyDetailWrapper result =  restTemplate.postForObject(URL, month,DailyDetailWrapper.class);
+
 			List<String> dates = new ArrayList<>() ;
 			
 			List<DailyAttractionDetail> list = result.getDailyDetails();
@@ -112,19 +116,24 @@ public class ProductController {
 				}
 			}		
 			System.out.println(dates);		
+			model.addAttribute("price",price);
 			model.addAttribute("dates1", dates);
 		
 		return "Attraction-available-date";
 	}
 	
-	@RequestMapping(value = "/room-available-date")
-	public String gethotelRoomTypeAvailibleDate(Model model)  {
+	@RequestMapping(value = "/room-available-date/{id}")
+	public String gethotelRoomTypeAvailibleDate(Model model,@PathVariable("id")Long id)  {
+		Product p = pservice.findProductById(id);
+		String URL = p.getRoomType().getHotel().getAPI_URL()+"room/month";
+		String RoomType = p.getRoomType().getRoomType();
 		
 		String hotel1 =  "http://localhost:8081/api/hotel/room/month";
 		
 		RestTemplate restTemplate = new RestTemplate();
-		MonthTypeQuery roomtype = new MonthTypeQuery(1,"single");
-		DailyRoomDetailWrapper result =  restTemplate.postForObject(hotel1, roomtype, DailyRoomDetailWrapper.class);
+		MonthTypeQuery roomtype = new MonthTypeQuery(1,RoomType);
+		
+		DailyRoomDetailWrapper result =  restTemplate.postForObject(URL, roomtype, DailyRoomDetailWrapper.class);
 		System.out.println(result.getDailyList());
 		List<String> dates = new ArrayList<>() ;
 		
@@ -138,7 +147,7 @@ public class ProductController {
 		}
 		System.out.println(dates);	
 		model.addAttribute("dates1", dates);
-		
+		model.addAttribute("RoomType",RoomType);
 		return "hotel-roomType-availble-date";
 	}
 
@@ -219,6 +228,7 @@ public class ProductController {
 		aservice.save(attraction);
 		return "forward:/product/list";
 	}
+
 }
 
 
