@@ -124,16 +124,20 @@ function submitdayViaAjax(){
 <h3>select your date and see attraction/hotel Status </h3>
 
 
-<form action="" th:action="@{/stock/report}" method="POST" class="form-horizontal">
-
+<!-- <form action="" th:action="@{/stock/report}" method="POST" class="form-horizontal"> -->
+<form action="" th:object="${cartitem}" th:action="@{/cart/add/}+${cartitem.product.id}" method="get" class="form-horizontal">
+  
+  <input type="hidden" th:field="*{product}"> 
+  <input type="hidden" th:field="*{user}">
+  
   <table class="table py-5" cellspacing="10px" cellpadding="10px">
 	<tr><th colspan="4" class="text-center">select a date</th></tr>
 	<tr>
 		<td class="td_left"><label for="startDate">Start Date :</label></td>
-		<td class="td_right"><input type="text" id="startdate"></td>
+		<td class="td_right"><input type="text" id="startdate" th:field="*{startDate}"></td>
 		
 		<td class = "td_left"> End Date</td>
-		<td class="td_right"><input type="text" id="enddate" onselect = "datediff()"></td>
+		<td class="td_right"><input type="text" id="enddate" onselect = "datediff()" th:field="*{endDate}"></td>
 	</tr>
 	<tr>
 	<td class="td_left"><label for="totalPrice">Total Price :</label></td>
@@ -151,6 +155,7 @@ function submitdayViaAjax(){
 	
 	<tr>
 		<td><input type="submit" value="add to cart" /></td>
+		<!-- <td><a th:href="@{/cart/add/}+${product.id}">add to cart</a></td> -->
 	</tr>
   </table>
 </form>  

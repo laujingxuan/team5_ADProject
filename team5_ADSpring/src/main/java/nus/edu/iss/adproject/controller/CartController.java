@@ -3,14 +3,17 @@ package nus.edu.iss.adproject.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 //import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -54,11 +57,22 @@ public class CartController {
     }*/
 	
 	@GetMapping("/add/{id}")
-	public String AddItemToCart(Model model, @PathVariable("id") Long productId) {
+	public String AddItemToCart(@ModelAttribute("cartitem") @Valid Cart cartitem, BindingResult bindingResult, Model model) {
 
-		int total = cart_svc.add(productId);
+		System.out.println("from page to select room: " + cartitem.getProduct().getId());
+		System.out.println("from page to select room: " + cartitem.getUser().getUserName());
+		System.out.println("from page to select room: " + cartitem.getStartDate());
+		System.out.println("from page to select room: " + cartitem.getEndDate());
+		//int total = cart_svc.add(productId);
 		return "forward:/product/list";
 	}
+	/*
+	@GetMapping("/delete/{id}")
+	public String deleteMethod1(Model model, @PathVariable("id") Long id) {
+		Cart cartitem = cart_svc.findById(id);
+		cart_svc.delete(cartitem);
+		return "forward:/cart/list";
+	}*/
 
     @GetMapping("/list")
     public String ListCartItems(Model model){    

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
+import nus.edu.iss.adproject.model.Cart;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.RoomType;
@@ -33,6 +34,7 @@ import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.ProductService;
 import nus.edu.iss.adproject.service.RoomTypeService;
+import nus.edu.iss.adproject.service.SessionService;
 
 
 @Controller
@@ -56,6 +58,8 @@ public class ProductController {
 	@Autowired
 	private RoomTypeService RTService;
 	
+	@Autowired
+	private SessionService session_svc;
 
 	@GetMapping("/detail/{id}")
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
@@ -131,6 +135,11 @@ public class ProductController {
 		System.out.println(dates);	
 		model.addAttribute("dates1", dates);
 		model.addAttribute("RoomType",RoomType);
+		
+		Cart cartitem = new Cart();
+		cartitem.setProduct(p);
+		cartitem.setUser(session_svc.getUser());
+		model.addAttribute("cartitem", cartitem);
 		return "hotel-roomType-availble-date";
 	}
 
