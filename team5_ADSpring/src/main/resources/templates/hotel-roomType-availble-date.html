@@ -8,17 +8,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script th:inline="javascript" >
-function button(){
-	 var list = /*[[${dates1}]]*/ [];
-	 console.log(typeof list);
-	 console.log(list);
-	 console.log(typeof dates)
-	 console.log(dates)
-}
 
 var list = /*[[${dates1}]]*/ [];
-
-var dates = ["20/01/2021", "21/01/2021", "22/01/2021", "23/01/2021"] ;
 
 function DisableDates(date) {
     var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
@@ -39,7 +30,6 @@ $(function() {
 	   onSelect: function(dateText, inst) { 
 		      var dateAsString = dateText; //the first parameter of this function
 		      startdate = $(this).datepicker( 'getDate' ); //the getDate method
-
 		      firstdate = startdate.getFullYear()+ "-0"+ (startdate.getMonth()+1) + "-" + startdate.getDate() ;
 		      console.log(firstdate);
 		      console.log(startdate.getTime());
@@ -90,6 +80,7 @@ function submitdayViaAjax(){
     $.ajax({
         type : "POST",
         contentType : "application/json",
+        //get API URL from database
         url : "http://localhost:8081/api/hotel/room/period",
         data : JSON.stringify(date),
         dataType : 'json',
@@ -131,7 +122,7 @@ function submitdayViaAjax(){
 </head>
 <body>
 
-<h3>select your date and see attraction/hotel Status </h3>
+<h3>select your date and see hotel room </h3>
 
 <form action="" th:action="@{/stock/report}" method="POST" class="form-horizontal">
 

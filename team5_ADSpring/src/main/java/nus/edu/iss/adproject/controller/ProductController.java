@@ -116,7 +116,7 @@ public class ProductController {
 		String hotel1 =  "http://localhost:8081/api/hotel/room/month";
 		
 		RestTemplate restTemplate = new RestTemplate();
-		MonthTypeQuery roomtype = new MonthTypeQuery(1,"single");
+		MonthTypeQuery roomtype = new MonthTypeQuery(1,RoomType);
 		
 		DailyRoomDetailWrapper result =  restTemplate.postForObject(URL, roomtype, DailyRoomDetailWrapper.class);
 		System.out.println(result.getDailyList());
