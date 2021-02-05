@@ -31,6 +31,13 @@ public class Cart {
 		super();
 	}
 	
+	public Cart(Product product, int quantity,User user) {
+		super();
+		this.product = product;
+		this.quantity = quantity;
+		this.user = user;
+	}
+	
 	public Cart(Product product, int quantity, LocalDate startDate,	User user) {
 		super();
 		this.product = product;

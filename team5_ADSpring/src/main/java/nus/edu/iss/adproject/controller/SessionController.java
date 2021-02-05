@@ -46,7 +46,7 @@ public class SessionController {
 		{
 			User u = usvc.findByUsername(user.getUserName());
 			session.setAttribute("user", u);
-			return "redirect:/booking/list";
+			return "redirect:/";
 		}
 		else
 			return "login";

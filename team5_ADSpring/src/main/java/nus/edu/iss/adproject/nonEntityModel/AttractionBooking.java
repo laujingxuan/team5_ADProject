@@ -25,6 +25,7 @@ public class AttractionBooking implements BookingWrapper {
 		this.quantity = quantity;
 		this.date = date;
 	}
+	
 
 	public long getId() {
 		return id;
