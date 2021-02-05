@@ -1,12 +1,17 @@
 package nus.edu.iss.adproject.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import nus.edu.iss.adproject.nonEntityModel.CartForm;
 
 @Entity
 public class Cart {
@@ -19,7 +24,9 @@ public class Cart {
 	private Product product;
 	
 	private int quantity;
+	
 	private LocalDate startDate;
+	
 	private LocalDate endDate;
 	private int numGuests;
 	private String remarks;
@@ -31,6 +38,22 @@ public class Cart {
 		super();
 	}
 	
+	public Cart(CartForm form) {
+		super();
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		this.startDate = LocalDate.parse(form.getStartDate(), df);
+		this.endDate = LocalDate.parse(form.getEndDate(), df);
+		
+	}
+
+	public Cart(Product product, LocalDate startDate, LocalDate endDate, User user) {
+		super();
+		this.product = product;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.user = user;
+	}
+
 	public Cart(Product product, int quantity,User user) {
 		super();
 		this.product = product;

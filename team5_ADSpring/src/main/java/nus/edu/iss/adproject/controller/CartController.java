@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.edu.iss.adproject.model.Cart;
+import nus.edu.iss.adproject.model.User;
+import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.service.CartService;
 import nus.edu.iss.adproject.service.CartServiceImpl;
 import nus.edu.iss.adproject.service.SessionService;
@@ -56,13 +59,16 @@ public class CartController {
         return new JSONObject("{'status':'success', 'total': total}");
     }*/
 	
-	@GetMapping("/add/{id}")
-	public String AddItemToCart(@ModelAttribute("cartitem") @Valid Cart cartitem, BindingResult bindingResult, Model model) {
-
-		System.out.println("from page to select room: " + cartitem.getProduct().getId());
-		System.out.println("from page to select room: " + cartitem.getUser().getUserName());
-		System.out.println("from page to select room: " + cartitem.getStartDate());
-		System.out.println("from page to select room: " + cartitem.getEndDate());
+	@PostMapping("/add/{id}")
+	public String AddItemToCart(@ModelAttribute("cartitem") @Valid CartForm cartitem, @PathVariable("id") Long productId, BindingResult bindingResult, Model model, HttpSession session) {
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		User user = (User) session.getAttribute("user");
+		System.out.println("productId "+ productId);
+		Cart newCart = new Cart(cartitem);
+		newCart.setUser(user);
+//		System.out.println("from page to select room: " + cartitem.getUser().getUserName());
+		System.out.println("from page to select room: " + newCart.getEndDate());
+		System.out.println("from page to select room: " + newCart.getStartDate());
 		//int total = cart_svc.add(productId);
 		return "forward:/product/list";
 	}

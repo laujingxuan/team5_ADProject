@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
-import nus.edu.iss.adproject.model.Cart;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.RoomType;
+import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.nonEntityModel.DailyAttractionDetail;
 import nus.edu.iss.adproject.nonEntityModel.DailyDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
@@ -136,10 +136,11 @@ public class ProductController {
 		model.addAttribute("dates1", dates);
 		model.addAttribute("RoomType",RoomType);
 		
-		Cart cartitem = new Cart();
-		cartitem.setProduct(p);
-		cartitem.setUser(session_svc.getUser());
-		model.addAttribute("cartitem", cartitem);
+//		Cart cartitem = new Cart();
+//		cartitem.setProduct(p);
+//		cartitem.setUser(session_svc.getUser());
+		model.addAttribute("cartitem", new CartForm());
+		model.addAttribute("productId", id);
 		return "hotel-roomType-availble-date";
 	}
 
