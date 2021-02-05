@@ -167,10 +167,7 @@ public class ProductController {
 	public String createProduct(Model model)
 	{
 		model.addAttribute("Hotels", hservice.findAll());
-		//model.addAttribute("ProductType", ProductType.values());
-		
-		
-		
+		//model.addAttribute("ProductType", ProductType.values());	
 //		
 //		System.out.println("this new product id "+newroom.getId());
 //		model.addAttribute("newP",newroom);
@@ -193,14 +190,14 @@ public class ProductController {
 		pservice.save(newroom);
 		room.setProduct(newroom);
 		RTService.save(room);
-		return "forward:/hotel/roomtypes/1";
+		return "forward:/hotel/roomtypes";
 	}
 	@GetMapping("/delete/room/{id}")
 	public String deleteMethod(Model model, @PathVariable("id") Long id) {
 		RTrepo.deleteById(id);
 //		RoomType Rtype = RTService.findById(id);
 //		RTService.delete(Rtype);
-		return "forward:/hotel/roomtypes/detail/1";
+		return "forward:/hotel/roomtypes";
 	}
 	
 	
