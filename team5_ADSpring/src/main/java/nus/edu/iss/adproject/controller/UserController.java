@@ -1,5 +1,7 @@
 package nus.edu.iss.adproject.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -16,9 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import nus.edu.iss.adproject.nonEntityModel.RoleType;
-import nus.edu.iss.adproject.nonEntityModel.UserForm;
 import nus.edu.iss.adproject.model.User;
+import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
 import nus.edu.iss.adproject.service.SessionService;
 import nus.edu.iss.adproject.service.SessionServiceImpl;
@@ -73,9 +76,28 @@ public class UserController {
 	@PostMapping("/validate")
 	public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
 		model.addAttribute("path", "/user/validate");
-//		if (bindingResult.hasErrors()) {
-//			return "signUpForm";
-//		}
+		userForm.setRole(RoleType.CUSTOMER);
+		System.out.println(userForm);
+		if (bindingResult.hasErrors()) {
+			for (Object object : bindingResult.getAllErrors()) {
+			    if(object instanceof FieldError) {
+			        FieldError fieldError = (FieldError) object;
+
+			        System.out.println(fieldError.getCode());
+			    }
+
+			    if(object instanceof ObjectError) {
+			        ObjectError objectError = (ObjectError) object;
+
+			        System.out.println(objectError.getCode());
+			    }
+			}
+			List<FieldError> errors = bindingResult.getFieldErrors();
+		    for (FieldError error : errors ) {
+		        System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
+		    }
+			return "signUpForm";
+		}
 		User user = new User(userForm);
 		user_svc.save(user);
 		return "signup_success";
