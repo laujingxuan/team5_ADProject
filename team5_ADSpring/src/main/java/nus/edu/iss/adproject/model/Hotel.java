@@ -51,9 +51,10 @@ public class Hotel {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+		
 	public Hotel(String name, String location, double lat, double longi, double rate,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description, String API_URL) {
+			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
+			String aPI_URL, User user) {
 		super();
 		this.roomType = new ArrayList<RoomType>();
 		this.discount = new ArrayList<Discount>();
@@ -67,10 +68,10 @@ public class Hotel {
 		this.emenities = emenities;
 		this.quality = quality;
 		this.description = description;
-		this.API_URL = API_URL;
+		API_URL = aPI_URL;
+		this.user = user;
 	}
-	
-	
+
 	public String getAPI_URL() {
 		return API_URL;
 	}
@@ -169,15 +170,15 @@ public class Hotel {
 
 	public void setUser(User user) {
 		this.user = user;
-	}	
-	
+	}
 
-	
 	@Override
 	public String toString() {
 		return "Hotel [id=" + id + ", roomType=" + roomType + ", name=" + name + ", location=" + location + ", lat="
 				+ lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants=" + numberOfRestaurants
 				+ ", country_City=" + country_City + ", emenities=" + emenities + ", quality=" + quality
-				+ ", description=" + description + ", discount=" + discount + "]";
-	}
+				+ ", description=" + description + ", API_URL=" + API_URL + "]";
+	}	
+	
+
 }
