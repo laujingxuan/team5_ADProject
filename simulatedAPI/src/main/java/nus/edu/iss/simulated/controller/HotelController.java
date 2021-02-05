@@ -44,6 +44,12 @@ public class HotelController {
 		return new ResponseEntity<HotelBooking>(hotelBookSer.createBooking(hotelBooking), HttpStatus.OK);
 	}
 	
+//	{
+//	    "date" : "2021-01-30",
+//	    "roomType" : "single"
+//
+//	}
+	
 	@PostMapping("/room/date")
 	public ResponseEntity<DailyRoomTypeDetail>findRoomDetailsByTypeDate(@RequestBody DateTypeQuery input){
 		return new ResponseEntity<DailyRoomTypeDetail>(dailyRoomSer.findRoomDetailByDateAndType(input.getDate(), input.getRoomType()), HttpStatus.OK);
@@ -52,12 +58,15 @@ public class HotelController {
 	
 	@PostMapping("/room/month")
 	public ResponseEntity<DailyRoomDetailWrapper> findRoomDetailsByTypeMonth(@RequestBody MonthTypeQuery input){
+		System.out.println("Hi");
 		return new ResponseEntity<DailyRoomDetailWrapper>
+		
 		(new DailyRoomDetailWrapper (dailyRoomSer.findRoomDetailsByMonthAndType(input.getMonth(), input.getRoomType())), HttpStatus.OK);
 	}
 	
 	@PostMapping("/room/period")
 	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypePeriod(@RequestBody MultipleDateQuery input){
+		
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);
 
 	}

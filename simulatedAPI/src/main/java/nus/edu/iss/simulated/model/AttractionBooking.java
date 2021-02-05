@@ -19,18 +19,23 @@ public class AttractionBooking {
 	private int quantity;
 	
 	private LocalDate date;
+	
 
 	public AttractionBooking() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
-	public AttractionBooking(String attractionName, int quantity, LocalDate date) {
+	public AttractionBooking(String attractionName, int quantity, LocalDate date, double amountPaid) {
 		super();
 		this.attractionName = attractionName;
 		this.quantity = quantity;
 		this.date = date;
+
 	}
+
 
 	public long getId() {
 		return id;

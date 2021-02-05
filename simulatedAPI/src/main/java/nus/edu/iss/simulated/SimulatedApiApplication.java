@@ -59,16 +59,16 @@ public class SimulatedApiApplication {
 			roomRepo.save(roomTypeDetail3);
 
 			
-			AttractionBooking attractionbooking1 = new AttractionBooking("birdPark",20,LocalDate.of(2021, 2, 23));
+			AttractionBooking attractionbooking1 = new AttractionBooking("birdPark",10,LocalDate.of(2021, 2, 23),50);
 			attractionRepo.save(attractionbooking1);
 			
 			DailyAttractionDetail dap1 = new DailyAttractionDetail("birdPark",LocalDate.of(2021, 1, 23) , 10);
 			dapRepo.save(dap1);
 			
-			DailyAttractionDetail dap2 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 21) , 10);
+			DailyAttractionDetail dap2 = new DailyAttractionDetail("birdPark",LocalDate.of(2021, 1, 21) , 10);
 			dapRepo.save(dap2);
 			
-			DailyAttractionDetail dap3 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 22) , 10);
+			DailyAttractionDetail dap3 = new DailyAttractionDetail("birdPark",LocalDate.of(2021, 1, 22) , 10);
 			dapRepo.save(dap3);
 			
 		
@@ -101,10 +101,10 @@ public class SimulatedApiApplication {
 			HotelBooking booking3 = new HotelBooking("DOUBLE", 2, 4, "4 breakfast", 400, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 4, 15), LocalDate.of(2021, 4, 20));
 			hotelRepo.save(booking3);
 			
-			AttractionBooking attraction1 = new AttractionBooking("Zoo",5,LocalDate.of(2021, 1, 15));
+			AttractionBooking attraction1 = new AttractionBooking("birdPark",5,LocalDate.of(2021, 1, 15),50);
 			attractionRepo.save(attraction1);
 			
-			DailyAttractionDetail attractDetail1 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 15), 50);
+			DailyAttractionDetail attractDetail1 = new DailyAttractionDetail("birdPark",LocalDate.of(2021, 1, 15), 50);
 			dailyAttractRepo.save(attractDetail1);
 		};
 //			BookingDetails bookDetail1 = new BookingDetails(booking1, attraction1.getProduct(), "1", "23456", 4, 300);

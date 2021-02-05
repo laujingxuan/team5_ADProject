@@ -25,12 +25,15 @@ public class DailyAttractionDetail {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	public DailyAttractionDetail(String name, LocalDate date, int quantityLeft) {
 		super();
 		this.name = name;
 		this.date = date;
 		this.quantityLeft = quantityLeft;
 	}
+
+
 
 	public long getId() {
 		return id;
