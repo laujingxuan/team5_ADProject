@@ -12,8 +12,10 @@ public interface RoomTypeService {
   
   	List<RoomType> findAll();
 
-	List<RoomType> findbyName(String roomT);
+//	List<RoomType> findbyHotelId(int hid);
 
 	void save(RoomType x);
+
+	void delete(RoomType rtype);
 
 }

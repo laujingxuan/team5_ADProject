@@ -22,8 +22,8 @@ public interface RoomTypeRepo extends JpaRepository<RoomType, Long> {
 	public List<RoomType> findAll();
 
 
-	@Query("Select r From RoomType r where r.roomType = :rooT")
-	public List<RoomType> findbyName(@Param("rooT")String roomT);
+//	@Query("Select r From RoomType r where r.hotel_id=:Hid")
+//	public List<RoomType> findbyHotelId(@Param("Hid") int hid);
 
 
 

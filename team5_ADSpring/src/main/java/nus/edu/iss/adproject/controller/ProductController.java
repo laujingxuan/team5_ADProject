@@ -5,7 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
@@ -33,11 +39,14 @@ import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.ProductService;
+import nus.edu.iss.adproject.service.RoomTypeService;
 
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+	@Autowired 
+	ProductRepo pRepo;
 	
 	@Autowired
 	private ProductService pservice;
@@ -46,7 +55,24 @@ public class ProductController {
 	private AttractionService aservice;
 	
 	@Autowired
-	private HotelService hservice;	
+	private HotelService hservice;
+	
+	@Autowired
+	private RoomTypeRepo RTrepo;
+	
+	@Autowired
+	private RoomTypeService RTService;
+	
+	@GetMapping("/list")
+	public String listProductForm(Model model, @Param("keyword") String keyword) {
+		List<Product> listproducts = pservice.listAllSearchAttractions(keyword);
+		List<Product> listhotels = pservice.listAllSearchHotels(keyword);
+		listproducts.addAll(listhotels);
+		model.addAttribute("product", listproducts);
+		model.addAttribute("keyword", keyword); 
+		
+		return "productslist";
+	}
 	
 	@GetMapping("/detail/{id}")
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
@@ -63,18 +89,22 @@ public class ProductController {
 			return "hoteldetail";
 		}
 	}
-	
-	@RequestMapping(value = "/available-date")
-	public String getAttractionAvailibleDate(Model model)  {
+  
 
-			String attraction1 =  "http://localhost:8081/api/attraction/booking/month";
+	@RequestMapping(value = "/available-date/{id}")
+	public String getAttractionAvailibleDate(Model model,@PathVariable("id")Long id)  {
+			Product p = pservice.findProductById(id);
+			String URL = p.getAttraction().getAPI_URL()+ "booking/month";
+			double price = p.getAttraction().getPrice();
+			//System.out.println(price);
+			//String attraction1 =  "http://localhost:8081/api/attraction/booking/month";
+
 			RestTemplate restTemplate = new RestTemplate();
 			
-			MonthTypeQuery month = new MonthTypeQuery(1);
+			MonthTypeQuery month = new MonthTypeQuery(1);	
 			
-			DailyDetailWrapper result =  restTemplate.postForObject(attraction1, month,DailyDetailWrapper.class);
-			
-			//System.out.println(result.getDailyDetails());
+			DailyDetailWrapper result =  restTemplate.postForObject(URL, month,DailyDetailWrapper.class);
+
 			List<String> dates = new ArrayList<>() ;
 			
 			List<DailyAttractionDetail> list = result.getDailyDetails();
@@ -86,19 +116,24 @@ public class ProductController {
 				}
 			}		
 			System.out.println(dates);		
+			model.addAttribute("price",price);
 			model.addAttribute("dates1", dates);
 		
 		return "Attraction-available-date";
 	}
 	
-	@RequestMapping(value = "/room-available-date")
-	public String gethotelRoomTypeAvailibleDate(Model model)  {
+	@RequestMapping(value = "/room-available-date/{id}")
+	public String gethotelRoomTypeAvailibleDate(Model model,@PathVariable("id")Long id)  {
+		Product p = pservice.findProductById(id);
+		String URL = p.getRoomType().getHotel().getAPI_URL()+"room/month";
+		String RoomType = p.getRoomType().getRoomType();
 		
 		String hotel1 =  "http://localhost:8081/api/hotel/room/month";
 		
 		RestTemplate restTemplate = new RestTemplate();
-		MonthTypeQuery roomtype = new MonthTypeQuery(1,"single");
-		DailyRoomDetailWrapper result =  restTemplate.postForObject(hotel1, roomtype, DailyRoomDetailWrapper.class);
+		MonthTypeQuery roomtype = new MonthTypeQuery(1,RoomType);
+		
+		DailyRoomDetailWrapper result =  restTemplate.postForObject(URL, roomtype, DailyRoomDetailWrapper.class);
 		System.out.println(result.getDailyList());
 		List<String> dates = new ArrayList<>() ;
 		
@@ -112,29 +147,69 @@ public class ProductController {
 		}
 		System.out.println(dates);	
 		model.addAttribute("dates1", dates);
-		
+		model.addAttribute("RoomType",RoomType);
 		return "hotel-roomType-availble-date";
 	}
 
-	@GetMapping("/create")
+	@GetMapping("/createHotel")
+	public String createHotel(Model model)
+	{
+		model.addAttribute("hotel", new Hotel());
+		return "ProductHotelCreate";
+	}
+	
+	
+	@GetMapping("/saveHotel")
+	public String saveHotel(@ModelAttribute("hotel") @Valid Hotel hotel, BindingResult bindingResult,
+			Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("Hotel", hservice.findAll());
+		
+			return "ProductHotelCreate";
+		}
+		System.out.println("this is hotel object"+hotel);
+		hservice.save(hotel);
+		return "forward:/product/createRoom";
+  }
+	
+	@GetMapping("/createRoom")
 	public String createProduct(Model model)
 	{
 		model.addAttribute("Hotels", hservice.findAll());
-		model.addAttribute("ProductType", ProductType.values());
-		model.addAttribute("product", new RoomType());
+		//model.addAttribute("ProductType", ProductType.values());	
+//		
+//		System.out.println("this new product id "+newroom.getId());
+//		model.addAttribute("newP",newroom);
+		model.addAttribute("room", new RoomType());
 		return "ProductCreation";
 	}
 	
-//	@GetMapping("/save")
-//	public String saveProductForm(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
-//			Model model) {
-//		if (bindingResult.hasErrors()) {
-//			model.addAttribute("supplier", hservice.findAll());
-//			return "ProductCreation";
-//		}
-//		RTrepo.save(product);
-//		return "forward:/product/listproducts";
-//  }
+	@GetMapping("/saveRoom")
+	public String saveRoom(@ModelAttribute("room") @Valid RoomType room, BindingResult bindingResult,
+			Model model)
+	{
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("Hotels", hservice.findAll());
+			//model.addAttribute("ProductType", ProductType.values());
+			model.addAttribute("room", new RoomType());		
+			return "ProductCreation";
+		}
+		System.out.println("this is room object"+room);
+		Product newroom= new Product(ProductType.HOTEL);
+		pservice.save(newroom);
+		room.setProduct(newroom);
+		RTService.save(room);
+		return "forward:/hotel/roomtypes";
+	}
+	@GetMapping("/delete/room/{id}")
+	public String deleteMethod(Model model, @PathVariable("id") Long id) {
+		RTrepo.deleteById(id);
+//		RoomType Rtype = RTService.findById(id);
+//		RTService.delete(Rtype);
+		return "forward:/hotel/roomtypes";
+	}
+	
+	
 	
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {
@@ -153,6 +228,7 @@ public class ProductController {
 		aservice.save(attraction);
 		return "forward:/product/list";
 	}
+
 }
 
 

@@ -1,5 +1,7 @@
 package nus.edu.iss.simulated.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.simulated.model.DailyRoomTypeDetail;
 import nus.edu.iss.simulated.model.HotelBooking;
 import nus.edu.iss.simulated.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.simulated.nonEntityModel.DateTypeQuery;
+import nus.edu.iss.simulated.nonEntityModel.MLearningVar;
 import nus.edu.iss.simulated.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.simulated.nonEntityModel.MultipleDateQuery;
 import nus.edu.iss.simulated.service.DailyRoomTypeDetailService;
@@ -41,7 +45,11 @@ public class HotelController {
 	//createNewHotelBooking
 	@PostMapping("/booking")
 	public ResponseEntity<HotelBooking> newBooking (@RequestBody HotelBooking hotelBooking) {
-		return new ResponseEntity<HotelBooking>(hotelBookSer.createBooking(hotelBooking), HttpStatus.OK);
+		HotelBooking newHotelBooking = hotelBookSer.createBooking(hotelBooking);
+		int isCancelled = predictBookingCancellationRate(newHotelBooking);
+		System.out.println(isCancelled);
+		System.out.println(newHotelBooking);
+		return new ResponseEntity<HotelBooking>(newHotelBooking, HttpStatus.OK);
 	}
 	
 	@PostMapping("/room/date")
@@ -65,10 +73,46 @@ public class HotelController {
 	@PostMapping("/room/update")
 	public ResponseEntity<Boolean> updateVacanciesQuantity(@RequestBody DailyRoomDetailWrapper updated){
 		return new ResponseEntity<Boolean>
-		(dailyRoomSer.UpdateVacanciesQuantity(updated),HttpStatus.OK);
+		(dailyRoomSer.updateVacanciesQuantity(updated),HttpStatus.OK);
 	}
 	
-	//predictBookingCancellationRate
-	//Need to connect to machine learning API
-
+	//EVERY BOOKINGS of the hotel need to pass through this method!
+	public int predictBookingCancellationRate(HotelBooking hotelBooking) {
+		//connect to machine learning api
+		final String uri = "http://127.0.0.1:5000/model";
+		RestTemplate restTemplate = new RestTemplate();
+		MLearningVar mLearning = new MLearningVar(hotelBooking);
+		String isCancelled = restTemplate.postForObject( uri, mLearning, String.class);
+		int isCancel = Integer.parseInt(isCancelled);
+		//1 means predicted to cancel
+		//need to update the database on vacancy and number of cancellations
+		if (isCancel == 1) {
+			for (LocalDate date = hotelBooking.getStartDate(); date.isBefore(hotelBooking.getEndDate()); date = date.plusDays(1)) {
+				DailyRoomTypeDetail temp = dailyRoomSer.findRoomDetailByDateAndType(date, hotelBooking.getRoomType());
+				//increase 0.7*number of booked rooms for vacancy and number of cancellations because only 70% accuracy
+				//(risk-averse) in case predicted cancelled rooms are not cancelled.
+				temp.setNumVacancies(temp.getNumVacancies()+0.7*hotelBooking.getNumRooms());
+				temp.setNumCancellations(temp.getNumCancellations()+0.7*hotelBooking.getNumRooms());
+			}
+		}
+		return isCancel;
+	}
+	
+//	@GetMapping("/")
+//	public ResponseEntity<Boolean> testing(){
+//		predictBookingCancellationRate();
+//		return new ResponseEntity<Boolean>
+//		(true,HttpStatus.OK);
+//	}
+	
+//	public int predictBookingCancellationRate() {
+//		//connect to machine learning api
+//		final String uri = "http://127.0.0.1:5000/model";
+//		RestTemplate restTemplate = new RestTemplate();
+//		MLearningVar mLearning = new MLearningVar(12,9,20,102.81,0);
+//		String isCancelled = restTemplate.postForObject( uri, mLearning, String.class);
+//		System.out.println(isCancelled);
+//
+//		return Integer.parseInt(isCancelled);
+//	}
 }

@@ -93,6 +93,10 @@ public class BookingController {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
 		List<Cart> carts = cartService.retrieveByUserId(user.getId());
+		if (carts.size() == 0) {
+			model.addAttribute("error", "Your cart is empty");
+			return "error";
+		}
 		//check through every cart items and ensure sufficient vacancies/tickets
 		for (Cart cart: carts) {
 			if (cart.getProduct().getType()==ProductType.HOTEL) {
