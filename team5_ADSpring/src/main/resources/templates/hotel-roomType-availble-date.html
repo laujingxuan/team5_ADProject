@@ -25,16 +25,105 @@ function DisableDates(date) {
     return [list.indexOf(string) !== -1];
 }
 
+var startdate;
+var firstdate;
+var lastdate;
 $(function() {
-   $("#date").datepicker({
+   $("#startdate").datepicker({
        changeYear: true,
        changeMonth:true,
        dateFormat: 'mm/dd/yy',
        minDate: new Date('01/01/1900'),
        maxDate: '+1Y',
-       beforeShowDay: DisableDates
+       beforeShowDay: DisableDates,
+	   onSelect: function(dateText, inst) { 
+		      var dateAsString = dateText; //the first parameter of this function
+		      startdate = $(this).datepicker( 'getDate' ); //the getDate method
+
+		      firstdate = startdate.getFullYear()+ "-0"+ (startdate.getMonth()+1) + "-" + startdate.getDate() ;
+		      console.log(firstdate);
+		      console.log(startdate.getTime());
+		   }
    });
 });
+
+var enddate;
+var difference_in_day
+$(function() {
+	   $("#enddate").datepicker({
+	       changeYear: true,
+	       changeMonth:true,
+	       dateFormat: 'mm/dd/yy',
+	       minDate: new Date('01/01/1900'),
+	       maxDate: '+1Y',
+	       beforeShowDay: DisableDates,
+		   onSelect: function(dateText, inst) { 
+			      var dateAsString = dateText; //the first parameter of this function
+			      enddate = $(this).datepicker( 'getDate' ); //the getDate method
+			      lastdate = enddate.getFullYear()+ "-0"+ (enddate.getMonth()+1) + "-" + enddate.getDate() ;
+			      console.log(lastdate);
+			      console.log(enddate);
+			      var difference_in_time = enddate.getTime() - startdate.getTime();
+			      difference_in_day = difference_in_time / (1000 * 3600 * 24);
+			      console.log(difference_in_day);
+			      submitdayViaAjax()
+			      
+			   }
+	   });
+	});
+
+// {
+//     "date" : "2021-01-30",
+//     "roomType" : "single"
+
+// }
+function submitdayViaAjax(){
+	
+	var date = {};
+	
+	date["startDate"] = firstdate;
+	date["endDate"] = lastdate;
+	date["roomType"] = /*[[${RoomType}]]*/ "";
+	//console.log(date);
+
+	
+    $.ajax({
+        type : "POST",
+        contentType : "application/json",
+        url : "http://localhost:8081/api/hotel/room/period",
+        data : JSON.stringify(date),
+        dataType : 'json',
+        timeout : 100000,
+        success : function(data) {
+        	var sum = 0;
+            console.log("SUCCESS: ", data);
+            for([key,val] of Object.entries(data)){
+            	//console.log(val);
+            	for([key1,val1] of Object.entries(val)){
+            		//console.log(val1);
+            		for([key2,val2] of Object.entries(val1)){
+            			if(key2 == "dailyPrice"){
+            				console.log(val2);
+            				sum += val2;
+            			}
+            		}
+            	}
+            }
+            console.log(sum);
+            $('#result').html("");
+            $('#result').html("$ " + sum);
+        },
+        error : function(e) {
+            console.log("ERROR: ", e);
+        },
+        done : function(e) {
+            console.log("DONE");
+        }
+    });
+
+}
+
+
 </script>
 
 <meta charset="ISO-8859-1">
@@ -45,19 +134,28 @@ $(function() {
 <h3>select your date and see attraction/hotel Status </h3>
 
 <form action="" th:action="@{/stock/report}" method="POST" class="form-horizontal">
+
   <table class="table py-5" cellspacing="10px" cellpadding="10px">
 	<tr><th colspan="4" class="text-center">select a date</th></tr>
 	<tr>
-		<td class="td_left"><label for="startDate">Start date</label></td>
-		<td class="td_right"><input type="text" id="date"></td>
+		<td class="td_left"><label for="startDate">Start Date :</label></td>
+		<td class="td_right"><input type="text" id="startdate"></td>
+		
+		<td class = "td_left"> End Date</td>
+		<td class="td_right"><input type="text" id="enddate" onselect = "datediff()"></td>
+	</tr>
+	<tr>
+	<td class="td_left"><label for="totalPrice">Total Price :</label></td>
+	<td> <div id="result"></div></td>
+	
 	</tr>
 
-		<td>duration</td>
-		<td><select name ="">
-		    <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}" 
-      th:selected="${i==75}"></option>
-      </select></td>
-	</tr>
+<!-- 		<td>duration</td> -->
+<!-- 		<td><select name =""> -->
+<!-- 		    <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"  -->
+<!--       th:selected="${i==75}"></option> -->
+<!--       </select></td> -->
+<!-- 	</tr> -->
 	
 	
 	<tr>
@@ -65,7 +163,6 @@ $(function() {
 	</tr>
   </table>
 </form>  
-
 
 
 </body>
