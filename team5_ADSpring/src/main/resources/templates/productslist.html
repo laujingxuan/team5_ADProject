@@ -5,14 +5,7 @@
 <body>
 	<div th:replace="layout/layout.html :: menu" ></div>
 	<h3>Product List</h3>
-	
-	<form th:action="@{/product/list}" class="search">
-   		Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required /> &nbsp;
-    		<input type="submit" value="Search" /> &nbsp; 
-    		<input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
-	</form>
-	
-	
+		
 	<table>
 		<tr>
 			<th>ID</th>
@@ -29,12 +22,6 @@
 		</tr>
 	</table>
 	
-	
-<script type="text/javascript">
-    function clearSearch() {
-        window.location = "[[@{/product/list}]]";
-    }
-</script>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
 </body>

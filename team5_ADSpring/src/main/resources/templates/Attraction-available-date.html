@@ -17,9 +17,7 @@ function button(){
 }
 
 var list = /*[[${dates1}]]*/ [];
-
 var dates = ["20/01/2021", "21/01/2021", "22/01/2021", "23/01/2021"] ;
-
 function DisableDates(date) {
     var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
     return [list.indexOf(string) !== -1];
@@ -39,23 +37,41 @@ $(function() {
 <title>Insert title here</title>
 </head>
 
+
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 <h3>select your date and see attraction/hotel Status </h3>
 
-<form action="" th:action="@{/stock/report}" method="POST" class="form-horizontal">
+
+<form action="" th:action="@{/stock/report}" method="POST" class="product-item">
   <table class="table py-5" cellspacing="10px" cellpadding="10px">
 	<tr><th colspan="4" class="text-center">select a date</th></tr>
 	<tr>
 		<td class="td_left"><label for="startDate">Start date</label></td>
 		<td class="td_right"><input type="text" id="date"></td>
 	</tr>
+		<tr>
+		<td class="td_left">Price </td>
+
+		<td>
+		  <input type="hidden" th:value="${price}" name="price">
+  			<div class="total-price"  th:text="${price}"th:value ="${price}"></div>
+		</td>
+	</tr>
+	
 	<tr>
-		<td>duration</td>
-		<td><select name ="">
-		    <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}" 
-      th:selected="${i==75}"></option>
-      </select></td>
+		<td>Quantity</td>
+		<td>  <select name="quantity" class="product-select" tabindex="1">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+  </select></td>
 	</tr>
 	
 	
@@ -65,9 +81,21 @@ $(function() {
   </table>
 </form>  
 
+
 <div th:replace="layout/layout.html :: footer"></div>
 <!-- <div th:replace="layout/layout.html :: javascript"></div> -->
+
 
 </body>
 </body>
 </html>
+
+<script>
+  jQuery('.product-select').on('change', function () {
+    var el = $(this);
+    var quantity = parseInt(el.val());
+    var price = parseInt(el.closest('.product-item').find('[name="price"]').val());
+    el.closest('.product-item').find('.total-price').text(quantity * price);
+  });
+</script>
+

@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -7,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.repository.ProductRepo;
 
@@ -31,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 		if(keyword!=null) {
 			return prepo.search1(keyword);
 		}
-		return prepo.findAll();
+		return new ArrayList<Product>();
 	}
 	
 	@Transactional
