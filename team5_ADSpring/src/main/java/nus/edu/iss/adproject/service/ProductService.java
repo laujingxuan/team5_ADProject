@@ -9,5 +9,7 @@ public interface ProductService {
 	public Product findProductById(Long id);
 	public List<Product> listAllSearchAttractions(String keyword);
 	public List<Product> listAllSearchHotels(String keyword);
+	public void save(Product newroom);
+	
 	
 }

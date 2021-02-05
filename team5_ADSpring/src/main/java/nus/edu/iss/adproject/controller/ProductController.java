@@ -39,11 +39,14 @@ import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.ProductService;
+import nus.edu.iss.adproject.service.RoomTypeService;
 
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
+	@Autowired 
+	ProductRepo pRepo;
 	
 	@Autowired
 	private ProductService pservice;
@@ -52,7 +55,24 @@ public class ProductController {
 	private AttractionService aservice;
 	
 	@Autowired
-	private HotelService hservice;	
+	private HotelService hservice;
+	
+	@Autowired
+	private RoomTypeRepo RTrepo;
+	
+	@Autowired
+	private RoomTypeService RTService;
+	
+	@GetMapping("/list")
+	public String listProductForm(Model model, @Param("keyword") String keyword) {
+		List<Product> listproducts = pservice.listAllSearchAttractions(keyword);
+		List<Product> listhotels = pservice.listAllSearchHotels(keyword);
+		listproducts.addAll(listhotels);
+		model.addAttribute("product", listproducts);
+		model.addAttribute("keyword", keyword); 
+		
+		return "productslist";
+	}
 	
 	@GetMapping("/detail/{id}")
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
@@ -70,6 +90,7 @@ public class ProductController {
 		}
 	}
   
+
 	@RequestMapping(value = "/available-date/{id}")
 	public String getAttractionAvailibleDate(Model model,@PathVariable("id")Long id)  {
 			Product p = pservice.findProductById(id);
@@ -130,25 +151,65 @@ public class ProductController {
 		return "hotel-roomType-availble-date";
 	}
 
-	@GetMapping("/create")
+	@GetMapping("/createHotel")
+	public String createHotel(Model model)
+	{
+		model.addAttribute("hotel", new Hotel());
+		return "ProductHotelCreate";
+	}
+	
+	
+	@GetMapping("/saveHotel")
+	public String saveHotel(@ModelAttribute("hotel") @Valid Hotel hotel, BindingResult bindingResult,
+			Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("Hotel", hservice.findAll());
+		
+			return "ProductHotelCreate";
+		}
+		System.out.println("this is hotel object"+hotel);
+		hservice.save(hotel);
+		return "forward:/product/createRoom";
+  }
+	
+	@GetMapping("/createRoom")
 	public String createProduct(Model model)
 	{
 		model.addAttribute("Hotels", hservice.findAll());
-		model.addAttribute("ProductType", ProductType.values());
-		model.addAttribute("product", new RoomType());
+		//model.addAttribute("ProductType", ProductType.values());	
+//		
+//		System.out.println("this new product id "+newroom.getId());
+//		model.addAttribute("newP",newroom);
+		model.addAttribute("room", new RoomType());
 		return "ProductCreation";
 	}
 	
-//	@GetMapping("/save")
-//	public String saveProductForm(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult,
-//			Model model) {
-//		if (bindingResult.hasErrors()) {
-//			model.addAttribute("supplier", hservice.findAll());
-//			return "ProductCreation";
-//		}
-//		RTrepo.save(product);
-//		return "forward:/product/listproducts";
-//  }
+	@GetMapping("/saveRoom")
+	public String saveRoom(@ModelAttribute("room") @Valid RoomType room, BindingResult bindingResult,
+			Model model)
+	{
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("Hotels", hservice.findAll());
+			//model.addAttribute("ProductType", ProductType.values());
+			model.addAttribute("room", new RoomType());		
+			return "ProductCreation";
+		}
+		System.out.println("this is room object"+room);
+		Product newroom= new Product(ProductType.HOTEL);
+		pservice.save(newroom);
+		room.setProduct(newroom);
+		RTService.save(room);
+		return "forward:/hotel/roomtypes";
+	}
+	@GetMapping("/delete/room/{id}")
+	public String deleteMethod(Model model, @PathVariable("id") Long id) {
+		RTrepo.deleteById(id);
+//		RoomType Rtype = RTService.findById(id);
+//		RTService.delete(Rtype);
+		return "forward:/hotel/roomtypes";
+	}
+	
+	
 	
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {

@@ -87,7 +87,7 @@
       </tr>
       <tr>
         <th>Similar Room</th>
-        <td ><a href="SimilarRoom.html" th:href="@{/Room/SimilarRoom/}+${roomtype.roomType}" >Check</a></td>
+        <td ><a href="SimilarRoom.html" th:href="@{/Room/SimilarRoom/}+${roomtype.hotel.id}" >Check</a></td>
       </tr>
     </table>
     <div th:replace="layout/layout.html :: footer"></div>

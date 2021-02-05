@@ -76,6 +76,11 @@ public class HotelController {
 		model.addAttribute("roomtype", rservice.findRoomTypesByHotelId(id));
 		return "roomtypes";
 	}
+	@GetMapping("/roomtypes")
+	public String viewRoomTypes(Model model) {
+		model.addAttribute("roomtype", rservice.findAll());
+		return "roomtypes";
+	}
 	
 	@GetMapping("/roomtypes/detail/{id}")
 	public String viewRoomDetail(Model model, @PathVariable("id")Long id) {
