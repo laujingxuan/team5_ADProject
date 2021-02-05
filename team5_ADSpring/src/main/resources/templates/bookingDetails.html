@@ -9,32 +9,38 @@
 			<h3>Booking Details</h3>
 		</div>
 		<div th:each="detail:${bookingDetails}" class="py-3">
-			<table th:if="${detail.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
-	 			<tr ><td th:text = "${detail.key.product.roomType.hotel.name} + ': ' + ${detail.key.product.roomType.roomType} + ' Room'">Hotel</td></tr> 
+			<table th:if="${detail.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}" class="table">
+	 			<tr ><td th:text = "${detail.key.product.roomType.hotel.name} + ': ' + ${detail.key.product.roomType.roomType} + ' Room'" colspan="3">Hotel</td></tr> 
 				<tr>
 					<td>Number of rooms: </td>
 					<td th:text="${detail.value.numRooms}">Total</td>
+					<td></td>
+					<td></td>
 				</tr>
 				<tr>
 					<td>Total price: </td>
 					<td th:text="${detail.key.price}">Total</td>
+					<td></td>
+					<td></td>
 				</tr>
 				<tr>
-					<td>From: </td>
-					<td th:text="${detail.value.startDate}">Total</td>
-					<td>To: </td>
-					<td th:text="${detail.value.endDate}">Total</td>
+					<td style="width:25%">From: </td>
+					<td th:text="${detail.value.startDate}" style="width:15%">startD</td>
+					<td style="width:10%">To: </td>
+					<td th:text="${detail.value.endDate}" style="width:15%">endD</td>
 				</tr>
 				<tr>
 					<td>Special Request: </td>
 					<td th:text="${detail.value.remarks}">Request</td>
+					<td></td>
+					<td></td>
 				</tr>
 			</table>
-			<table th:if="${detail.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
-	 			<tr><td th:text = ${detail.key.product.attraction.name}>Attraction</td></tr> 
+			<table th:if="${detail.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}" class="table">
+	 			<tr><td th:text = "${detail.key.product.attraction.name}" colspan="2">Attraction</td></tr> 
 				<tr>
-					<td>Price: </td>
-					<td th:text="${detail.key.price}">Total</td>
+					<td style="width:15%">Price: </td>
+					<td th:text="${detail.key.price}" style="width:25%">Total</td>
 				</tr>
 				<tr>
 					<td>Quantity: </td>
