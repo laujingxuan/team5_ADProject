@@ -17,4 +17,8 @@ public interface BookingService {
 	public BookingDetails saveBookingDetails(BookingDetails bookD);
 	
 	public List<Object> findGuestByMonth();
+	
+	public List<Object> findMonthlyRevenueByHotel(Long userId);
+	
+	public List<Object> findMonthlyBookingRateByHotel(Long userId);
 }
