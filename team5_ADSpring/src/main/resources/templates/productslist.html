@@ -13,7 +13,7 @@
 <body>
 	<div th:replace="layout/layout.html :: menu" ></div>
 	<h6>&nbsp;</h6>
-	<h3 align="center"><b>Product List</b></h3>
+	<h3 align="center">Product List</h3>
 	<h6>&nbsp;</h6>
 	
 	<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto">
@@ -31,6 +31,52 @@
 		</tr>
 	</table>
 	
+	<br>
+	<h3 align="center" >Recommendation</h3>
+	<br>
+	<h4>HotSellers</h4>
+		<table class = "table">
+			<tr>
+				<td><b>Image</b></td>
+				<td><b>Product Name</b></td>
+				<td><b>Detail Link</b></td>
+			</tr>
+			<tbody th:each="product:${hotSellers}">
+				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
+					<td><img height="128" th:src="${product.roomType.imageURL}" width="128" /></td>
+					<td th:text="${product.roomType.hotel.name} + ': ' + ${product.roomType.roomType} + ' Room'">Hotel Name</td>
+					<td><a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${product.roomType.id}">View Detail</a></td>
+				</tr>
+				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
+					<td><img height="128" th:src="${product.attraction.imageURL}" width="128" /></td>
+					<td th:text="${product.attraction.name}">Hotel Name</td>
+					<td><a href="hoteldetail.html" th:href="@{/product/detail/}+${product.id}">View Detail</a></td>
+				</tr>
+			</tbody>
+		</table>
+	<br>
+	<div th:if="${session.user!=null}">
+		<h4>Recently Bought Items</h4>
+		<table class = "table">
+			<tr>
+				<td><b>Image</b></td>
+				<td><b>Product Name</b></td>
+				<td><b>Detail Link</b></td>
+			</tr>
+			<tbody th:each="product:${userRecommendation}">
+				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
+					<td><img height="128" th:src="${product.roomType.imageURL}" width="128" /></td>
+					<td th:text="${product.roomType.hotel.name} + ': ' + ${product.roomType.roomType} + ' Room'">Hotel Name</td>
+					<td><a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${product.roomType.id}">View Detail</a></td>
+				</tr>
+				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
+					<td><img height="128" th:src="${product.attraction.imageURL}" width="128" /></td>
+					<td th:text="${product.attraction.name}">Hotel Name</td>
+					<td><a href="hoteldetail.html" th:href="@{/product/detail/}+${product.id}">View Detail</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
 </body>

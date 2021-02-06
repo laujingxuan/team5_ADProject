@@ -104,12 +104,15 @@ public class Team5AdSpringApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
+			
+			//Creating travel package
 			TravelPackage tp1 = new TravelPackage(2,3,5);
 			tpRepo.save(tp1);
 			TravelPackage tp2 = new TravelPackage(5,3,7);
 			tpRepo.save(tp2);
 			TravelPackage tp3 = new TravelPackage(7,3,10);
 			tpRepo.save(tp3);
+			
 			
 			//creating User
 			User customer1 = new User("customer1","customer1",RoleType.CUSTOMER,"tanfeng95@hotmail.com");
@@ -124,20 +127,41 @@ public class Team5AdSpringApplication {
 			userRepo.save(attractionM1);
 			
 			
+			//Creating Booking
 			Booking booking1 = new Booking(customer1, LocalDate.of(2021, 1, 15), 5);
 			Booking booking2 = new Booking(customer1, LocalDate.of(2021, 1, 18), 5);
 			Booking booking3 = new Booking(customer1, LocalDate.of(2021, 2, 15), 5);
+			Booking booking5 = new Booking(customer1, LocalDate.of(2020, 1, 15), 5);
+			Booking booking6 = new Booking(customer1, LocalDate.of(2020, 1, 18), 5);
+			Booking booking7 = new Booking(customer1, LocalDate.of(2020, 2, 15), 5);
 			Booking booking4 = new Booking(customer2, LocalDate.of(2021, 1, 15), 5);
 			bookRepo.save(booking1);
 			bookRepo.save(booking2);
 			bookRepo.save(booking3);
 			bookRepo.save(booking4);
+			bookRepo.save(booking5);
+			bookRepo.save(booking6);
+			bookRepo.save(booking7);
 			
+			
+			//Creating Attraction
 			Product product1 = new Product(ProductType.ATTRACTION);
+			Product product10 = new Product(ProductType.ATTRACTION);
+			Product product11 = new Product(ProductType.ATTRACTION);
 			productRepo.save(product1);
-			Attraction attraction1 = new Attraction("zoo", 75, "Singapore Jalan 1", 4, "Zoo with animals", "Singapore", "http://localhost:8081/api/attraction/", attractionM1, product1);
+			productRepo.save(product10);
+			productRepo.save(product11);
+			Attraction attraction1 = new Attraction("Singapore Zoo", 75, "80 Mandai Lake Rd, 729826", 4, "Zoo with animals", "Singapore", "http://localhost:8081/api/attraction/", attractionM1, product1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPRuo0c4vT4LkTUTsMHQKdPad7unhMWYL68A&usqp=CAU");
+			Attraction attraction2 = new Attraction("Universal Studios Singapore", 75, "8 Sentosa Gateway, 098269", 4, "Universal Studios Singapore is a theme park located within Resorts World Sentosa on Sentosa Island, Singapore", "Singapore", "NA", attractionM1, product10, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0iNHp4S_BJIGknelmLR-x2obdFa9rb7Gh4w&usqp=CAU");
+			Attraction attraction3 = new Attraction("S.E.A. Aquarium", 75, "8 Sentosa Gateway, Sentosa Island, 098269", 4, "Large aquarium & resort featuring 800 species of marine life in a variety of habitats.", "Singapore", "NA", attractionM1, product11, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlJxOrew9nEOurRCadeDMVZUcCMzLbX4svw&usqp=CAU");
 			attractionRepo.save(attraction1);
+			attractionRepo.save(attraction2);
+			attractionRepo.save(attraction3);
 			
+			
+			
+			//Creating Hotel
+			//ONLY HOTEL 1 HAS API SETUP
 			Product room1 = new Product(ProductType.HOTEL);
 			Product room2 = new Product(ProductType.HOTEL);
 			Product room3 = new Product(ProductType.HOTEL);
@@ -148,21 +172,25 @@ public class Team5AdSpringApplication {
 			productRepo.save(room3);
 			productRepo.save(room4);
 			productRepo.save(room5);
-			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://localhost:8081/api/hotel/", hotelM1);
-			Hotel hotel2 = new Hotel("Swissôtel The Stamford ",  "Singapore ",1.293354,103.853561 , 260.0, 8,"Sg","aa", "best", "we try to be home","http://localhost:8081/api/hotel/", hotelM1);
-			Hotel hotel3 = new Hotel("Hotel Miramar ", "Singapore",1.288710,103.837372 , 260.0, 8, "SG","aa", "best", "we try to be home","http://localhost:8081/api/hotel/", hotelM1);
+			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://localhost:8081/api/hotel/", hotelM1 ,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHWHuNv8X8UXn9KrVrVu4P5zZMn9GWEVotg&usqp=CAU");
+			Hotel hotel2 = new Hotel("Swissôtel The Stamford",  "Singapore ",1.293354,103.853561 , 260.0, 8,"Sg","aa", "best", "we try to be home","NA", hotelM1,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ61juiK980qp_59nzk8BZSKCD1LBwLMkrgYg&usqp=CAU");
+			Hotel hotel3 = new Hotel("Hotel Miramar", "Singapore",1.288710,103.837372 , 260.0, 8, "SG","aa", "best", "we try to be home","NA", hotelM1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJQasGWLv85VE--hj4JjvcYvlH6AVu1qpi4A&usqp=CAU");
 			htRepo.save(hotel1);
 			htRepo.save(hotel2);
 			htRepo.save(hotel3);
-			RoomType singleRoom = new RoomType(room1, hotel1, "SINGLE", "Single bed room", "https://a36c2e13a78ae1256a2f-1dc878dead8ec78a84e429cdf4c9df00.ssl.cf1.rackcdn.com/responsive/980/a36c2e13a78ae1256a2f-1dc878dead8ec78a84e429cdf4c9df00.ssl.cf1.rackcdn.com/u/park-hotel-hong-kong/room/Superior-Single-Room_mid.jpg");
-			RoomType singleRoom1 = new RoomType(room3, hotel1, "SINGLE", "Single bed room","https://media-cdn.tripadvisor.com/media/photo-s/0e/e5/f5/d2/small-single-room-at.jpg");
+			
+			
+			
+			//Creating roomType
+			RoomType DoubleRoom1 = new RoomType(room3, hotel2, "DOUBLE", "Double bed room", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhcmJ1X_UaXdgLx7g71aztPspAMs0onNcBw&usqp=CAU");
+			RoomType singleRoom = new RoomType(room1, hotel1, "SINGLE", "Single bed room","https://media-cdn.tripadvisor.com/media/photo-s/0e/e5/f5/d2/small-single-room-at.jpg");
 			RoomType singleRoom2 = new RoomType(room4, hotel2, "SINGLE", "Single bed room","https://www.oyster.com/wp-content/uploads/sites/35/2019/05/single-room-v12936474-1440-1024x683.jpg");
 			RoomType singleRoom3 = new RoomType(room5, hotel3, "SINGLE", "Single bed room","https://setupmyhotel.com/images/Room-Type-Single-Room.jpg");
 			RoomType doubleRoom = new RoomType(room2, hotel1, "DOUBLE", "Double bed room", "https://cdn.traveltripper.io/site-assets/512_855_12327/media/2018-02-27-080021/large_ex-double-1.jpg");
 //			RoomType doubleRoom1 = new RoomType(room2, hotel2, "DOUBLE", "Double bed room", "https://www.hotel-solemare.com/photo/diapo1/13/_solemare_hotel_25720180717164604_550xautox75.jpg");
 //			RoomType doubleRoom2 = new RoomType(room2, hotel3, "DOUBLE", "Double bed room", "https://www.pavillon-monceau.com/files/hotel/pavillon-monceau/chambres/chambre_standard_.jpg");
 			roomTypeRepo.save(singleRoom);
-			roomTypeRepo.save(singleRoom1);
+			roomTypeRepo.save(DoubleRoom1);
 			roomTypeRepo.save(singleRoom2);
 			roomTypeRepo.save(singleRoom3);
 			roomTypeRepo.save(doubleRoom);
@@ -171,6 +199,7 @@ public class Team5AdSpringApplication {
 ////		    htRepo.save(new Hotel("Swissôtel The Stamford ","Singapore", 1.293354,103.853561, 260.0, 8, "SG","aa", "best", "we try to be home"));
 //		    htRepo.save(new Hotel("Hotel Miramar ","Singapore", 1.288710,103.837372, 260.0, 8, "SG","aa", "best", "we try to be home"));
 			
+			//Creating booking details
 			Cart cart1 = new Cart(product1, 3, LocalDate.of(2021, 1, 15), customer1);
 			Cart cart2 = new Cart(room1, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 17),2, "No lunch", customer1);
 			Cart cart3 = new Cart(room2, 2, LocalDate.of(2021, 12, 15), LocalDate.of(2021, 12, 20),4, "4 lunch", customer1);
@@ -180,6 +209,8 @@ public class Team5AdSpringApplication {
 			cartRepo.save(cart3);
 			cartRepo.save(cart4);
 			
+			
+			//Creating booking details
 			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300);
 			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250);
 			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400);
@@ -188,7 +219,16 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail2);
 			bookDetRepo.save(bookDetail3);
 			bookDetRepo.save(bookDetail4);
-			
+
+			BookingDetails bookDetail5 = new BookingDetails(booking2, attraction2.getProduct(), "1", 4, 300);
+			BookingDetails bookDetail6 = new BookingDetails(booking2, attraction3.getProduct(), "2", 3, 250);
+			BookingDetails bookDetail7 = new BookingDetails(booking3, DoubleRoom1.getProduct(), "3", 5, 400);
+			BookingDetails bookDetail8 = new BookingDetails(booking4, singleRoom2.getProduct(), "1", 5, 100);
+			bookDetRepo.save(bookDetail5);
+			bookDetRepo.save(bookDetail6);
+			bookDetRepo.save(bookDetail7);
+			bookDetRepo.save(bookDetail8);
+
 		};
 	}
 

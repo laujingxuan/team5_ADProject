@@ -92,7 +92,7 @@ public class HotelController {
 				//increase 0.7*number of booked rooms for vacancy and number of cancellations because only 70% accuracy
 				//(risk-averse) in case predicted cancelled rooms are not cancelled.
 				temp.setNumVacancies(temp.getNumVacancies()+0.7*hotelBooking.getNumRooms());
-				temp.setNumCancellations(temp.getNumCancellations()+0.7*hotelBooking.getNumRooms());
+				temp.setNumCancellations(temp.getNumCancellations()+hotelBooking.getNumRooms());
 			}
 		}
 		return isCancel;

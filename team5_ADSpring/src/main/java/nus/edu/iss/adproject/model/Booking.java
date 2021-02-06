@@ -72,6 +72,14 @@ public class Booking {
 		this.travelPackageDiscount = travelPackageDiscount;
 	}
 	
+	public List<BookingDetails> getBookingDetails() {
+		return bookingDetails;
+	}
+
+	public void setBookingDetails(List<BookingDetails> bookingDetails) {
+		this.bookingDetails = bookingDetails;
+	}
+
 	public int getNumTransactions() {
 		return bookingDetails.size();
 	}
@@ -87,8 +95,10 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [user=" + user + ", bookingDetails=" + bookingDetails + ", bookingDate=" + bookingDate
-				+ ", travelPackageDiscount=" + travelPackageDiscount + "]";
+
+		return "Booking [id=" + id + ", bookingDate="
+				+ bookingDate + ", travelPackageDiscount=" + travelPackageDiscount + "]";
+
 	}
 
 	

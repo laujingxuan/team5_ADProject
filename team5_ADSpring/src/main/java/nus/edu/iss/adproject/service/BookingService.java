@@ -16,6 +16,12 @@ public interface BookingService {
 	public Booking saveBooking(Booking booking);
 
 	public BookingDetails saveBookingDetails(BookingDetails bookD);
+
+
+	public List<Booking> findLatestBookingsByUser(User user);
+
+	public List<Booking> findPastOneMonthBookings();
+
 	
 	public List<Object> findGuestByMonth();
 	
@@ -32,4 +38,5 @@ public interface BookingService {
 	public List<Object> findMonthlyRevenueByHotelId(Long hotel_id);
 	
 	public List<Object> findMonthlyBookingRateByHotelId(Long hotel_id);
+
 }

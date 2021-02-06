@@ -29,11 +29,6 @@ public class HotelController {
 
 	@Autowired
 	private RoomTypeService rservice;
-	
-	@GetMapping("/list")
-	public String viewUser(Model model, HttpSession session) {
-		return "discountForm";
-	}
 
 	@GetMapping("/Hotels")
 	public String gethotel(Model model){
