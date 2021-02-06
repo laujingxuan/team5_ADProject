@@ -180,5 +180,6 @@ public class UserController {
 		user_svc.deleteUsers(deleteUsers);
 		return "redirect:/user/users";
 	}
+	
 }
 

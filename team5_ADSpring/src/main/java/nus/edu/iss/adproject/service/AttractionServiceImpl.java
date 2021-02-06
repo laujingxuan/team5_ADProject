@@ -20,7 +20,7 @@ public class AttractionServiceImpl implements AttractionService{
 	
     @Override
 	public void save(Attraction x) {
-		// TODO Auto-generated method stub
+		arepo.save(x);
 		
 	}
 
