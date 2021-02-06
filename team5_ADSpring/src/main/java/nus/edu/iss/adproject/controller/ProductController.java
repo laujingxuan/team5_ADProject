@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
+import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.RoomType;
@@ -81,6 +82,12 @@ public class ProductController {
 			double price = p.getAttraction().getPrice();
 			//System.out.println(price);
 			//String attraction1 =  "http://localhost:8081/api/attraction/booking/month";
+			List<Discount> discountlist= p.getAttraction().getDiscount();
+			String discount = "";
+			for(Discount d : discountlist) {
+				discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
+						+ " the discount is " + d.getDiscount_rate() + "%";
+			}
 
 			RestTemplate restTemplate = new RestTemplate();
 			
@@ -101,6 +108,7 @@ public class ProductController {
 			System.out.println(dates);		
 			model.addAttribute("price",price);
 			model.addAttribute("dates1", dates);
+			model.addAttribute("discount",discount);
 		
 		return "Attraction-available-date";
 	}
@@ -109,15 +117,22 @@ public class ProductController {
 	public String gethotelRoomTypeAvailibleDate(Model model,@PathVariable("id")Long id)  {
 		Product p = pservice.findProductById(id);
 		String URL = p.getRoomType().getHotel().getAPI_URL()+"room/month";
+		String APIURL = p.getRoomType().getHotel().getAPI_URL()+"room/period";
 		String RoomType = p.getRoomType().getRoomType();
+		List<Discount> discountlist= p.getRoomType().getHotel().getDiscount();
+		String discount = "";
+		for(Discount d : discountlist) {
+			discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
+					+ " the discount is " + d.getDiscount_rate() + "%";
+		}
 		
-		String hotel1 =  "http://localhost:8081/api/hotel/room/month";
+		//String hotel1 =  "http://localhost:8081/api/hotel/room/month";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		MonthTypeQuery roomtype = new MonthTypeQuery(1,RoomType);
 		
 		DailyRoomDetailWrapper result =  restTemplate.postForObject(URL, roomtype, DailyRoomDetailWrapper.class);
-		System.out.println(result.getDailyList());
+		//System.out.println(result.getDailyList());
 		List<String> dates = new ArrayList<>() ;
 		
 		List<DailyRoomTypeDetail> list = result.getDailyList();
@@ -131,6 +146,8 @@ public class ProductController {
 		System.out.println(dates);	
 		model.addAttribute("dates1", dates);
 		model.addAttribute("RoomType",RoomType);
+		model.addAttribute("APIURL",APIURL);
+		model.addAttribute("discount",discount);
 		return "hotel-roomType-availble-date";
 	}
 
