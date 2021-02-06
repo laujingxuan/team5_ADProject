@@ -24,9 +24,15 @@
 	        </div>
 		</div>
     </div>
-    <div class="row" style="margin-top: 200px; margin-bottom: 100px">
-    	<div class="chart-container" style="float: left; height:20vh; width:40vw">
+    <div class="row" style="margin-top: 200px; margin-bottom: 100px;">
+    	<div class="chart-container" style="float: left; height:40vh; width:30vw">
+	            <canvas id="myChart_vacancyRate"></canvas>
+	        </div>
+    	<div class="chart-container" style="height:40vh; width:30vw">
 	            <canvas id="myChart_bookingRate"></canvas>
+	        </div>
+	        <div class="chart-container" style="float:right; height:40vh; width:30vw">
+	            <canvas id="myChart_cancellationRate"></canvas>
 	        </div>
     </div>
 
@@ -41,6 +47,8 @@
 var htmldata = /*[[${data}]]*/{}
 var htmldata_revenue = /*[[${data_revenue}]]*/{}
 var htmldata_bookingRate = /*[[${data_bookingRate}]]*/{}
+var htmldata_vacancyRate = /*[[${data_vacancyRate}]]*/{}
+var htmldata_cancellationRate = /*[[${data_cancellationRate}]]*/{}
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
@@ -153,7 +161,6 @@ var myChart = new Chart(ctx1, {
 });
 
 
-
 var ctx_bookingRate = document.getElementById('myChart_bookingRate').getContext('2d');
 var myChart = new Chart(ctx_bookingRate, {
     type: 'bar',
@@ -197,7 +204,121 @@ var myChart = new Chart(ctx_bookingRate, {
     options: {
     	title: {
             display: true,
-            text: 'Monthly Booking Rate'
+            text: 'Daily Booking Rate'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+
+
+var ctx_vacancyRate = document.getElementById('myChart_vacancyRate').getContext('2d');
+var myChart = new Chart(ctx_vacancyRate, {
+    type: 'bar',
+    data: {
+        labels: Object.keys(htmldata_vacancyRate),
+        datasets: [{
+            label: 'Vacancy Rate',
+            /* data: [12, 19, 3, 5, 2, 3], */
+            data: Object.keys(htmldata_vacancyRate).map(function(key) {return htmldata_vacancyRate[key];}),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(248, 196, 113,0.2)',
+                'rgba(220, 118, 51,0.2)',
+                'rgba(33, 97, 140,0.2)',
+                'rgba(146, 43, 33,0.2)',
+                'rgba(20, 90, 50,0.2)',
+                'rgba(125, 60, 152,0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(248, 196, 113,1)',
+                'rgba(220, 118, 51,1)',
+                'rgba(33, 97, 140,1)',
+                'rgba(146, 43, 33,1)',
+                'rgba(20, 90, 50,1)',
+                'rgba(125, 60, 152,1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	title: {
+            display: true,
+            text: 'Daily Vacancy Rate'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var ctx_cancellationRate = document.getElementById('myChart_cancellationRate').getContext('2d');
+var myChart = new Chart(ctx_cancellationRate, {
+    type: 'bar',
+    data: {
+        labels: Object.keys(htmldata_cancellationRate),
+        datasets: [{
+            label: 'Vacancy Rate',
+            /* data: [12, 19, 3, 5, 2, 3], */
+            data: Object.keys(htmldata_cancellationRate).map(function(key) {return htmldata_cancellationRate[key];}),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(248, 196, 113,0.2)',
+                'rgba(220, 118, 51,0.2)',
+                'rgba(33, 97, 140,0.2)',
+                'rgba(146, 43, 33,0.2)',
+                'rgba(20, 90, 50,0.2)',
+                'rgba(125, 60, 152,0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(248, 196, 113,1)',
+                'rgba(220, 118, 51,1)',
+                'rgba(33, 97, 140,1)',
+                'rgba(146, 43, 33,1)',
+                'rgba(20, 90, 50,1)',
+                'rgba(125, 60, 152,1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	title: {
+            display: true,
+            text: 'Daily Cancellation Rate'
         },
         scales: {
             yAxes: [{
