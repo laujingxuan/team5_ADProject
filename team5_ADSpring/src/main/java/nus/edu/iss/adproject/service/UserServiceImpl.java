@@ -7,6 +7,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.adproject.model.User;
@@ -77,5 +78,26 @@ public class UserServiceImpl implements UserService {
 		return;
 	}
 	
+	public void updateResetPasswordToken(String token,String email) throws CustomerNotFoundException {
+		User user = userRepo.findByEmail(email);
+		if(user!=null) {
+			user.setResetPasswordToken(token);
+			userRepo.save(user);
+		}else {
+			throw new CustomerNotFoundException("Could not find any user with email "+ email);
+		}
+	}
+	
+	public User get(String resetPasswordToken) {
+		return userRepo.findByResetPasswordToken(resetPasswordToken);
+	}
+	
+	public void updatePassword(User user,String newPassword) {
+		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+		String encodePassword = passwordEncoder.encode(newPassword);
+		user.setPassword(encodePassword);
+		user.setResetPasswordToken(null);
+		userRepo.save(user);
+	}
 }
 

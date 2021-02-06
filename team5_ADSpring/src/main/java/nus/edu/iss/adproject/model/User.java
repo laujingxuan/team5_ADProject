@@ -3,6 +3,7 @@ package nus.edu.iss.adproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class User {
 	String name;
 	
 
+
 	public String getName() {
 		return name;
 	}
@@ -42,7 +44,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Hotel> hotel;
-
+	
+	@Column(name="reset_password_token")
+	private String resetPasswordToken;
 	
 	public User() { }
 
@@ -148,6 +152,14 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + ", email="
 				+ email + ", points=" + points + "]";
+	}
+
+	public String getResetPasswordToken() {
+		return resetPasswordToken;
+	}
+
+	public void setResetPasswordToken(String resetPasswordToken) {
+		this.resetPasswordToken = resetPasswordToken;
 	}
 	
 	

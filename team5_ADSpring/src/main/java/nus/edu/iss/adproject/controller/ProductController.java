@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -220,16 +221,16 @@ public class ProductController {
 		return "product-form";
 	}
 	
-	@GetMapping("/save")
+	@PostMapping("/save")
 	public String saveProductForm(@ModelAttribute("attraction") @Valid Attraction attraction, BindingResult bindingResult,
 			Model model) {
 		
 		if (bindingResult.hasErrors()) {
 			return "product-form";
 		}
-		
+		System.out.println(1);
 		aservice.save(attraction);
-		return "forward:/product/list";
+		return "redirect:/";
 	}
 	@GetMapping("/CreateAttraction")
 	public String CreateAtt(Model model)
