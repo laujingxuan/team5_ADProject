@@ -89,6 +89,20 @@
         <th>Similar Room</th>
         <td ><a href="SimilarRoom.html" th:href="@{/Room/SimilarRoom/}+${roomtype.hotel.id}" >Check</a></td>
       </tr>
+      <tr>
+      	<td colspan="2">
+      		<a class="btn btn-primary" href="reviewList.html" 
+      		   th:href="@{/review/list/}+${roomtype.product.id}" role="button">View Comments
+      		</a>
+      	</td>
+      </tr>
+	  <tr>
+	   	<td colspan="2">
+	   		<a class="btn btn-primary" href="reviewForm.html" 
+	   			th:href="@{/review/post/}+${roomtype.product.id}" role="button">Post Comment
+	   		</a>
+	   	</td>
+	  </tr>
     </table>
     <div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
