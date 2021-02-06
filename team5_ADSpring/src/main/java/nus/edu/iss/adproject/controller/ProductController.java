@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
+import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.RoomType;
@@ -27,6 +28,7 @@ import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
+import nus.edu.iss.adproject.repository.AttractionRepository;
 import nus.edu.iss.adproject.repository.ProductRepo;
 import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.service.AttractionService;
@@ -41,6 +43,8 @@ public class ProductController {
 	@Autowired 
 	ProductRepo pRepo;
 	
+	@Autowired
+	AttractionRepository Attrepo;
 	@Autowired
 	private ProductService pservice;
 	
@@ -81,6 +85,12 @@ public class ProductController {
 			double price = p.getAttraction().getPrice();
 			//System.out.println(price);
 			//String attraction1 =  "http://localhost:8081/api/attraction/booking/month";
+			List<Discount> discountlist= p.getAttraction().getDiscount();
+			String discount = "";
+			for(Discount d : discountlist) {
+				discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
+						+ " the discount is " + d.getDiscount_rate() + "%";
+			}
 
 			RestTemplate restTemplate = new RestTemplate();
 			
@@ -101,6 +111,7 @@ public class ProductController {
 			System.out.println(dates);		
 			model.addAttribute("price",price);
 			model.addAttribute("dates1", dates);
+			model.addAttribute("discount",discount);
 		
 		return "Attraction-available-date";
 	}
@@ -109,15 +120,22 @@ public class ProductController {
 	public String gethotelRoomTypeAvailibleDate(Model model,@PathVariable("id")Long id)  {
 		Product p = pservice.findProductById(id);
 		String URL = p.getRoomType().getHotel().getAPI_URL()+"room/month";
+		String APIURL = p.getRoomType().getHotel().getAPI_URL()+"room/period";
 		String RoomType = p.getRoomType().getRoomType();
+		List<Discount> discountlist= p.getRoomType().getHotel().getDiscount();
+		String discount = "";
+		for(Discount d : discountlist) {
+			discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
+					+ " the discount is " + d.getDiscount_rate() + "%";
+		}
 		
-		String hotel1 =  "http://localhost:8081/api/hotel/room/month";
+		//String hotel1 =  "http://localhost:8081/api/hotel/room/month";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		MonthTypeQuery roomtype = new MonthTypeQuery(1,RoomType);
 		
 		DailyRoomDetailWrapper result =  restTemplate.postForObject(URL, roomtype, DailyRoomDetailWrapper.class);
-		System.out.println(result.getDailyList());
+		//System.out.println(result.getDailyList());
 		List<String> dates = new ArrayList<>() ;
 		
 		List<DailyRoomTypeDetail> list = result.getDailyList();
@@ -131,6 +149,8 @@ public class ProductController {
 		System.out.println(dates);	
 		model.addAttribute("dates1", dates);
 		model.addAttribute("RoomType",RoomType);
+		model.addAttribute("APIURL",APIURL);
+		model.addAttribute("discount",discount);
 		return "hotel-roomType-availble-date";
 	}
 
@@ -210,6 +230,41 @@ public class ProductController {
 		
 		aservice.save(attraction);
 		return "forward:/product/list";
+	}
+	@GetMapping("/CreateAttraction")
+	public String CreateAtt(Model model)
+	
+	{
+		model.addAttribute("attraction",new Attraction());
+		return "CreateAttraction";
+	}
+	@GetMapping("/saveAttraction")
+	public String saveAtt(@ModelAttribute("attraction") @Valid Attraction attraction, BindingResult bindingResult,
+			Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			return "CreateAttraction";
+		}
+		Product newAtt= new Product(ProductType.ATTRACTION);
+		pservice.save(newAtt);
+		attraction.setProduct(newAtt);
+		aservice.save(attraction);
+		System.out.println(attraction);
+		return "forward:/product/AttractionOverall";
+	}
+	@GetMapping("/AttractionOverall")
+	public String attoverall(Model model)
+	{
+		List<Attraction> AttAll= aservice.findAll();
+		System.out.println("this is attraction after create att : "+ AttAll);
+		model.addAttribute("attractions",AttAll);
+		return "attractionOverAll";
+	}
+	@GetMapping("/delete/AttDel/{id}")
+	public String deleteAtt(Model model, @PathVariable("id") Long id) {
+		Attrepo.deleteById(id);
+
+		return "forward:/product/AttractionOverall";
 	}
 
 }
