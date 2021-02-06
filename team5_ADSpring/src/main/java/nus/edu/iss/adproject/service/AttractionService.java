@@ -11,5 +11,9 @@ public interface AttractionService extends IService<Attraction> {
 	
 	public List<Attraction> findByUserId(Long userId);
 
+	public List<Attraction> findAll();
+	public void delete(Attraction A);
+	public void save(Attraction a);
+
   
 }
