@@ -1,11 +1,13 @@
 package nus.edu.iss.adproject.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +31,12 @@ import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.DateTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.HotelBooking;
+import nus.edu.iss.adproject.nonEntityModel.Email;
 import nus.edu.iss.adproject.nonEntityModel.MultipleDateQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.service.BookingService;
 import nus.edu.iss.adproject.service.CartService;
+import nus.edu.iss.adproject.service.EmailService;
 import nus.edu.iss.adproject.service.SessionService;
 import nus.edu.iss.adproject.service.TravelPackageService;
 
@@ -51,6 +55,9 @@ public class BookingController {
 	
 	@Autowired
 	private TravelPackageService travelPacService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@GetMapping("/list")
 	public String showBookings(Model model, HttpSession session) {
@@ -89,7 +96,7 @@ public class BookingController {
 	//need to change to post mapping	
 	//Show Booking Details
 	@GetMapping("/makeBook")
-	public String makeBooking(HttpSession session, Model model) {
+	public String makeBooking(HttpSession session, Model model) throws MessagingException {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
 		List<Cart> carts = cartService.retrieveByUserId(user.getId());
@@ -143,6 +150,9 @@ public class BookingController {
 			//remove from cart since alr added into booking
 			cartService.deleteCart(cart);
 		}
+		
+		//emailService.sendMail(newBooking.getId());
+		
 		return "redirect:/booking/list";
 	}
 	
@@ -243,8 +253,7 @@ public class BookingController {
 		}
 		int tp = travelPacService.getDiscount(numNights, numAttractions);
 		newBooking = new Booking(user, LocalDate.now(), tp);
-		bookService.saveBooking(newBooking);
-		return newBooking;
+		return bookService.saveBooking(newBooking);
 	}
 	
 }

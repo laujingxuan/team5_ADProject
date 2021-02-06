@@ -23,7 +23,16 @@ public class User {
 	private RoleType role;
 	private String email;
 	private long points; 
+	String name;
 	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@OneToMany(mappedBy="user")
 	private List<Cart> carts;

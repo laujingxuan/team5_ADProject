@@ -76,13 +76,13 @@ function submitdayViaAjax(){
 	date["endDate"] = lastdate;
 	date["roomType"] = /*[[${RoomType}]]*/ "";
 	//console.log(date);
-
+	var api_url = /*[[${APIURL}]]*/'';
 	
     $.ajax({
         type : "POST",
         contentType : "application/json",
         //get API URL from database
-        url : "http://localhost:8081/api/hotel/room/period",
+        url : api_url,
         data : JSON.stringify(date),
         dataType : 'json',
         timeout : 100000,
@@ -128,6 +128,7 @@ function submitdayViaAjax(){
 
   <table class="table py-5" cellspacing="10px" cellpadding="10px">
 	<tr><th colspan="4" class="text-center">select a date</th></tr>
+	<tr th:text ="${discount}">id</tr>
 	<tr>
 		<td class="td_left"><label for="startDate">Start Date :</label></td>
 		<td class="td_right"><input type="text" id="startdate"></td>
