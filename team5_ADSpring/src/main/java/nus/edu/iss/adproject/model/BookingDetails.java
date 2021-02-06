@@ -28,16 +28,25 @@ public class BookingDetails {
 	public BookingDetails() {
 		super();
 	}
+	
+	
 
-	public BookingDetails(Booking booking, Product product, String APIBookingId,
-			int numOfGuest, double price) {
+	public BookingDetails(Booking booking, Product product, String aPIBookingId, int numOfGuest,
+			double price) {
 		super();
 		this.booking = booking;
 		this.product = product;
-		this.APIBookingId = APIBookingId;
+		APIBookingId = aPIBookingId;
 		this.numOfGuest = numOfGuest;
 		this.price = price;
 	}
+
+	/*
+	 * public BookingDetails(Booking booking, Product product, String APIBookingId,
+	 * int numOfGuest, double price) { super(); this.booking = booking; this.product
+	 * = product; this.APIBookingId = APIBookingId; this.numOfGuest = numOfGuest;
+	 * this.price = price; }
+	 */
 
 	public long getId() {
 		return id;

@@ -17,5 +17,9 @@ public interface AttractionRepository extends JpaRepository<Attraction, Long> {
 
 	@Query("Select a from Attraction a where a.user.id = :userId")
 	List<Attraction> findByUserId(@Param("userId")Long UserId);
+	
+	List<Attraction> findAll();
+	
+
 
 }

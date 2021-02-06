@@ -1,4 +1,4 @@
-
+//
 //package nus.edu.iss.adproject;
 //
 //import org.junit.jupiter.api.Test;
@@ -29,14 +29,14 @@
 //		RoomRepo.save(new RoomType("Swissôtel The Stamford ","super  Single","Best all","http://arcadiahotel.com.sg/wp-content/uploads/2015/08/1-Superior-Single1.jpg",37.00));
 //		RoomRepo.save(new RoomType("Hotel Miramar ","Single","Best all","https://cf.bstatic.com/images/hotel/max1024x768/586/58653023.jpg",40.00));
 //		
-////		
-////		RoomRepo.save(new RoomType("Marina Bay Sands Hotel ","Double","Best to rest","double.png",50.00));
-////		RoomRepo.save(new RoomType("Marina Bay Sands Hotel ","Double","Best to rest","double1.png",55.00));
-////		RoomRepo.save(new RoomType("Swissôtel The Stamford ","Double","Best to U","double2.png",45.00));
-////		RoomRepo.save(new RoomType("Swissôtel The Stamford ","Double","Best to U","double3.png",47.00));
-////		RoomRepo.save(new RoomType("Swissôtel The Stamford ","Double","Best to U","double4.png",49.00));
-////		RoomRepo.save(new RoomType("Hotel Miramar ","Double","Best all","double5.png",67.00));
-////		RoomRepo.save(new RoomType("Hotel Miramar ","Double","Best all","double6.png",60.00));
+//		
+//		RoomRepo.save(new RoomType("Marina Bay Sands Hotel ","Double","Best to rest","double.png",50.00));
+//		RoomRepo.save(new RoomType("Marina Bay Sands Hotel ","Double","Best to rest","double1.png",55.00));
+//		RoomRepo.save(new RoomType("Swissôtel The Stamford ","Double","Best to U","double2.png",45.00));
+//		RoomRepo.save(new RoomType("Swissôtel The Stamford ","Double","Best to U","double3.png",47.00));
+//		RoomRepo.save(new RoomType("Swissôtel The Stamford ","Double","Best to U","double4.png",49.00));
+//		RoomRepo.save(new RoomType("Hotel Miramar ","Double","Best all","double5.png",67.00));
+//		RoomRepo.save(new RoomType("Hotel Miramar ","Double","Best all","double6.png",60.00));
 //	}
 ////	@Test
 ////	void htcreate()
@@ -57,4 +57,4 @@
 //	
 //
 //
-
+//
