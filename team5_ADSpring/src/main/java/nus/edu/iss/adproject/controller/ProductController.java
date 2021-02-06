@@ -28,6 +28,7 @@ import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
+import nus.edu.iss.adproject.repository.AttractionRepository;
 import nus.edu.iss.adproject.repository.ProductRepo;
 import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.service.AttractionService;
@@ -42,6 +43,8 @@ public class ProductController {
 	@Autowired 
 	ProductRepo pRepo;
 	
+	@Autowired
+	AttractionRepository Attrepo;
 	@Autowired
 	private ProductService pservice;
 	
@@ -227,6 +230,41 @@ public class ProductController {
 		
 		aservice.save(attraction);
 		return "forward:/product/list";
+	}
+	@GetMapping("/CreateAttraction")
+	public String CreateAtt(Model model)
+	
+	{
+		model.addAttribute("attraction",new Attraction());
+		return "CreateAttraction";
+	}
+	@GetMapping("/saveAttraction")
+	public String saveAtt(@ModelAttribute("attraction") @Valid Attraction attraction, BindingResult bindingResult,
+			Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			return "CreateAttraction";
+		}
+		Product newAtt= new Product(ProductType.ATTRACTION);
+		pservice.save(newAtt);
+		attraction.setProduct(newAtt);
+		aservice.save(attraction);
+		System.out.println(attraction);
+		return "forward:/product/AttractionOverall";
+	}
+	@GetMapping("/AttractionOverall")
+	public String attoverall(Model model)
+	{
+		List<Attraction> AttAll= aservice.findAll();
+		System.out.println("this is attraction after create att : "+ AttAll);
+		model.addAttribute("attractions",AttAll);
+		return "attractionOverAll";
+	}
+	@GetMapping("/delete/AttDel/{id}")
+	public String deleteAtt(Model model, @PathVariable("id") Long id) {
+		Attrepo.deleteById(id);
+
+		return "forward:/product/AttractionOverall";
 	}
 
 }

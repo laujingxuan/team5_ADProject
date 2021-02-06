@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.adproject.model.Attraction;
+import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.repository.AttractionRepository;
 
 
@@ -21,7 +22,7 @@ public class AttractionServiceImpl implements AttractionService{
     @Override
 	public void save(Attraction x) {
 		// TODO Auto-generated method stub
-		
+		arepo.save(x);
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class AttractionServiceImpl implements AttractionService{
 	@Override
 	public void delete(Attraction x) {
 		// TODO Auto-generated method stub
-		
+		arepo.delete(x);
 	}
 	
 	@Override 
@@ -50,6 +51,8 @@ public class AttractionServiceImpl implements AttractionService{
 	public List<Attraction> findByUserId(Long userId) {
 		return arepo.findByUserId(userId);
 	}
+	
+	
 
 
 }
