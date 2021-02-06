@@ -16,6 +16,7 @@ import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Cart;
+import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.RoomType;
@@ -114,7 +115,7 @@ public class Team5AdSpringApplication {
 			
 			
 			//creating User
-			User customer1 = new User("customer1","customer1",RoleType.CUSTOMER,"customer1@gmail.com");
+			User customer1 = new User("customer1","customer1",RoleType.CUSTOMER,"tanfeng95@hotmail.com");
 			User customer2 = new User("customer2","customer2",RoleType.CUSTOMER,"customer2@gmail.com");
 			User platform1 = new User("platform1","platform1",RoleType.PLATFORMMANAGER,"platform1@gmail.com");
 			User hotelM1 = new User("hotel1","hotel1",RoleType.HOTELMANAGER,"hotel1@gmail.com");
@@ -218,6 +219,7 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail2);
 			bookDetRepo.save(bookDetail3);
 			bookDetRepo.save(bookDetail4);
+
 			BookingDetails bookDetail5 = new BookingDetails(booking2, attraction2.getProduct(), "1", 4, 300);
 			BookingDetails bookDetail6 = new BookingDetails(booking2, attraction3.getProduct(), "2", 3, 250);
 			BookingDetails bookDetail7 = new BookingDetails(booking3, DoubleRoom1.getProduct(), "3", 5, 400);
@@ -226,6 +228,7 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail6);
 			bookDetRepo.save(bookDetail7);
 			bookDetRepo.save(bookDetail8);
+
 		};
 	}
 

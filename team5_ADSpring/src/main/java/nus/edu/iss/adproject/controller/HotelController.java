@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.edu.iss.adproject.model.Hotel;
@@ -92,14 +93,16 @@ public class HotelController {
 		return "hotel-form";
 	}
 
-	@GetMapping("/save")
-	public String saveProductForm(@ModelAttribute("product") @Valid Hotel hotel, BindingResult bindingResult,
+	@PostMapping("/save")
+	public String saveHotelForm(@ModelAttribute("hotel") @Valid Hotel hotel, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
-			return "productform";
+			model.addAttribute("hotel", hotelservice.findById(hotel.getId()));
+			return "hotel-form";
 		}
+		System.out.println(3);
 		hotelservice.save(hotel);
-		return "forward:/hotel/Hotel";
+		return "redirect:/hotel/Hotels";
 
 	}
 }

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -19,16 +20,20 @@ public class Hotel {
     public long id;	
 	@OneToMany(mappedBy = "hotel")
 	private List< RoomType> roomType;
+	@NotNull
 	private String name;
+	@NotNull
     private String location;
     private double lat;
     private double longi;
     private double rate;
     private int numberOfRestaurants;
+    @NotNull
     private String country_City;
     private String emenities;
     private String quality;
     private String description;
+    @NotNull
     private String API_URL;
     private String imageURL;
     

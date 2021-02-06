@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.User;
+import nus.edu.iss.adproject.nonEntityModel.DashboardQuery;
 import nus.edu.iss.adproject.repository.BookingDetailsRepo;
 import nus.edu.iss.adproject.repository.BookingRepo;
 
@@ -44,6 +45,47 @@ public class BookingServiceImp implements BookingService {
 	public BookingDetails saveBookingDetails(BookingDetails bookD) {
 		return bookRepoDet.save(bookD);
 	}
+
+	@Override
+	public List findGuestByMonth() {
+		return bookRepoDet.findGuestByMonth();
+	}
+
+	@Override
+	public List<Object> findMonthlyRevenueByHotel(Long userId) {
+		return bookRepoDet.findMonthlyRevenueByHotel(userId);
+	}
+
+	@Override
+	public List<Object> findMonthlyBookingRateByHotel(Long userId) {
+		return bookRepoDet.findMonthlyBookingRateByHotel(userId);
+	}
+
+	@Override
+	public List<Object> findMonthlyRevenueForAllHotels() {
+		return bookRepoDet.findMonthlyRevenueForAllHotels();
+	}
+
+	@Override
+	public List<Object> findMonthlyRevenueForAllAttractions() {
+		return bookRepoDet.findMonthlyRevenueForAllAttractions();
+	}
+
+	@Override
+	public List<Object> findMonthlyGuestByHotelId(Long hotel_id) {
+		return bookRepoDet.findMonthlyGuestByHotelId(hotel_id);
+	}
+
+	@Override
+	public List<Object> findMonthlyRevenueByHotelId(Long hotel_id) {
+		return bookRepoDet.findMonthlyRevenueByHotelId(hotel_id);
+	}
+
+	@Override
+	public List<Object> findMonthlyBookingRateByHotelId(Long hotel_id) {
+		return bookRepoDet.findMonthlyBookingRateByHotelId(hotel_id);
+	}
+
 	
 	@Override
 	public List<Booking> findLatestBookingsByUser(User user){

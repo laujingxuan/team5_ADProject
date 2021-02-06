@@ -95,9 +95,13 @@ public class Booking {
 
 	@Override
 	public String toString() {
+
 		return "Booking [id=" + id + ", bookingDate="
 				+ bookingDate + ", travelPackageDiscount=" + travelPackageDiscount + "]";
+
 	}
+
+	
 
 	
 }

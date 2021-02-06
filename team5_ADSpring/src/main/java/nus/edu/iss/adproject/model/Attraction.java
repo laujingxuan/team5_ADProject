@@ -35,6 +35,18 @@ public class Attraction {
 	private List<Discount> discount;
 	
 	public Attraction() { }	
+	public Attraction(String name, double price, String location, double rating, String description,
+			String country_city, String aPI_URL) {
+		super();
+		discount = new ArrayList<Discount>();
+		this.name = name;
+		this.price = price;
+		this.location = location;
+		this.rating = rating;
+		this.description = description;
+		this.country_city = country_city;
+		API_URL = aPI_URL;
+	}
 	
 	public Attraction(String name, double price, String location, double rating, String description,
 			String country_city, String aPI_URL, User user, Product product) {
