@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -44,4 +45,9 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 //	public List<RoomType>  findbyHotelId(int hid){
 //		return rrepo.findbyHotelId(hid);
 //	}
+
+	@Override
+	public ArrayList<Object> findDistinctRoomTypes() {
+		return rrepo.findDistinctRoomTypes();
+	}
 }
