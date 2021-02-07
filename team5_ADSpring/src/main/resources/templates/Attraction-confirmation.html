@@ -41,8 +41,8 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center" valign="top"
                             style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <h4 style="font-size: 18px; font-weight: 400; margin: 2;">Attached is your booking id :
-                                bookingid </h4> <img
+                            <h4 style="font-size: 18px; font-weight: 400; margin: 2;">Attached is your booking id : <b th:text="${bookingdetail.APIBookingId}"></b>
+                               </h4> <img
                                 src="https://www.cognex.com/BarcodeGenerator/Content/images/isbn.png" width="125"
                                 height="80" style="display: block; border: 0px;" />
                         </td>
@@ -56,58 +56,53 @@
                     <tr>
                         <td bgcolor="#ffffff" align="left" 
                             style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 24px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">the following booking has been booked:</p>
+                            <p style="margin: 0;">the following <b th:text="${bookingdetail.product.attraction.name}"></b> booking has been booked:</p>
                         </td>
                     </tr>
+                    
+                     <tr>
+                        <td bgcolor="#ffffff" align="left"
+                            style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">Booked on  :<b th:text="${bookingdetail.booking.bookingDate}"></b> </p>
+                        </td>
+                    </tr> <!-- COPY -->
+                    
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">from start date to end date how many nights </p>
+                            <p style="margin: 0;">Entrance Date :<b th:text="${bookingdetail.startDate}"></b> </p>
                         </td>
                     </tr> <!-- COPY -->
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">check in : check in date </p>
+                            <p style="margin: 0;">Number of Tickets :  <b th:text="${bookingdetail.quantity}"></b> </p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">check out : check out date</p>
+                            <p style="margin: 0;">Total Cost : <b th:text="${bookingdetail.price}"></b></p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">number of room : </p>
+                            <p style="margin: 0;">Location :<b th:text="${bookingdetail.product.attraction.location}"></b> </p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">guest per room : </p>
+                            <p style="margin: 0;">Description : <b th:text="${bookingdetail.product.attraction.description}"></b> </p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">total for stay : value </p>
+                            <p style="margin: 0;">Rating : <b th:text="${bookingdetail.product.attraction.rating}"></b> </p>
                         </td>
                     </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 10px 30px 10px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">room type : room type </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 10px 30px 10px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">request : request </p>
-                        </td>
-                    </tr>
-
                 </table>
             </td>
         </tr>
@@ -119,43 +114,19 @@
                     <tr>
                         <td bgcolor="#ffffff" align="center" 
                             style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 40px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;">Summary of charges </p>
+                        <p style="margin: 0;">Summary Of Charges </p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">tuedat , 10 march 2020 to friday 13 march 2020</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">3 nights ar 100 sgd per night per room </p>
-                        </td>
-                    </tr> <!-- COPY -->
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">taxes and free (per night per room) </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">estimated goverment taxes and fee : cost </p>
+                            <p style="margin: 0;">Entrance Date : <b th:text="${bookingdetail.startDate}"></b></p>
                         </td>
                     </tr>
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">service charge : cost </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td bgcolor="#ffffff" align="left"
-                            style="padding: 10px 30px 10px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">total cost : total </p>
+                            <p style="margin: 0;">Total Cost : <b th:text="${bookingdetail.price}"></b> </p>
                         </td>
                     </tr>
                 </table>
@@ -178,7 +149,7 @@
                             style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                             <p style="margin: 0;">
                             •
-                            You may cancel your reservation for no charge before 11:59 PM local hotel time on Thursday, January 14, 2021 (1 day[s]
+                            You may cancel your reservation for no charge before 11:59 PM local Attraction time on  <b th:text="${bookingdetail.startDate}" ></b> (1 day[s]
                             before arrival).<br>
                             
                             •Please note that we will assess a fee of 294.25 SGD if you must cancel after this deadline.<br>
@@ -201,4 +172,13 @@
 
 </body>
 
+</html><!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
 </html>
