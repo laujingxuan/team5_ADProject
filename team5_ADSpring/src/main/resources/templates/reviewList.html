@@ -20,11 +20,13 @@
 	<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto"> 
 		<tr>
 			<td><b>ID</b></td>
+			<td><b>Picture</b></td>
 			<td><b>Rating</b></td>
 			<td><b>Content</b></td>
 		</tr>
 		<tr th:each="review:${review}">
 			<td th:text="${review.id}">ID</td>
+			<td><img height="128" width="168" th:src="${review.photoImagePath}"/></td>
 			<td th:text="${review.rating}">Rating</td>
 			<td th:text="${review.message}">Content</td>
 		</tr>

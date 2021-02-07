@@ -33,7 +33,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Hotel> hotel;
-
+	
+	@OneToMany(mappedBy = "user")
+	private List<ProductReview> productReview;
 	
 	public User() { }
 

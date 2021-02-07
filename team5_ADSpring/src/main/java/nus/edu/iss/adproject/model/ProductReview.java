@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class ProductReview {
@@ -23,17 +24,19 @@ public class ProductReview {
 	
 	private String message;
 	
-	private String photoUrl;
+	private String photoImagePath;
+	
+	private String photo;
 	
 	
 	public ProductReview() { }
 
-	public ProductReview(User user, Product product, double rating, String message, String photoUrl) {
+	public ProductReview(User user, Product product, double rating, String message, String photo) {
 		this.user = user;
 		this.product = product;
 		this.rating = rating;
 		this.message = message;
-		this.photoUrl = photoUrl;
+		this.photo = photo;
 	}
 
 	
@@ -52,13 +55,6 @@ public class ProductReview {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public String getPhotoUrl() {
-		return photoUrl;
-	}
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -74,7 +70,24 @@ public class ProductReview {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	public void setPhotoImagePath(String photoImagePath) {
+		this.photoImagePath = photoImagePath;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
 	
+	
+	@Transient
+	public String getPhotoImagePath() {
+		if(photo == null)
+			return null;
+		
+		return "/user-photos/" + id + "/" + photo;
+	}
 	
 
 }
