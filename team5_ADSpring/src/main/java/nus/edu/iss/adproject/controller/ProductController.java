@@ -228,7 +228,6 @@ public class ProductController {
 		if (bindingResult.hasErrors()) {
 			return "product-form";
 		}
-		System.out.println(1);
 		aservice.save(attraction);
 		return "redirect:/";
 	}
