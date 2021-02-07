@@ -32,50 +32,58 @@
 	</table>
 	
 	<br>
-	<h3 align="center" >Recommendation</h3>
-	<br>
-	<h4>HotSellers</h4>
-		<table class = "table">
-			<tr>
-				<td><b>Image</b></td>
-				<td><b>Product Name</b></td>
-				<td><b>Detail Link</b></td>
-			</tr>
-			<tbody th:each="product:${hotSellers}">
-				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
-					<td><img height="128" th:src="${product.roomType.imageURL}" width="128" /></td>
-					<td th:text="${product.roomType.hotel.name} + ': ' + ${product.roomType.roomType} + ' Room'">Hotel Name</td>
-					<td><a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${product.roomType.id}">View Detail</a></td>
-				</tr>
-				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
-					<td><img height="128" th:src="${product.attraction.imageURL}" width="128" /></td>
-					<td th:text="${product.attraction.name}">Hotel Name</td>
-					<td><a href="hoteldetail.html" th:href="@{/product/detail/}+${product.id}">View Detail</a></td>
-				</tr>
-			</tbody>
-		</table>
+	<h4 align="center" class = "py-3">Hot Sellers</h4>
+	<div class = "container">
+		<div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+			<div th:each="product:${hotSellers}">
+				<div th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
+					<div class = "cardSection">
+				        <div class = "card text-center py-3 d-flex flex-column" style="width: 14rem; height: 14rem;">
+				          <img height="128" th:src="${product.roomType.imageURL}" width="128"  class="card-img-top py-2 px-2 image-fluid"/>
+				          <h6 th:text="${product.roomType.hotel.name} + ': ' + ${product.roomType.roomType} + ' Room'">Hotel Name</h6>
+						  <a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${product.roomType.id}" class = "mt-auto">View Detail</a>
+				        </div>
+				 	</div>
+			 	</div>		
+				<div th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
+					<div class = "cardSection">
+				        <div class = "card text-center py-3 d-flex flex-column" style="width: 14rem; height: 14rem;">
+				          <img height="128" th:src="${product.attraction.imageURL}" width="128"  class="card-img-top py-2 px-2 image-fluid"/>
+				          <h6 th:text="${product.attraction.name}">Attraction Name</h6>
+						  <a href="hoteldetail.html" th:href="@{/product/detail/}+${product.id}" class = "mt-auto">View Detail</a>
+				        </div>
+				 	</div>
+			 	</div>		 		
+			</div>
+		</div>
+	</div>
 	<br>
 	<div th:if="${session.user!=null}">
-		<h4>Recently Bought Items</h4>
-		<table class = "table">
-			<tr>
-				<td><b>Image</b></td>
-				<td><b>Product Name</b></td>
-				<td><b>Detail Link</b></td>
-			</tr>
-			<tbody th:each="product:${userRecommendation}">
-				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
-					<td><img height="128" th:src="${product.roomType.imageURL}" width="128" /></td>
-					<td th:text="${product.roomType.hotel.name} + ': ' + ${product.roomType.roomType} + ' Room'">Hotel Name</td>
-					<td><a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${product.roomType.id}">View Detail</a></td>
-				</tr>
-				<tr th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
-					<td><img height="128" th:src="${product.attraction.imageURL}" width="128" /></td>
-					<td th:text="${product.attraction.name}">Hotel Name</td>
-					<td><a href="hoteldetail.html" th:href="@{/product/detail/}+${product.id}">View Detail</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<h4 align="center" class = "py-3">Recently Booked Items</h4>
+		<div class = "container">
+			<div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+				<div th:each="product:${userRecommendation}">
+					<div th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
+						<div class = "cardSection">
+					        <div class = "card text-center py-3 d-flex flex-column" style="width: 14rem; height: 14rem;">
+					          <img height="128" th:src="${product.roomType.imageURL}" width="128"  class="card-img-top py-2 px-2 image-fluid"/>
+					          <h6 th:text="${product.roomType.hotel.name} + ': ' + ${product.roomType.roomType} + ' Room'">Hotel Name</h6>
+							  <a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${product.roomType.id}" class = "mt-auto">View Detail</a>
+					        </div>
+					 	</div>
+				 	</div>		
+					<div th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
+						<div class = "cardSection">
+					        <div class = "card text-center py-3 d-flex flex-column" style="width: 14rem; height: 14rem;">
+					          <img height="128" th:src="${product.attraction.imageURL}" width="128"  class="card-img-top py-2 px-2 image-fluid"/>
+					          <h6 th:text="${product.attraction.name}">Attraction Name</h6>
+							  <a href="hoteldetail.html" th:href="@{/product/detail/}+${product.id}" class = "mt-auto">View Detail</a>
+					        </div>
+					 	</div>
+				 	</div>		 		
+				</div>
+			</div>
+		</div>
 	</div>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
