@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,30 +14,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
-import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Hotel;
+import nus.edu.iss.adproject.model.Month;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.User;
-import nus.edu.iss.adproject.nonEntityModel.AttractionBooking;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.DashboardQuery;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.RoleType;
-import nus.edu.iss.adproject.repository.BookingDetailsRepo;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.AttractionServiceImpl;
 import nus.edu.iss.adproject.service.BookingService;
 import nus.edu.iss.adproject.service.BookingServiceImp;
-import nus.edu.iss.adproject.service.DiscountServiceImpl;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.HotelServiceImpl;
+import nus.edu.iss.adproject.service.RoomTypeService;
+import nus.edu.iss.adproject.service.RoomTypeServiceImpl;
 import nus.edu.iss.adproject.service.SessionService;
 import nus.edu.iss.adproject.service.SessionServiceImpl;
 
@@ -54,14 +58,63 @@ public class DashboardController {
 	
 	@Autowired
 	private AttractionService attraction_svc;
+	
+	@Autowired
+	private RoomTypeService room_svc;
 
 	@Autowired
-	public void SetImplimentation(BookingServiceImp bookingservice_impl, SessionServiceImpl session_svcimpl, HotelServiceImpl hotel_svcimpl, AttractionServiceImpl attr_svcimpl) {
+	public void SetImplimentation(BookingServiceImp bookingservice_impl, SessionServiceImpl session_svcimpl, HotelServiceImpl hotel_svcimpl, AttractionServiceImpl attr_svcimpl, RoomTypeServiceImpl room_svcimpl) {
 		this.bookingservice = bookingservice_impl;
 		this.session_svc = session_svcimpl;
 		this.hotel_svc = hotel_svcimpl;
 		this.attraction_svc = attr_svcimpl;
+		this.room_svc = room_svcimpl;
 	}
+	
+	@RequestMapping(value = "/dailyBookingVacancy")
+	@ResponseBody
+	public Map<Integer,Integer> getBookingData(@RequestParam String month,@RequestParam String room, HttpSession session) {
+		//User user = (User) session.getAttribute("user");
+		int monthValue = Month.valueOf(month).ordinal()+1;	
+		
+		
+		String uri;
+		RestTemplate restTemplate = new RestTemplate();
+		Map<Integer, Integer> data_dailyVacancyRate = new LinkedHashMap<Integer, Integer>();
+		//uri = roomType.getHotel().getAPI_URL()+ "room/month";
+		uri = "http://localhost:8081/api/hotel/room/month";
+		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
+		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
+				DailyRoomDetailWrapper.class);
+		for (DailyRoomTypeDetail daily : result.getDailyList()) {
+			data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
+			//data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
+		}
+		return data_dailyVacancyRate;
+	}
+	
+	@RequestMapping(value = "/dailyCancellation")
+	@ResponseBody
+	public Map<Integer,Integer> getCancellationData(@RequestParam String month,@RequestParam String room, HttpSession session) {
+		
+		int monthValue = Month.valueOf(month).ordinal()+1;
+		System.out.println(room);
+		
+		String uri;
+		RestTemplate restTemplate = new RestTemplate();
+		Map<Integer, Integer> data_dailyCancellationRate = new LinkedHashMap<Integer, Integer>();
+		//uri = roomType.getHotel().getAPI_URL()+ "room/month";
+		uri = "http://localhost:8081/api/hotel/room/month";
+		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
+		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
+				DailyRoomDetailWrapper.class);
+		for (DailyRoomTypeDetail daily : result.getDailyList()) {
+			//data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
+			data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
+		}
+		return data_dailyCancellationRate;
+	}
+	
 
 	@GetMapping("/reports")
 	public String showDashboard(Model model, HttpSession session) {
@@ -206,7 +259,18 @@ public class DashboardController {
 				}
 
 			}
-
+			
+			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
+			List<RoomType> room_list = new ArrayList<RoomType>();
+			System.out.println(rooms.size());
+			for (Object object : rooms) {
+				roomType= new RoomType();
+				roomType.setRoomType(object.toString());
+				room_list.add(roomType);
+			}
+			 
+			model.addAttribute("roomTypes", room_list);
+			model.addAttribute("month",Month.values());
 			model.addAttribute("data", data);
 			model.addAttribute("data_revenue", data_revenue);
 			model.addAttribute("data_bookingRate", data_bookingRate);
@@ -268,6 +332,7 @@ public class DashboardController {
 				}
 			}
 
+			model.addAttribute("month",Month.values());
 			model.addAttribute("attractoins", a_list);
 			model.addAttribute("hotels", d_list);
 			return "platformDashboard";
@@ -417,6 +482,17 @@ public class DashboardController {
 				}
 
 			}
+			
+			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
+			List<RoomType> room_list = new ArrayList<RoomType>();
+			System.out.println(rooms.size());
+			for (Object object : rooms) {
+				roomType= new RoomType();
+				roomType.setRoomType(object.toString());
+				room_list.add(roomType);
+			}
+			 
+			model.addAttribute("roomTypes", room_list);
 
 			model.addAttribute("data", data);
 			model.addAttribute("data_revenue", data_revenue);

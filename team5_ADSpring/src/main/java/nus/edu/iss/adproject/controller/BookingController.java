@@ -134,8 +134,10 @@ public class BookingController {
 				final String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL() + "booking";
 				RestTemplate restTemplate = new RestTemplate();
 				HotelBooking returnBooking = restTemplate.postForObject( uri, hotelBook, HotelBooking.class);
-				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice);
+				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice,cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks());
 				bookService.saveBookingDetails(newDetail);
+				emailService.sendMail(newBooking.getId());
+				
 			}else {
 				//creating booking details in our database and attraction booking in the api
 				double beforeDiscountPrice = updateAttractionAPIQuantityLeftAndGetTotalPrice(cart);
@@ -144,14 +146,14 @@ public class BookingController {
 				final String uri = cart.getProduct().getAttraction().getAPI_URL()+ "booking";
 				RestTemplate restTemplate = new RestTemplate();
 				AttractionBooking returnBooking = restTemplate.postForObject(uri, attractBook, AttractionBooking.class);
-				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getQuantity(), afterDiscountPrice);
+				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getQuantity(), afterDiscountPrice,cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks());
 				bookService.saveBookingDetails(newDetail);
 			}
 			//remove from cart since alr added into booking
 			cartService.deleteCart(cart);
 		}
 		
-		//emailService.sendMail(newBooking.getId());
+		emailService.sendMail(newBooking.getId());
 		
 		return "redirect:/booking/list";
 	}

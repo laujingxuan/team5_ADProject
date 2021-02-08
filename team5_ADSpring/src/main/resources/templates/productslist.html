@@ -21,13 +21,13 @@
 			<td><b>ID</b></td>
 			<td><b>Type</b></td>
 			<td><b>Detail Link</b></td>
-      <td><b>Add to cart</b></td>
+      		<td><b>Add to cart</b></td>
 		</tr>
 		<tr th:each="product:${product}">
 			<td th:text="${product.id}">ID</td>
 			<td th:text="${product.type}">ID</td>
 			<td><a href="hoteldetail.html" th:href="@{/product/detail/}+${product.id}">View Detail</a></td>
-			<td><a th:href="@{/cart/add/}+${product.id}">add to cart</a></td>
+			<td><a href="roomType-availble-date.html" th:href="@{product/room-available-date/}+${product.id}">add to cart</a></td>
 		</tr>
 	</table>
 	

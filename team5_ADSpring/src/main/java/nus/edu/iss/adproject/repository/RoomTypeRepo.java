@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -28,6 +29,11 @@ public interface RoomTypeRepo extends JpaRepository<RoomType, Long> {
 
 
 	public void save(@Valid Product product);
+	
+//	distinct r.roomType as RoomType, r.description as Description
+	
+	@Query("Select distinct r.roomType as RoomType From RoomType r")
+	public ArrayList<Object> findDistinctRoomTypes();
 
 
 }
