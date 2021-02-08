@@ -21,6 +21,7 @@ public class RoomType {
 	@ManyToOne
 	private Hotel hotel;
 
+	//roomType is "SINGLE", "DOUBLE", "FAMILY" or etc
 	private String roomType;
 	private String description;
 	private String imageURL;

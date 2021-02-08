@@ -45,38 +45,20 @@ nav {
 			<th>location</th>
 
 		</tr>
-
-		<tr th:each="hotel:${Hotels}">
+	
+		<tr  th:each="hotel:${Hotels}" >
 			<td th:text="${hotel.id}">ID</td>
-			<td th:text="${hotel.name}">ID</td>
+			<td th:text="${hotel.name}">ID</td>	
 			<td th:text="${hotel.lat}">ID</td>
 			<td th:text="${hotel.longi}">ID</td>
-			<td th:text="${hotel.rate}">ID</td>
+			<td th:text="${hotel.rate}">ID</td>	
 			<td th:text="${hotel.numberOfRestaurants}">ID</td>
 			<td th:text="${hotel.country_City}">ID</td>
-			<td th:text="${hotel.emenities}">ID</td>
+			<td th:text="${hotel.emenities}">ID</td>	
 			<td th:text="${hotel.quality}">ID</td>
 			<td th:text="${hotel.description}">ID</td>
-			<td><a href="Map.html" th:href="@{/list/Map/}+${hotel.id}">location</a></td>
-
+			<td ><a href="Map.html" th:href="@{/hotel/Map/}+${hotel.id}" >location</a></td>
 		</tr>
-
-	
-			<tr  th:each="hotel:${Hotels}" >
-				<td th:text="${hotel.id}">ID</td>
-				<td th:text="${hotel.name}">ID</td>	
-				<td th:text="${hotel.lat}">ID</td>
-				<td th:text="${hotel.longi}">ID</td>
-				<td th:text="${hotel.rate}">ID</td>	
-				<td th:text="${hotel.numberOfRestaurants}">ID</td>
-				<td th:text="${hotel.country_City}">ID</td>
-				<td th:text="${hotel.emenities}">ID</td>	
-				<td th:text="${hotel.quality}">ID</td>
-				<td th:text="${hotel.description}">ID</td>
-
-	<td ><a href="Map.html" th:href="@{/hotel/Map/}+${hotel.id}" >location</a></td>
-
-			</tr>
 		
 
 	</table>

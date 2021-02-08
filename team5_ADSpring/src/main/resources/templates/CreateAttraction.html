@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Update Attraction</title>
-</head>
+<head><title>Login</title></head>
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
-	<div th:replace="layout/layout.html :: menu"></div>
-	<br />
-	<h3>Update Attraction Details</h3>
-	<form action="#" th:object="${attraction}" th:action="@{/product/save}"
-		method="post">
+<div th:replace="layout/layout.html :: menu" ></div>
+	<form action="#" th:object="${attraction}" th:action="@{/product/saveAttraction}"
+		method="get">
 		<table>
+		<tr>
+				<td>
+					<input type="hidden" th:field="*{id}">
+				</td>				
+			</tr>
 
 			<tr>
 				<td>Attraction Name</td>
 				<td><input type="text" th:field="*{name}"></td>
 			</tr>
-
+			
 			<tr>
 				<td>Price</td>
 				<td><input type="text" th:field="*{price}"></td>
@@ -25,7 +26,7 @@
 			<tr>
 				<td>Location</td>
 				<td><input type="text" th:field="*{location}">
-			</tr>
+			</tr>			
 
 			<tr>
 				<td>Country and city</td>
@@ -36,22 +37,20 @@
 				<td>Description</td>
 				<td><input type="text" th:field="*{description}"></td>
 			</tr>
-
+			
 			<tr>
 				<td>API URL</td>
 				<td><input type="text" th:field="*{API_URL}"></td>
 			</tr>
 
 			<tr>
-				<td><input type="hidden" th:field="*{id}" th:value="*{id}">
-				<input type="hidden" th:field="*{product}" th:value="*{product}">
-				<input type="hidden" th:field="*{user}" th:value="*{user}"></td>
 				<td colspan="3"><button class="btn btn-primary" type="submit">Save</button></td>
 			</tr>
 		</table>
 	</form>
-	<div th:replace="layout/layout.html :: footer"></div>
-	<div th:replace="layout/layout.html :: javascript"></div>
+
+
+<div th:replace="layout/layout.html :: footer"></div>
+<div th:replace="layout/layout.html :: javascript"></div>
 </body>
 </html>
-

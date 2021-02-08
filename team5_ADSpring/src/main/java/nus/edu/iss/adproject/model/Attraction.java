@@ -23,6 +23,7 @@ public class Attraction {
 	private String description;
 	private String country_city;
 	private String API_URL;
+	private String imageURL;
 	
 	@ManyToOne
 	private User user;
@@ -34,6 +35,18 @@ public class Attraction {
 	private List<Discount> discount;
 	
 	public Attraction() { }	
+	public Attraction(String name, double price, String location, double rating, String description,
+			String country_city, String aPI_URL) {
+		super();
+		discount = new ArrayList<Discount>();
+		this.name = name;
+		this.price = price;
+		this.location = location;
+		this.rating = rating;
+		this.description = description;
+		this.country_city = country_city;
+		API_URL = aPI_URL;
+	}
 	
 	public Attraction(String name, double price, String location, double rating, String description,
 			String country_city, String aPI_URL, User user, Product product) {
@@ -48,6 +61,30 @@ public class Attraction {
 		API_URL = aPI_URL;
 		this.user = user;
 		this.product = product;
+	}
+	
+	public Attraction(String name, double price, String location, double rating, String description,
+			String country_city, String aPI_URL, User user, Product product, String imageURL) {
+		super();
+		discount = new ArrayList<Discount>();
+		this.name = name;
+		this.price = price;
+		this.location = location;
+		this.rating = rating;
+		this.description = description;
+		this.country_city = country_city;
+		API_URL = aPI_URL;
+		this.user = user;
+		this.product = product;
+		this.imageURL = imageURL;
+	}
+	
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 
 	public Product getProduct() {

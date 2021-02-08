@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -19,17 +20,22 @@ public class Hotel {
     public long id;	
 	@OneToMany(mappedBy = "hotel")
 	private List< RoomType> roomType;
+	@NotNull
 	private String name;
+	@NotNull
     private String location;
     private double lat;
     private double longi;
     private double rate;
     private int numberOfRestaurants;
+    @NotNull
     private String country_City;
     private String emenities;
     private String quality;
     private String description;
+    @NotNull
     private String API_URL;
+    private String imageURL;
     
     @OneToMany(mappedBy = "hotel")
     private List<Discount> discount;
@@ -60,6 +66,35 @@ public class Hotel {
 		this.description = description;
 		API_URL = aPI_URL;
 		this.user = user;
+	}
+	
+	public Hotel(String name, String location, double lat, double longi, double rate,
+			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
+			String aPI_URL, User user, String imageURL) {
+		super();
+		this.roomType = new ArrayList<RoomType>();
+		this.discount = new ArrayList<Discount>();
+		this.name = name;
+		this.location = location;
+		this.lat = lat;
+		this.longi = longi;
+		this.rate = rate;
+		this.numberOfRestaurants = numberOfRestaurants;
+		this.country_City = country_City;
+		this.emenities = emenities;
+		this.quality = quality;
+		this.description = description;
+		API_URL = aPI_URL;
+		this.user = user;
+		this.imageURL = imageURL;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 
 	public String getAPI_URL() {

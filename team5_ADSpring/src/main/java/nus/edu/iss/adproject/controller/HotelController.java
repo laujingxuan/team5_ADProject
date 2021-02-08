@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.edu.iss.adproject.model.Hotel;
@@ -28,11 +29,6 @@ public class HotelController {
 
 	@Autowired
 	private RoomTypeService rservice;
-	
-	@GetMapping("/list")
-	public String viewUser(Model model, HttpSession session) {
-		return "discountForm";
-	}
 
 	@GetMapping("/Hotels")
 	public String gethotel(Model model){
@@ -97,14 +93,31 @@ public class HotelController {
 		return "hotel-form";
 	}
 
-	@GetMapping("/save")
-	public String saveProductForm(@ModelAttribute("product") @Valid Hotel hotel, BindingResult bindingResult,
+	@PostMapping("/save")
+	public String saveHotelForm(@ModelAttribute("hotel") @Valid Hotel hotel, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
-			return "productform";
+			model.addAttribute("hotel", hotelservice.findById(hotel.getId()));
+			return "hotel-form";
 		}
 		hotelservice.save(hotel);
-		return "forward:/hotel/Hotel";
-
+		return "redirect:/hotel/Hotels";
+	}
+	
+	@GetMapping("/roomtypes/edit/{id}")
+	public String editRoomtypes(Model model,@PathVariable("id") Long id) {
+		model.addAttribute("roomtype",rservice.findById(id));
+		return "roomtypes-form";
+	}
+	
+	@PostMapping("/saveRoom")
+	public String saveRoomType(@ModelAttribute("roomtype") @Valid RoomType roomtype, BindingResult bindingResult,
+			Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("roomtype", rservice.findById(roomtype.getId()));
+			return "roomtypes-form";
+		}
+		rservice.save(roomtype);
+		return "redirect:/hotel/roomtypes";
 	}
 }
