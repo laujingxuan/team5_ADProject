@@ -1,6 +1,7 @@
 package nus.edu.iss.adproject.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
@@ -38,5 +39,7 @@ public interface BookingService {
 	public List<Object> findMonthlyRevenueByHotelId(Long hotel_id);
 	
 	public List<Object> findMonthlyBookingRateByHotelId(Long hotel_id);
+	
+	public BookingDetails retrieveDetailsByDetailId(Long id);
 
 }

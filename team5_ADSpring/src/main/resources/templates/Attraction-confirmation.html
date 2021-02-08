@@ -70,13 +70,13 @@
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Entrance Date :<b th:text="${bookingdetail.startDate}"></b> </p>
+                            <p style="margin: 0;">Entrance Date :<b th:text="${startdate}"></b> </p>
                         </td>
                     </tr> <!-- COPY -->
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Number of Tickets :  <b th:text="${bookingdetail.quantity}"></b> </p>
+                            <p style="margin: 0;">Number of Tickets :  <b th:text="${quantity}"></b> </p>
                         </td>
                     </tr>
                     <tr>
@@ -120,7 +120,7 @@
                     <tr>
                         <td bgcolor="#ffffff" align="left"
                             style="padding: 10px 30px 10px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                            <p style="margin: 0;">Entrance Date : <b th:text="${bookingdetail.startDate}"></b></p>
+                            <p style="margin: 0;">Entrance Date : <b th:text="${startdate}"></b></p>
                         </td>
                     </tr>
                     <tr>
@@ -149,7 +149,7 @@
                             style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
                             <p style="margin: 0;">
                             •
-                            You may cancel your reservation for no charge before 11:59 PM local Attraction time on  <b th:text="${bookingdetail.startDate}" ></b> (1 day[s]
+                            You may cancel your reservation for no charge before 11:59 PM local Attraction time on  <b th:text="${startdate}" ></b> (1 day[s]
                             before arrival).<br>
                             
                             •Please note that we will assess a fee of 294.25 SGD if you must cancel after this deadline.<br>
