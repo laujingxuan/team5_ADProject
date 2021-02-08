@@ -23,6 +23,7 @@ import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.RoomType;
+import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.nonEntityModel.DailyAttractionDetail;
 import nus.edu.iss.adproject.nonEntityModel.DailyDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
@@ -36,6 +37,7 @@ import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.ProductService;
 import nus.edu.iss.adproject.service.RoomTypeService;
+import nus.edu.iss.adproject.service.SessionService;
 
 
 @Controller
@@ -61,6 +63,8 @@ public class ProductController {
 	@Autowired
 	private RoomTypeService RTService;
 	
+	@Autowired
+	private SessionService session_svc;
 
 	@GetMapping("/detail/{id}")
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
@@ -152,6 +156,13 @@ public class ProductController {
 		model.addAttribute("RoomType",RoomType);
 		model.addAttribute("APIURL",APIURL);
 		model.addAttribute("discount",discount);
+
+		
+//		Cart cartitem = new Cart();
+//		cartitem.setProduct(p);
+//		cartitem.setUser(session_svc.getUser());
+		model.addAttribute("cartitem", new CartForm());
+		model.addAttribute("productId", id);
 		return "hotel-roomType-availble-date";
 	}
 

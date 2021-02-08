@@ -21,7 +21,15 @@ public class SessionServiceImpl implements SessionService {
 	UserRepository urepo;
 	
 	@Autowired
+	UserService user_svc;
+	
+	@Autowired
 	HttpSession session;
+	
+	@Autowired
+	public void SetImplimentation(UserServiceImpl user_svcimpl) {
+		this.user_svc = user_svcimpl;
+	}
 	
 	public boolean authenticate(User user) {
 		User dbuser = urepo.findByUserName(user.getUserName());
@@ -44,7 +52,8 @@ public class SessionServiceImpl implements SessionService {
 	}
 	
 	public long getUserId() {
-		User user = (User) session.getAttribute("user");
+		//User user = (User) session.getAttribute("user");
+		User user = user_svc.findById((long) 1);
 		
 		if (user == null)
 			return getDeviceHashCode();
@@ -68,7 +77,8 @@ public class SessionServiceImpl implements SessionService {
 	
 	
 	public User getUser() {
-		return (User) session.getAttribute("user");
+		//return (User) session.getAttribute("user");
+		return (User) user_svc.findById((long) 1);
 	}
 	
 	public boolean hasNoPermission(HttpSession session) {
