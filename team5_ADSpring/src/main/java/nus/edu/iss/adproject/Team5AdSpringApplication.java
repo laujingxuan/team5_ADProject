@@ -7,10 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Booking;
@@ -19,6 +15,7 @@ import nus.edu.iss.adproject.model.Cart;
 import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
+import nus.edu.iss.adproject.model.ProductReview;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.TravelPackage;
 import nus.edu.iss.adproject.model.User;
@@ -30,6 +27,7 @@ import nus.edu.iss.adproject.repository.BookingRepo;
 import nus.edu.iss.adproject.repository.CartRepository;
 import nus.edu.iss.adproject.repository.HotelRepository;
 import nus.edu.iss.adproject.repository.ProductRepo;
+import nus.edu.iss.adproject.repository.ProductReviewRepo;
 import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.repository.TravelPackageRepository;
 import nus.edu.iss.adproject.repository.UserRepository;
@@ -40,18 +38,6 @@ public class Team5AdSpringApplication {
 	@Autowired
 	private TravelPackageRepository tpRepo;
 	
-	@Autowired
-	private HotelRepository hrepo;
-	
-	@Autowired
-	private ProductRepo prepo;
-	
-	@Autowired
-	private AttractionRepository arepo;
-	
-	@Autowired
-	private RoomTypeRepo rrepo;
-
 	@Autowired
 	private UserRepository userRepo;
 	
@@ -75,6 +61,9 @@ public class Team5AdSpringApplication {
 	
 	@Autowired
 	private CartRepository cartRepo;
+	
+	@Autowired
+	private ProductReviewRepo prrepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Team5AdSpringApplication.class, args);
@@ -210,14 +199,15 @@ public class Team5AdSpringApplication {
 			
 			
 			//Creating booking details
-			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300);
-			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250);
-			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400);
-			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100);
+			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 17),2,"No lunch");
+			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 18),4,"No lunch");
+			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 19),6,"No lunch");
+			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 20),2,"No lunch");
 			bookDetRepo.save(bookDetail1);
 			bookDetRepo.save(bookDetail2);
 			bookDetRepo.save(bookDetail3);
 			bookDetRepo.save(bookDetail4);
+
 
 			BookingDetails bookDetail5 = new BookingDetails(booking2, attraction2.getProduct(), "1", 4, 300);
 			BookingDetails bookDetail6 = new BookingDetails(booking2, attraction3.getProduct(), "2", 3, 250);
@@ -228,6 +218,33 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail7);
 			bookDetRepo.save(bookDetail8);
 
+			ProductReview review1 = new ProductReview(customer1, room1, 4.6, "I think it is comfortable", "pic1");
+			prrepo.save(review1);
+			ProductReview review2 = new ProductReview(customer2, room1, 4.8, "I perfectly like what I ordered", "pic1");
+			prrepo.save(review2);
+			ProductReview review3 = new ProductReview(customer1, product1, 4.7, "Really enjoy the time in the zoo", "pic1");
+			prrepo.save(review3);
+			ProductReview review4 = new ProductReview(customer1, room2, 4.8, "Want to back for several times", "pic1");
+			prrepo.save(review4);
+			ProductReview review5 = new ProductReview(customer2, room2, 4.2, "Just so so", "pic1");
+			prrepo.save(review5);
+			ProductReview review6 = new ProductReview(customer1, room3, 4.8, "Have a good time in the room", "pic1");
+			prrepo.save(review6);
+			ProductReview review7 = new ProductReview(customer2, product1, 4.9, "We had fun!", "pic1");
+			prrepo.save(review7);
+			ProductReview review8 = new ProductReview(customer2, room3, 4.1, "Don't want to reorder anymore", "pic1");
+			prrepo.save(review8);
+			ProductReview review9 = new ProductReview(customer1, room4, 4.8, "Just order without hesitate, it worth!", "pic1");
+			prrepo.save(review9);
+			ProductReview review10 = new ProductReview(customer2, room4, 4.7, "Will live here again the next time to Singapore", "pic1");
+			prrepo.save(review10);
+			ProductReview review11 = new ProductReview(customer1, room5, 4.2, "Better to find another hotel...", "pic1");
+			prrepo.save(review11);
+			ProductReview review12 = new ProductReview(customer2, room5, 4.3, "It is ok, but not best", "pic1");
+			prrepo.save(review12);
+			
+			
+			
 
 		};
 	}

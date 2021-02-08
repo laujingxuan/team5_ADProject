@@ -2,6 +2,7 @@ package nus.edu.iss.adproject.service;
 
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -60,27 +61,40 @@ public class EmailService {
 
     public String sendMail(Long id) throws MessagingException {
     	User user = userimpl.findById(id);
-//    	List<BookingDetails> bookingdetail = bookingservice.retrieveDetailsByBookingId(id);
-//    	for(BookingDetails b :bookingdetail ) {
-//    		System.out.println(b.getProduct().getType());
-//    		ProductType producttype = b.getProduct().getType();
-//    		if(producttype == ProductType.ATTRACTION) {
-//    			System.out.print(b.getProduct().getAttraction().toString());
-//    		}
-//    		else {
-//    			System.out.print(b.getProduct().getRoomType().getHotel().getName());
-//    		}
-//    	}
-        Context context = new Context();
-        context.setVariable("user", user);
+    	List<BookingDetails> bookingdetail = bookingservice.retrieveDetailsByBookingId(id);
+    	for(BookingDetails b :bookingdetail ) {
+    		//System.out.println(b.getProduct().getType());
+    		ProductType producttype = b.getProduct().getType();
+    		if(producttype == ProductType.ATTRACTION) {
+    			System.out.print(b.getProduct().getAttraction().toString());
+    			
+    	        Context context = new Context();
+    	        context.setVariable("bookingdetail", b);
+    	        String process = templateEngine.process("Attraction-confirmation", context);
+    	        javax.mail.internet.MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    	        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+    	        helper.setSubject("Thank you for booking");
+    	        helper.setText(process, true);
+    	        helper.setTo(user.getEmail());
+    	        javaMailSender.send(mimeMessage);
+    			
+    		}
+    		else {
+    			//System.out.print(b.getProduct().getRoomType().getClass().toString());
+    	        Context context = new Context();
+    	        
+    	        context.setVariable("bookingdetail", b);
 
-        String process = templateEngine.process("welcome", context);
-        javax.mail.internet.MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
-        helper.setSubject("welcome " + user.getUserName());
-        helper.setText(process, true);
-        helper.setTo(user.getEmail());
-        javaMailSender.send(mimeMessage);
+    	        String process = templateEngine.process("hotel-confirmation", context);
+    	        javax.mail.internet.MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    	        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+    	        helper.setSubject("Thank you for booking");
+    	        helper.setText(process, true);
+    	        helper.setTo(user.getEmail());
+    	        javaMailSender.send(mimeMessage);
+    		}
+    	}
+
         return "Sent";
     }
 

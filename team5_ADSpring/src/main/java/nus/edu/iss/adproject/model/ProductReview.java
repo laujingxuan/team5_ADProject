@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class ProductReview {
@@ -19,52 +20,74 @@ public class ProductReview {
 	@ManyToOne
 	private Product product;
 	
-	private int rating;
+	private double rating;
 	
 	private String message;
 	
-	private String photoUrl;
+	private String photoImagePath;
 	
-	public ProductReview(long id, int rating, String message, String photoUrl) {
-		super();
-		this.id = id;
+	private String photo;
+	
+	
+	public ProductReview() { }
+
+	public ProductReview(User user, Product product, double rating, String message, String photo) {
+		this.user = user;
+		this.product = product;
 		this.rating = rating;
 		this.message = message;
-		this.photoUrl = photoUrl;
+		this.photo = photo;
 	}
 
+	
 	public long getId() {
 		return id;
 	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
-
-	public void setRating(int rating) {
+	public void setRating(double rating) {
 		this.rating = rating;
 	}
-
 	public String getMessage() {
 		return message;
 	}
-
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-	public String getPhotoUrl() {
-		return photoUrl;
+	public User getUser() {
+		return user;
 	}
 
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	public void setPhotoImagePath(String photoImagePath) {
+		this.photoImagePath = photoImagePath;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 	
+	
+	@Transient
+	public String getPhotoImagePath() {
+		if(photo == null)
+			return null;
+		
+		return "/user-photos/" + id + "/" + photo;
+	}
 	
 
 }
