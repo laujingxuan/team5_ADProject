@@ -73,10 +73,10 @@ public class DashboardController {
 	
 	@RequestMapping(value = "/dailyBookingVacancy")
 	@ResponseBody
-	public Map<Integer,Integer> getBookingData(@RequestParam String month,@RequestParam String room) {
+	public Map<Integer,Integer> getBookingData(@RequestParam String month,@RequestParam String room, HttpSession session) {
+		//User user = (User) session.getAttribute("user");
+		int monthValue = Month.valueOf(month).ordinal()+1;	
 		
-		int monthValue = Month.valueOf(month).ordinal()+1;
-		System.out.println(room);
 		
 		String uri;
 		RestTemplate restTemplate = new RestTemplate();
@@ -95,7 +95,7 @@ public class DashboardController {
 	
 	@RequestMapping(value = "/dailyCancellation")
 	@ResponseBody
-	public Map<Integer,Integer> getCancellationData(@RequestParam String month,@RequestParam String room) {
+	public Map<Integer,Integer> getCancellationData(@RequestParam String month,@RequestParam String room, HttpSession session) {
 		
 		int monthValue = Month.valueOf(month).ordinal()+1;
 		System.out.println(room);
@@ -482,6 +482,17 @@ public class DashboardController {
 				}
 
 			}
+			
+			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
+			List<RoomType> room_list = new ArrayList<RoomType>();
+			System.out.println(rooms.size());
+			for (Object object : rooms) {
+				roomType= new RoomType();
+				roomType.setRoomType(object.toString());
+				room_list.add(roomType);
+			}
+			 
+			model.addAttribute("roomTypes", room_list);
 
 			model.addAttribute("data", data);
 			model.addAttribute("data_revenue", data_revenue);
