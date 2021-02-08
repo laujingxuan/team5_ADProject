@@ -93,7 +93,6 @@ public class Team5AdSpringApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
-			
 			//Creating travel package
 			TravelPackage tp1 = new TravelPackage(2,3,5);
 			tpRepo.save(tp1);
@@ -219,9 +218,6 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail7);
 			bookDetRepo.save(bookDetail8);
 
-
-			
-			
 			ProductReview review1 = new ProductReview(customer1, room1, 4.6, "I think it is comfortable", "pic1");
 			prrepo.save(review1);
 			ProductReview review2 = new ProductReview(customer2, room1, 4.8, "I perfectly like what I ordered", "pic1");
@@ -249,7 +245,7 @@ public class Team5AdSpringApplication {
 			
 			
 			
-			
+
 		};
 	}
 
