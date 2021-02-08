@@ -5,21 +5,21 @@
 <style type="text/css">
         table.altrowstable {
             font-family: verdana,arial,sans-serif;
-            font-size:11px;
+            font-size:15px;
             color:#333333;
-            border-width: 2px;
+            border-width: 1px;
             border-color: #d1d1d1;
             border-collapse: collapse;
             width:100%
         }
         table.altrowstable th {
-            border-width: 2px;
+            border-width: 1px;
             padding: 8px;
             border-style: solid;
             border-color: #d1d1d1;
         }
         table.altrowstable td {
-            border-width: 2px;
+            border-width: 1px;
             padding: 8px;
             border-style: solid;
             border-color: #d1d1d1;
@@ -30,6 +30,11 @@
         .evenrowcolor{
             background-color:#f0f0f0;
         }
+        td{
+   			text-align:center;
+   			vertical-align:middle;
+   			height:50px;
+		}
     </style>
     <script type="text/javascript">
         function altRows(id){
@@ -56,7 +61,10 @@
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 	<div th:replace="layout/layout.html :: menu" ></div>
-	<h3>RoomType Detail</h3>
+	<h6>&nbsp;</h6>
+	<h3 align="center"><b>RoomType  Detail</b></h3>
+	<h6>&nbsp;</h6>
+	
 	
 	<table class="altrowstable" id="alternatecolor" th:object="${roomtype}">
 	  <tr>
@@ -70,7 +78,7 @@
       <!--  
       <tr>
         <th>Price</th>
-        <!-- <td th:text="*{price}">Price</td> -->
+        <td th:text="*{price}">Price</td>
       </tr>	
       -->
       <tr>
@@ -79,8 +87,22 @@
       </tr>
       <tr>
         <th>Similar Room</th>
-        <td ><a href="SimilarRoom.html" th:href="@{/Room/SimilarRoom/}+${roomtype.roomType}" >Check</a></td>
+        <td ><a href="SimilarRoom.html" th:href="@{/Room/SimilarRoom/}+${roomtype.hotel.id}" >Check</a></td>
       </tr>
+      <tr>
+      	<td colspan="2">
+      		<a class="btn btn-primary" href="reviewList.html" 
+      		   th:href="@{/review/list/}+${roomtype.product.id}" role="button">View Comments
+      		</a>
+      	</td>
+      </tr>
+	  <tr>
+	   	<td colspan="2">
+	   		<a class="btn btn-primary" href="reviewForm.html" 
+	   			th:href="@{/review/post/}+${roomtype.product.id}" role="button">Post Comment
+	   		</a>
+	   	</td>
+	  </tr>
     </table>
     <div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>

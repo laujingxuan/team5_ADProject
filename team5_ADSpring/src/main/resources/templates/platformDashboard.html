@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Dash board</title>
+</head>
+<head th:insert="layout/layout.html :: veryTop"></head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<body>	
+<div th:replace="layout/layout.html :: menu" ></div>
+	<h3>Dashboard for Platform Owner</h3><br/>
+	<form action="#" method="get">	
+		<div class="row">
+			<div style="margin: 0 auto">
+				<table class="table table-bordered" >
+					<thead>
+						<tr>
+							<th>Hotel Name</th>
+							<th>Monthly Revenue</th>
+							<th>Monthly Guest</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="hotel:${hotels}">
+							<td th:text="${hotel.hotel_name}">ID</td>
+							<td th:text="${hotel.monthly_revenue}">ID</td>
+							<td th:text="${hotel.monthly_guest}">ID</td>
+							<td><a href="EditProduct.html" th:href="@{/dashboard/view/}+${hotel.hotel_id}">View</a></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div style="margin: 0 auto">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Hotel Name</th>
+							<th>Monthly Revenue</th>
+							<th>Monthly Guest</th>
+							<!-- <th></th> -->
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="attr:${attractoins}">
+							<td th:text="${attr.attraction_name}">ID</td>
+							<td th:text="${attr.monthly_revenue}">ID</td>
+							<td th:text="${attr.monthly_guest}">ID</td>
+							<!-- <td><a href="EditProduct.html" th:href="@{/dashboard/view/}+${attr.attraction_id}">View</a></td> -->
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</div>
+		
+	</form>
+
+	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>
+</body>
+</html>

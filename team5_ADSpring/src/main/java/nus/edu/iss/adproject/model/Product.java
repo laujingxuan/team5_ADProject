@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -36,6 +37,7 @@ public class Product {
 
 	public Product(ProductType type) {
 		super();
+		this.productReview = new ArrayList<ProductReview>();
 		this.type = type;
 	}
 

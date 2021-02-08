@@ -12,4 +12,7 @@ public interface UserService extends IService<User> {
 	public User findByUsername(String userName);
 	public void deleteUsers(String[] users);
 	boolean updateUser(User user);
+	public void updateResetPasswordToken(String token,String email) throws CustomerNotFoundException;
+	public User get(String resetPasswordToken);
+	public void updatePassword(User user,String newPassword);
 }

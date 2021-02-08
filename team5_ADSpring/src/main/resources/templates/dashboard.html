@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Dashboard</title>
+ <script type="text/javascript" src="/js/Chart.min.js"></script>
+  <script type="text/javascript" src="/js/Chart.js"></script>
+  <link th:href="@{/css/Chart.css}" rel="stylesheet">
+   <link th:href="@{/css/Chart.min.css}" rel="stylesheet">
+   <!-- <script type="text/javascript" src="/js/jquery-3.5.1.js"></script> -->
+   <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
+ </head>
+ <head th:insert="layout/layout.html :: veryTop"></head>
+<body>
+<div th:replace="layout/layout.html :: menu" ></div>
+
+
+	<div class="container">
+		<div class="row" style="margin-top: 60px">
+
+			<div style="margin: 0 auto">
+				<div class="chart-container"
+					style="float: left; height: 20vh; width: 40vw">
+					<canvas id="myChart"></canvas>
+				</div>
+
+				<div class="chart-container" style="float: right; height: 20vh; width: 40vw">
+					<canvas id="myChart1"></canvas>
+				</div>
+			</div>
+		</div>
+		<table class="table table-borderless" style="margin-top: 170px">
+			<tr >
+				<td>
+					<select name="month" class="form-control" id="month" style="width: 150px;margin:0 auto">
+					<option
+						th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+						th:value="${month}" th:text="${month}"></option>
+				</select>
+				</td>
+				<td>
+				<select name="id" id="room" th:field="*{roomTypes}" class="form-control" style="width: 150px;margin:0 auto">
+                    	<option th:each="room : ${roomTypes}" th:value="${room.roomType}" th:text="${room.roomType}"></option>
+                    </select>
+				</td>
+				<td colspan="2"></td>
+				<td>
+					<select name="month" class="form-control" id="monthly_cancellation"
+					style="width: 150px; margin: 0 auto">
+						<option
+							th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+							th:value="${month}" th:text="${month}"></option>
+				</select>
+				</td>
+				<td>
+					<select name="id" id="roomtype_cancellation" th:field="*{roomTypes}" class="form-control" style="width: 150px;margin:0 auto">
+                    	<option th:each="room : ${roomTypes}" th:value="${room.roomType}" th:text="${room.roomType}"></option>
+                    </select>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="chart-container"
+						style="float: left; height: 40vh; width: 30vw">
+						<canvas id="myChart_vacancyRate"></canvas>
+					</div>
+				<td colspan="2">
+					<div class="chart-container" style="height: 40vh; width: 30vw">
+						<canvas id="myChart_bookingRate"></canvas>
+					</div>
+				</td>
+				<td colspan = "2">
+				<div class="chart-container"
+						style="float: right; height: 40vh; width: 30vw">
+						<canvas id="myChart_cancellationRate"></canvas>
+					</div>
+				</td>
+				
+			</tr>
+		</table>
+	<!-- 	<div class="row">
+			<div class="row" style="width: 400px;margin-top: 170px">
+				<select name="month" class="form-control" id="month" style="width: 150px;margin:0 auto">
+					<option
+						th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+						th:value="${month}" th:text="${month}"></option>
+				</select>
+				<select name="id" id="room" th:field="*{roomTypes}" class="form-control" style="width: 150px;margin:0 auto">
+                    	<option th:each="room : ${roomTypes}" th:value="${room.roomType}" th:text="${room.roomType}"></option>
+                    </select>
+			</div>
+			<div style="width: 300px;"></div>
+			<div class="row" style="width: 400px;margin-top: 170px;float:right">
+				<select name="month" class="form-control" id="monthly_cancellation" style="width: 150px;margin:0 auto">
+					<option
+						th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+						th:value="${month}" th:text="${month}"></option>
+				</select>
+				<select name="id" id="roomtype_cancellation" th:field="*{roomTypes}" class="form-control" style="width: 150px;margin:0 auto">
+                    	<option th:each="room : ${roomTypes}" th:value="${room.roomType}" th:text="${room.roomType}"></option>
+                    </select>
+			</div>
+		</div> -->
+		<!-- <div class="row" style="margin-top: 100px; margin-bottom: 100px;">
+			<div class="chart-container"
+				style="float: left; height: 40vh; width: 30vw">
+				<canvas id="myChart_vacancyRate"></canvas>
+			</div>
+			<div class="chart-container" style="height: 40vh; width: 30vw">
+				<canvas id="myChart_bookingRate"></canvas>
+			</div>
+			<div class="chart-container"
+				style="float: right; height: 40vh; width: 30vw">
+				<canvas id="myChart_cancellationRate"></canvas>
+			</div>
+		</div> -->
+	</div>
+
+</body>
+<div th:replace="layout/layout.html :: footer"></div>
+<div th:replace="layout/layout.html :: javascript"></div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+       <script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+var htmldata = /*[[${data}]]*/{}
+var htmldata_revenue = /*[[${data_revenue}]]*/{}
+var htmldata_bookingRate = /*[[${data_bookingRate}]]*/{}
+var htmldata_vacancyRate = /*[[${data_vacancyRate}]]*/{}
+var htmldata_cancellationRate = /*[[${data_cancellationRate}]]*/{}
+	
+$(document).ready(function() {
+	var name = "";
+    $("#month").change(function() {
+    	sendAjaxRequestForVacancyRate();
+    });
+    
+    $("#room").change(function() {
+    	sendAjaxRequestForVacancyRate();
+    });
+    
+    $("#monthly_cancellation").change(function() {
+    	sendAjaxRequestForCancellationRate();
+    });
+    
+    $("#roomtype_cancellation").change(function() {
+    	sendAjaxRequestForCancellationRate();
+    });
+});
+
+
+	function sendAjaxRequestForVacancyRate() {
+	    var month = $("#month").val();
+	    var room = $("#room").val();
+	    var type = 'vacancyRate';
+	    
+	    
+	   $.get( "/dashboard/dailyBookingVacancy?month=" + month + '&room=' + room+ '&type=' + type, function( data ) {
+	    	htmldata_vacancyRate = data;
+	    	console.log(htmldata_vacancyRate);
+	    	window.myChart_Vacancy.data.datasets[0].data = [];
+	    	window.myChart_Vacancy.data.datasets[0].data = Object.keys(htmldata_vacancyRate).map(function(key) {return htmldata_vacancyRate[key];});
+	    	window.myChart_Vacancy.update();
+	    }); 
+	}; 	
+	
+	function sendAjaxRequestForCancellationRate() {
+	    var month = $("#monthly_cancellation").val();
+	    var room = $("#roomtype_cancellation").val();
+	    var type = 'cancellationRate';
+	    
+	    
+	   $.get( "/dashboard/dailyCancellation?month=" + month + '&room=' + room+ '&type=' + type, function( data ) {
+	    	
+		   htmldata_cancellationRate = data;
+		   window.myChart_Cancellation.data.datasets[0].data = [];
+	    	window.myChart_Cancellation.data.datasets[0].data = Object.keys(htmldata_cancellationRate).map(function(key) {return htmldata_cancellationRate[key];});
+	    	window.myChart_Cancellation.update();
+		   
+	    }); 
+	}; 	
+	
+	var ctx_vacancyRate = document.getElementById('myChart_vacancyRate').getContext('2d');
+	console.log(ctx_vacancyRate);
+	
+	var myChart_Vacancy = new Chart(ctx_vacancyRate, {
+	    type: 'line',
+	    data: {
+	        labels: Object.keys(htmldata_vacancyRate),
+	        datasets: [{
+	            label: 'Vacancy Rate',
+	            /* data: [12, 19, 3, 5, 2, 3], */
+	            data: Object.keys(htmldata_vacancyRate).map(function(key) {return htmldata_vacancyRate[key];}),
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(248, 196, 113,0.2)',
+	                'rgba(220, 118, 51,0.2)',
+	                'rgba(33, 97, 140,0.2)',
+	                'rgba(146, 43, 33,0.2)',
+	                'rgba(20, 90, 50,0.2)',
+	                'rgba(125, 60, 152,0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(248, 196, 113,1)',
+	                'rgba(220, 118, 51,1)',
+	                'rgba(33, 97, 140,1)',
+	                'rgba(146, 43, 33,1)',
+	                'rgba(20, 90, 50,1)',
+	                'rgba(125, 60, 152,1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	    	title: {
+	            display: true,
+	            text: 'Daily Vacancy Rate'
+	        },
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+
+
+
+	var ctx_cancellationRate = document.getElementById('myChart_cancellationRate').getContext('2d');
+	var myChart_Cancellation = new Chart(ctx_cancellationRate, {
+	    type: 'bar',
+	    data: {
+	        labels: Object.keys(htmldata_cancellationRate),
+	        datasets: [{
+	            label: 'Vacancy Rate',
+	            /* data: [12, 19, 3, 5, 2, 3], */
+	            data: Object.keys(htmldata_cancellationRate).map(function(key) {return htmldata_cancellationRate[key];}),
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.2)',
+	                'rgba(54, 162, 235, 0.2)',
+	                'rgba(255, 206, 86, 0.2)',
+	                'rgba(75, 192, 192, 0.2)',
+	                'rgba(153, 102, 255, 0.2)',
+	                'rgba(255, 159, 64, 0.2)',
+	                'rgba(248, 196, 113,0.2)',
+	                'rgba(220, 118, 51,0.2)',
+	                'rgba(33, 97, 140,0.2)',
+	                'rgba(146, 43, 33,0.2)',
+	                'rgba(20, 90, 50,0.2)',
+	                'rgba(125, 60, 152,0.2)'
+	            ],
+	            borderColor: [
+	                'rgba(255, 99, 132, 1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)',
+	                'rgba(248, 196, 113,1)',
+	                'rgba(220, 118, 51,1)',
+	                'rgba(33, 97, 140,1)',
+	                'rgba(146, 43, 33,1)',
+	                'rgba(20, 90, 50,1)',
+	                'rgba(125, 60, 152,1)'
+	            ],
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	    	title: {
+	            display: true,
+	            text: 'Daily Cancellation Rate'
+	        },
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }]
+	        }
+	    }
+	});
+
+
+	
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: Object.keys(htmldata_revenue),
+        datasets: [{
+            label: 'Monthly Revenue',
+            /* data: [12, 19, 3, 5, 2, 3], */
+            data: Object.keys(htmldata_revenue).map(function(key) {return htmldata_revenue[key];}),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(248, 196, 113,0.2)',
+                'rgba(220, 118, 51,0.2)',
+                'rgba(33, 97, 140,0.2)',
+                'rgba(146, 43, 33,0.2)',
+                'rgba(20, 90, 50,0.2)',
+                'rgba(125, 60, 152,0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(248, 196, 113,1)',
+                'rgba(220, 118, 51,1)',
+                'rgba(33, 97, 140,1)',
+                'rgba(146, 43, 33,1)',
+                'rgba(20, 90, 50,1)',
+                'rgba(125, 60, 152,1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	 title: {
+             display: true,
+             text: 'Monthly Revenue'
+         },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var ctx1 = document.getElementById('myChart1').getContext('2d');
+var myChart = new Chart(ctx1, {
+    type: 'line',
+    data: {
+        labels: Object.keys(htmldata),
+        datasets: [{
+            label: 'Number of guests',
+            /* data: [12, 19, 3, 5, 2, 3], */
+            data: Object.keys(htmldata).map(function(key) {return htmldata[key];}),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(248, 196, 113,0.2)',
+                'rgba(220, 118, 51,0.2)',
+                'rgba(33, 97, 140,0.2)',
+                'rgba(146, 43, 33,0.2)',
+                'rgba(20, 90, 50,0.2)',
+                'rgba(125, 60, 152,0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(248, 196, 113,1)',
+                'rgba(220, 118, 51,1)',
+                'rgba(33, 97, 140,1)',
+                'rgba(146, 43, 33,1)',
+                'rgba(20, 90, 50,1)',
+                'rgba(125, 60, 152,1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	title: {
+            display: true,
+            text: 'Monthly Guest'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+var ctx_bookingRate = document.getElementById('myChart_bookingRate').getContext('2d');
+var myChart = new Chart(ctx_bookingRate, {
+    type: 'bar',
+    data: {
+        labels: Object.keys(htmldata_bookingRate),
+        datasets: [{
+            label: 'Booking Rate',
+            /* data: [12, 19, 3, 5, 2, 3], */
+            data: Object.keys(htmldata_bookingRate).map(function(key) {return htmldata_bookingRate[key];}),
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(248, 196, 113,0.2)',
+                'rgba(220, 118, 51,0.2)',
+                'rgba(33, 97, 140,0.2)',
+                'rgba(146, 43, 33,0.2)',
+                'rgba(20, 90, 50,0.2)',
+                'rgba(125, 60, 152,0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(248, 196, 113,1)',
+                'rgba(220, 118, 51,1)',
+                'rgba(33, 97, 140,1)',
+                'rgba(146, 43, 33,1)',
+                'rgba(20, 90, 50,1)',
+                'rgba(125, 60, 152,1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+    	title: {
+            display: true,
+            text: 'Monthly Booking Rate'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+/*]]>*/
+</script>
+</html>

@@ -87,12 +87,12 @@ public class SimulatedApiApplication {
 			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 29), 300, 7, 1));
 			
 			//Double room from 15/1/2021 to 20/1/2021 created
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 15), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 16), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 17), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 18), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 19), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 1, 20), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 15), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 16), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 17), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 18), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 19), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 20), 400, 7, 1));
 			
 			HotelBooking booking1 = new HotelBooking("SINGLE", 1, 3, "No breakfast", 300, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 2, 15), LocalDate.of(2021, 2, 20));
 			hotelRepo.save(booking1);

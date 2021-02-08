@@ -7,7 +7,7 @@
 	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 	<link th:href="@{/css/styling.css}" rel="stylesheet">
 	<script type = "text/javascript" th:src="@{/js/layout.js}"></script>
-	<title>Insert title here</title>
+<title>Insert title here</title>
     <style type="text/css">
         table.altrowstable {
             font-family: verdana,arial,sans-serif;
@@ -59,9 +59,7 @@
         }
     </script>
 </head>
-<head th:insert="layout/layout.html :: veryTop"></head>
 <body>
-	<div th:replace="layout/layout.html :: menu" ></div>
 	<h3>Attraction Detail</h3>
 	
 	
@@ -90,6 +88,20 @@
         <th>Country_city</th>
         <td th:text="*{country_city}">Country_city</td>
       </tr>
+      <tr>
+      	<td colspan="2">
+      		<a class="btn btn-primary" href="reviewList.html" 
+      		   th:href="@{/review/list/}+${attraction.product.id}" role="button">View Comments
+      		</a>
+      	</td>
+      </tr>
+	  <tr>
+	   	<td colspan="2">
+	   		<a class="btn btn-primary" href="reviewForm.html" 
+	   			th:href="@{/review/post/}+${attraction.product.id}" role="button">Post Comment
+	   		</a>
+	   	</td>
+	  </tr>
     </table>
 </body>
 </html>

@@ -24,12 +24,12 @@ public class RoomTypeController {
 		model.addAttribute("Rooms",RoomT);		
 		return "SimilarRoom";
 	}
-	@GetMapping("/SimilarRoom/{roomtype}")
-	public String getsimilar(@PathVariable("roomtype") String roomT,Model model)
+	@GetMapping("/SimilarRoom/{hotel_id}")
+	public String getsimilar(@PathVariable("hotel_id") long hoid,Model model)
 	{
-		String checkst= roomT.toLowerCase();
-		List<RoomType> RoomT= RTservice.findbyName(checkst);
-		System.out.println("this is room string"+checkst);
+	
+		List<RoomType> RoomT= RTservice.findRoomTypesByHotelId(hoid);
+		System.out.println("this is room id "+hoid);
 		System.out.print("this is obj" + RoomT);
 		model.addAttribute("Rooms",RoomT);
 		return "SimilarRoom";

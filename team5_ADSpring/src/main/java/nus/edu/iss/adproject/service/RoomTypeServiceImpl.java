@@ -1,5 +1,6 @@
 package nus.edu.iss.adproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -20,7 +21,13 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 	
 	@Override
 	public void save(RoomType x) {
-		// TODO Auto-generated method stub
+		rrepo.save(x);
+	}
+	
+	@Override
+	public void delete(RoomType x)
+	{
+		rrepo.delete(x);
 	}
 	@Override
 	public List<RoomType> findRoomTypesByHotelId(Long id) {
@@ -35,7 +42,12 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 	public List<RoomType> findAll(){
 		return rrepo.findAll();
 	}
-	public List<RoomType>  findbyName(String roomT){
-		return rrepo.findbyName(roomT);
+//	public List<RoomType>  findbyHotelId(int hid){
+//		return rrepo.findbyHotelId(hid);
+//	}
+
+	@Override
+	public ArrayList<Object> findDistinctRoomTypes() {
+		return rrepo.findDistinctRoomTypes();
 	}
 }

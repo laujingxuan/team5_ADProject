@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org/">
-<head><title>Room Types</title></head>
+<head><title>Room Types</title>
+	<style type="text/css">
+		td{
+   			text-align:center;
+   			vertical-align:middle;
+   			height:50px;
+		}
+	</style>
+</head>
 <head th:insert="layout/layout.html :: veryTop"></head>
 
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-	<h3>RoomTypes List</h3>
+	
+	<h6>&nbsp;</h6>
+	<h3 align="center"><b>RoomTypes  List</b></h3>
+	<h6>&nbsp;</h6>
 		
-	<table border="1" cellpadding="2" cellspacing="2">
+	<table align="center" cellpadding="5" cellspacing="5" style="width: 90%;margin:auto">
 		<tr>
-			<th>ID</th>
-			<th>Picture</th>
-			<th>RoomType</th>
+			<td><b>ID</b></td>
+			<td><b>Picture</b></td>
+			<td><b>RoomType</b></td>
 			<!-- 
 			<th>Price</th>
 			 -->
-			<th>Detail Link</th>
+			<td><b>Detail Link</b></td>
+			<td><b>Delete</b></td>
 		</tr>
 		<tr  th:each="roomtype:${roomtype}" >
 			<td th:text="${roomtype.id}">ID</td>
-			<td><img src="${roomtype.imageURL}">Picture</td>
+			<!-- <td><img height="128" src="${roomtype.imageURL}" width="128" />Picture</td> -->
+			<td><img height="128" th:src="${roomtype.imageURL}" width="168" /></td>
 			<td th:text="${roomtype.roomType}">RoomType</td>
 			<td><a href="roomdetail.html" th:href="@{/hotel/roomtypes/detail/}+${roomtype.id}">View Detail</a></td>
+			<td ><a href="href="DeleteProduct.html"" th:href="@{/product/delete/room/}+${roomtype.id}" >Delete</a></td>
 		</tr>
 		
 	</table>

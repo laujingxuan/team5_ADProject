@@ -4,27 +4,31 @@
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 	<div th:replace="layout/layout.html :: menu" ></div>
-	<div class = "container">
+	<div class = "container py-3">
 		<div class = "row">
-			<h3>Booking History</h3>
+			<h4>Booking History</h4>
 		</div>
-		<div th:each="booking:${BookingsList}" class="py-3">
-			<table>
-				<tr><td th:text=${booking.getBookingDate()}>Date</td></tr>
-				<tr>
-					<td>Amount Paid</td>
-					<td th:text=${booking.getTotalPrice()}>Total</td>
-				</tr>
-				<tr>
-					<td>Travel Package Discount (%)</td>
-					<td th:text=${booking.getTravelPackageDiscount()}>Total</td>
-				</tr>
-				<tr>
-					<td>Number of Transactions</td>
-					<td th:text=${booking.getNumTransactions()}>Total</td>
-				</tr>
-				<tr><td><a class="btn btn-primary" href="BookingDetail.html" th:href="@{/booking/}+${booking.getId()}" role="button">View Details</a></td></tr>
-			</table>
+		<div th:each="booking:${BookingsList}" class="py-3 row">
+			<div class="card" style="width: 50rem; height: 18rem;">
+			  <h5 class="card-header" th:text="'Booking Date: ' + ${booking.getBookingDate()}">Featured</h5>
+			  <div class="card-body">
+				<table class="table">
+					<tr>
+						<td style="width:30%">Amount Paid (S$)</td>
+						<td th:text=${booking.getTotalPrice()} style="width:30%; text-align: center">Total</td>
+					</tr>
+					<tr>
+						<td>Travel Package Discount (%)</td>
+						<td th:text=${booking.getTravelPackageDiscount()} style="text-align: center">Total</td>
+					</tr>
+					<tr>
+						<td>Number of Transactions</td>
+						<td th:text=${booking.getNumTransactions()} style="text-align: center">Total</td>
+					</tr>
+				</table>
+			    <a class="btn btn-primary" href="BookingDetail.html" th:href="@{/booking/}+${booking.getId()}" role="button">View Details</a>
+			  </div>
+			</div>
 		</div>
 	</div>
 	<div th:replace="layout/layout.html :: footer"></div>
