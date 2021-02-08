@@ -211,10 +211,10 @@ public class Team5AdSpringApplication {
 			
 			
 			//Creating booking details
-			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300);
-			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250);
-			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400);
-			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100);
+			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 17),2,"No lunch");
+			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 18),4,"No lunch");
+			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 19),6,"No lunch");
+			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 20),2,"No lunch");
 			bookDetRepo.save(bookDetail1);
 			bookDetRepo.save(bookDetail2);
 			bookDetRepo.save(bookDetail3);

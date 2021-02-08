@@ -1,5 +1,7 @@
 package nus.edu.iss.adproject.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +27,14 @@ public class BookingDetails {
 	
 	private double price;
 	
+	private LocalDate startDate;
+	
+	private LocalDate endDate;
+	
+	private int quantity;
+	
+	private String remarks;
+	
 	public BookingDetails() {
 		super();
 	}
@@ -40,6 +50,38 @@ public class BookingDetails {
 		this.numOfGuest = numOfGuest;
 		this.price = price;
 	}
+	
+	
+
+	public BookingDetails(Booking booking, Product product, String aPIBookingId, int numOfGuest, double price,
+			LocalDate startDate, LocalDate endDate) {
+		super();
+		this.booking = booking;
+		this.product = product;
+		APIBookingId = aPIBookingId;
+		this.numOfGuest = numOfGuest;
+		this.price = price;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
+
+
+	public BookingDetails(Booking booking, Product product, String aPIBookingId, int numOfGuest, double price,
+			LocalDate startDate, LocalDate endDate, int quantity, String remarks) {
+		super();
+		this.booking = booking;
+		this.product = product;
+		APIBookingId = aPIBookingId;
+		this.numOfGuest = numOfGuest;
+		this.price = price;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.quantity = quantity;
+		this.remarks = remarks;
+	}
+
+
 
 	/*
 	 * public BookingDetails(Booking booking, Product product, String APIBookingId,
@@ -47,10 +89,61 @@ public class BookingDetails {
 	 * = product; this.APIBookingId = APIBookingId; this.numOfGuest = numOfGuest;
 	 * this.price = price; }
 	 */
+	
+	
+	
 
 	public long getId() {
 		return id;
 	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+
+
+	public LocalDate getStartDate() {
+		return startDate;
+	}
+
+
+
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
+	}
+
+
+
+	public LocalDate getEndDate() {
+		return endDate;
+	}
+
+
+
+	public void setEndDate(LocalDate endDate) {
+		this.endDate = endDate;
+	}
+
+
 
 	public void setId(long id) {
 		this.id = id;
