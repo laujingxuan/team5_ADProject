@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.repository.HotelRepository;
 

@@ -44,9 +44,13 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Hotel> hotel;
-	
+
 	@Column(name="reset_password_token")
 	private String resetPasswordToken;
+
+	@OneToMany(mappedBy = "user")
+	private List<ProductReview> productReview;
+
 	
 	public User() { }
 
