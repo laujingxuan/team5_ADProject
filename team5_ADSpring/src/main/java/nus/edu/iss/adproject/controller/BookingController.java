@@ -67,7 +67,7 @@ public class BookingController {
 		return "bookingList";
 	}
 	
-	//show Booking History
+	//show Booking Details for a particular booking
 	@GetMapping("/{id}")
 	public String showBookingDetails(@PathVariable("id") Long id, HttpSession session, Model model) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
