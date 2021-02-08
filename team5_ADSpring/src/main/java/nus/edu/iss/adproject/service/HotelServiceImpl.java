@@ -48,6 +48,11 @@ public class HotelServiceImpl implements HotelService{
 		return hotelrepo.findByUserId(userId);
 	}
 
+	@Override
+	public Hotel findByHotelIdAndUserId(Long hotelId, Long userId) {
+		return hotelrepo.findHotelByUserIdAndHotelId(userId, hotelId);
+	}
+
 	
 }
 

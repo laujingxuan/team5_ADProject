@@ -100,10 +100,26 @@
         <td th:text="*{description}">Description</td>
       </tr>
       <tr>
-        <th>RoomType</th>
-        <td><a href="roomtypes.html" th:href="@{/hotel/roomtypes/}+*{id}">View RoomTypes</a></td>
+        <th>Location</th>
+        <td><a href="Map.html" th:href="@{/hotel/map/}+*{id}" >location</a></td>
       </tr>
     </table>
+    
+    <h4 align="center" class = "py-3">Type of Rooms</h4>
+	<div class = "container">
+		<div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+			<div th:each="room:${roomType}">
+				<div class = "cardSection">
+			        <div class = "card text-center py-3 d-flex flex-column" style="width: 14rem; height: 14rem;">
+			          <img height="128" th:src="${room.imageURL}" width="128"  class="card-img-top py-2 px-2 image-fluid"/>
+			          <h6 th:text="${room.roomType} + ' Room'">Hotel Name</h6>
+					  <a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${room.id}" class = "mt-auto">View Detail</a>
+<!-- 						  <a href="href="DeleteProduct.html"" th:href="@{/product/delete/room/}+${room.id}" >Delete</a> -->
+			        </div>
+			 	</div>	 		
+			</div>
+		</div>
+	</div>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>    
 </body>

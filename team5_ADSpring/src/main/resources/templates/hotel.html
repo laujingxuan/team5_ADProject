@@ -36,7 +36,7 @@ nav {
 			<th>Name</th>
 			<th>lat</th>
 			<th>longi</th>
-			<th>rate</th>
+			<th>Rating</th>
 			<th>numberofRestaurants</th>
 			<th>country_City</th>
 			<th>emenities</th>
@@ -51,18 +51,19 @@ nav {
 			<td th:text="${hotel.name}">ID</td>	
 			<td th:text="${hotel.lat}">ID</td>
 			<td th:text="${hotel.longi}">ID</td>
-			<td th:text="${hotel.rate}">ID</td>	
+			<td th:text="${hotel.rating}">ID</td>	
 			<td th:text="${hotel.numberOfRestaurants}">ID</td>
 			<td th:text="${hotel.country_City}">ID</td>
 			<td th:text="${hotel.emenities}">ID</td>	
 			<td th:text="${hotel.quality}">ID</td>
 			<td th:text="${hotel.description}">ID</td>
 			<td ><a href="Map.html" th:href="@{/hotel/Map/}+${hotel.id}" >location</a></td>
+			<td ><a href="hotel-form.html" th:href="@{/hotel/edit/}+${hotel.id}" >edit</a></td>
 		</tr>
 		
 
 	</table>
-
+	<a href="hotel-form.html" th:href="@{/hotel/create/}" >create</a>
 	<script
 		src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=&v=weekly"
 		defer></script>
