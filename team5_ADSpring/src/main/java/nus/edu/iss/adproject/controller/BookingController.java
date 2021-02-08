@@ -136,7 +136,7 @@ public class BookingController {
 				HotelBooking returnBooking = restTemplate.postForObject( uri, hotelBook, HotelBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice,cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks());
 				bookService.saveBookingDetails(newDetail);
-				emailService.sendMail(newBooking.getId());
+//				emailService.sendMail(newBooking.getId());
 				
 			}else {
 				//creating booking details in our database and attraction booking in the api
@@ -153,7 +153,7 @@ public class BookingController {
 			cartService.deleteCart(cart);
 		}
 		
-		emailService.sendMail(newBooking.getId());
+//		emailService.sendMail(newBooking.getId());
 		
 		return "redirect:/booking/list";
 	}
