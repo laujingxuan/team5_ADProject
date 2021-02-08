@@ -11,6 +11,7 @@ public interface CartService extends IService<Cart>  {
 	public void deleteCart(Cart cart);
 	
 	public int getQuantityByUserId(long userId);
+	//public int getCartItemQuantity(long userId);
 	
 	public int add(long productId, LocalDate startDate,LocalDate endDate);
 	List<Cart> findByUserId(long userId);

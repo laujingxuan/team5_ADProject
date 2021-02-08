@@ -52,13 +52,39 @@ public class CartController {
 //	}
 
 	@ResponseBody
-	@GetMapping("/test")
-	public JSONObject getCartitemQuantity( Model model, HttpSession session) {
+	@GetMapping("/CartitemTotalQuantiy")
+	public JSONObject CartitemTotalQuantiy( Model model, HttpSession session) {
 		 //String s = "{\"status\":\"success\", \"total\": 5}";
 		
+		  if (session_svc.isNotLoggedIn(session)) return null; 
+		  User user = (User)session.getAttribute("user"); 
+		  Long userId = user.getId(); 
+		  int quantity =  cart_svc.getQuantityByUserId(userId); 
+		  //System.out.println(quantity);
+		  
+		  //Map<String, Object> map=new HashMap<String,Object>(); 
+		  //map.put("quantity",quantity);
+		  
+		  Map<String, Object> map=new HashMap<String,Object>(); 
+		  map.put("status", "success");
+		  map.put("total", quantity);
+		  
+		  JSONObject jsonObj=new JSONObject(map);
+		  System.out.println("checkpoint B");
+		  System.out.println("checkpoint A: " + jsonObj.toJSONString());
+		
+		//return jsonObj;
+		return jsonObj;
+	}
+	
+	@ResponseBody
+	@GetMapping("/getProductQuantity")
+	public JSONObject getitemQuantity(@ModelAttribute("cartitem") @Valid CartForm cartitem ,Model model, HttpSession session) {
+		 //String s = "{\"status\":\"success\", \"total\": 5}";
 		  if (session_svc.isNotLoggedIn(session)) return null; User user = (User)
-		  session.getAttribute("user"); Long userId = user.getId(); int quantity =
-		  cart_svc.getQuantityByUserId(userId); System.out.println(quantity);
+		  session.getAttribute("user"); Long userId = user.getId(); 
+		  int quantity =cart_svc.getQuantityByUserId(userId);
+		  System.out.println(quantity);
 		  
 		  //Map<String, Object> map=new HashMap<String,Object>(); 
 		  //map.put("quantity",quantity);
@@ -88,7 +114,8 @@ public class CartController {
 		int total = cart_svc.add(productId, newCart.getStartDate(), newCart.getEndDate());
 		return "forward:/product/list";
 	}
-
+	
+	
 
     @GetMapping("/list")
     public String ListCartItems(Model model){    
