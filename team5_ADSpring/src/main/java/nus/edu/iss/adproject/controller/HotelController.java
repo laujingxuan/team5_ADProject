@@ -100,9 +100,24 @@ public class HotelController {
 			model.addAttribute("hotel", hotelservice.findById(hotel.getId()));
 			return "hotel-form";
 		}
-		System.out.println(3);
 		hotelservice.save(hotel);
 		return "redirect:/hotel/Hotels";
-
+	}
+	
+	@GetMapping("/roomtypes/edit/{id}")
+	public String editRoomtypes(Model model,@PathVariable("id") Long id) {
+		model.addAttribute("roomtype",rservice.findById(id));
+		return "roomtypes-form";
+	}
+	
+	@PostMapping("/saveRoom")
+	public String saveRoomType(@ModelAttribute("roomtype") @Valid RoomType roomtype, BindingResult bindingResult,
+			Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("roomtype", rservice.findById(roomtype.getId()));
+			return "roomtypes-form";
+		}
+		rservice.save(roomtype);
+		return "redirect:/hotel/roomtypes";
 	}
 }
