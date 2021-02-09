@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -59,17 +60,25 @@ public class EmailService {
     	  javaMailSender.send(mimeMessage);
     	 }
 
-    public String sendMail(Long id) throws MessagingException {
-    	User user = userimpl.findById(id);
-    	List<BookingDetails> bookingdetail = bookingservice.retrieveDetailsByBookingId(id);
-    	for(BookingDetails b :bookingdetail ) {
+    public String sendMail(Long detailid,Long userId,LocalDate startDate, LocalDate endDate,
+    		int quantity ,String Remarks)
+    		throws MessagingException {
+    	User user = userimpl.findById(userId);
+ //   	List<BookingDetails> bookingdetail = bookingservice.retrieveDetailsByBookingId(id);
+    	BookingDetails details = bookingservice.retrieveDetailsByDetailId(detailid);
+    	
     		//System.out.println(b.getProduct().getType());
-    		ProductType producttype = b.getProduct().getType();
+    		ProductType producttype = details.getProduct().getType();
+    		
     		if(producttype == ProductType.ATTRACTION) {
-    			System.out.print(b.getProduct().getAttraction().toString());
+    			//System.out.print(details.getProduct().getAttraction().toString());
     			
     	        Context context = new Context();
-    	        context.setVariable("bookingdetail", b);
+    	        context.setVariable("startdate", startDate);
+    	        context.setVariable("enddate",endDate);
+    	        context.setVariable("quantity", quantity);
+    	        context.setVariable("remarks", Remarks);
+    	        context.setVariable("bookingdetail", details);
     	        String process = templateEngine.process("Attraction-confirmation", context);
     	        javax.mail.internet.MimeMessage mimeMessage = javaMailSender.createMimeMessage();
     	        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -83,8 +92,11 @@ public class EmailService {
     			//System.out.print(b.getProduct().getRoomType().getClass().toString());
     	        Context context = new Context();
     	        
-    	        context.setVariable("bookingdetail", b);
-
+    	        context.setVariable("bookingdetail", details);
+    	        context.setVariable("startdate", startDate);
+    	        context.setVariable("enddate",endDate);
+    	        context.setVariable("quantity", quantity);
+    	        context.setVariable("remarks", Remarks);
     	        String process = templateEngine.process("hotel-confirmation", context);
     	        javax.mail.internet.MimeMessage mimeMessage = javaMailSender.createMimeMessage();
     	        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
@@ -93,7 +105,7 @@ public class EmailService {
     	        helper.setTo(user.getEmail());
     	        javaMailSender.send(mimeMessage);
     		}
-    	}
+    	
 
         return "Sent";
     }

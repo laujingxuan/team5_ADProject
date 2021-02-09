@@ -31,6 +31,7 @@ public class SessionServiceImpl implements SessionService {
 		this.user_svc = user_svcimpl;
 	}
 	
+	@Override
 	public boolean authenticate(User user) {
 		User dbuser = urepo.findByUserName(user.getUserName());
 		if (dbuser==null) {
@@ -42,7 +43,7 @@ public class SessionServiceImpl implements SessionService {
 		}
 	}
 	
-	
+	@Override
 	public boolean isNotLoggedIn(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user == null)
@@ -51,37 +52,37 @@ public class SessionServiceImpl implements SessionService {
 			return false;
 	}
 	
-	public long getUserId() {
-		//User user = (User) session.getAttribute("user");
-		User user = user_svc.findById((long) 1);
-		
-		if (user == null)
-			return getDeviceHashCode();
-		else 
-			return user.getId();
-	}
+//	@Override
+//	public long getUserId() {
+//		//User user = (User) session.getAttribute("user");
+//		User user = user_svc.findById((long) 1);
+//		if (user == null)
+//			return getDeviceHashCode();
+//		else 
+//			return user.getId();
+//	}
+//	
+//	public long getDeviceHashCode() {
+//		long userId = -1; // invalid userId by default 
+//		
+//        try {
+//            InetAddress myHost = InetAddress.getLocalHost();
+//            userId = (long) myHost.getHostName().hashCode();
+//        } catch (UnknownHostException ex) {
+//            ex.printStackTrace();
+//        }
+//        
+//		return userId;
+//	}
 	
-	public long getDeviceHashCode() {
-		long userId = -1; // invalid userId by default 
-		
-        try {
-            InetAddress myHost = InetAddress.getLocalHost();
-            userId = (long) myHost.getHostName().hashCode();
-        } catch (UnknownHostException ex) {
-            ex.printStackTrace();
-        }
-        
-		return userId;
-	}
 	
+//	public User getUser() {
+//		//return (User) session.getAttribute("user");
+//		return (User) user_svc.findById((long) 1);
+//	}
 	
-	
-	public User getUser() {
-		//return (User) session.getAttribute("user");
-		return (User) user_svc.findById((long) 1);
-	}
-	
-	public boolean hasNoPermission(HttpSession session) {
+	@Override
+	public boolean hasPlatformPermission(HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if (user.getRole() != RoleType.PLATFORMMANAGER)
 			return true;
@@ -89,9 +90,19 @@ public class SessionServiceImpl implements SessionService {
 			return false;
 	}
 	
-	public boolean hasPermission(HttpSession session) {
+	@Override
+	public boolean hasHotelPermission(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if (user.getRole() == RoleType.PLATFORMMANAGER)
+		if (user.getRole() == RoleType.HOTELMANAGER)
+			return true;
+		else 
+			return false;
+	}
+	
+	@Override
+	public boolean hasAttractionPermission(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user.getRole() == RoleType.ATTRACTIONMANAGER)
 			return true;
 		else 
 			return false;

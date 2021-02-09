@@ -10,19 +10,34 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Attraction {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
+	
+	@NotEmpty
 	private String name;
+	
+	@NotNull
 	private double price;
+	@NotEmpty
 	private String location;
+	@NotNull
+	private double lat;
+	@NotNull
+    private double longi;
 	private double rating;
+	@NotEmpty
 	private String description;
+	@NotEmpty
 	private String country_city;
+	@NotEmpty
 	private String API_URL;
+	@NotEmpty
 	private String imageURL;
 	
 	@ManyToOne
@@ -49,22 +64,7 @@ public class Attraction {
 	}
 	
 	public Attraction(String name, double price, String location, double rating, String description,
-			String country_city, String aPI_URL, User user, Product product) {
-		super();
-		discount = new ArrayList<Discount>();
-		this.name = name;
-		this.price = price;
-		this.location = location;
-		this.rating = rating;
-		this.description = description;
-		this.country_city = country_city;
-		API_URL = aPI_URL;
-		this.user = user;
-		this.product = product;
-	}
-	
-	public Attraction(String name, double price, String location, double rating, String description,
-			String country_city, String aPI_URL, User user, Product product, String imageURL) {
+			String country_city, String aPI_URL, User user, Product product, String imageURL, double lat, double longi) {
 		super();
 		discount = new ArrayList<Discount>();
 		this.name = name;
@@ -77,8 +77,22 @@ public class Attraction {
 		this.user = user;
 		this.product = product;
 		this.imageURL = imageURL;
+		this.lat = lat;
+		this.longi = longi;
 	}
 	
+	public double getLat() {
+		return lat;
+	}
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+	public double getLongi() {
+		return longi;
+	}
+	public void setLongi(double longi) {
+		this.longi = longi;
+	}
 	public String getImageURL() {
 		return imageURL;
 	}

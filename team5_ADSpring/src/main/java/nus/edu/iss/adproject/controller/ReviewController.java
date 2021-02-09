@@ -3,6 +3,7 @@ package nus.edu.iss.adproject.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.ProductReview;
+import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.FileUploadUtil;
 import nus.edu.iss.adproject.repository.ProductRepo;
 import nus.edu.iss.adproject.service.ProductReviewService;
+import nus.edu.iss.adproject.service.SessionService;
 
 @Controller
 @RequestMapping("/review")
@@ -33,6 +36,9 @@ public class ReviewController {
 	
 	@Autowired
 	ProductRepo prepo;
+	
+	@Autowired
+	private SessionService sessionservice;
 	
 	
 	@GetMapping("/list/{id}")
@@ -47,8 +53,12 @@ public class ReviewController {
 	
 	
 	@GetMapping("/post/{id}")
-	public String postProductReview(Model model, @PathVariable("id")Long id) {
+	public String postProductReview(Model model, HttpSession session, @PathVariable("id")Long id) {
+		if (sessionservice.isNotLoggedIn(session))
+			return "redirect:/user/login";
+		User user = (User) session.getAttribute("user");
 		ProductReview review = new ProductReview();
+		review.setUser(user);
 		review.setProduct(prepo.findById(id).get());
 		model.addAttribute("review", review);
 		return "reviewForm";

@@ -22,11 +22,10 @@ public interface ProductRepo extends JpaRepository<Product, Long>{
        + " OR p.roomType.hotel.location LIKE %?1%"
        + " OR p.roomType.hotel.lat LIKE %?1%"  
        + " OR p.roomType.hotel.longi LIKE %?1%"  
-       + " OR p.roomType.hotel.rate LIKE %?1%"  
+       + " OR p.roomType.hotel.rating LIKE %?1%"  
        + " OR p.roomType.hotel.numberOfRestaurants LIKE %?1%"  
        + " OR p.roomType.hotel.country_City LIKE %?1%"  
        + " OR p.roomType.hotel.emenities LIKE %?1%"
-       + " OR p.roomType.hotel.quality LIKE %?1%"  
        + " OR p.roomType.hotel.description LIKE %?1%")
 //  + " OR p.roomType.price LIKE %?1%"
 //  + " OR p.roomType.roomType LIKE %?1%" 

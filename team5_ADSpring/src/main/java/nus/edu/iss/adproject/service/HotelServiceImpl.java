@@ -29,8 +29,7 @@ public class HotelServiceImpl implements HotelService{
 
 	@Override
 	public void delete(Hotel x) {
-		// TODO Auto-generated method stub
-		
+		hotelrepo.delete(x);
 	}
 	
 	@Override 
@@ -46,6 +45,11 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public List<Hotel> findByUserId(Long userId) {
 		return hotelrepo.findByUserId(userId);
+	}
+
+	@Override
+	public Hotel findByHotelIdAndUserId(Long hotelId, Long userId) {
+		return hotelrepo.findHotelByUserIdAndHotelId(userId, hotelId);
 	}
 
 	

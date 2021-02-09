@@ -48,5 +48,14 @@ public class DiscountServiceImpl implements DiscountService {
 	public List<Discount> findDiscountByAttractionUserId(Long userId) {
 		return discount_repo.findAttractionByUserId(userId);
 	}
+	
+	@Override
+	public List<Discount> findDiscountByHotelId(Long hotelId){
+		return discount_repo.findDiscountByHotelId(hotelId);
+	}
 
+	@Override
+	public List<Discount> findDiscountByAttractionId(Long attractionId){
+		return discount_repo.findDiscountByAttractionId(attractionId);
+	}
 }
