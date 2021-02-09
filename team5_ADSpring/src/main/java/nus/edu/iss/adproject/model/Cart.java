@@ -42,8 +42,12 @@ public class Cart {
 		super();
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		this.startDate = LocalDate.parse(form.getStartDate(), df);
-		this.endDate = LocalDate.parse(form.getEndDate(), df);
-		
+		if (form.getEndDate()!= null) {
+			this.endDate = LocalDate.parse(form.getEndDate(), df);
+		}
+		if (form.getQuantity()>0) {
+			this.quantity = form.getQuantity();
+		}
 	}
 
 	public Cart(Product product, LocalDate startDate, LocalDate endDate, User user) {

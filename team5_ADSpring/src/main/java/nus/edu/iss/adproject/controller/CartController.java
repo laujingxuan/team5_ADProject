@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.minidev.json.JSONObject;
@@ -27,6 +28,7 @@ import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.service.CartService;
 import nus.edu.iss.adproject.service.CartServiceImpl;
+import nus.edu.iss.adproject.service.ProductService;
 import nus.edu.iss.adproject.service.SessionService;
 import nus.edu.iss.adproject.service.SessionServiceImpl;
 
@@ -40,7 +42,9 @@ public class CartController {
 	
 	@Autowired
 	private SessionService session_svc;
-	//private long userId = session_svc.getUserId();
+	
+	@Autowired
+	private ProductService pservice;
 	
 	@Autowired
 	public void SetImplimentation(CartServiceImpl cart_svcimpl, SessionServiceImpl session_svcimpl) {
@@ -110,23 +114,21 @@ public class CartController {
 	public String AddItemToCart(@ModelAttribute("cartitem") @Valid CartForm cartitem, @PathVariable("id") Long productId, BindingResult bindingResult, Model model, HttpSession session) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
-		System.out.println("productId "+ productId);
 		Cart newCart = new Cart(cartitem);
 		newCart.setUser(user);
-//		System.out.println("from page to select room: " + cartitem.getUser().getUserName());
-		System.out.println("from page to select room: " + newCart.getEndDate());
-		System.out.println("from page to select room: " + newCart.getStartDate());
-		int total = cart_svc.add(productId, newCart.getStartDate(), newCart.getEndDate());
-		return "forward:/product/list";
+		if (newCart.getQuantity()==0) {
+			newCart.setQuantity(1);
+		}
+		newCart.setProduct(pservice.findProductById(productId));;
+		cart_svc.save(newCart);
+		return "redirect:/cart/list";
 	}
-	
-	
 
     @GetMapping("/list")
-    public String ListCartItems(Model model){    
-    	//long userId = session_svc.getUserId();
-    	long userId = 1;
-          List<Cart> carts = cart_svc.findByUserId(userId);  
+    public String ListCartItems(Model model, HttpSession session){    
+    	if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+    	User user = (User) session.getAttribute("user");
+        List<Cart> carts = cart_svc.findByUserId(user.getId());  
         
         System.out.println(carts.size());
         

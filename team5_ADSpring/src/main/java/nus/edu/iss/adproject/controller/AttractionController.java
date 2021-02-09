@@ -92,6 +92,40 @@ public class AttractionController {
 		return "map";
 	}	
 	
+	
+	@RequestMapping(value = "/available-date/{id}")
+	public String getAttractionAvailibleDate(Model model,@PathVariable("id")Long productId)  {
+			Product p = pservice.findProductById(productId);
+			String URL = p.getAttraction().getAPI_URL()+ "booking/month";
+			double price = p.getAttraction().getPrice();
+			List<Discount> discountlist= p.getAttraction().getDiscount();
+			String discount = "";
+			for(Discount d : discountlist) {
+				discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
+						+ " the discount is " + d.getDiscount_rate() + "%";
+			}
+			RestTemplate restTemplate = new RestTemplate();
+			MonthTypeQuery month = new MonthTypeQuery(1);	
+			DailyDetailWrapper result =  restTemplate.postForObject(URL, month,DailyDetailWrapper.class);
+			List<String> dates = new ArrayList<>() ;
+			List<DailyAttractionDetail> list = result.getDailyDetails();
+			for(DailyAttractionDetail d : list) {
+				if(d.getQuantityLeft()>0) {
+					LocalDate date = d.getDate();
+					String date1 = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					dates.add(date1);
+				}
+			}		
+			model.addAttribute("price",price);
+			model.addAttribute("dates1", dates);
+			model.addAttribute("discount",discount);
+		
+			model.addAttribute("cartitem", new CartForm());
+			model.addAttribute("productId", productId);
+		return "Attraction-available-date";
+	}
+	
+	
 //	----------------------------------------------------------------------------------------------------------------------edit/create
 	//done
 	//edit attraction product
@@ -155,36 +189,6 @@ public class AttractionController {
 		}
 		aservice.delete(attraction);
 		return "redirect:/attraction/attractions";
-	}
-	
-	@RequestMapping(value = "/available-date/{id}")
-	public String getAttractionAvailibleDate(Model model,@PathVariable("id")Long id)  {
-			Product p = pservice.findProductById(id);
-			String URL = p.getAttraction().getAPI_URL()+ "booking/month";
-			double price = p.getAttraction().getPrice();
-			List<Discount> discountlist= p.getAttraction().getDiscount();
-			String discount = "";
-			for(Discount d : discountlist) {
-				discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
-						+ " the discount is " + d.getDiscount_rate() + "%";
-			}
-			RestTemplate restTemplate = new RestTemplate();
-			MonthTypeQuery month = new MonthTypeQuery(1);	
-			DailyDetailWrapper result =  restTemplate.postForObject(URL, month,DailyDetailWrapper.class);
-			List<String> dates = new ArrayList<>() ;
-			List<DailyAttractionDetail> list = result.getDailyDetails();
-			for(DailyAttractionDetail d : list) {
-				if(d.getQuantityLeft()>0) {
-					LocalDate date = d.getDate();
-					String date1 = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-					dates.add(date1);
-				}
-			}		
-			model.addAttribute("price",price);
-			model.addAttribute("dates1", dates);
-			model.addAttribute("discount",discount);
-		
-		return "Attraction-available-date";
 	}
 
 }

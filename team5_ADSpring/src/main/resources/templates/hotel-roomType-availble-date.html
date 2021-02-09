@@ -132,10 +132,10 @@ function submitdayViaAjax(){
 
   <table class="table py-5" cellspacing="10px" cellpadding="10px">
 	<tr><th colspan="4" class="text-center">select a date</th></tr>
-	<tr th:text ="${discount}">id</tr>
+	<tr><td th:text ="${discount}">id</td></tr>
 	<tr>
 		<td class="td_left"><label for="startDate">Start Date :</label></td>
-		<td class="td_right">  <input type="text"  name="startDate" id="startdate" th:field="*{startDate}"></td>
+		<td class="td_right"><input type="text"  name="startDate" id="startdate" th:field="*{startDate}"></td>
 		
 		<td class = "td_left"> End Date</td>
 		<td class="td_right"><input type="text"  name = "endDate " id="enddate" onselect = "datediff()" th:field="*{endDate}"></td>
@@ -152,8 +152,6 @@ function submitdayViaAjax(){
 <!--       th:selected="${i==75}"></option> -->
 <!--       </select></td> -->
 <!-- 	</tr> -->
-	
-	
 	<tr>
 		<td><input type="submit" value="add to cart" /></td>
 		<!-- <td><a th:href="@{/cart/add/}+${product.id}">add to cart</a></td> -->

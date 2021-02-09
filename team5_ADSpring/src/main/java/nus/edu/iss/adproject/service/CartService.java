@@ -13,7 +13,6 @@ public interface CartService extends IService<Cart>  {
 	public int getQuantityByUserId(long userId);
 	public int getProductQuantity(long productId,long userId, LocalDate startDate);
 	
-	public int add(long productId, LocalDate startDate,LocalDate endDate);
 	List<Cart> findByUserId(long userId);
 	Cart findByUserIdAndProductId(long userId, long productId);
 	

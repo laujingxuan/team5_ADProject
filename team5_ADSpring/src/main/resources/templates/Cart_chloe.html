@@ -169,7 +169,7 @@ function qtyajax(){
 
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-
+<!-- 
 	<h3>Cart</h3>
 
 	<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto">
@@ -181,7 +181,7 @@ function qtyajax(){
 			<th>Remarks</th>
 			<th> </th>	
 			<th>Quantity</th>
-			<!-- <th>Product ID</th> -->
+			<th>Product ID</th>
  
 		</tr>
 		
@@ -190,22 +190,68 @@ function qtyajax(){
 			<td th:text="${cartitem.numGuests}">single</td>
 			<td th:text="${cartitem.startDate}">2</td>			
 			<td th:text="${cartitem.endDate}" >default end date</td>
-<!-- 		<td th:if="${cartitem.endDate} eq null" >default end date</td> -->
+		<td th:if="${cartitem.endDate} eq null" >default end date</td>
 			<td th:text="${cartitem.remarks}" >default remarks<td>
-<!-- 		<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
-			<td th:if="${cartitem.remarks} eq null" >default remarks</td> -->
-			<!-- <td th:text="${cartitem.product.id}">2</td> -->	
-<!-- 		<td  th:text="${cartitem.quantity}" class="qty" th:value = "${cartitem.quantity}"></td>
+		<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
+			<td th:if="${cartitem.remarks} eq null" >default remarks</td>
+			<td th:text="${cartitem.product.id}">2</td>	
+		<td  th:text="${cartitem.quantity}" class="qty" th:value = "${cartitem.quantity}"></td>
 			<td class="count">
                 <input class="reduce"  type="button" onClick ="minusNum(this.value)" th:value = "-">
                 <span id="cart_quantity"></span>
                 <input class="add" value="+" type="button" onClick ="addNum()">
-            </td>  -->
-            <td><input class="quantity" name="${cartitem.quantity}" th:value="${cartitem.quantity}" type="number" productid = "productid"></td>
-			<td><a th:href="@{/cart/delete/}+${cartitem.id}">Delete</a></td>
-		</tr>
-	</table>
-	
-	
+            </td> 
+ 	</table>    -->        
+	<div class = "container py-3">
+		<div class = "row">
+			<h4>Cart</h4>
+		</div>
+		<div th:each="cart:${carts}" class="py-3 row">
+			<form>
+				<div class="card" style="width: 80rem; height: 18rem;">
+				  	<div th:if="${cart.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
+					  <h5 class="card-header" th:text = "${cart.product.roomType.hotel.name} + ': ' + ${cart.product.roomType.roomType} + ' Room'">Hotel</h5>
+					  <div class="card-body">
+						<table class="table">
+							<tr>
+								<td style="width:25%">From: </td>
+								<td style="width:15%"><input type="date" th:value="${cart.startDate}"></td>
+								<td style="width:10%">To: </td>
+								<td style="width:15%"><input type="date" th:value="${cart.endDate}"></td>
+							</tr>
+							<tr>
+								<td>Special Request: </td>
+								<td><input type="text" th:value = "${cart.remarks}"></td>
+								<td></td>
+								<td></td>
+							</tr>	
+							<tr>
+								<td style="width:30%">Number of rooms:</td>
+								<td><input type="number" th:value = "${cart.quantity}"></td>
+								<td></td>
+								<td></td>
+							</tr>						
+						</table>
+					 </div>
+					</div>
+					<div th:if="${cart.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
+					  <h5 class="card-header" th:text = "${cart.product.attraction.name}">Attraction</h5>
+					  <div class="card-body">
+						<table class="table">				
+							<tr>
+								<td>Date: </td>
+								<td><input type="date" th:value="${cart.startDate}"></td>
+							</tr>
+							<tr>
+								<td>Quantity: </td>
+								<td><input type="number" th:value = "${cart.quantity}"></td>
+							</tr>							
+						</table>
+					 </div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

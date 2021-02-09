@@ -68,34 +68,6 @@ public class CartServiceImpl implements CartService {
 
 	}
 
-//	Product product, int quantity, LocalDate startDate,	User use
-	public int add(long productId, LocalDate startDate, LocalDate endDate) {
-		// long userId = session_svc.getUserId();
-		long userId = 1;
-		Cart item = findByUserIdAndProductId(userId, productId);
-
-		if (item == null) {
-			item = new Cart();
-
-			User user = user_svcimpl.findById(userId);
-			// item.setUser(session_svc.getUser());
-			item.setUser(user);
-			Product p = product_svcimpl.findProductById(productId);
-			item.setProduct(p);
-			item.setStartDate(startDate);
-			item.setEndDate(endDate);
-			item.setQuantity(1);
-
-		} else {
-			item.setQuantity(item.getQuantity() + 1);
-		}
-
-		save(item);
-		int total = item.getQuantity();
-
-		return total;
-	}
-
 	@Override
 	public void save(Cart x) {
 		crepo.save(x);
