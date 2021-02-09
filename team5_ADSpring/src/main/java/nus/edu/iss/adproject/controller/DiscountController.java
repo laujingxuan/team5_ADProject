@@ -31,6 +31,8 @@ import nus.edu.iss.adproject.service.DiscountService;
 import nus.edu.iss.adproject.service.DiscountServiceImpl;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.HotelServiceImpl;
+import nus.edu.iss.adproject.service.SessionService;
+import nus.edu.iss.adproject.service.SessionServiceImpl;
 
 @Controller
 @RequestMapping("/discount")
@@ -46,10 +48,14 @@ public class DiscountController {
 	private AttractionService attraction_svc;
 	
 	@Autowired
-	public void SetImplimentation(DiscountServiceImpl disc_impl, HotelServiceImpl hotel_impl, AttractionServiceImpl attraction_impl) {
+	private SessionService session_svc;
+	
+	@Autowired
+	public void SetImplimentation(DiscountServiceImpl disc_impl,SessionServiceImpl session_svcimpl, HotelServiceImpl hotel_impl, AttractionServiceImpl attraction_impl) {
 		this.discount_svc = disc_impl;
 		this.hotel_svc = hotel_impl;
 		this.attraction_svc = attraction_impl;
+		this.session_svc = session_svcimpl;
 	}
 	
 	@InitBinder()
@@ -78,6 +84,8 @@ public class DiscountController {
 	@GetMapping("/discounts")
 	public String viewDiscounts(Model model, HttpSession session) {		
 		User user = (User) session.getAttribute("user");
+		if (session_svc.isNotLoggedIn(session))
+			return "redirect:/user/login";
 		
 		List<Hotel> hotel = hotel_svc.findByUserId(user.getId());
 		List<Attraction> attraction = attraction_svc.findByUserId(user.getId());
