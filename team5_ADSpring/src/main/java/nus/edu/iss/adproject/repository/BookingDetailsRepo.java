@@ -19,6 +19,8 @@ public interface BookingDetailsRepo  extends JpaRepository<BookingDetails, Long>
 	 * @Query("SELECT b FROM BookingDetails b") public List<BookingDetails>
 	 * findGuestByMonth();
 	 */
+	@Query("SELECT b FROM BookingDetails b WHERE b.id = :detailId")
+	public BookingDetails findDetailsByDetailId(@Param("detailId")Long detailId);
 	
 	
 	  @Query("SELECT b.booking.bookingDate, sum(b.numOfGuest) as total_guest FROM BookingDetails b Group By month(b.booking.bookingDate), year(b.booking.bookingDate) order by month(b.booking.bookingDate)") 

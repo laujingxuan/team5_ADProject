@@ -7,6 +7,7 @@
   <script type="text/javascript" src="/js/Chart.js"></script>
   <link th:href="@{/css/Chart.css}" rel="stylesheet">
    <link th:href="@{/css/Chart.min.css}" rel="stylesheet">
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous"></script>
    <!-- <script type="text/javascript" src="/js/jquery-3.5.1.js"></script> -->
    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
  </head>
@@ -16,19 +17,22 @@
 
 
 	<div class="container">
-		<div class="row" style="margin-top: 60px">
-
-			<div style="margin: 0 auto">
-				<div class="chart-container"
-					style="float: left; height: 20vh; width: 40vw">
-					<canvas id="myChart"></canvas>
-				</div>
-
-				<div class="chart-container" style="float: right; height: 20vh; width: 40vw">
-					<canvas id="myChart1"></canvas>
-				</div>
-			</div>
-		</div>
+		<table class="table table-borderless" style="margin-top: 60px">
+			<tr>
+				<td>
+					<div class="chart-container"
+						style="margin: 0 auto; float: left; height: 20vh; width: 40vw; position: relative;">
+						<canvas id="myChart"></canvas>
+					</div>
+				</td>
+				<td>
+					<div class="chart-container"
+						style="margin: 0 auto; height: 20vh; width: 40vw; position: relative;">
+						<canvas id="myChart1"></canvas>
+					</div>
+				</td>
+			</tr>
+		</table>
 		<table class="table table-borderless" style="margin-top: 170px">
 			<tr >
 				<td>
@@ -78,49 +82,15 @@
 				
 			</tr>
 		</table>
-	<!-- 	<div class="row">
-			<div class="row" style="width: 400px;margin-top: 170px">
-				<select name="month" class="form-control" id="month" style="width: 150px;margin:0 auto">
-					<option
-						th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
-						th:value="${month}" th:text="${month}"></option>
-				</select>
-				<select name="id" id="room" th:field="*{roomTypes}" class="form-control" style="width: 150px;margin:0 auto">
-                    	<option th:each="room : ${roomTypes}" th:value="${room.roomType}" th:text="${room.roomType}"></option>
-                    </select>
-			</div>
-			<div style="width: 300px;"></div>
-			<div class="row" style="width: 400px;margin-top: 170px;float:right">
-				<select name="month" class="form-control" id="monthly_cancellation" style="width: 150px;margin:0 auto">
-					<option
-						th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
-						th:value="${month}" th:text="${month}"></option>
-				</select>
-				<select name="id" id="roomtype_cancellation" th:field="*{roomTypes}" class="form-control" style="width: 150px;margin:0 auto">
-                    	<option th:each="room : ${roomTypes}" th:value="${room.roomType}" th:text="${room.roomType}"></option>
-                    </select>
-			</div>
-		</div> -->
-		<!-- <div class="row" style="margin-top: 100px; margin-bottom: 100px;">
-			<div class="chart-container"
-				style="float: left; height: 40vh; width: 30vw">
-				<canvas id="myChart_vacancyRate"></canvas>
-			</div>
-			<div class="chart-container" style="height: 40vh; width: 30vw">
-				<canvas id="myChart_bookingRate"></canvas>
-			</div>
-			<div class="chart-container"
-				style="float: right; height: 40vh; width: 30vw">
-				<canvas id="myChart_cancellationRate"></canvas>
-			</div>
-		</div> -->
 	</div>
 
 </body>
 <div th:replace="layout/layout.html :: footer"></div>
 <div th:replace="layout/layout.html :: javascript"></div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-       <script type="text/javascript" th:inline="javascript">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous"></script>
+<script type="text/javascript" th:inline="javascript">
+
 /*<![CDATA[*/
 var htmldata = /*[[${data}]]*/{}
 var htmldata_revenue = /*[[${data_revenue}]]*/{}
@@ -341,6 +311,7 @@ var myChart = new Chart(ctx, {
              display: true,
              text: 'Monthly Revenue'
          },
+         responsive: true,
         scales: {
             yAxes: [{
                 ticks: {
@@ -397,6 +368,7 @@ var myChart = new Chart(ctx1, {
             display: true,
             text: 'Monthly Guest'
         },
+        responsive: true,
         scales: {
             yAxes: [{
                 ticks: {

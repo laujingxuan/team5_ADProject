@@ -59,7 +59,7 @@ public class EmailController {
 //    @RequestMapping(value = "/email/{id}", method = RequestMethod.GET)
 //    @ResponseBody
     public String sendMail(@PathVariable("id") Long id)throws MessagingException{
-        emailService.sendMail(id);
+        //emailService.sendMail(id);
         return"Email Sent Successfully.!";
         }
 

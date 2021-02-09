@@ -2,6 +2,7 @@ package nus.edu.iss.adproject.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -29,6 +30,11 @@ public class BookingServiceImp implements BookingService {
 	@Override
 	public List<Booking> retrieveUserBooking(User user) {
 		return bookRepo.findBookingsByUserId(user.getId());
+	}
+	
+	public BookingDetails retrieveDetailsByDetailId(Long id) {
+		return bookRepoDet.findDetailsByDetailId(id);
+		
 	}
 
 	@Override

@@ -28,11 +28,11 @@
 	
 	<form action="#" th:object="${review}" th:action="@{/review/save/}+${review.product.id}" method="Post" enctype="multipart/form-data">
 		<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto">
-<!-- 		    <tr> -->
-<!-- 		    	<td><input type="hidden" th:field="*{user.id}"></td> -->
-<!-- 		    	<td></td> -->
-<!-- 		    </tr> -->
-		   <tr>
+		    <tr>
+		    	<td><input type="hidden" th:field="*{user.id}"></td>
+		    	<td></td>
+		    </tr>
+		    <tr>
 		    	<td>Photos:</td>
 		    	<td><input type="file" name="image" accept="image/png, image/jpg, image/jpeg" /></td>
 		    </tr>
