@@ -58,9 +58,6 @@ public class ProductController {
 	private HotelService hservice;
 	
 	@Autowired
-	private RoomTypeRepo RTrepo;
-	
-	@Autowired
 	private RoomTypeService RTService;
 	
 	@Autowired
@@ -70,7 +67,6 @@ public class ProductController {
 	public String viewProductDetail(Model model, @PathVariable("id")Long id) {
 		Product product = pservice.findProductById(id);
 		model.addAttribute("product", product);
-		System.out.println(product.getType());
 		if(product.getType().equals(ProductType.ATTRACTION)) {
 			Attraction attraction = aservice.findAttractionByProductId(id);
 			model.addAttribute("attraction", attraction);
@@ -78,6 +74,7 @@ public class ProductController {
 		}else {
 			Hotel hotel = hservice.findHotelByProductId(id);
 			model.addAttribute("hotel", hotel);
+			model.addAttribute("roomType", RTService.findRoomTypesByHotelId(hotel.getId()));
 			return "hoteldetail";
 		}
 	}
@@ -165,27 +162,6 @@ public class ProductController {
 		model.addAttribute("productId", id);
 		return "hotel-roomType-availble-date";
 	}
-
-	@GetMapping("/createHotel")
-	public String createHotel(Model model)
-	{
-		model.addAttribute("hotel", new Hotel());
-		return "ProductHotelCreate";
-	}
-	
-	
-	@GetMapping("/saveHotel")
-	public String saveHotel(@ModelAttribute("hotel") @Valid Hotel hotel, BindingResult bindingResult,
-			Model model) {
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("Hotel", hservice.findAll());
-		
-			return "ProductHotelCreate";
-		}
-		System.out.println("this is hotel object"+hotel);
-		hservice.save(hotel);
-		return "forward:/product/createRoom";
-  }
 	
 	@GetMapping("/createRoom")
 	public String createProduct(Model model)
@@ -216,15 +192,12 @@ public class ProductController {
 		RTService.save(room);
 		return "forward:/hotel/roomtypes";
 	}
+	
 	@GetMapping("/delete/room/{id}")
 	public String deleteMethod(Model model, @PathVariable("id") Long id) {
-		RTrepo.deleteById(id);
-//		RoomType Rtype = RTService.findById(id);
-//		RTService.delete(Rtype);
+		RTService.delete(RTService.findById(id));
 		return "forward:/hotel/roomtypes";
 	}
-	
-	
 	
 	@GetMapping("/edit/{id}")
 	public String showEditForm(Model model, @PathVariable("id") Long id) {

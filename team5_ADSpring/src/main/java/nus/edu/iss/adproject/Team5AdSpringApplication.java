@@ -108,12 +108,14 @@ public class Team5AdSpringApplication {
 			User customer2 = new User("customer2","customer2",RoleType.CUSTOMER,"customer2@gmail.com");
 			User platform1 = new User("platform1","platform1",RoleType.PLATFORMMANAGER,"platform1@gmail.com");
 			User hotelM1 = new User("hotel1","hotel1",RoleType.HOTELMANAGER,"hotel1@gmail.com");
+			User hotelM2 = new User("hotel2","hotel2",RoleType.HOTELMANAGER,"hotel2@gmail.com");
 			User attractionM1 = new User("attraction1","attraction1",RoleType.ATTRACTIONMANAGER,"attraction1@gmail.com");
 			User customer3 = new User("customer3","customer3",RoleType.CUSTOMER,"lusicong22@gmail.com");
 			userRepo.save(customer1);
 			userRepo.save(customer2);
 			userRepo.save(platform1);
 			userRepo.save(hotelM1);
+			userRepo.save(hotelM2);
 			userRepo.save(attractionM1);
 			userRepo.save(customer3);
 			

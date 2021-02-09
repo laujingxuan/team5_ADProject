@@ -18,7 +18,18 @@
 				<td>Address:</td>
 				<td><input type="text" th:field="*{location}">
 			</tr>
-
+			<tr>
+				<td>Rating:</td>
+				<td><input type="text" th:field="*{rating}"></td>
+			</tr>
+			<tr>
+				<td>Latitude:</td>
+				<td><input type="text" th:field="*{lat}"></td>
+			</tr>
+			<tr>
+				<td>Longitude:</td>
+				<td><input type="text" th:field="*{longi}"></td>
+			</tr>
 			<tr>
 				<td>Number of restaurants:</td>
 				<td><input type="text" th:field="*{numberOfRestaurants}"></td>
@@ -28,9 +39,14 @@
 				<td>Country and city:</td>
 				<td><input type="text" th:field="*{country_City}"></td>
 			</tr>
+			
+			<tr>
+				<td>Image URL:</td>
+				<td><input type="text" th:field="*{imageURL}"></td>
+			</tr>
 
 			<tr>
-				<td>Amenities</td>
+				<td>Emenities</td>
 				<td><input type="text" th:field="*{emenities}"></td>
 			</tr>
 
@@ -49,6 +65,7 @@
 			</tr>
 
 			<tr>
+				<td><input type="hidden" th:field="*{user}" th:value="*{user}"></td>
 				<td><input type="hidden" th:field="*{id}" th:value="*{id}"></td>
 				<td colspan="3"><button class="btn btn-primary" type="submit">Save</button></td>
 			</tr>

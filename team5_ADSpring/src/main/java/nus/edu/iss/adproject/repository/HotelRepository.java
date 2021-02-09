@@ -19,4 +19,6 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 	@Query("Select h from Hotel h where h.user.id = :userId")
 	List<Hotel> findByUserId(@Param("userId")Long UserId);
 
+	@Query("SELECT h FROM Hotel h WHERE h.user.id = :userId AND h.id = :hotelId")
+	public Hotel findHotelByUserIdAndHotelId(@Param("userId")Long userId, @Param("hotelId")Long hotelId);
 }

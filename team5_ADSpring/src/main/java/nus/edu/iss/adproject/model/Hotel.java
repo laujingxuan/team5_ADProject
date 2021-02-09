@@ -26,7 +26,7 @@ public class Hotel {
     private String location;
     private double lat;
     private double longi;
-    private double rate;
+    private double rating;
     private int numberOfRestaurants;
     @NotNull
     private String country_City;
@@ -48,7 +48,7 @@ public class Hotel {
 		// TODO Auto-generated constructor stub
 	}
 		
-	public Hotel(String name, String location, double lat, double longi, double rate,
+	public Hotel(String name, String location, double lat, double longi, double rating,
 			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
 			String aPI_URL, User user) {
 		super();
@@ -58,7 +58,7 @@ public class Hotel {
 		this.location = location;
 		this.lat = lat;
 		this.longi = longi;
-		this.rate = rate;
+		this.rating = rating;
 		this.numberOfRestaurants = numberOfRestaurants;
 		this.country_City = country_City;
 		this.emenities = emenities;
@@ -68,7 +68,7 @@ public class Hotel {
 		this.user = user;
 	}
 	
-	public Hotel(String name, String location, double lat, double longi, double rate,
+	public Hotel(String name, String location, double lat, double longi, double rating,
 			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
 			String aPI_URL, User user, String imageURL) {
 		super();
@@ -78,7 +78,7 @@ public class Hotel {
 		this.location = location;
 		this.lat = lat;
 		this.longi = longi;
-		this.rate = rate;
+		this.rating = rating;
 		this.numberOfRestaurants = numberOfRestaurants;
 		this.country_City = country_City;
 		this.emenities = emenities;
@@ -145,11 +145,11 @@ public class Hotel {
 	public void setLongi(double longi) {
 		this.longi = longi;
 	}
-	public double getRate() {
-		return rate;
+	public double getRating() {
+		return rating;
 	}
-	public void setRate(double rate) {
-		this.rate = rate;
+	public void setRating(double rate) {
+		this.rating = rating;
 	}
 	public int getNumberOfRestaurants() {
 		return numberOfRestaurants;
@@ -200,7 +200,7 @@ public class Hotel {
 	@Override
 	public String toString() {
 		return "Hotel [id=" + id + ", roomType=" + roomType + ", name=" + name + ", location=" + location + ", lat="
-				+ lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants=" + numberOfRestaurants
+				+ lat + ", longi=" + longi + ", rating=" + rating + ", numberOfRestaurants=" + numberOfRestaurants
 				+ ", country_City=" + country_City + ", emenities=" + emenities + ", quality=" + quality
 				+ ", description=" + description + ", API_URL=" + API_URL + "]";
 	}	
