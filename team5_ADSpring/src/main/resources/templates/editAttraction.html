@@ -8,7 +8,7 @@
 	<div th:replace="layout/layout.html :: menu"></div>
 	<br />
 	<h3>Update Attraction Details</h3>
-	<form action="#" th:object="${attraction}" th:action="@{/product/save}"
+	<form action="#" th:object="${attraction}" th:action="@{/attraction/save}"
 		method="post">
 		<table>
 
@@ -23,18 +23,38 @@
 			</tr>
 
 			<tr>
-				<td>Location</td>
+				<td>Address</td>
 				<td><input type="text" th:field="*{location}">
 			</tr>
 
 			<tr>
-				<td>Country and city</td>
+				<td>Country</td>
 				<td><input type="text" th:field="*{country_city}"></td>
 			</tr>
 
 			<tr>
 				<td>Description</td>
 				<td><input type="text" th:field="*{description}"></td>
+			</tr>
+			
+			<tr>
+				<td>Latitude</td>
+				<td><input type="text" th:field="*{lat}"></td>
+			</tr>
+			
+			<tr>
+				<td>Longitude</td>
+				<td><input type="text" th:field="*{longi}"></td>
+			</tr>
+			
+			<tr>
+				<td>Rating</td>
+				<td><input type="text" th:field="*{rating}"></td>
+			</tr>
+			
+			<tr>
+				<td>Image URL</td>
+				<td><input type="text" th:field="*{imageURL}"></td>
 			</tr>
 
 			<tr>

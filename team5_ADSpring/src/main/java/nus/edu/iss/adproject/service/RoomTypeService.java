@@ -15,7 +15,7 @@ public interface RoomTypeService {
 
 //	List<RoomType> findbyHotelId(int hid);
 
-	void save(RoomType x);
+	public RoomType save(RoomType x);
 
 	void delete(RoomType rtype);
 	

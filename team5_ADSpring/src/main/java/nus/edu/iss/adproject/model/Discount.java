@@ -34,8 +34,6 @@ public class Discount {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-
 
 	public Discount(long id, int discount_rate, LocalDate from_date, LocalDate to_date) {
 		super();

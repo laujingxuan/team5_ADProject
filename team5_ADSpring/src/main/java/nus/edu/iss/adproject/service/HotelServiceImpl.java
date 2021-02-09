@@ -29,8 +29,7 @@ public class HotelServiceImpl implements HotelService{
 
 	@Override
 	public void delete(Hotel x) {
-		// TODO Auto-generated method stub
-		
+		hotelrepo.delete(x);
 	}
 	
 	@Override 

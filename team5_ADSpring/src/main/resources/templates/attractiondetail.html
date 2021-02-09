@@ -53,11 +53,16 @@
         }
     </script>
 </head>
+<head th:insert="layout/layout.html :: veryTop"></head>
 <body>
+<div th:replace="layout/layout.html :: menu" ></div>
 	<h3>Attraction Detail</h3>
 	
 	
 	<table class="altrowstable" id="alternatecolor" th:object="${attraction}">
+	  <tr>
+        <td colspan = "2"><img th:src="*{imageURL}"></td>
+      </tr>
 	  <tr>
         <th>Name</th>
         <td th:text="*{name}"><b>Name</b></td>
@@ -67,7 +72,7 @@
         <td th:text="*{price}">Price</td>
       </tr>
       <tr>
-        <th>Location</th>
+        <th>Address</th>
         <td th:text="*{location}">Location</td>
       </tr>
       <tr>
@@ -81,6 +86,14 @@
       <tr>
         <th>Country_city</th>
         <td th:text="*{country_city}">Country_city</td>
+      </tr>
+      <tr>
+        <th>Location</th>
+        <td><a href="Map.html" th:href="@{/attraction/map/}+*{id}" >Location</a></td>
+      </tr>
+      <tr>
+        <th>Select Date</th>
+        <td><a href="#" th:href="@{/attraction/available-date/}+*{product.id}">Attraction Available Date</a></td>
       </tr>
       <tr>
       	<td colspan="2">
@@ -97,6 +110,8 @@
 	   	</td>
 	  </tr>
     </table>
+	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>    
 </body>
 </html>
 
