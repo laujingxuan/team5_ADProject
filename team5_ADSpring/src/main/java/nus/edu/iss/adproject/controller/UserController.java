@@ -94,18 +94,32 @@ public class UserController {
 	
 	@GetMapping("/signup")
 	public String signUp(Model model, HttpSession session) {
-		
-		model.addAttribute("roleType", RoleType.values());
 		model.addAttribute("path", "/user/validate");
-		model.addAttribute("userForm", new UserForm());
+		UserForm userform=new UserForm();
+		userform.setRole(RoleType.CUSTOMER);
+		model.addAttribute("userForm", userform);
 		return "signUpForm";
+	}
+	
+	@GetMapping("/merchant_signup")
+	public String merchantSignUp(Model model, HttpSession session) {
+		model.addAttribute("path", "/user/validate");
+		UserForm userform = new UserForm();
+		userform.setRole(RoleType.HOTELMANAGER);
+		model.addAttribute("userForm", userform);
+		return "merchant-signup-form";
 	}
 	
 	@PostMapping("/validate")
 	public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
 		model.addAttribute("path", "/user/validate");
-		userForm.setRole(RoleType.CUSTOMER);
-		System.out.println(userForm);
+		System.out.print(userForm.isSubscribe());
+		if(user_svc.userExists(userForm.getUserName())) {
+			bindingResult.addError(new FieldError("userForm","userName","User name is already in use"));
+		}
+		if(user_svc.emailExists(userForm.getEmail())) {
+			bindingResult.addError(new FieldError("userForm","email","email is already in use"));
+		}
 		if (bindingResult.hasErrors()) {
 			for (Object object : bindingResult.getAllErrors()) {
 			    if(object instanceof FieldError) {
@@ -124,7 +138,12 @@ public class UserController {
 		    for (FieldError error : errors ) {
 		        System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
 		    }
+		    if(userForm.getRole()==RoleType.CUSTOMER) {
 			return "signUpForm";
+			}else {
+				return "merchant-signup-form";
+			}
+		    
 		}
 		User user = new User(userForm);
 		user_svc.save(user);

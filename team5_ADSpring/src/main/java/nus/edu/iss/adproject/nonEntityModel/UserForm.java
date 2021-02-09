@@ -20,10 +20,41 @@ public class UserForm {
 	@NotNull
 	private String confPassword;
 	private RoleType role;
-
+	private boolean subscribe;
 	public UserForm() {
 		super();
 	}
+	
+	
+
+	public UserForm(long id, @NotNull String userName, @NotNull String email,
+			@NotNull @Size(min = 2, max = 30) String password, @NotNull String confPassword, RoleType role,
+			boolean subscribe) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.confPassword = confPassword;
+		this.role = role;
+		this.subscribe = subscribe;
+	}
+
+
+
+
+
+	public boolean isSubscribe() {
+		return subscribe;
+	}
+
+
+
+	public void setSubscribe(boolean subscribe) {
+		this.subscribe = subscribe;
+	}
+
+
 
 	public UserForm(long id, String userName, String email,String password, String confPassword, RoleType role) {
 		super();

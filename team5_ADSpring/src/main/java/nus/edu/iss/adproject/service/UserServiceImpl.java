@@ -3,6 +3,7 @@ package nus.edu.iss.adproject.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -99,5 +100,25 @@ public class UserServiceImpl implements UserService {
 		user.setResetPasswordToken(null);
 		userRepo.save(user);
 	}
+
+	@Override
+	public boolean emailExists(String email) {
+		return findUserByEmail(email).isPresent();
+	}
+
+	private Optional<User> findUserByEmail(String email) {
+		return userRepo.findUserByEmail(email);
+	}
+
+	@Override
+	public boolean userExists(String userName) {
+		return findUserByName(userName).isPresent();
+	}
+
+	private Optional<User> findUserByName(String userName) {
+		return userRepo.findUserByUserName(userName);
+	}
+	
+	
 }
 
