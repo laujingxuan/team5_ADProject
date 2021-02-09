@@ -93,9 +93,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public void updatePassword(User user,String newPassword) {
-		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
-		String encodePassword = passwordEncoder.encode(newPassword);
-		user.setPassword(encodePassword);
+//		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
+//		String encodePassword = passwordEncoder.encode(newPassword);
+		user.setPassword(newPassword);
 		user.setResetPasswordToken(null);
 		userRepo.save(user);
 	}
