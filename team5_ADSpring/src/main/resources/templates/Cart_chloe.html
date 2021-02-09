@@ -190,12 +190,12 @@ function qtyajax(){
 			<td th:text="${cartitem.numGuests}">single</td>
 			<td th:text="${cartitem.startDate}">2</td>			
 			<td th:text="${cartitem.endDate}" >default end date</td>
-<!-- 			<td th:if="${cartitem.endDate} eq null" >default end date</td> -->
+<!-- 		<td th:if="${cartitem.endDate} eq null" >default end date</td> -->
 			<td th:text="${cartitem.remarks}" >default remarks<td>
-<!-- 			<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
+<!-- 		<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
 			<td th:if="${cartitem.remarks} eq null" >default remarks</td> -->
 			<!-- <td th:text="${cartitem.product.id}">2</td> -->	
-<!-- 			<td  th:text="${cartitem.quantity}" class="qty" th:value = "${cartitem.quantity}"></td>
+<!-- 		<td  th:text="${cartitem.quantity}" class="qty" th:value = "${cartitem.quantity}"></td>
 			<td class="count">
                 <input class="reduce"  type="button" onClick ="minusNum(this.value)" th:value = "-">
                 <span id="cart_quantity"></span>
