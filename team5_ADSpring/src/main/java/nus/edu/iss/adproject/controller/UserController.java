@@ -113,7 +113,6 @@ public class UserController {
 	@PostMapping("/validate")
 	public String addUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
 		model.addAttribute("path", "/user/validate");
-		System.out.print(userForm.isSubscribe());
 		if(user_svc.userExists(userForm.getUserName())) {
 			bindingResult.addError(new FieldError("userForm","userName","User name is already in use"));
 		}

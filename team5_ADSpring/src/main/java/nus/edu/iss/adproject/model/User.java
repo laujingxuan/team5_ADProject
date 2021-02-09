@@ -134,6 +134,7 @@ public class User {
 		this.password=userForm.getPassword();
 		this.role=userForm.getRole();
 		this.carts = new ArrayList<Cart>();
+		this.subscribe=userForm.isSubscribe();
 	}
 	
 	
@@ -202,7 +203,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + ", email="
-				+ email + ", points=" + points + "]";
+				+ email + ", points=" + points + ", subscribe=" + subscribe + "]";
 	}
 
 	public String getResetPasswordToken() {
