@@ -1,5 +1,7 @@
 package nus.edu.iss.adproject.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,13 +54,15 @@ public class CartController {
 //	}
 
 	@ResponseBody
-	@GetMapping("/test")
-	public JSONObject getCartitemQuantity( Model model, HttpSession session) {
+	@GetMapping("/getQuantityByUserId")
+	public JSONObject CartitemTotalQuantiy( Model model, HttpSession session) {
 		 //String s = "{\"status\":\"success\", \"total\": 5}";
 		
-		  if (session_svc.isNotLoggedIn(session)) return null; User user = (User)
-		  session.getAttribute("user"); Long userId = user.getId(); int quantity =
-		  cart_svc.getQuantityByUserId(userId); System.out.println(quantity);
+		  if (session_svc.isNotLoggedIn(session)) return null; 
+		  User user = (User)session.getAttribute("user"); 
+		  Long userId = user.getId(); 
+		  int quantity =  cart_svc.getQuantityByUserId(userId); 
+		  //System.out.println(quantity);
 		  
 		  //Map<String, Object> map=new HashMap<String,Object>(); 
 		  //map.put("quantity",quantity);
@@ -68,8 +72,35 @@ public class CartController {
 		  map.put("total", quantity);
 		  
 		  JSONObject jsonObj=new JSONObject(map);
-		  System.out.println("checkpoint B");
-		  System.out.println("checkpoint A: " + jsonObj.toJSONString());
+		  System.out.println("checkpoint A ");
+		  System.out.println("checkpoint B: " + jsonObj.toJSONString());
+		
+		//return jsonObj;
+		return jsonObj;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getProductQuantity")
+	public JSONObject getProductQuantity(CartForm cartitem ,Model model, HttpSession session) {
+		  if (session_svc.isNotLoggedIn(session)) return null; User user = (User)
+		  session.getAttribute("user"); Long userId = user.getId(); 
+		  //int quantity =cart_svc.getQuantityByUserId(userId);
+		  //System.out.println(quantity);
+		  String startdate = cartitem.getStartDate();
+		  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yy");
+		  LocalDate startDate = LocalDate.parse(startdate, formatter);
+		  
+		  int quantity =cart_svc.getProductQuantity(cartitem.getProductId(),cartitem.getUserId(),startDate);
+		  System.out.print("now quantity is " + quantity);
+		  
+		  //Map<String, Object> map=new HashMap<String,Object>(); 
+		  //map.put("quantity",quantity);		  
+		  Map<String, Object> map=new HashMap<String,Object>(); 
+		  map.put("status", "success");
+		  map.put("total", quantity);
+		  
+		  JSONObject jsonObj=new JSONObject(map);
+		  System.out.println("checkpoint C: " + jsonObj.toJSONString());
 		
 		//return jsonObj;
 		return jsonObj;
@@ -88,7 +119,8 @@ public class CartController {
 		int total = cart_svc.add(productId, newCart.getStartDate(), newCart.getEndDate());
 		return "forward:/product/list";
 	}
-
+	
+	
 
     @GetMapping("/list")
     public String ListCartItems(Model model){    
