@@ -121,6 +121,7 @@ public class DashboardController {
 		if (session_svc.isNotLoggedIn(session))
 			return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
+		
 		if (user.getRole() == RoleType.HOTELMANAGER) {
 
 			Map<String, Integer> data = new LinkedHashMap<String, Integer>();
@@ -133,11 +134,20 @@ public class DashboardController {
 			RoomType roomType = new RoomType();
 			RestTemplate restTemplate = new RestTemplate();
 			
+			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
+			List<RoomType> room_list = new ArrayList<RoomType>();
+			System.out.println(rooms.size());
+			for (Object object : rooms) {
+				roomType= new RoomType();
+				roomType.setRoomType(object.toString());
+				room_list.add(roomType);
+			}
+			
 
 			String uri;
 			//uri = roomType.getHotel().getAPI_URL()+ "room/month";
 			uri = "http://localhost:8081/api/hotel/room/month";
-			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, "SINGLE");
+			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
 			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
 					DailyRoomDetailWrapper.class);
 			for (DailyRoomTypeDetail daily : result.getDailyList()) {
@@ -258,16 +268,8 @@ public class DashboardController {
 					break;
 				}
 
-			}
+			}			
 			
-			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
-			List<RoomType> room_list = new ArrayList<RoomType>();
-			System.out.println(rooms.size());
-			for (Object object : rooms) {
-				roomType= new RoomType();
-				roomType.setRoomType(object.toString());
-				room_list.add(roomType);
-			}
 			 
 			model.addAttribute("roomTypes", room_list);
 			model.addAttribute("month",Month.values());
@@ -346,6 +348,7 @@ public class DashboardController {
 	public String showDashboardByHotel(@PathVariable("hotel_id") Long hotel_id,Model model, HttpSession session) {
 		
 		User user = (User) session.getAttribute("user");
+		Hotel hotel = hotel_svc.findById(hotel_id);
 		if (user.getRole() == RoleType.PLATFORMMANAGER) {
 
 			Map<String, Integer> data = new LinkedHashMap<String, Integer>();
@@ -358,11 +361,19 @@ public class DashboardController {
 			RoomType roomType = new RoomType();
 			RestTemplate restTemplate = new RestTemplate();
 			
+			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
+			List<RoomType> room_list = new ArrayList<RoomType>();
+			System.out.println(rooms.size());
+			for (Object object : rooms) {
+				roomType= new RoomType();
+				roomType.setRoomType(object.toString());
+				room_list.add(roomType);
+			}	
 
 			String uri;
-//		uri = roomType.getHotel().getAPI_URL()+ "booking/month";
-			uri = "http://localhost:8081/api/hotel/room/month";
-			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, "SINGLE");
+			
+			uri = hotel.getAPI_URL()+ "room/month";
+			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
 			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
 					DailyRoomDetailWrapper.class);
 			for (DailyRoomTypeDetail daily : result.getDailyList()) {
@@ -483,14 +494,7 @@ public class DashboardController {
 
 			}
 			
-			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
-			List<RoomType> room_list = new ArrayList<RoomType>();
-			System.out.println(rooms.size());
-			for (Object object : rooms) {
-				roomType= new RoomType();
-				roomType.setRoomType(object.toString());
-				room_list.add(roomType);
-			}
+			
 			 
 			model.addAttribute("roomTypes", room_list);
 
