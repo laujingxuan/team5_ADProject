@@ -45,6 +45,15 @@ public class CartServiceImpl implements CartService {
 	}
 	
 	@Override
+	public int getQuantityByUserId(long userId) {
+		//return cartRepo.findCartsByUserId(userId);
+		return crepo.getQuantityByUserId(userId);
+		
+		//System.out.println(retrieveByUserId(userId).size());
+		//return 0;
+	}
+	
+	@Override
 	public void deleteCart(Cart cart) {
 		//cartRepo.delete(cart);
 		crepo.delete(cart);
@@ -53,7 +62,7 @@ public class CartServiceImpl implements CartService {
 	}
 	
 //	Product product, int quantity, LocalDate startDate,	User use
-	public int add(long productId) {
+	public int add(long productId , LocalDate startDate, LocalDate endDate) {
 		//long userId = session_svc.getUserId();
 		long userId = 1;
 		Cart item = findByUserIdAndProductId(userId, productId);
@@ -66,7 +75,10 @@ public class CartServiceImpl implements CartService {
             item.setUser(user);
             Product p = product_svcimpl.findProductById(productId);
             item.setProduct(p);
+            item.setStartDate(startDate);
+            item.setEndDate(endDate);
             item.setQuantity(1);
+            
             
         } else {
         	item.setQuantity(item.getQuantity() + 1);

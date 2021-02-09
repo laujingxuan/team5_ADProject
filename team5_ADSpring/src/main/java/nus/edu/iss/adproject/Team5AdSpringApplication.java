@@ -93,6 +93,7 @@ public class Team5AdSpringApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
+			
 			//Creating travel package
 			TravelPackage tp1 = new TravelPackage(2,3,5);
 			tpRepo.save(tp1);
@@ -108,17 +109,19 @@ public class Team5AdSpringApplication {
 			User platform1 = new User("platform1","platform1",RoleType.PLATFORMMANAGER,"platform1@gmail.com");
 			User hotelM1 = new User("hotel1","hotel1",RoleType.HOTELMANAGER,"hotel1@gmail.com");
 			User attractionM1 = new User("attraction1","attraction1",RoleType.ATTRACTIONMANAGER,"attraction1@gmail.com");
+			User customer3 = new User("customer3","customer3",RoleType.CUSTOMER,"lusicong22@gmail.com");
 			userRepo.save(customer1);
 			userRepo.save(customer2);
 			userRepo.save(platform1);
 			userRepo.save(hotelM1);
 			userRepo.save(attractionM1);
+			userRepo.save(customer3);
 			
 			
 			//Creating Booking
-			Booking booking1 = new Booking(customer1, LocalDate.of(2021, 1, 15), 5);
-			Booking booking2 = new Booking(customer1, LocalDate.of(2021, 1, 18), 5);
-			Booking booking3 = new Booking(customer1, LocalDate.of(2021, 2, 15), 5);
+			Booking booking1 = new Booking(customer1, LocalDate.of(2021, 2, 7), 5);
+			Booking booking2 = new Booking(customer1, LocalDate.of(2021, 2, 1), 5);
+			Booking booking3 = new Booking(customer1, LocalDate.of(2021, 1, 30), 5);
 			Booking booking5 = new Booking(customer1, LocalDate.of(2020, 1, 15), 5);
 			Booking booking6 = new Booking(customer1, LocalDate.of(2020, 1, 18), 5);
 			Booking booking7 = new Booking(customer1, LocalDate.of(2020, 2, 15), 5);
@@ -199,15 +202,14 @@ public class Team5AdSpringApplication {
 			
 			
 			//Creating booking details
-			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 17),2,"No lunch");
-			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 18),4,"No lunch");
-			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 19),6,"No lunch");
-			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100,LocalDate.of(2021, 1, 15),LocalDate.of(2021, 1, 20),2,"No lunch");
+			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300);
+			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250);
+			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400);
+			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100);
 			bookDetRepo.save(bookDetail1);
 			bookDetRepo.save(bookDetail2);
 			bookDetRepo.save(bookDetail3);
 			bookDetRepo.save(bookDetail4);
-
 
 			BookingDetails bookDetail5 = new BookingDetails(booking2, attraction2.getProduct(), "1", 4, 300);
 			BookingDetails bookDetail6 = new BookingDetails(booking2, attraction3.getProduct(), "2", 3, 250);
@@ -217,7 +219,8 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail6);
 			bookDetRepo.save(bookDetail7);
 			bookDetRepo.save(bookDetail8);
-
+  
+  
 			ProductReview review1 = new ProductReview(customer1, room1, 4.6, "I think it is comfortable", "pic1");
 			prrepo.save(review1);
 			ProductReview review2 = new ProductReview(customer2, room1, 4.8, "I perfectly like what I ordered", "pic1");
@@ -243,11 +246,10 @@ public class Team5AdSpringApplication {
 			ProductReview review12 = new ProductReview(customer2, room5, 4.3, "It is ok, but not best", "pic1");
 			prrepo.save(review12);
 			
-			
-			
 
 		};
 	}
+
 
 }
 
