@@ -5,11 +5,112 @@
 </head>
 <head th:insert="layout/layout.html :: veryTop"></head>
 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script th:inline="javascript" >
-	
+
+
+
+window.onload = function ()
+{
+    let elemlist = document.getElementsByClassName("quantity");
+    //in the event of changes is made on the quantity in the cart
+    for (let i = 0; i < elemlist.length; i++) {
+        elemlist[i].addEventListener('keyup', onChange)
+        elemlist[i].addEventListener('mouseup', onChange)
+    }
+}
+
+function onChange(event) {
+    let elem = event.currentTarget;
+    let quantity = elem.value;
+    console.log(quantity);
+    //UpdateTotal(elem);
+	qtyajax()
+    //pass to AJAX to update the server
+     let productId = elem.getAttribute("productid");
+    
+  //  sendChange(productId, quantity) 
+}
+/* 
+function UpdateTotal(elem) {
+    //calculating the cart total and total for each items
+    let quantity = elem.value;
+    //let unitPrice = elem.parentElement.parentElement.parentElement.querySelector(".price").textContent;
+    //let totalprice = parseInt(unitPrice) * parseInt(quantity);
+    //elem.parentElement.parentElement.parentElement.querySelector(".product_total").textContent = totalprice;
+    let cartTotal = 0;
+    var itemslist = document.getElementsByClassName("quantity");
+    for (let i = 0; i < itemslist.length; i++) {
+        cartTotal = cartTotal + parseInt(itemslist[i].value) * parseInt(itemslist[i].parentElement.parentElement.parentElement.querySelector(".price").textContent);
+    }
+    document.querySelector(".grand_total").textContent = cartTotal;
+    return;
+}
+ */
+function sendChange(productId, value) {
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "/Cart/Cart");
+    xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+            // receive response from server
+            if (this.status === 200 || this.status === 302) {
+                let data = JSON.parse(this.responseText);
+
+                if (this.status === 200) {
+                    console.log("Successful operation: " + data.success);
+                }
+                else if (this.status === 302) {
+                    window.location = data.redirect_url;
+                }
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify({
+        ProductId: productId,
+        Value: value
+    }));
+}
+
+function confirmRemove(event) {
+    if (confirm("Confirm remove item from the cart?")) {
+        //get product id for removed item
+        let elem = event.currentTarget;
+        let productId = elem.getAttribute("product_id");
+
+        SendProductId(productId, elem)
+    }
+}
+
+function SendProductId(productId, elem) {
+    //send AJAX request to server to remove record from database
+    let xhr = new XMLHttpRequest();
+
+    //send to action method to receive AJAX call
+    xhr.open("POST", "/Cart/RemoveItem");
+    xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+            if (this.status == 200) {
+                let data = JSON.parse(this.responseText);
+                console.log("Successful operation: " + data.success);
+                elem.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+                UpdateTotal(elem);
+            }
+        }
+    };
+    //send product id to controller as identifier
+    xhr.send(JSON.stringify({
+        ProductId: productId,
+    }));
+}
 
 	function minusNum() {
-		var x = document.getElementById("qty").value;
+		var x = document.getElementById("qty").value; 
+		console.log(x);
 		x = Number(x);
 		if (x >= 2) { x = x - 1; } 
 		document.getElementById("qty").value = x;
@@ -17,15 +118,16 @@
 	
 	
 	function addNum() {
-		var x = document.getElementById("qty").value;
+		var x = document.getElementsByClassName("qty").value;
+		console.log(x);
 		x = Number(x);
 		if (x >= 1) { x = x + 1; } 
-		document.getElementById("qty").value = x;
+		document.getElementsByClassName("qty").value = x;
 		
-		snedtocontrollerwithAJAX(x);
+		qtyajax(x);
 	}
 	
-	$(function(){
+/* 	$(function(){
 		$.ajax({
 			type : "POST",
 			url : "http://localhost:8080/cart/test", 
@@ -36,12 +138,19 @@
 					// send to controller 
         	}
 		})
-	});
+	}); */
 	
-	$(function(){
+function qtyajax(){
+		
+		var cartitem = {};
+		cartitem["productId"] = 4;
+		cartitem["userId"] =1;
+		cartitem["startDate"] ="2021-01-19"
+		
 		$.ajax({
-			type : "GET",
-			url : "http://localhost:8080/cart/test", 
+			type : "POST",
+			url : "http://localhost:8080/cart/getProductQuantity", 
+			data: JSON.stringify(cartitem),
 			dataType : 'json',
 			//contentType: "application/json",
 	        success : function(data) {
@@ -55,7 +164,7 @@
 	            $('#cart_total').html("$ " + sum); */
 	        }
 		})
-	});
+	};
 	</script>
 
 <body>
@@ -86,11 +195,13 @@
 <!-- 			<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
 			<td th:if="${cartitem.remarks} eq null" >default remarks</td> -->
 			<!-- <td th:text="${cartitem.product.id}">2</td> -->	
+<!-- 			<td  th:text="${cartitem.quantity}" class="qty" th:value = "${cartitem.quantity}"></td>
 			<td class="count">
-                <input class="reduce" id="jia1" value="-" type="button" onClick ="minusNum()">
-                <input style="width: 30%;" type="number" id="qty" th:field="${cartitem.quantity}" value="3">
-                <input class="add" id="jia2" value="+" type="button" onClick ="addNum()">
-            </td> 
+                <input class="reduce"  type="button" onClick ="minusNum(this.value)" th:value = "-">
+                <span id="cart_quantity"></span>
+                <input class="add" value="+" type="button" onClick ="addNum()">
+            </td>  -->
+            <td><input class="quantity" name="${cartitem.quantity}" th:value="${cartitem.quantity}" type="number" productid = "productid"></td>
 			<td><a th:href="@{/cart/delete/}+${cartitem.id}">Delete</a></td>
 		</tr>
 	</table>
