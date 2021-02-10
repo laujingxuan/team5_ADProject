@@ -26,9 +26,12 @@
 		</tr>
 		<tr th:each="review:${review}">
 			<td th:text="${review.id}">ID</td>
-			<td><img height="128" width="168" th:src="${review.photoImagePath}"/></td>
+			<td><img height="128" width="168" th:src="${review.pic}"/></td>
 			<td th:text="${review.rating}">Rating</td>
 			<td th:text="${review.message}">Content</td>
+		</tr>
+		<tr th:each="review:${photo}">
+			<td th:text="${review}">ID</td>
 		</tr>
 	</table>
 	
