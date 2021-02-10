@@ -7,13 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
@@ -118,4 +122,41 @@ public class MainController {
 		}
 		return hotSellers;
 	}
+	@RequestMapping("/Chat")
+  public String index(HttpServletRequest request, Model model) {
+      String username = (String) request.getSession().getAttribute("username");
+
+//      if (username == null || username.isEmpty()) {
+//          return "redirect:/chatlogin";
+//      }
+      model.addAttribute("username", username); 
+      return "chat";
+  }//work
+
+  //@RequestMapping(path = "/chatlogin", method = RequestMethod.GET)
+//  @RequestMapping("/chatlogin")
+//  public String showLoginPage() {
+//      return "chatlogin"; // work
+//  }
+
+ // @RequestMapping(path = "/chatlogin", method = RequestMethod.POST)
+  @RequestMapping("/chatlogin")
+  public String doLogin(HttpServletRequest request, @RequestParam(defaultValue = "") String username) {
+      username = username.trim();
+
+      if (username.isEmpty()) {
+          return "chatlogin";
+      }
+      request.getSession().setAttribute("username", username);
+
+      return "redirect:/Chat";
+  }
+
+  @RequestMapping(path = "/chatlogout")
+  public String logout(HttpServletRequest request) {
+      request.getSession(true).invalidate();
+       
+      return "redirect:/chatlogin";
+  }
+	     
 }
