@@ -1,5 +1,7 @@
 package nus.edu.iss.adproject.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.minidev.json.JSONObject;
@@ -25,6 +28,7 @@ import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.service.CartService;
 import nus.edu.iss.adproject.service.CartServiceImpl;
+import nus.edu.iss.adproject.service.ProductService;
 import nus.edu.iss.adproject.service.SessionService;
 import nus.edu.iss.adproject.service.SessionServiceImpl;
 
@@ -38,7 +42,9 @@ public class CartController {
 	
 	@Autowired
 	private SessionService session_svc;
-	//private long userId = session_svc.getUserId();
+	
+	@Autowired
+	private ProductService pservice;
 	
 	@Autowired
 	public void SetImplimentation(CartServiceImpl cart_svcimpl, SessionServiceImpl session_svcimpl) {
@@ -52,13 +58,15 @@ public class CartController {
 //	}
 
 	@ResponseBody
-	@GetMapping("/test")
-	public JSONObject getCartitemQuantity( Model model, HttpSession session) {
+	@GetMapping("/getQuantityByUserId")
+	public JSONObject CartitemTotalQuantiy( Model model, HttpSession session) {
 		 //String s = "{\"status\":\"success\", \"total\": 5}";
 		
-		  if (session_svc.isNotLoggedIn(session)) return null; User user = (User)
-		  session.getAttribute("user"); Long userId = user.getId(); int quantity =
-		  cart_svc.getQuantityByUserId(userId); System.out.println(quantity);
+		  if (session_svc.isNotLoggedIn(session)) return null; 
+		  User user = (User)session.getAttribute("user"); 
+		  Long userId = user.getId(); 
+		  int quantity =  cart_svc.getQuantityByUserId(userId); 
+		  //System.out.println(quantity);
 		  
 		  //Map<String, Object> map=new HashMap<String,Object>(); 
 		  //map.put("quantity",quantity);
@@ -68,8 +76,35 @@ public class CartController {
 		  map.put("total", quantity);
 		  
 		  JSONObject jsonObj=new JSONObject(map);
-		  System.out.println("checkpoint B");
-		  System.out.println("checkpoint A: " + jsonObj.toJSONString());
+		  System.out.println("checkpoint A ");
+		  System.out.println("checkpoint B: " + jsonObj.toJSONString());
+		
+		//return jsonObj;
+		return jsonObj;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getProductQuantity")
+	public JSONObject getProductQuantity(CartForm cartitem ,Model model, HttpSession session) {
+		  if (session_svc.isNotLoggedIn(session)) return null; User user = (User)
+		  session.getAttribute("user"); Long userId = user.getId(); 
+		  //int quantity =cart_svc.getQuantityByUserId(userId);
+		  //System.out.println(quantity);
+		  String startdate = cartitem.getStartDate();
+		  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yy");
+		  LocalDate startDate = LocalDate.parse(startdate, formatter);
+		  
+		  int quantity =cart_svc.getProductQuantity(cartitem.getProductId(),cartitem.getUserId(),startDate);
+		  System.out.print("now quantity is " + quantity);
+		  
+		  //Map<String, Object> map=new HashMap<String,Object>(); 
+		  //map.put("quantity",quantity);		  
+		  Map<String, Object> map=new HashMap<String,Object>(); 
+		  map.put("status", "success");
+		  map.put("total", quantity);
+		  
+		  JSONObject jsonObj=new JSONObject(map);
+		  System.out.println("checkpoint C: " + jsonObj.toJSONString());
 		
 		//return jsonObj;
 		return jsonObj;
@@ -79,22 +114,21 @@ public class CartController {
 	public String AddItemToCart(@ModelAttribute("cartitem") @Valid CartForm cartitem, @PathVariable("id") Long productId, BindingResult bindingResult, Model model, HttpSession session) {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
-		System.out.println("productId "+ productId);
 		Cart newCart = new Cart(cartitem);
 		newCart.setUser(user);
-//		System.out.println("from page to select room: " + cartitem.getUser().getUserName());
-		System.out.println("from page to select room: " + newCart.getEndDate());
-		System.out.println("from page to select room: " + newCart.getStartDate());
-		int total = cart_svc.add(productId, newCart.getStartDate(), newCart.getEndDate());
-		return "forward:/product/list";
+		if (newCart.getQuantity()==0) {
+			newCart.setQuantity(1);
+		}
+		newCart.setProduct(pservice.findProductById(productId));;
+		cart_svc.save(newCart);
+		return "redirect:/cart/list";
 	}
 
-
     @GetMapping("/list")
-    public String ListCartItems(Model model){    
-    	//long userId = session_svc.getUserId();
-    	long userId = 1;
-          List<Cart> carts = cart_svc.findByUserId(userId);  
+    public String ListCartItems(Model model, HttpSession session){    
+    	if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+    	User user = (User) session.getAttribute("user");
+        List<Cart> carts = cart_svc.findByUserId(user.getId());  
         
         System.out.println(carts.size());
         

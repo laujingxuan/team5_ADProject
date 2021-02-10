@@ -79,10 +79,10 @@
         <th>Description</th>
         <td th:text="*{description}">Description</td>
       </tr>
-<!--       <tr> -->
-<!--         <th>Similar Room</th> -->
-<!--         <td ><a href="SimilarRoom.html" th:href="@{/hotel/similarRoom/}+${roomtype.hotel.id}" >Check</a></td> -->
-<!--       </tr> -->
+      <tr>
+        <th>Select Dates</th>
+        <td><a href="#" th:href="@{/hotel/room-available-date/}+*{product.id}">Room Available Date</a></td>
+      </tr>
       <tr>
       	<td colspan="2">
       		<a class="btn btn-primary" href="reviewList.html" 
@@ -107,7 +107,7 @@
 			        <div class = "card text-center py-3 d-flex flex-column" style="width: 14rem; height: 14rem;">
 			          <img height="128" th:src="${room.imageURL}" width="128"  class="card-img-top py-2 px-2 image-fluid"/>
 			          <h6 th:text="${room.roomType} + ' Room'">Hotel Name</h6>
-					  <a href="hoteldetail.html" th:href="@{/hotel/roomtypes/detail/}+${room.id}" class = "mt-auto">View Detail</a>
+ 					  <a href="roomdetail.html" th:href="@{/hotel/roomtypes/detail/}+${room.id}">View Detail</a> 
 <!-- 						  <a href="href="DeleteProduct.html"" th:href="@{/product/delete/room/}+${room.id}" >Delete</a> -->
 			        </div>
 			 	</div>	 		

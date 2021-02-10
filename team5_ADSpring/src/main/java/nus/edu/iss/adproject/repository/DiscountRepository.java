@@ -17,4 +17,9 @@ public interface DiscountRepository extends JpaRepository<Discount, Long> {
 	  @Query("Select d from Discount d where d.attraction.user.id = :userId")
 	  List<Discount> findAttractionByUserId(@Param("userId")Long UserId);
 	 
+	  @Query("SELECT d FROM Discount d WHERE d.hotel.id = :hotelId")
+	  List<Discount> findDiscountByHotelId(@Param("hotelId") Long hotelId);
+	  
+	  @Query("SELECT d FROM Discount d WHERE d.attraction.id = :attractionId")
+	  List<Discount> findDiscountByAttractionId(@Param("attractionId") Long attractionId);
 }

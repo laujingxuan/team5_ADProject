@@ -20,8 +20,8 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 	private RoomTypeRepo rrepo;
 	
 	@Override
-	public void save(RoomType x) {
-		rrepo.save(x);
+	public RoomType save(RoomType x) {
+		return rrepo.save(x);
 	}
 	
 	@Override
@@ -39,12 +39,10 @@ public class RoomTypeServiceImpl implements RoomTypeService{
 		return rrepo.findById(id).get();
 	}
 	
+	@Override
 	public List<RoomType> findAll(){
 		return rrepo.findAll();
 	}
-//	public List<RoomType>  findbyHotelId(int hid){
-//		return rrepo.findbyHotelId(hid);
-//	}
 
 	@Override
 	public ArrayList<Object> findDistinctRoomTypes() {

@@ -4,19 +4,17 @@
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-	<h3>My Google Maps Location for Hotel</h3>
+	<h3>My Google Maps Location</h3>
 	<!--The div element for the map -->
 	<div id="map"></div>
 	<table>
-
 		<tr>
-			<td th:text="${hotels.lat}">ID</td>
-			<td th:text="${hotels.longi}">ID</td>
-
+			<td th:text="${lat}">ID</td>
+			<td th:text="${longi}">ID</td>
 		</tr>
 	</table>
-	<input type="hidden" th:value="${hotels.lat}" name="lagid" />
-	<input type="hidden" th:value="${hotels.longi}" name="longid" />
+	<input type="hidden" th:value="${lat}" name="lagid" />
+	<input type="hidden" th:value="${longi}" name="longid" />
 <div th:replace="layout/layout.html :: footer"></div>
 <div th:replace="layout/layout.html :: javascript"></div>
 </body>
@@ -59,11 +57,4 @@
         });
       }
     </script>
-<!--     //var latnumb = "${hotels.lat}";
-       // var latn=toString(latnumb);
-       // var latnb=parseFloat(latn);
-       // var latnumb= document.getElementById("${htoels.lat}").value;
-    	//var lngnumb = [[${longi}]];
-    	//alert(latnumb);
-    	//var latnum=parseFloat(latnumb); -->
 </html>
