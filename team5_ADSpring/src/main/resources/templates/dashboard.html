@@ -7,17 +7,28 @@
   <script type="text/javascript" src="/js/Chart.js"></script>
   <link th:href="@{/css/Chart.css}" rel="stylesheet">
    <link th:href="@{/css/Chart.min.css}" rel="stylesheet">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous"></script>
-   <!-- <script type="text/javascript" src="/js/jquery-3.5.1.js"></script> -->
-   <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
  </head>
  <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 
 
-	<div class="container">
-		<table class="table table-borderless" style="margin-top: 60px">
+	<div class="container" path="/home">
+		<table class="table table-borderless" style="margin-top: 30px">
+			<tr>
+				<td th:if="${not #lists.isEmpty(hotel)}">
+					<div th:if="${#lists.size(hotel) == 1} ">
+						<span th:each="h : ${hotel}">
+							 <span th:text="${h.name}" id="hotel">Name </span>
+						</span>
+					</div>
+					<div th:unless="${#lists.size(hotel) == 1} ">
+						<select class="form-control" id="hotel" th:field="*{hotel}" th:onchange="'window.location.href = \'' + @{/dashboard/showDashboardByHotel} + '?hotel_id=\' + this.value'  ">
+							<option th:each="h : ${hotel}" th:value="${h.id}" th:text="${h.name}"></option>
+						</select>
+					</div>
+				</td>
+			</tr>
 			<tr>
 				<td>
 					<div class="chart-container"
@@ -97,9 +108,14 @@ var htmldata_revenue = /*[[${data_revenue}]]*/{}
 var htmldata_bookingRate = /*[[${data_bookingRate}]]*/{}
 var htmldata_vacancyRate = /*[[${data_vacancyRate}]]*/{}
 var htmldata_cancellationRate = /*[[${data_cancellationRate}]]*/{}
+var hotel_id =/*[[${hotel_id}]]*/{}
+console.log(hotel_id);
+document.getElementById("hotel").value  =hotel_id;
+
 	
 $(document).ready(function() {
 	var name = "";
+	
     $("#month").change(function() {
     	sendAjaxRequestForVacancyRate();
     });
@@ -121,10 +137,9 @@ $(document).ready(function() {
 	function sendAjaxRequestForVacancyRate() {
 	    var month = $("#month").val();
 	    var room = $("#room").val();
-	    var type = 'vacancyRate';
 	    
 	    
-	   $.get( "/dashboard/dailyBookingVacancy?month=" + month + '&room=' + room+ '&type=' + type, function( data ) {
+	   $.get( "/dashboard/dailyBookingVacancy?month=" + month + '&room=' + room, function( data ) {
 	    	htmldata_vacancyRate = data;
 	    	console.log(htmldata_vacancyRate);
 	    	window.myChart_Vacancy.data.datasets[0].data = [];
@@ -136,10 +151,9 @@ $(document).ready(function() {
 	function sendAjaxRequestForCancellationRate() {
 	    var month = $("#monthly_cancellation").val();
 	    var room = $("#roomtype_cancellation").val();
-	    var type = 'cancellationRate';
 	    
 	    
-	   $.get( "/dashboard/dailyCancellation?month=" + month + '&room=' + room+ '&type=' + type, function( data ) {
+	   $.get( "/dashboard/dailyCancellation?month=" + month + '&room=' + room, function( data ) {
 	    	
 		   htmldata_cancellationRate = data;
 		   window.myChart_Cancellation.data.datasets[0].data = [];

@@ -53,18 +53,18 @@ public class BookingServiceImp implements BookingService {
 	}
 
 	@Override
-	public List findGuestByMonth() {
-		return bookRepoDet.findGuestByMonth();
+	public List findGuestByMonth(Long hotel_id) {
+		return bookRepoDet.findGuestByMonth(hotel_id);
 	}
 
 	@Override
-	public List<Object> findMonthlyRevenueByHotel(Long userId) {
-		return bookRepoDet.findMonthlyRevenueByHotel(userId);
+	public List<Object> findMonthlyRevenueByHotel(Long userId,Long hotel_id) {
+		return bookRepoDet.findMonthlyRevenueByHotel(userId, hotel_id);
 	}
 
 	@Override
-	public List<Object> findMonthlyBookingRateByHotel(Long userId) {
-		return bookRepoDet.findMonthlyBookingRateByHotel(userId);
+	public List<Object> findMonthlyBookingRateByHotel(Long userId,Long hotel_id) {
+		return bookRepoDet.findMonthlyBookingRateByHotel(userId, hotel_id);
 	}
 
 	@Override

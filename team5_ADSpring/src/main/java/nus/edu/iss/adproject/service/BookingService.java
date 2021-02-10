@@ -24,11 +24,11 @@ public interface BookingService {
 	public List<Booking> findPastOneMonthBookings();
 
 	
-	public List<Object> findGuestByMonth();
+	public List<Object> findGuestByMonth(Long hotel_id);
 	
-	public List<Object> findMonthlyRevenueByHotel(Long userId);
+	public List<Object> findMonthlyRevenueByHotel(Long userId, Long hotel_id);
 	
-	public List<Object> findMonthlyBookingRateByHotel(Long userId);
+	public List<Object> findMonthlyBookingRateByHotel(Long userId, Long hotel_id);
 	
 	public List<Object> findMonthlyRevenueForAllHotels();
 	
