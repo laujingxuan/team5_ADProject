@@ -86,7 +86,7 @@ public class ProductReview {
 		if(photo == null)
 			return null;
 		
-		return "/user-photos/" + id + "/" + photo;
+		return "/user-photos/" + user.getId() + "/" + photo;
 	}
 	
 

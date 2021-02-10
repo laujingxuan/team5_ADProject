@@ -71,12 +71,14 @@ public class ReviewController {
 			BindingResult bindingResult, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		review.setPhoto(fileName);
+		String photoImagePath = "/user-photos/" + review.getUser().getId() + "/" + review.getPhoto();
+		review.setPhotoImagePath(photoImagePath);
 		review.setProduct(prepo.findById(id).get());
 		if(bindingResult.hasErrors()) {
 			return "reviewForm";
 		}
 		prservice.save(review);
-		String uploadDir = "user-photos/" + review.getId();
+		String uploadDir = "user-photos/" + review.getUser().getId();
 		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 		return "reviewList";
 	}

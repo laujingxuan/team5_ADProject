@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Customer SignUp</title></head>
+<head><title>Merchant SignUp</title></head>
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 <br/>
 <div class = "container">
 
-		<h3>Sign Up</h3>
+		<h3>Merchant Sign Up</h3>
 
 	<form action="" th:object="${userForm}" th:action="${path}" method="POST" class="form-horizontal">
 		<input type="hidden" th:field="*{role}" th:value="*{role}">
       	<table class="table">	
+			
 			<tr>
 				<td style="width:30%">User Name:</td>
 				<td style="width:30%"><input type="text" th:field="*{userName}" value="*{userName}" placeholder="User Name"></td>	
@@ -35,11 +36,15 @@
 				<td></td>
 			</tr>
 			<tr>
-				<td colspan="3"><button type="submit" value="Sign Up" class="btn btn-primary">Sign Up</button>  
-				<small>&nbsp&nbspAlready registered?&nbsp<a href="/" th:href="@{/user/login}">Login here</a></small></td>
-				
+			<td>
+			<input type="hidden" th:name="*{subscribe}" th:value="*{subscribe}"/>
+			<input type="checkbox" th:name="*{subscribe}"th:checked="*{subscribe}" th:value="*{subscribe}" th:field="*{subscribe}"
+			/>I want to subscribe to *** 
+  	</td></tr>
+			<tr>
+				<td colspan="3"><input type="submit" value="Sign Up" class="btn btn-primary"/>  
+				<small>&nbsp&nbspAlready registered?&nbsp<a href="/" th:href="@{/user/login}">Login here</a></small></td>			
 			</tr>
-			
 		</table>
 	</form>
 </div>
