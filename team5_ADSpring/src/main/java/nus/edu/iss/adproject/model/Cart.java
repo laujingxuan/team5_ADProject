@@ -24,9 +24,7 @@ public class Cart {
 	private Product product;
 	
 	private int quantity;
-	
 	private LocalDate startDate;
-	
 	private LocalDate endDate;
 	private int numGuests;
 	private String remarks;
@@ -48,6 +46,7 @@ public class Cart {
 		if (form.getQuantity()>0) {
 			this.quantity = form.getQuantity();
 		}
+		this.remarks = "";
 	}
 
 	public Cart(Product product, LocalDate startDate, LocalDate endDate, User user) {

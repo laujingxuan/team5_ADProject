@@ -1,6 +1,5 @@
 package nus.edu.iss.adproject.controller;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,7 +31,6 @@ import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.DateTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.HotelBooking;
-import nus.edu.iss.adproject.nonEntityModel.Email;
 import nus.edu.iss.adproject.nonEntityModel.MultipleDateQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.service.BookingService;
@@ -86,7 +85,6 @@ public class BookingController {
 				uri = b.getProduct().getRoomType().getHotel().getAPI_URL()+ "booking/{id}";	
 				booking = restTemplate.getForObject(uri, HotelBooking.class, params);
 			}
-			System.out.println("book" + booking);
 			bookingMap.put(b, booking);
 		}
 		model.addAttribute("bookingDetails", bookingMap);
@@ -95,7 +93,7 @@ public class BookingController {
 	
 	//need to change to post mapping	
 	//Show Booking Details
-	@GetMapping("/makeBook")
+	@PostMapping("/makeBook")
 	public String makeBooking(HttpSession session, Model model) throws MessagingException {
 		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
