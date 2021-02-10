@@ -56,12 +56,6 @@ public class AttractionController {
 	private AttractionService aservice;
 	
 	@Autowired
-	private HotelService hservice;
-	
-	@Autowired
-	private RoomTypeService RTService;
-	
-	@Autowired
 	private SessionService session_svc;
 	
 	@Autowired
