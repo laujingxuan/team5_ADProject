@@ -52,6 +52,7 @@
 								<td></td>
 							</tr>
 						</table>
+						<a class="btn btn-primary" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
 					 </div>
 					</div>
 					<div th:if="${cart.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
@@ -77,6 +78,7 @@
 								<td><input type="hidden" value ="0" class = "numGuest"></td>
 							</tr>					
 						</table>
+						<a class="btn btn-primary" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
 					 </div>
 					</div>
 				</div>
