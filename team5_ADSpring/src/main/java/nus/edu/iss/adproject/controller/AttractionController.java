@@ -3,9 +3,7 @@ package nus.edu.iss.adproject.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -23,25 +21,18 @@ import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Discount;
-import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
-import nus.edu.iss.adproject.model.RoomType;
+import nus.edu.iss.adproject.model.ProductReview;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.nonEntityModel.DailyAttractionDetail;
 import nus.edu.iss.adproject.nonEntityModel.DailyDetailWrapper;
-import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
-import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
-import nus.edu.iss.adproject.repository.AttractionRepository;
-import nus.edu.iss.adproject.repository.ProductRepo;
-import nus.edu.iss.adproject.repository.RoomTypeRepo;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.DiscountService;
-import nus.edu.iss.adproject.service.HotelService;
+import nus.edu.iss.adproject.service.ProductReviewService;
 import nus.edu.iss.adproject.service.ProductService;
-import nus.edu.iss.adproject.service.RoomTypeService;
 import nus.edu.iss.adproject.service.SessionService;
 
 
@@ -60,6 +51,9 @@ public class AttractionController {
 	
 	@Autowired
 	private DiscountService discountService;
+	
+	@Autowired
+	private ProductReviewService reviewService;
 	
 	//done
 	//show list of attractions
@@ -175,11 +169,6 @@ public class AttractionController {
 		if (attraction.getUser().getId() != user.getId()) {
 			model.addAttribute("error", "No Permission");
 			return "error";
-		}
-		//to remove dependency on attraction
-		List<Discount> discounts = discountService.findDiscountByAttractionId(attractionId);
-		for (Discount discount: discounts) {
-			discountService.delete(discount);
 		}
 		aservice.delete(attraction);
 		return "redirect:/attraction/attractions";
