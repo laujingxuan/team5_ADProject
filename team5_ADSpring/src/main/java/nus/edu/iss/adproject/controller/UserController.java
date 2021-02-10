@@ -105,7 +105,6 @@ public class UserController {
 	public String merchantSignUp(Model model, HttpSession session) {
 		model.addAttribute("path", "/user/validate");
 		UserForm userform = new UserForm();
-		userform.setRole(RoleType.HOTELMANAGER);
 		model.addAttribute("userForm", userform);
 		return "merchant-signup-form";
 	}
