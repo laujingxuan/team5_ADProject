@@ -18,9 +18,38 @@ public class CartForm {
 	private String startDate;
 	
 	private String endDate;
+	
+	private long productId;
+	
+	private long userId;
+	
+	private int quantity;
+	
+	
+	public int getQuantity() {
+		return quantity;
+	}
 
-	
-	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(long productId) {
+		this.productId = productId;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
 	public CartForm() {
 		super();
 		// TODO Auto-generated constructor stub

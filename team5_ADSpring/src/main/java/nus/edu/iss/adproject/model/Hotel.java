@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
@@ -18,30 +19,32 @@ public class Hotel {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     public long id;	
+	
 	@OneToMany(mappedBy = "hotel")
 	private List< RoomType> roomType;
-	@NotNull
+    @OneToMany(mappedBy = "hotel")
+    private List<Discount> discount;
+    @ManyToOne
+    private User user;
+	
+    @NotEmpty
 	private String name;
-	@NotNull
+    @NotEmpty
     private String location;
+    @NotNull
     private double lat;
+    @NotNull
     private double longi;
     private double rating;
     private int numberOfRestaurants;
-    @NotNull
+    @NotEmpty
     private String country_City;
     private String emenities;
-    private String quality;
     private String description;
-    @NotNull
+    @NotEmpty
     private String API_URL;
+    @NotEmpty
     private String imageURL;
-    
-    @OneToMany(mappedBy = "hotel")
-    private List<Discount> discount;
-    
-    @ManyToOne
-    private User user;
 
 	public Hotel() {
 		super();
@@ -49,7 +52,7 @@ public class Hotel {
 	}
 		
 	public Hotel(String name, String location, double lat, double longi, double rating,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
+			int numberOfRestaurants, String country_City, String emenities, String description,
 			String aPI_URL, User user) {
 		super();
 		this.roomType = new ArrayList<RoomType>();
@@ -62,7 +65,6 @@ public class Hotel {
 		this.numberOfRestaurants = numberOfRestaurants;
 		this.country_City = country_City;
 		this.emenities = emenities;
-		this.quality = quality;
 		this.description = description;
 		API_URL = aPI_URL;
 		this.user = user;
@@ -82,7 +84,6 @@ public class Hotel {
 		this.numberOfRestaurants = numberOfRestaurants;
 		this.country_City = country_City;
 		this.emenities = emenities;
-		this.quality = quality;
 		this.description = description;
 		API_URL = aPI_URL;
 		this.user = user;
@@ -145,12 +146,6 @@ public class Hotel {
 	public void setLongi(double longi) {
 		this.longi = longi;
 	}
-	public double getRating() {
-		return rating;
-	}
-	public void setRating(double rate) {
-		this.rating = rating;
-	}
 	public int getNumberOfRestaurants() {
 		return numberOfRestaurants;
 	}
@@ -169,12 +164,6 @@ public class Hotel {
 	public void setEmenities(String emenities) {
 		this.emenities = emenities;
 	}
-	public String getQuality() {
-		return quality;
-	}
-	public void setQuality(String quality) {
-		this.quality = quality;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -188,6 +177,13 @@ public class Hotel {
 		this.discount = discount;
 	}
 
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
 
 	public User getUser() {
 		return user;
@@ -201,7 +197,7 @@ public class Hotel {
 	public String toString() {
 		return "Hotel [id=" + id + ", roomType=" + roomType + ", name=" + name + ", location=" + location + ", lat="
 				+ lat + ", longi=" + longi + ", rating=" + rating + ", numberOfRestaurants=" + numberOfRestaurants
-				+ ", country_City=" + country_City + ", emenities=" + emenities + ", quality=" + quality
+				+ ", country_City=" + country_City + ", emenities=" + emenities
 				+ ", description=" + description + ", API_URL=" + API_URL + "]";
 	}	
 	

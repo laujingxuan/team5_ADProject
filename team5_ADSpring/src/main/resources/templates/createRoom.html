@@ -5,26 +5,21 @@
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-<form action="" th:object="${room}" th:action="@{/product/saveRoom}"
-		method="get">	
+<form action="" th:object="${room}" th:action="@{/hotel/saveRoom}" method="post">	
 		<table class="table">
-		<!--  <tr>
-				<td>Product Type: </td>
+			<tr>
+				<td>Hotel:</td>
 				<td>
-					<select class="ProductType">
-						<option value = "HOTEL">Hotel</option>
-		              	<option value = "ATTRIACTION">Attraction</option>
-			        </select>
-			    </td>
-			  </tr> -->
+					<select name="id" id="id" th:field="*{Hotel}">
+                    	<option th:each="hotel : ${Hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
+                    </select>
+				</td>
+			</tr>
 			<tr>
 				<td>
 					<input type="hidden" th:field="*{id}">
 				</td>				
 			</tr>
-			<!-- private String roomType;
-	private String description;
-	private String imageURL; -->
 			<tr>
 				<td>Type</td>
 				<td><input type="text" th:field="*{roomType}">
@@ -36,26 +31,10 @@
 				<!-- <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p></td> -->
 			</tr>
 			<tr>
-				<td>Hotel:</td>
-				<td>
-					<select name="id" id="id" th:field="*{Hotel}">
-                    	<option th:each="hotel : ${Hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
-                    </select>
-				</td>
-			</tr>
-		
 				<td>ImageURL:</td>
 				<td><input type="text" th:field="*{imageURL}"></td>
 			</tr>
-			<!-- </tr>
-		
-				<td>ProductId:</td>
-				<td><input type="text" th:text="${newP.id}" th:field="*{product}"></td>
-			</tr> -->
 			<tr>
-			<td>
-			</td>
-			
 				<td  ><button type="submit">Save</button></td>
 			</tr>
 			

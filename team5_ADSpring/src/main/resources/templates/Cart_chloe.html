@@ -4,38 +4,254 @@
 <title>Cart</title>
 </head>
 <head th:insert="layout/layout.html :: veryTop"></head>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script th:inline="javascript" >
+
+
+
+window.onload = function ()
+{
+    let elemlist = document.getElementsByClassName("quantity");
+    //in the event of changes is made on the quantity in the cart
+    for (let i = 0; i < elemlist.length; i++) {
+        elemlist[i].addEventListener('keyup', onChange)
+        elemlist[i].addEventListener('mouseup', onChange)
+    }
+}
+
+function onChange(event) {
+    let elem = event.currentTarget;
+    let quantity = elem.value;
+    console.log(quantity);
+    //UpdateTotal(elem);
+	qtyajax()
+    //pass to AJAX to update the server
+     let productId = elem.getAttribute("productid");
+    
+  //  sendChange(productId, quantity) 
+}
+/* 
+function UpdateTotal(elem) {
+    //calculating the cart total and total for each items
+    let quantity = elem.value;
+    //let unitPrice = elem.parentElement.parentElement.parentElement.querySelector(".price").textContent;
+    //let totalprice = parseInt(unitPrice) * parseInt(quantity);
+    //elem.parentElement.parentElement.parentElement.querySelector(".product_total").textContent = totalprice;
+    let cartTotal = 0;
+    var itemslist = document.getElementsByClassName("quantity");
+    for (let i = 0; i < itemslist.length; i++) {
+        cartTotal = cartTotal + parseInt(itemslist[i].value) * parseInt(itemslist[i].parentElement.parentElement.parentElement.querySelector(".price").textContent);
+    }
+    document.querySelector(".grand_total").textContent = cartTotal;
+    return;
+}
+ */
+function sendChange(productId, value) {
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "/Cart/Cart");
+    xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+            // receive response from server
+            if (this.status === 200 || this.status === 302) {
+                let data = JSON.parse(this.responseText);
+
+                if (this.status === 200) {
+                    console.log("Successful operation: " + data.success);
+                }
+                else if (this.status === 302) {
+                    window.location = data.redirect_url;
+                }
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify({
+        ProductId: productId,
+        Value: value
+    }));
+}
+
+function confirmRemove(event) {
+    if (confirm("Confirm remove item from the cart?")) {
+        //get product id for removed item
+        let elem = event.currentTarget;
+        let productId = elem.getAttribute("product_id");
+
+        SendProductId(productId, elem)
+    }
+}
+
+function SendProductId(productId, elem) {
+    //send AJAX request to server to remove record from database
+    let xhr = new XMLHttpRequest();
+
+    //send to action method to receive AJAX call
+    xhr.open("POST", "/Cart/RemoveItem");
+    xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
+    xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+            if (this.status == 200) {
+                let data = JSON.parse(this.responseText);
+                console.log("Successful operation: " + data.success);
+                elem.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+                UpdateTotal(elem);
+            }
+        }
+    };
+    //send product id to controller as identifier
+    xhr.send(JSON.stringify({
+        ProductId: productId,
+    }));
+}
+
+	function minusNum() {
+		var x = document.getElementById("qty").value; 
+		console.log(x);
+		x = Number(x);
+		if (x >= 2) { x = x - 1; } 
+		document.getElementById("qty").value = x;
+	}
+	
+	
+	function addNum() {
+		var x = document.getElementsByClassName("qty").value;
+		console.log(x);
+		x = Number(x);
+		if (x >= 1) { x = x + 1; } 
+		document.getElementsByClassName("qty").value = x;
+		
+		qtyajax(x);
+	}
+	
+/* 	$(function(){
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8080/cart/test", 
+			dataType : 'json',
+			//contentType: "application/json",
+	        success : function snedtocontrollerwithAJAX(input) {
+					// make a JSONstring
+					// send to controller 
+        	}
+		})
+	}); */
+	
+function qtyajax(){
+		
+		var cartitem = {};
+		cartitem["productId"] = 4;
+		cartitem["userId"] =1;
+		cartitem["startDate"] ="2021-01-19"
+		
+		$.ajax({
+			type : "POST",
+			url : "http://localhost:8080/cart/getProductQuantity", 
+			data: JSON.stringify(cartitem),
+			dataType : 'json',
+			//contentType: "application/json",
+	        success : function(data) {
+	       
+	        console.log(data);
+	        $('#cart_quantity').html(data.total);
+
+	        
+	        	/* $('#cart_total').html(data.total);
+	             $('#result').html("");
+	            $('#cart_total').html("$ " + sum); */
+	        }
+		})
+	};
+	</script>
+
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-
+<!-- 
 	<h3>Cart</h3>
 
-	<table>
+	<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto">
 		<tr>
 			<th>Product ID</th>
 			<th>Number Of Guests</th>
-			<th>Quantity</th>
 			<th>Start Date</th>		
 			<th>End Date</th>
 			<th>Remarks</th>
-			<th>User ID</th>
+			<th> </th>	
+			<th>Quantity</th>
 			<th>Product ID</th>
-			<th>Delete</th> 
+ 
 		</tr>
 		
 		<tr th:each="cartitem:${carts}">
 			<td th:text="${cartitem.id}">1</td>
 			<td th:text="${cartitem.numGuests}">single</td>
-			<td th:text="${cartitem.quantity}">2</td>
 			<td th:text="${cartitem.startDate}">2</td>			
-			<td th:if="${cartitem.endDate} ne null"  th:text="${cartitem.endDate}" >default end date</td>
-			<td th:if="${cartitem.endDate} eq null" >default end date</td>
-			<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
+			<td th:text="${cartitem.endDate}" >default end date</td>
+		<td th:if="${cartitem.endDate} eq null" >default end date</td>
+			<td th:text="${cartitem.remarks}" >default remarks<td>
+		<td th:if="${cartitem.remarks} ne null"  th:text="${cartitem.remarks}" >default remarks<td>
 			<td th:if="${cartitem.remarks} eq null" >default remarks</td>
-			<td th:text="${cartitem.user.id}">2</td>
-			<td th:text="${cartitem.product.id}">2</td>		
-			<td><a th:href="@{/cart/delete/}+${cartitem.id}">Delete</a></td>
-		</tr>
-	</table>
-
+			<td th:text="${cartitem.product.id}">2</td>	
+		<td  th:text="${cartitem.quantity}" class="qty" th:value = "${cartitem.quantity}"></td>
+			<td class="count">
+                <input class="reduce"  type="button" onClick ="minusNum(this.value)" th:value = "-">
+                <span id="cart_quantity"></span>
+                <input class="add" value="+" type="button" onClick ="addNum()">
+            </td> 
+ 	</table>    -->        
+	<div class = "container py-3">
+		<div class = "row">
+			<h4>Cart</h4>
+		</div>
+		<div th:each="cart:${carts}" class="py-3 row">
+			<form>
+				<div class="card" style="width: 80rem; height: 18rem;">
+				  	<div th:if="${cart.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
+					  <h5 class="card-header" th:text = "${cart.product.roomType.hotel.name} + ': ' + ${cart.product.roomType.roomType} + ' Room'">Hotel</h5>
+					  <div class="card-body">
+						<table class="table">
+							<tr>
+								<td style="width:25%">From: </td>
+								<td style="width:15%"><input type="date" th:value="${cart.startDate}"></td>
+								<td style="width:10%">To: </td>
+								<td style="width:15%"><input type="date" th:value="${cart.endDate}"></td>
+							</tr>
+							<tr>
+								<td>Special Request: </td>
+								<td><input type="text" th:value = "${cart.remarks}"></td>
+								<td></td>
+								<td></td>
+							</tr>	
+							<tr>
+								<td style="width:30%">Number of rooms:</td>
+								<td><input type="number" th:value = "${cart.quantity}"></td>
+								<td></td>
+								<td></td>
+							</tr>						
+						</table>
+					 </div>
+					</div>
+					<div th:if="${cart.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
+					  <h5 class="card-header" th:text = "${cart.product.attraction.name}">Attraction</h5>
+					  <div class="card-body">
+						<table class="table">				
+							<tr>
+								<td>Date: </td>
+								<td><input type="date" th:value="${cart.startDate}"></td>
+							</tr>
+							<tr>
+								<td>Quantity: </td>
+								<td><input type="number" th:value = "${cart.quantity}"></td>
+							</tr>							
+						</table>
+					 </div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

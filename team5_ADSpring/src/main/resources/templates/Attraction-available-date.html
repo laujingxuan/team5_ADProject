@@ -43,40 +43,37 @@ $(function() {
 <h3>select your date and see attraction/hotel Status </h3>
 
 
-<form action="" th:action="@{/stock/report}" method="POST" class="product-item">
+<form action="" th:object="${cartitem}" th:action="@{/cart/add/}+${productId}" method="POST" class="product-item">
   <table class="table py-5" cellspacing="10px" cellpadding="10px">
 	<tr><th colspan="4" class="text-center">select a date</th></tr>
-	<tr th:text ="${discount}">id</tr>
-	
+	<tr><td th:text ="${discount}">id</td></tr>
 	<tr>
 		<td class="td_left"><label for="startDate">Start date</label></td>
-		<td class="td_right"><input type="text" id="date"></td>
+		<td class="td_right"><input type="text" id="date" th:field="*{startDate}"></td>
 	</tr>
-		<tr>
+	<tr>
 		<td class="td_left">Price </td>
-
 		<td>
 		  <input type="hidden" th:value="${price}" name="price">
   			<div class="total-price"  th:text="${price}"th:value ="${price}"></div>
 		</td>
 	</tr>
-	
 	<tr>
 		<td>Quantity</td>
-		<td>  <select name="quantity" class="product-select" tabindex="1">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-  </select></td>
+		<td>  
+			<select name="quantity" class="product-select" tabindex="1">
+			    <option value="1">1</option>
+			    <option value="2">2</option>
+			    <option value="3">3</option>
+			    <option value="4">4</option>
+			    <option value="5">5</option>
+			    <option value="6">6</option>
+			    <option value="7">7</option>
+			    <option value="8">8</option>
+			    <option value="9">9</option>
+			 </select>
+		</td>
 	</tr>
-	
-	
 	<tr>
 		<td><input type="submit" value="add to cart" /></td>
 	</tr>
