@@ -25,8 +25,55 @@ public class User {
 	private String email;
 	private long points; 
 	String name;
-	
+	private boolean subscribe;
 
+
+	
+	
+	public User(long id, String userName, String password, RoleType role, String email,boolean subscribe) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
+		this.email = email;
+		this.subscribe = subscribe;
+
+	}
+
+
+
+
+
+
+
+	public boolean isSubscribe() {
+		return subscribe;
+	}
+
+
+
+
+
+
+
+	public void setSubscribe(boolean subscribe) {
+		this.subscribe = subscribe;
+	}
+
+
+
+
+
+
+
+	public List<ProductReview> getProductReview() {
+		return productReview;
+	}
+
+	public void setProductReview(List<ProductReview> productReview) {
+		this.productReview = productReview;
+	}
 
 	public String getName() {
 		return name;
@@ -87,6 +134,7 @@ public class User {
 		this.password=userForm.getPassword();
 		this.role=userForm.getRole();
 		this.carts = new ArrayList<Cart>();
+		this.subscribe=userForm.isSubscribe();
 	}
 	
 	
@@ -155,7 +203,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + ", email="
-				+ email + ", points=" + points + "]";
+				+ email + ", points=" + points + ", subscribe=" + subscribe + "]";
 	}
 
 	public String getResetPasswordToken() {
