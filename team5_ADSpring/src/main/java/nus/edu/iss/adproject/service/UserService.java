@@ -15,4 +15,6 @@ public interface UserService extends IService<User> {
 	public void updateResetPasswordToken(String token,String email) throws CustomerNotFoundException;
 	public User get(String resetPasswordToken);
 	public void updatePassword(User user,String newPassword);
+	public boolean userExists(String userName);
+	public boolean emailExists(String userName);
 }
