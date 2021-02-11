@@ -84,7 +84,7 @@ public class SessionServiceImpl implements SessionService {
 	@Override
 	public boolean hasPlatformPermission(HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if (user.getRole() != RoleType.PLATFORMMANAGER)
+		if (user.getRole() == RoleType.PLATFORMMANAGER)
 			return true;
 		else 
 			return false;

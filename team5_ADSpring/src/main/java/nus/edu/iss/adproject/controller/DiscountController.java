@@ -1,9 +1,6 @@
 package nus.edu.iss.adproject.controller;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.edu.iss.adproject.model.Attraction;
@@ -81,12 +77,14 @@ public class DiscountController {
 		return "forward:/discount/list";
 	}
 	
-	@GetMapping("/discounts")
+	@GetMapping("/create")
 	public String viewDiscounts(Model model, HttpSession session) {		
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		User user = (User) session.getAttribute("user");
-		if (session_svc.isNotLoggedIn(session))
-			return "redirect:/user/login";
-		
 		List<Hotel> hotel = hotel_svc.findByUserId(user.getId());
 		List<Attraction> attraction = attraction_svc.findByUserId(user.getId());
 		if(hotel.size()> 0) {
@@ -101,7 +99,12 @@ public class DiscountController {
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String showEditForm(Model model, @PathVariable("id") Long id) {
+	public String showEditForm(Model model, @PathVariable("id") Long id, HttpSession session) {
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		Discount discount = discount_svc.findById(id);
 		if(discount.getHotel()!=null) {
 			model.addAttribute("name", "Hotel");
@@ -116,6 +119,11 @@ public class DiscountController {
 	
 	@GetMapping("/list")
 	public String listDiscountForm(Model model,HttpSession session) {	
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		User user = (User) session.getAttribute("user");
 		List<Discount> hotel_dis = discount_svc.findDiscountByHotelUserId(user.getId());
 		List<Discount> attraction_dis = discount_svc.findDiscountByAttractionUserId(user.getId());
@@ -128,9 +136,13 @@ public class DiscountController {
 	}
 	
 	@RequestMapping(value = "/delete/{id}")
-	public String deleteSupplier(@PathVariable("id") Long id, HttpSession session) {		
-		
+	public String deleteSupplier(@PathVariable("id") Long id, HttpSession session, Model model) {		
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		discount_svc.delete(discount_svc.findById(id));
-		return "forward:/discount/list";
+		return "redirect:/discount/list";
 	}
 }
