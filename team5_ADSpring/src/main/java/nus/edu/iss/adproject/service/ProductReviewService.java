@@ -11,4 +11,6 @@ public interface ProductReviewService {
 	void save(@Valid ProductReview review);
 	public List<ProductReview> findReviewByProductId(Long id);
 	
+	public ProductReview findReviewById(Long id);
+	
 }
