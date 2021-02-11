@@ -79,18 +79,17 @@
                 <nav class="nav-menu mobile-menu">
                     <ul>
                         <li><a href="#" th:href="@{/}">Home</a></li>
-                        <li><a href="#">Discount</a>
-                            <ul class="dropdown">
-                                <li><a href="#" th:href="@{/discount/discounts}">Add Discount</a></li>
-                                <li><a href="#" th:href="@{/discount/list}">Discount List</a></li>
-                            </ul>
-                        </li>
                         <li><a href="#">Booking</a>
                             <ul class="dropdown">
                                 <li><a href="#" th:href="@{/booking/list}">View Booking History</a></li>
                             </ul>
                         </li>
-                        <li><a href="#" th:href="@{/package/list}">Travel Packages</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#" th:href="@{/discount/list}" th:if="${session.user!= null && (session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).HOTELMANAGER || session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).ATTRACTIONMANAGER)}">Discount List</a></li>
+                    </ul>
+                    <ul>    
+                        <li><a href="#" th:href="@{/package/list}" th:if="${session.user!= null && session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).PLATFORMMANAGER}">Travel Packages</a></li>
                     </ul>
                     <ul>
                     	<li><a href="#" th:href="@{/hotel/hotels}" th:if="${session.user!= null && session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).HOTELMANAGER}">Hotels</a></li>
@@ -99,7 +98,7 @@
                     	<li><a href="#" th:href="@{/attraction/attractions}" th:if="${session.user!= null && session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).ATTRACTIONMANAGER}">Attractions</a></li>
                     </ul>
                     <ul>
-                        <li style="margin-left: 120%; text-align:center">
+                        <li style="margin-left: 250%; text-align:center">
             				<a href="#" th:href="@{/user/login}" th:if="${session.user==null}">Login</a>
             				<a href="#" th:href="@{/user/logout}" th:if="${session.user!=null}">Logout</a>
           				</li>

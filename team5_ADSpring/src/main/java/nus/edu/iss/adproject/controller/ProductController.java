@@ -58,10 +58,24 @@ public class ProductController {
 	
 	@RequestMapping("/")
 	public String listProductForm(Model model, @Param("keyword") String keyword, HttpSession session) {
-		List<Product> listproducts = pservice.listAllSearchAttractions(keyword);
-		List<Product> listhotels = pservice.listAllSearchHotels(keyword);
-		listproducts.addAll(listhotels);
-		model.addAttribute("product", listproducts);
+		List<Product> listproducts;
+		if (keyword==null) {
+			listproducts = new ArrayList<>();
+		}else {
+			listproducts = pservice.listAllSearchAttractions(keyword);
+			List<Product> listhotels = pservice.listAllSearchHotels(keyword);
+			//find unique hotel instead of returning all rooms
+			List<Product> uniqueHotels = new ArrayList<>();
+			List<Long> uniqueHotelsId = new ArrayList<>();
+			for (Product product: listhotels) {
+				if (!uniqueHotelsId.contains(product.getRoomType().getHotel().getId())) {
+					uniqueHotelsId.add(product.getRoomType().getHotel().getId());
+					uniqueHotels.add(product);
+				}
+			}
+			listproducts.addAll(uniqueHotels);
+		}
+		model.addAttribute("products", listproducts);
 		model.addAttribute("keyword", keyword); 
 		if (session_svc.isNotLoggedIn(session) == false) {
 			User user = (User) session.getAttribute("user");
@@ -117,7 +131,6 @@ public class ProductController {
 		//Loop through every booking details and count items by product id
 		Map<Product, Integer> map = new HashMap<>();
 		for (Booking booking: bookings) {
-			System.out.println(booking.getBookingDate());
 			for (BookingDetails bk: booking.getBookingDetails()) {
 				if (map.get(bk.getProduct())==null) {
 					map.put(bk.getProduct(), 1);

@@ -89,7 +89,6 @@ public class HotelController {
 	//get the roomtype details of a particular roomtype
 	@GetMapping("/roomtypes/detail/{roomId}")
 	public String viewRoomDetail(Model model, @PathVariable("roomId")Long roomId) {
-		System.out.println("roomID is " + roomId);
 		RoomType room = rservice.findById(roomId);
 		model.addAttribute("roomtype", room);
 		List<RoomType> RoomT= rservice.findRoomTypesByHotelId(room.getHotel().getId());

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import net.minidev.json.JSONObject;
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Cart;
 import nus.edu.iss.adproject.model.Hotel;
@@ -63,6 +64,7 @@ public class CartController {
     	if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
     	User user = (User) session.getAttribute("user");
         List<Cart> carts = cart_svc.findByUserId(user.getId());
+        //map value is price of the cart item
         Map<Cart, Double> cartMap = new HashMap<Cart,Double>();
         //price for 1 room/1 attraction
         double price;
@@ -112,10 +114,16 @@ public class CartController {
 	}
 	
 	@GetMapping("/delete/{id}")
-	public String deleteMethod(Model model, @PathVariable("id") Long id) {
+	public String deleteMethod(Model model, @PathVariable("id") Long id, HttpSession session) {
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		User user = (User) session.getAttribute("user");
 		Cart cartitem = cart_svc.findById(id);
+		if (user.getId()!= cartitem.getUser().getId()) {
+			model.addAttribute("error", "The item does not belongs to you!");
+			return "error";
+		}
 		cart_svc.delete(cartitem);
-		return "forward:/cart/list";
+		return "redirect:/cart/list";
 	}
 	
 	public double getTotalNightPriceAfterHotelDiscount(Cart cart) {
@@ -153,6 +161,38 @@ public class CartController {
 			}
 		}
 		return cart.getProduct().getAttraction().getPrice() * (100-discount_rate)/100;
+	}
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping("/getQuantityByUserId") public JSONObject CartitemTotalQuantity(
+	 * Model model, HttpSession session) {​​​​​​​ if
+	 * (session_svc.isNotLoggedIn(session)) { return null; } User user =
+	 * (User)session.getAttribute("user"); Long userId = user.getId(); int quantity
+	 * = cart_svc.getQuantityByUserId(userId); Map<String, Object> map=new
+	 * HashMap<String,Object>(); map.put("status", "success"); map.put("total",
+	 * quantity); JSONObject jsonObj=new JSONObject(map); return jsonObj; }
+	 */
+	
+	@ResponseBody
+	@GetMapping("/getQuantityByUserId")
+	public JSONObject CartItemTotalQuantity (Model model, HttpSession session) {
+		if (session_svc.isNotLoggedIn(session)) {
+			return null;
+		}
+		
+		User user = (User)session.getAttribute("user");
+		Long userId = user.getId();
+		
+		int quantity = cart_svc.getQuantityByUserId(userId);
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("status", "success");
+		map.put("total", quantity);
+		
+		JSONObject jsonObj = new JSONObject(map);
+		
+		return jsonObj;
 	}
 	
 }
