@@ -23,12 +23,7 @@ public class User {
 	private String password;
 	private RoleType role;
 	private String email;
-	private long points; 
-	String name;
 	private boolean subscribe;
-
-
-	
 	
 	public User(long id, String userName, String password, RoleType role, String email,boolean subscribe) {
 		super();
@@ -39,48 +34,6 @@ public class User {
 		this.email = email;
 		this.subscribe = subscribe;
 
-	}
-
-
-
-
-
-
-
-	public boolean isSubscribe() {
-		return subscribe;
-	}
-
-
-
-
-
-
-
-	public void setSubscribe(boolean subscribe) {
-		this.subscribe = subscribe;
-	}
-
-
-
-
-
-
-
-	public List<ProductReview> getProductReview() {
-		return productReview;
-	}
-
-	public void setProductReview(List<ProductReview> productReview) {
-		this.productReview = productReview;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	@OneToMany(mappedBy="user")
@@ -101,17 +54,8 @@ public class User {
 	
 	public User() { }
 
-	public User(String name, String password, RoleType role, String email, long points) {
-
-		this.userName = name;
-		this.password = password;
-		this.role = role;
-		this.email = email;
-		this.points = points;
-		this.carts = new ArrayList<Cart>();
-	}
-	
 	public User(String name, String password, RoleType role, String email) {
+
 		this.userName = name;
 		this.password = password;
 		this.role = role;
@@ -137,6 +81,21 @@ public class User {
 		this.subscribe=userForm.isSubscribe();
 	}
 	
+	public boolean isSubscribe() {
+		return subscribe;
+	}
+
+	public void setSubscribe(boolean subscribe) {
+		this.subscribe = subscribe;
+	}
+
+	public List<ProductReview> getProductReview() {
+		return productReview;
+	}
+
+	public void setProductReview(List<ProductReview> productReview) {
+		this.productReview = productReview;
+	}
 	
 	public RoleType getRole() {
 		return role;
@@ -181,12 +140,7 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getPoints() {
-		return points;
-	}
-	public void setPoints(long points) {
-		this.points = points;
-	}
+
 	public List<Attraction> getAttraction() {
 		return attraction;
 	}
@@ -203,7 +157,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + ", email="
-				+ email + ", points=" + points + ", subscribe=" + subscribe + "]";
+				+ email + ", subscribe=" + subscribe + "]";
 	}
 
 	public String getResetPasswordToken() {

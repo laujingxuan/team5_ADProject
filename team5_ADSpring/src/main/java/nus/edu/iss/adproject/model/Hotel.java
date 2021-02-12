@@ -4,6 +4,7 @@ package nus.edu.iss.adproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,9 +21,9 @@ public class Hotel {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     public long id;	
 	
-	@OneToMany(mappedBy = "hotel")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
 	private List< RoomType> roomType;
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
     private List<Discount> discount;
     @ManyToOne
     private User user;

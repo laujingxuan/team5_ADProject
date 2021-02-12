@@ -3,6 +3,7 @@ package nus.edu.iss.adproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,14 +23,20 @@ public class Product {
 
 	private ProductType type;
 	
-	@OneToMany(mappedBy = "product")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
 	private List<ProductReview> productReview;
 	
-	@OneToOne(mappedBy = "product")
+	@OneToOne(cascade = CascadeType.REMOVE, mappedBy = "product")
 	private Attraction attraction;
 	
-	@OneToOne(mappedBy = "product")
+	@OneToOne(cascade = CascadeType.REMOVE, mappedBy = "product")
 	private RoomType roomType;
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	private List<Cart> carts;
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	private List<BookingDetails> bookingDetails;
 
 	public Product() {
 		super();

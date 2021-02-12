@@ -10,6 +10,6 @@ public interface ProductService {
 	public List<Product> listAllSearchAttractions(String keyword);
 	public List<Product> listAllSearchHotels(String keyword);
 	public void save(Product newroom);
-	
+	public void deleteProduct(Product newroom);
 	
 }

@@ -44,6 +44,11 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return prepo.findAll();
 	}
+
+	@Override
+	public void deleteProduct(Product room) {
+		prepo.delete(room);
+	}
 	
 	
 }
