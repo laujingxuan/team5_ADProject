@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity 
 public class RoomType {
 	@Id 
@@ -17,9 +19,11 @@ public class RoomType {
 	private long id;
 	
 	@OneToOne (cascade = CascadeType.REMOVE)
+	@JsonIgnore
 	private Product product;
 
 	@ManyToOne
+	@JsonIgnore
 	private Hotel hotel;
 
 	//roomType is "SINGLE", "DOUBLE", "FAMILY" or etc

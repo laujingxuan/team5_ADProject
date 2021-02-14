@@ -60,24 +60,11 @@ public class HotelApiController {
 	private DiscountService discountService;
 	
 	//http://localhost:8080/api/hotel/hotels
-	//done adding restriction
 	//show list of hotels
 	@GetMapping("/hotels")
-	public ResponseEntity<HotelWrapper> gethotel(Model model, HttpSession session){
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		if (session_svc.hasHotelPermission(session) == false) {
-//			model.addAttribute("error", "No Permission");
-//			return "error";
-//		User user = (User) session.getAttribute("user");
-//		List<Hotel> hotels=  hotelservice.findByUserId(user.getId());
-//		Map<Hotel, List<RoomType>> hotelMap = new HashMap<>();
-//		for (Hotel hotel: hotels) {
-//			hotelMap.put(hotel, rservice.findRoomTypesByHotelId(hotel.getId()));
-//		}
-//		model.addAttribute("hotelMap",hotelMap);
-		
+	public ResponseEntity<List<Hotel>> gethotel(Model model, HttpSession session){		
 		List<Hotel> hotels1 = hotelservice.findAll();
-		return new ResponseEntity<HotelWrapper>(new HotelWrapper(hotels1),HttpStatus.OK);
+		return new ResponseEntity<List<Hotel>>(hotels1,HttpStatus.OK);
 	}
 	
 	//http://localhost:8080/api/hotel/map/1

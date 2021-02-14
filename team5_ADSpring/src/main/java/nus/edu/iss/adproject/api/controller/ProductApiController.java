@@ -62,8 +62,7 @@ public class ProductApiController {
 	@Autowired
 	private RoomTypeService roomService;
 	
-	// i think need to split into 2 parts ?? cannot call
-	@PostMapping("/")
+	@GetMapping("/")
 	public ResponseEntity<ProductWrapper> listProductForm(Model model, @Param("keyword") String keyword, HttpSession session) {
 		List<Product> listproducts = pservice.listAllSearchAttractions(keyword);
 		List<Product> listhotels = pservice.listAllSearchHotels(keyword);
