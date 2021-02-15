@@ -1,8 +1,9 @@
 package nus.edu.iss.mobileapp.nonEntityModel;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Hotel {
+public class Hotel implements Serializable {
 
     public long id;
 

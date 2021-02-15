@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MobileApp</string>
+    <string name="product_details"><u>Product Details</u></string>
+    <string name="description">Description:</string>
+    <string name="rating">Rating     :</string>
+    <string name="address">Address    :</string>
+    <string name="amenities">Amenities  :</string>
 </resources>

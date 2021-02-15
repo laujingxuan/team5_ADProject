@@ -1,6 +1,8 @@
 package nus.edu.iss.mobileapp.nonEntityModel;
 
-public class RoomType {
+import java.io.Serializable;
+
+public class RoomType implements Serializable {
     private long id;
 
     //roomType is "SINGLE", "DOUBLE", "FAMILY" or etc

@@ -217,11 +217,11 @@ public class HotelController {
 	//save changes on roomType editing
 	@PostMapping("/saveRoom")
 	public String saveRoomType(@ModelAttribute("roomtype") @Valid RoomType roomType, BindingResult bindingResult,
-			Model model) {
+			Model model, HttpSession session) {
+		User user = (User) session.getAttribute("user");
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult);
-			System.out.println(roomType.getProduct());
 			if (roomType.getProduct()==null) {
+				model.addAttribute("Hotels", hotelservice.findByUserId(user.getId()));
 				model.addAttribute("room", new RoomType());
 				return "createRoom";
 			}else{
