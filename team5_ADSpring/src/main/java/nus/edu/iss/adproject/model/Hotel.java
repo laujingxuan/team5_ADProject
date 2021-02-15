@@ -14,7 +14,9 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties({"user","roomType","discount"})
 @Entity
 public class Hotel {
 	@Id 

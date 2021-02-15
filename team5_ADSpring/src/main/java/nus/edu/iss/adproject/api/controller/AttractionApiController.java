@@ -50,6 +50,20 @@ public class AttractionApiController {
 	
 //	http://localhost:8080/api/attraction/attractions
 	//show list of attractions
+
+	
+//	public ResponseEntity<AttractionWrapper> getAttraction(HttpSession session){
+////		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+////		if (session_svc.hasAttractionPermission(session) == false) {
+////			model.addAttribute("error", "No Permission");
+////			return "error";
+////		}
+////		User user = (User) session.getAttribute("user");
+////		List<Attraction> attractions=  aservice.findByUserId(user.getId());
+////		model.addAttribute("attractions", attractions);
+//		List<Attraction> attractions=  aservice.findAll();
+//		return new ResponseEntity<AttractionWrapper>(new AttractionWrapper(attractions) , HttpStatus.OK);
+//	}
 	@GetMapping("/attractions")
 	public ResponseEntity<AttractionWrapper> getAttraction(HttpSession session){
 //		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
