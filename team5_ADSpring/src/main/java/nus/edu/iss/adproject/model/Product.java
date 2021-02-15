@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 
 
@@ -24,6 +26,7 @@ public class Product {
 	private ProductType type;
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	@JsonIgnore
 	private List<ProductReview> productReview;
 	
 	@OneToOne(cascade = CascadeType.REMOVE, mappedBy = "product")
@@ -33,9 +36,11 @@ public class Product {
 	private RoomType roomType;
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	@JsonIgnore
 	private List<Cart> carts;
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	@JsonIgnore
 	private List<BookingDetails> bookingDetails;
 
 	public Product() {

@@ -23,7 +23,6 @@ public class RoomType {
 	private Product product;
 
 	@ManyToOne
-	@JsonIgnore
 	private Hotel hotel;
 
 	//roomType is "SINGLE", "DOUBLE", "FAMILY" or etc

@@ -24,6 +24,7 @@ public class Hotel {
     public long id;	
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
+	@JsonIgnore
 	private List< RoomType> roomType;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
     @JsonIgnore

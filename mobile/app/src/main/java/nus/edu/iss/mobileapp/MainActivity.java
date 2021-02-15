@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -22,16 +23,19 @@ import java.util.List;
 
 import nus.edu.iss.mobileapp.nonEntityModel.Hotel;
 import nus.edu.iss.mobileapp.nonEntityModel.JsonHotelAPIController;
+import nus.edu.iss.mobileapp.nonEntityModel.JsonProductAPIController;
+import nus.edu.iss.mobileapp.nonEntityModel.Product;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView mTextView;
-//    private RequestQueue mQueue;
+    private JsonProductAPIController jsonProductAPIController;
+    MyCustomAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,43 +43,51 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mTextView = findViewById(R.id.textView);
         Button buttonParse = findViewById(R.id.button);
-//        mQueue = Volley.newRequestQueue(this);
 
         //Need to type ipconfig in command prompt to check your ip address
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/hotel/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
 
-        JsonHotelAPIController jsonHotelAPIController = retrofit.create(JsonHotelAPIController.class);
+//        JsonHotelAPIController jsonHotelAPIController = retrofit.create(JsonHotelAPIController.class);
+        jsonProductAPIController = retrofit.create(JsonProductAPIController.class);
+        buttonParse.setOnClickListener(this);
+    }
 
-        buttonParse.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Call<List<Hotel>> call = jsonHotelAPIController.getHotels();
-                //checking path called
+    @Override
+    public void onClick(View v) {
+        adapter = new MyCustomAdapter(this, 0);
+        EditText search = findViewById(R.id.search_bar);
+        Call<List<Product>> call = jsonProductAPIController.getSearchResults(search.getText().toString());
+        //checking path called
 //                System.out.println(jsonHotelAPIController.getHotels().request().url().toString());
-                //.enqueue helps to run at background thread as else will have exception and causing freeze of app
-                call.enqueue(new Callback<List<Hotel>>() {
-                    @Override
-                    public void onResponse(Call<List<Hotel>> call, Response<List<Hotel>> response) {
+        //.enqueue helps to run at background thread as else will have exception and causing freeze of app
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
 
-                        if(!response.isSuccessful()){
-                            mTextView.setText("Code: " + response.code());
-                            return;
-                        }
-                        //get the result of the API call
-                        List<Hotel> hotels = response.body();
+                if(!response.isSuccessful()){
+                    mTextView.setText("Code: " + response.code());
+                    return;
+                }
+                //get the result of the API call
+                List<Product> products = response.body();
 
-                        for (Hotel hotel: hotels){
-                            String content = "";
-                            content += hotel.toString() + "\n\n";
-                            mTextView.append(content);
-                        }
-                    }
+                for (Product product: products){
+                    String content = "";
+                    content += product.toString() + "\n\n";
+                    System.out.println(product);
+                    mTextView.append(content);
+                }
+                adapter.setData(products);
+                ListView listView = findViewById(R.id.listView);
+                if (listView != null) {
+                    listView.setAdapter(adapter);
+                    listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<List<Hotel>> call, Throwable t) {
-                        mTextView.setText(t.getMessage());
-                    }
-                });
+            @Override
+            public void onFailure(Call<List<Product>> call, Throwable t) {
+                mTextView.setText(t.getMessage());
             }
         });
     }

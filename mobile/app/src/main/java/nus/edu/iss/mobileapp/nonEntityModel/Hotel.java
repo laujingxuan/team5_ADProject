@@ -17,7 +17,7 @@ public class Hotel {
     private String description;
     private String API_URL;
     private String imageURL;
-    private List< RoomType> roomType;
+//    private List< RoomType> roomType;
 
     public long getId() {
         return id;
@@ -115,14 +115,6 @@ public class Hotel {
         this.imageURL = imageURL;
     }
 
-    public List<RoomType> getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(List<RoomType> roomType) {
-        this.roomType = roomType;
-    }
-
     @Override
     public String toString() {
         return "Hotel{" +
@@ -138,7 +130,6 @@ public class Hotel {
                 ", description='" + description + '\'' +
                 ", API_URL='" + API_URL + '\'' +
                 ", imageURL='" + imageURL + '\'' +
-                ", roomType=" + roomType +
                 '}';
     }
 }
