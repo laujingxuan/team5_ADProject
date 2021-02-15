@@ -12,4 +12,7 @@ public interface ProductReviewRepo extends JpaRepository<ProductReview, Long> {
 
 	@Query("Select pr From ProductReview pr where pr.product.id = :cid")
 	public List<ProductReview> findReviewByProductId(@Param("cid") Long id);
+	
+	@Query("Select pr From ProductReview pr where pr.id = :cid")
+	public ProductReview findReviewById(@Param("cid") Long id);
 }
