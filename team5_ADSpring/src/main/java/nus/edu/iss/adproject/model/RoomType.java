@@ -1,6 +1,7 @@
 package nus.edu.iss.adproject.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,7 +16,7 @@ public class RoomType {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@OneToOne
+	@OneToOne (cascade = CascadeType.REMOVE)
 	private Product product;
 
 	@ManyToOne

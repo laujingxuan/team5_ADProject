@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.swing.text.View;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.BookingDetails;
@@ -71,18 +74,18 @@ public class DashboardController {
 		this.room_svc = room_svcimpl;
 	}
 	
+	Hotel hotel = new Hotel();
+	
 	@RequestMapping(value = "/dailyBookingVacancy")
 	@ResponseBody
 	public Map<Integer,Integer> getBookingData(@RequestParam String month,@RequestParam String room, HttpSession session) {
 		//User user = (User) session.getAttribute("user");
-		int monthValue = Month.valueOf(month).ordinal()+1;	
-		
+		int monthValue = Month.valueOf(month).ordinal()+1;			
 		
 		String uri;
 		RestTemplate restTemplate = new RestTemplate();
 		Map<Integer, Integer> data_dailyVacancyRate = new LinkedHashMap<Integer, Integer>();
-		//uri = roomType.getHotel().getAPI_URL()+ "room/month";
-		uri = "http://localhost:8081/api/hotel/room/month";
+		uri = hotel.getAPI_URL()+"room/month";
 		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
 		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
 				DailyRoomDetailWrapper.class);
@@ -104,7 +107,7 @@ public class DashboardController {
 		RestTemplate restTemplate = new RestTemplate();
 		Map<Integer, Integer> data_dailyCancellationRate = new LinkedHashMap<Integer, Integer>();
 		//uri = roomType.getHotel().getAPI_URL()+ "room/month";
-		uri = "http://localhost:8081/api/hotel/room/month";
+		uri = hotel.getAPI_URL()+"room/month";
 		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
 		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
 				DailyRoomDetailWrapper.class);
@@ -115,178 +118,216 @@ public class DashboardController {
 		return data_dailyCancellationRate;
 	}
 	
+	
+	@RequestMapping(value = "/showDashboardByHotel",method = RequestMethod.GET )	
+	@ResponseBody
+	public RedirectView ShowDashboardByHotel(Model model, HttpSession session,@RequestParam Long hotel_id) {
+		
+		hotel.setId(hotel_id);
+		
+		 RedirectView rv = new RedirectView();
+	        rv.setContextRelative(true);
+	        rv.setUrl("/dashboard/hotel/"+hotel_id);
+	        return rv;
+		
+		//return "home";
+	}
+	
+	 @RequestMapping("hotel/{hotel_id}")
+	    public String handleRequest (@PathVariable("hotel_id") Long hotel_id,Model model, HttpSession session) {
+		 System.out.println(hotel_id);
+		 Dashboard(model,hotel_id,session);
+	        return "dashboard";
+	    }
+	
+	public void Dashboard(Model model,Long hotel_id, HttpSession session) {
+		User user = (User) session.getAttribute("user");	
+		Map<String, Integer> data = new LinkedHashMap<String, Integer>();
+		Map<String, Double> data_revenue = new LinkedHashMap<String, Double>();
+		Map<String, Integer> data_bookingRate = new LinkedHashMap<String, Integer>();
+		Map<Integer, Integer> data_dailyVacancyRate = new LinkedHashMap<Integer, Integer>();
+		Map<Integer, Integer> data_dailyCancellationRate = new LinkedHashMap<Integer, Integer>();
+
+		
+		RoomType roomType = new RoomType();
+		List<Hotel> hotel = hotel_svc.findByUserId(user.getId());
+		RestTemplate restTemplate = new RestTemplate();
+		
+		ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
+		List<RoomType> room_list = new ArrayList<RoomType>();
+		for (Object object : rooms) {
+			roomType= new RoomType();
+			roomType.setRoomType(object.toString());
+			room_list.add(roomType);
+		}		
+		String uri;
+		System.out.println("Dropdown selected is " +hotel_id);
+		Hotel h1= new Hotel();
+		if(hotel_id >0) {
+			h1 = hotel_svc.findById(hotel_id);
+			uri = h1.getAPI_URL()+"room/month";
+		}else {
+			hotel_id = hotel.get(0).getId();
+			uri = hotel.get(0).getAPI_URL()+"room/month";
+		}		
+		
+		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
+		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
+				DailyRoomDetailWrapper.class);
+		for (DailyRoomTypeDetail daily : result.getDailyList()) {
+			data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
+			data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
+		}
+		
+		List<Object> b_details = bookingservice.findMonthlyGuestByHotelId(hotel_id);
+		List<Object> b_revenue = bookingservice.findMonthlyRevenueByHotelId(hotel_id);
+		List<Object> monthly_bookingRate = bookingservice.findMonthlyBookingRateByHotelId(hotel_id);
+
+//		List<Object> b_details = bookingservice.findGuestByMonth(hotel_id);
+//		List<Object> b_revenue = bookingservice.findMonthlyRevenueByHotel(user.getId(), hotel_id);
+//		List<Object> monthly_bookingRate = bookingservice.findMonthlyBookingRateByHotel(user.getId(), hotel_id);
+
+		int month = 0;
+		int total_guest = 0;
+		double total_revenue = 0.0;
+		int booking_rate = 0;
+		int months[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+
+		for (int i = 1; i <= months.length; i++) {
+			month = i;
+			total_guest = 0;
+			total_revenue = 0.0;
+			booking_rate = 0;
+
+			for (Iterator z = b_details.iterator(); z.hasNext();) {
+				Object[] values = (Object[]) z.next();
+
+				LocalDate date = LocalDate.parse(values[0].toString());
+				if (month == date.getMonthValue()) {
+					total_guest = Integer.parseInt(values[1].toString());
+
+				}
+			}
+
+			for (Iterator z = b_revenue.iterator(); z.hasNext();) {
+				Object[] values = (Object[]) z.next();
+
+				LocalDate date = LocalDate.parse(values[0].toString());
+				if (month == date.getMonthValue()) {
+					total_revenue = Double.parseDouble(values[1].toString());
+
+				}
+			}
+
+			for (Iterator z = monthly_bookingRate.iterator(); z.hasNext();) {
+				Object[] values = (Object[]) z.next();
+
+				LocalDate date = LocalDate.parse(values[0].toString());
+				if (month == date.getMonthValue()) {
+					booking_rate = Integer.parseInt(values[1].toString());
+
+				}
+			}
+
+			switch (month) {
+			case (1):
+				data.put("Jan", total_guest);
+				data_revenue.put("Jan", total_revenue);
+				data_bookingRate.put("Jan", booking_rate);
+				break;
+			case (2):
+				data.put("Feb", total_guest);
+				data_revenue.put("Feb", total_revenue);
+				data_bookingRate.put("Feb", booking_rate);
+				break;
+			case (3):
+				data.put("Mar", total_guest);
+				data_revenue.put("Mar", total_revenue);
+				data_bookingRate.put("Mar", booking_rate);
+				break;
+			case (4):
+				data.put("Apr", total_guest);
+				data_revenue.put("Apr", total_revenue);
+				data_bookingRate.put("Apr", booking_rate);
+				break;
+			case (5):
+				data.put("May", total_guest);
+				data_revenue.put("May", total_revenue);
+				data_bookingRate.put("May", booking_rate);
+				break;
+			case (6):
+				data.put("Jun", total_guest);
+				data_revenue.put("Jun", total_revenue);
+				data_bookingRate.put("Jun", booking_rate);
+				break;
+			case (7):
+				data.put("Jul", total_guest);
+				data_revenue.put("Jul", total_revenue);
+				data_bookingRate.put("Jul", booking_rate);
+				break;
+			case (8):
+				data.put("Aug", total_guest);
+				data_revenue.put("Aug", total_revenue);
+				data_bookingRate.put("Aug", booking_rate);
+				break;
+			case (9):
+				data.put("Sep", total_guest);
+				data_revenue.put("Sep", total_revenue);
+				data_bookingRate.put("Sep", booking_rate);
+				break;
+			case (10):
+				data.put("Oct", total_guest);
+				data_revenue.put("Oct", total_revenue);
+				data_bookingRate.put("Oct", booking_rate);
+				break;
+			case (11):
+				data.put("Nov", total_guest);
+				data_revenue.put("Nov", total_revenue);
+				data_bookingRate.put("Nov", booking_rate);
+				break;
+			case (12):
+				data.put("Dec", total_guest);
+				data_revenue.put("Dec", total_revenue);
+				data_bookingRate.put("Dec", booking_rate);
+				break;
+			default:
+				break;
+			}
+
+		}			
+		
+		model.addAttribute("hotel_id", hotel_id);
+		model.addAttribute("hotel", hotel);
+		model.addAttribute("roomTypes", room_list);
+		model.addAttribute("month",Month.values());
+		model.addAttribute("data", data);
+		model.addAttribute("data_revenue", data_revenue);
+		model.addAttribute("data_bookingRate", data_bookingRate);
+		model.addAttribute("data_vacancyRate", data_dailyVacancyRate);
+		model.addAttribute("data_cancellationRate", data_dailyCancellationRate);
+	}
+	
 
 	@GetMapping("/reports")
 	public String showDashboard(Model model, HttpSession session) {
 		if (session_svc.isNotLoggedIn(session))
 			return "redirect:/user/login";
 		User user = (User) session.getAttribute("user");
+		Hotel h_test = new Hotel();
+		h_test.setId(0);
 		
 		if (user.getRole() == RoleType.HOTELMANAGER) {
-
-			Map<String, Integer> data = new LinkedHashMap<String, Integer>();
-			Map<String, Double> data_revenue = new LinkedHashMap<String, Double>();
-			Map<String, Integer> data_bookingRate = new LinkedHashMap<String, Integer>();
-			Map<Integer, Integer> data_dailyVacancyRate = new LinkedHashMap<Integer, Integer>();
-			Map<Integer, Integer> data_dailyCancellationRate = new LinkedHashMap<Integer, Integer>();
-
+			Dashboard(model,h_test.getId(), session);
 			
-			RoomType roomType = new RoomType();
-			RestTemplate restTemplate = new RestTemplate();
-			
-			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
-			List<RoomType> room_list = new ArrayList<RoomType>();
-			System.out.println(rooms.size());
-			for (Object object : rooms) {
-				roomType= new RoomType();
-				roomType.setRoomType(object.toString());
-				room_list.add(roomType);
-			}
-			
-
-			String uri;
-			//uri = roomType.getHotel().getAPI_URL()+ "room/month";
-			uri = "http://localhost:8081/api/hotel/room/month";
-			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
-			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
-					DailyRoomDetailWrapper.class);
-			for (DailyRoomTypeDetail daily : result.getDailyList()) {
-				data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
-				data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
-			}
-
-			List<Object> b_details = bookingservice.findGuestByMonth();
-			List<Object> b_revenue = bookingservice.findMonthlyRevenueByHotel(user.getId());
-			List<Object> monthly_bookingRate = bookingservice.findMonthlyBookingRateByHotel(user.getId());
-
-			int month = 0;
-//		int revenue_month=0; int booking_month = 0;
-			int total_guest = 0;
-			double total_revenue = 0.0;
-			int booking_rate = 0;
-			int months[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-
-			for (int i = 1; i <= months.length; i++) {
-				month = i;
-//			revenue_month =i;
-				total_guest = 0;
-				total_revenue = 0.0;
-				booking_rate = 0;
-
-				for (Iterator z = b_details.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-
-					LocalDate date = LocalDate.parse(values[0].toString());
-					if (month == date.getMonthValue()) {
-						total_guest = Integer.parseInt(values[1].toString());
-
-					}
-				}
-
-				for (Iterator z = b_revenue.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-
-					LocalDate date = LocalDate.parse(values[0].toString());
-					if (month == date.getMonthValue()) {
-						total_revenue = Double.parseDouble(values[1].toString());
-
-					}
-				}
-
-				for (Iterator z = monthly_bookingRate.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-
-					LocalDate date = LocalDate.parse(values[0].toString());
-					if (month == date.getMonthValue()) {
-						booking_rate = Integer.parseInt(values[1].toString());
-
-					}
-				}
-
-				switch (month) {
-				case (1):
-					data.put("Jan", total_guest);
-					data_revenue.put("Jan", total_revenue);
-					data_bookingRate.put("Jan", booking_rate);
-					break;
-				case (2):
-					data.put("Feb", total_guest);
-					data_revenue.put("Feb", total_revenue);
-					data_bookingRate.put("Feb", booking_rate);
-					break;
-				case (3):
-					data.put("Mar", total_guest);
-					data_revenue.put("Mar", total_revenue);
-					data_bookingRate.put("Mar", booking_rate);
-					break;
-				case (4):
-					data.put("Apr", total_guest);
-					data_revenue.put("Apr", total_revenue);
-					data_bookingRate.put("Apr", booking_rate);
-					break;
-				case (5):
-					data.put("May", total_guest);
-					data_revenue.put("May", total_revenue);
-					data_bookingRate.put("May", booking_rate);
-					break;
-				case (6):
-					data.put("Jun", total_guest);
-					data_revenue.put("Jun", total_revenue);
-					data_bookingRate.put("Jun", booking_rate);
-					break;
-				case (7):
-					data.put("Jul", total_guest);
-					data_revenue.put("Jul", total_revenue);
-					data_bookingRate.put("Jul", booking_rate);
-					break;
-				case (8):
-					data.put("Aug", total_guest);
-					data_revenue.put("Aug", total_revenue);
-					data_bookingRate.put("Aug", booking_rate);
-					break;
-				case (9):
-					data.put("Sep", total_guest);
-					data_revenue.put("Sep", total_revenue);
-					data_bookingRate.put("Sep", booking_rate);
-					break;
-				case (10):
-					data.put("Oct", total_guest);
-					data_revenue.put("Oct", total_revenue);
-					data_bookingRate.put("Oct", booking_rate);
-					break;
-				case (11):
-					data.put("Nov", total_guest);
-					data_revenue.put("Nov", total_revenue);
-					data_bookingRate.put("Nov", booking_rate);
-					break;
-				case (12):
-					data.put("Dec", total_guest);
-					data_revenue.put("Dec", total_revenue);
-					data_bookingRate.put("Dec", booking_rate);
-					break;
-				default:
-					break;
-				}
-
-			}			
-			
-			 
-			model.addAttribute("roomTypes", room_list);
-			model.addAttribute("month",Month.values());
-			model.addAttribute("data", data);
-			model.addAttribute("data_revenue", data_revenue);
-			model.addAttribute("data_bookingRate", data_bookingRate);
-			model.addAttribute("data_vacancyRate", data_dailyVacancyRate);
-			model.addAttribute("data_cancellationRate", data_dailyCancellationRate);
 			return "dashboard";
 		}else if(user.getRole() == RoleType.PLATFORMMANAGER) {
-			List<Hotel> hotel = hotel_svc.findAll();
+			List<Hotel> hotel_list = hotel_svc.findAll();
 			List<Attraction> attraction = attraction_svc.findAll();
 			List<Object> dashboard_details = bookingservice.findMonthlyRevenueForAllHotels();
 			List<Object> attraction_details = bookingservice.findMonthlyRevenueForAllAttractions();
 			
 			List<DashboardQuery> d_list = new ArrayList<DashboardQuery>();			
-			for (Hotel h : hotel) {
+			for (Hotel h : hotel_list) {
 				DashboardQuery query = new DashboardQuery();
 				Boolean is_exist=false;
 				for (Iterator z = dashboard_details.iterator(); z.hasNext();) {
@@ -348,161 +389,12 @@ public class DashboardController {
 	public String showDashboardByHotel(@PathVariable("hotel_id") Long hotel_id,Model model, HttpSession session) {
 		
 		User user = (User) session.getAttribute("user");
+		if (session_svc.isNotLoggedIn(session))
+			return "redirect:/user/login";
 		Hotel hotel = hotel_svc.findById(hotel_id);
-		if (user.getRole() == RoleType.PLATFORMMANAGER) {
-
-			Map<String, Integer> data = new LinkedHashMap<String, Integer>();
-			Map<String, Double> data_revenue = new LinkedHashMap<String, Double>();
-			Map<String, Integer> data_bookingRate = new LinkedHashMap<String, Integer>();
-			Map<Integer, Integer> data_dailyVacancyRate = new LinkedHashMap<Integer, Integer>();
-			Map<Integer, Integer> data_dailyCancellationRate = new LinkedHashMap<Integer, Integer>();
-
-			
-			RoomType roomType = new RoomType();
-			RestTemplate restTemplate = new RestTemplate();
-			
-			ArrayList<Object> rooms = room_svc.findDistinctRoomTypes();
-			List<RoomType> room_list = new ArrayList<RoomType>();
-			System.out.println(rooms.size());
-			for (Object object : rooms) {
-				roomType= new RoomType();
-				roomType.setRoomType(object.toString());
-				room_list.add(roomType);
-			}	
-
-			String uri;
-			
-			uri = hotel.getAPI_URL()+ "room/month";
-			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
-			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
-					DailyRoomDetailWrapper.class);
-			for (DailyRoomTypeDetail daily : result.getDailyList()) {
-				data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
-				data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
-			}
-
-			List<Object> b_details = bookingservice.findMonthlyGuestByHotelId(hotel_id);
-			List<Object> b_revenue = bookingservice.findMonthlyRevenueByHotelId(hotel_id);
-			List<Object> monthly_bookingRate = bookingservice.findMonthlyBookingRateByHotelId(hotel_id);
-
-			int month = 0;
-			int total_guest = 0;
-			double total_revenue = 0.0;
-			int booking_rate = 0;
-			int months[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-
-			for (int i = 1; i <= months.length; i++) {
-				month = i;
-				total_guest = 0;
-				total_revenue = 0.0;
-				booking_rate = 0;
-
-				for (Iterator z = b_details.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-
-					LocalDate date = LocalDate.parse(values[0].toString());
-					if (month == date.getMonthValue()) {
-						total_guest = Integer.parseInt(values[1].toString());
-
-					}
-				}
-
-				for (Iterator z = b_revenue.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-
-					LocalDate date = LocalDate.parse(values[0].toString());
-					if (month == date.getMonthValue()) {
-						total_revenue = Double.parseDouble(values[1].toString());
-
-					}
-				}
-
-				for (Iterator z = monthly_bookingRate.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-
-					LocalDate date = LocalDate.parse(values[0].toString());
-					if (month == date.getMonthValue()) {
-						booking_rate = Integer.parseInt(values[1].toString());
-
-					}
-				}
-
-				switch (month) {
-				case (1):
-					data.put("Jan", total_guest);
-					data_revenue.put("Jan", total_revenue);
-					data_bookingRate.put("Jan", booking_rate);
-					break;
-				case (2):
-					data.put("Feb", total_guest);
-					data_revenue.put("Feb", total_revenue);
-					data_bookingRate.put("Feb", booking_rate);
-					break;
-				case (3):
-					data.put("Mar", total_guest);
-					data_revenue.put("Mar", total_revenue);
-					data_bookingRate.put("Mar", booking_rate);
-					break;
-				case (4):
-					data.put("Apr", total_guest);
-					data_revenue.put("Apr", total_revenue);
-					data_bookingRate.put("Apr", booking_rate);
-					break;
-				case (5):
-					data.put("May", total_guest);
-					data_revenue.put("May", total_revenue);
-					data_bookingRate.put("May", booking_rate);
-					break;
-				case (6):
-					data.put("Jun", total_guest);
-					data_revenue.put("Jun", total_revenue);
-					data_bookingRate.put("Jun", booking_rate);
-					break;
-				case (7):
-					data.put("Jul", total_guest);
-					data_revenue.put("Jul", total_revenue);
-					data_bookingRate.put("Jul", booking_rate);
-					break;
-				case (8):
-					data.put("Aug", total_guest);
-					data_revenue.put("Aug", total_revenue);
-					data_bookingRate.put("Aug", booking_rate);
-					break;
-				case (9):
-					data.put("Sep", total_guest);
-					data_revenue.put("Sep", total_revenue);
-					data_bookingRate.put("Sep", booking_rate);
-					break;
-				case (10):
-					data.put("Oct", total_guest);
-					data_revenue.put("Oct", total_revenue);
-					data_bookingRate.put("Oct", booking_rate);
-					break;
-				case (11):
-					data.put("Nov", total_guest);
-					data_revenue.put("Nov", total_revenue);
-					data_bookingRate.put("Nov", booking_rate);
-					break;
-				case (12):
-					data.put("Dec", total_guest);
-					data_revenue.put("Dec", total_revenue);
-					data_bookingRate.put("Dec", booking_rate);
-					break;
-				default:
-					break;
-				}
-
-			}
-			
-			
-			 
-			model.addAttribute("roomTypes", room_list);
-
-			model.addAttribute("data", data);
-			model.addAttribute("data_revenue", data_revenue);
-			model.addAttribute("data_bookingRate", data_bookingRate);
-			model.addAttribute("data_vacancyRate", data_dailyVacancyRate);
-			model.addAttribute("data_cancellationRate", data_dailyCancellationRate);
+		if (user.getRole() == RoleType.PLATFORMMANAGER) {			
+			Dashboard(model, hotel_id, session);
+			model.addAttribute("hotel", hotel);
 			return "dashboard";
 		}
 		else {

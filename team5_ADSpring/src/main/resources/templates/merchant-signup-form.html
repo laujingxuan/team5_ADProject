@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Merchant SignUp</title>
+</head>
+<head th:insert="layout/layout.html :: veryTop"></head>
+<body>
+	<div th:replace="layout/layout.html :: menu"></div>
+	<br />
+	<div class="container">
+
+		<h3>Merchant Sign Up</h3>
+
+		<form action="" th:object="${userForm}" th:action="${path}"
+			method="POST" class="form-horizontal">
+			<table class="table">
+				<tr>
+					<td>Product Category:</td>
+					<td><input type="radio" th:name="role" th:value=HOTELMANAGER
+						checked="checked" onclick="toggleSubscribe()">Hotel 
+						<input type="radio" th:name="role"
+						th:value=ATTRACTIONMANAGER onclick="toggleSubscribe()">Attraction</td>
+				</tr>
+				<tr>
+					<td style="width: 30%">User Name:</td>
+					<td style="width: 30%"><input type="text"
+						th:field="*{userName}" value="*{userName}" placeholder="User Name"></td>
+					<td style="width: 30%"><div
+							th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div></td>
+				</tr>
+
+				<tr>
+					<td>Email:</td>
+					<td><input type="text" th:field="*{email}" value="*{email}"
+						placeholder="Email"></td>
+					<td><div th:if="${#fields.hasErrors('email')}"
+							th:errors="*{email}"></div></td>
+				</tr>
+
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" th:field="*{password}"
+						placeholder="Password"></td>
+					<td><div th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}"></div></td>
+				</tr>
+				<tr>
+					<td>Confirm Password:</td>
+					<td><input type="password" th:field="*{confPassword}"
+						placeholder="Password"></td>
+					<td></td>
+				</tr>
+				<tr id="checkbox">
+					<td ><input type="hidden" th:name="*{subscribe}"
+						th:value="*{subscribe}" /> <input type="checkbox" 
+						th:name="*{subscribe}" th:checked="*{subscribe}"
+						th:value="*{subscribe}" th:field="*{subscribe}" />I want to
+						subscribe to ***</td>
+				</tr>
+				<tr>
+					<td colspan="3"><input type="submit" value="Sign Up"
+						class="btn btn-primary" /> <small>&nbsp&nbspAlready
+							registered?&nbsp<a href="/" th:href="@{/user/login}">Login
+								here</a>
+					</small></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>
+	<script>
+		function toggleSubscribe() {
+			var x = document.getElementById("checkbox");
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+	</script>
+</body>
+
+</html>

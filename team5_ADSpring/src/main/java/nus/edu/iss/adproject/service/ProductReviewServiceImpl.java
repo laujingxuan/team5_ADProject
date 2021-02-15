@@ -32,6 +32,11 @@ public class ProductReviewServiceImpl implements ProductReviewService{
 	@Override
 	public ProductReview findReviewById(Long id) {
 		return prrepo.findReviewById(id);
+  }
+  
+	public void deleteProductReview(ProductReview productReview) {
+		prrepo.delete(productReview);
+
 	}
 	
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+	<title>Attraction  Detail</title>
+</head>
+<head th:insert="layout/layout.html :: veryTop"></head>
+<body>
+<div th:replace="layout/layout.html :: menu" ></div>
+	<div class = "container py-3">
+		<div class = "row">
+			<h4>Attraction  Detail</h4>
+		</div>
+		<div th:each="attraction:${attractions}" class="py-3 row">
+			<div class="card" style="width: 80rem;">
+			  <h5 class="card-header" th:text="${attraction.name}">Featured</h5>
+			  <div class="card-body">
+				<table class="table">
+					<tr>
+						<td style="width:20%">Price (S$)</td>
+						<td th:text=${attraction.price} style="width:80%">Total</td>
+					</tr>
+					<tr>
+						<td>Address</td>
+						<td th:text=${attraction.location}>Total</td>
+					</tr>
+					<tr>
+						<td>Rating</td>
+						<td th:text=${attraction.rating}>Total</td>
+					</tr>
+					<tr>
+						<td>Latitude</td>
+						<td th:text=${attraction.lat}>Total</td>
+					</tr>
+					<tr>
+						<td>Longitude</td>
+						<td th:text=${attraction.longi}>Total</td>
+					</tr>
+					<tr>
+						<td>Description</td>
+						<td th:text=${attraction.description}>Total</td>
+					</tr>
+					<tr>
+						<td>Country</td>
+						<td th:text=${attraction.country_city}>Total</td>
+					</tr>
+					<tr>
+						<td>Image URL</td>
+						<td th:text=${attraction.imageURL}>Total</td>
+					</tr>
+					<tr>
+						<td>API URL</td>
+						<td th:text=${attraction.API_URL}>Total</td>
+					</tr>
+				</table>
+				<a class="btn btn-primary" href="BookingDetail.html" th:href="@{/attraction/edit/}+${attraction.id}" role="button">Edit</a>
+			    <a class="btn btn-primary" href="BookingDetail.html" th:href="@{/attraction/delete/}+${attraction.id}" role="button">Delete</a>
+			  </div>
+			</div>
+		</div>
+		<a class="btn btn-primary" href="BookingDetail.html" th:href="@{/attraction/create}" role="button">Create</a>
+	</div>	
+
+	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>
+</body>
+</html>
+
+
+  

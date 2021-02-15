@@ -110,6 +110,7 @@ public class Team5AdSpringApplication {
 			User hotelM1 = new User("hotel1","hotel1",RoleType.HOTELMANAGER,"hotel1@gmail.com");
 			User hotelM2 = new User("hotel2","hotel2",RoleType.HOTELMANAGER,"hotel2@gmail.com");
 			User attractionM1 = new User("attraction1","attraction1",RoleType.ATTRACTIONMANAGER,"attraction1@gmail.com");
+			User attractionM2 = new User("attraction2","attraction2",RoleType.ATTRACTIONMANAGER,"attraction2@gmail.com");
 			User customer3 = new User("customer3","customer3",RoleType.CUSTOMER,"lusicong22@gmail.com");
 			userRepo.save(customer1);
 			userRepo.save(customer2);
@@ -117,6 +118,7 @@ public class Team5AdSpringApplication {
 			userRepo.save(hotelM1);
 			userRepo.save(hotelM2);
 			userRepo.save(attractionM1);
+			userRepo.save(attractionM2);
 			userRepo.save(customer3);
 			
 			
@@ -144,9 +146,9 @@ public class Team5AdSpringApplication {
 			productRepo.save(product1);
 			productRepo.save(product10);
 			productRepo.save(product11);
-			Attraction attraction1 = new Attraction("Singapore Zoo", 75, "80 Mandai Lake Rd, 729826", 4, "Zoo with animals", "Singapore", "http://localhost:8081/api/attraction/", attractionM1, product1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPRuo0c4vT4LkTUTsMHQKdPad7unhMWYL68A&usqp=CAU");
-			Attraction attraction2 = new Attraction("Universal Studios Singapore", 75, "8 Sentosa Gateway, 098269", 4, "Universal Studios Singapore is a theme park located within Resorts World Sentosa on Sentosa Island, Singapore", "Singapore", "NA", attractionM1, product10, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0iNHp4S_BJIGknelmLR-x2obdFa9rb7Gh4w&usqp=CAU");
-			Attraction attraction3 = new Attraction("S.E.A. Aquarium", 75, "8 Sentosa Gateway, Sentosa Island, 098269", 4, "Large aquarium & resort featuring 800 species of marine life in a variety of habitats.", "Singapore", "NA", attractionM1, product11, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlJxOrew9nEOurRCadeDMVZUcCMzLbX4svw&usqp=CAU");
+			Attraction attraction1 = new Attraction("Singapore Zoo", 75, "80 Mandai Lake Rd, 729826", 4, "Zoo with animals", "Singapore", "http://localhost:8081/api/attraction/", attractionM1, product1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPRuo0c4vT4LkTUTsMHQKdPad7unhMWYL68A&usqp=CAU",1.4043,103.7930);
+			Attraction attraction2 = new Attraction("Universal Studios Singapore", 75, "8 Sentosa Gateway, 098269", 4, "Universal Studios Singapore is a theme park located within Resorts World Sentosa on Sentosa Island, Singapore", "Singapore", "NA", attractionM1, product10, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0iNHp4S_BJIGknelmLR-x2obdFa9rb7Gh4w&usqp=CAU", 1.2540, 103.8238);
+			Attraction attraction3 = new Attraction("S.E.A. Aquarium", 75, "8 Sentosa Gateway, Sentosa Island, 098269", 4, "Large aquarium & resort featuring 800 species of marine life in a variety of habitats.", "Singapore", "NA", attractionM1, product11, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlJxOrew9nEOurRCadeDMVZUcCMzLbX4svw&usqp=CAU", 1.2582, 103.8204);
 			attractionRepo.save(attraction1);
 			attractionRepo.save(attraction2);
 			attractionRepo.save(attraction3);
@@ -165,7 +167,7 @@ public class Team5AdSpringApplication {
 			productRepo.save(room3);
 			productRepo.save(room4);
 			productRepo.save(room5);
-			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://localhost:8081/api/hotel/", hotelM1 ,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHWHuNv8X8UXn9KrVrVu4P5zZMn9GWEVotg&usqp=CAU");
+			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://127.0.01:8081/api/hotel/", hotelM1 ,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHWHuNv8X8UXn9KrVrVu4P5zZMn9GWEVotg&usqp=CAU");
 			Hotel hotel2 = new Hotel("Swissôtel The Stamford",  "Singapore ",1.293354,103.853561 , 260.0, 8,"Sg","aa", "best", "we try to be home","NA", hotelM1,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ61juiK980qp_59nzk8BZSKCD1LBwLMkrgYg&usqp=CAU");
 			Hotel hotel3 = new Hotel("Hotel Miramar", "Singapore",1.288710,103.837372 , 260.0, 8, "SG","aa", "best", "we try to be home","NA", hotelM1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJQasGWLv85VE--hj4JjvcYvlH6AVu1qpi4A&usqp=CAU");
 			htRepo.save(hotel1);
@@ -207,7 +209,7 @@ public class Team5AdSpringApplication {
 			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300);
 			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250);
 			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400);
-			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100);
+			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "2", 2, 100);
 			bookDetRepo.save(bookDetail1);
 			bookDetRepo.save(bookDetail2);
 			bookDetRepo.save(bookDetail3);
@@ -251,8 +253,6 @@ public class Team5AdSpringApplication {
 
 		};
 	}
-
-
 }
 
 	
