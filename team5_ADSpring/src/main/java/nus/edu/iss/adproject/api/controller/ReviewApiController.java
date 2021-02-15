@@ -73,21 +73,21 @@ public class ReviewApiController {
 	}
 	
 	
-	@PostMapping("/save/{id}")
-	public ResponseEntity<ProductReview> postProductReveiw(Model model, @PathVariable("id")Long id, 
-			@ModelAttribute("review")@Valid ProductReview review, 
-			BindingResult bindingResult, @RequestParam("image") MultipartFile multipartFile) throws IOException {
-		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		review.setPhoto(fileName);
-		review.setProduct(prepo.findById(id).get());
-//		if(bindingResult.hasErrors()) {
-//			return "reviewForm";
-//		}
-		prservice.save(review);
-		String uploadDir = "user-photos/" + review.getId();
-		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-		
-		return  new ResponseEntity<ProductReview>(review,HttpStatus.OK);
-	}
+//	@PostMapping("/save/{id}")
+//	public ResponseEntity<ProductReview> postProductReveiw(Model model, @PathVariable("id")Long id, 
+//			@ModelAttribute("review")@Valid ProductReview review, 
+//			BindingResult bindingResult, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+//		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+//		review.setPhoto(fileName);
+//		review.setProduct(prepo.findById(id).get());
+////		if(bindingResult.hasErrors()) {
+////			return "reviewForm";
+////		}
+//		prservice.save(review);
+//		String uploadDir = "user-photos/" + review.getId();
+//		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+//		
+//		return  new ResponseEntity<ProductReview>(review,HttpStatus.OK);
+//	}
 
 }

@@ -135,7 +135,7 @@ public class BookingController {
 				HotelBooking returnBooking = restTemplate.postForObject( uri, hotelBook, HotelBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice);//cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks()
 				bookService.saveBookingDetails(newDetail);
-//				emailService.sendMail(newDetail.getId(),cart.getUser().getId(),cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks());
+				emailService.sendMail(newDetail.getId(),cart.getUser().getId(),cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks());
 				
 			}else {
 				//creating booking details in our database and attraction booking in the api
@@ -147,7 +147,7 @@ public class BookingController {
 				AttractionBooking returnBooking = restTemplate.postForObject(uri, attractBook, AttractionBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getQuantity(), afterDiscountPrice);//cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks()
 				bookService.saveBookingDetails(newDetail);
-//				emailService.sendMail(newDetail.getId(),cart.getUser().getId(),cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks());
+				emailService.sendMail(newDetail.getId(),cart.getUser().getId(),cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks());
 			}
 			//remove from cart since alr added into booking
 			cartService.deleteCart(cart);

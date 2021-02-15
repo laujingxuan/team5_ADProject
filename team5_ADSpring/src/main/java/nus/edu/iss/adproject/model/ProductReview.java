@@ -25,8 +25,6 @@ public class ProductReview {
 	
 	private String message;
 	
-	private String photoImagePath;
-	
 	private String photo;
 	
 	@Lob
@@ -41,14 +39,13 @@ public class ProductReview {
 		this.message = message;
 		this.photo = photo;
 	}
-	public ProductReview(User user, Product product, double rating, String message, String photoImagePath, String photo,
+	public ProductReview(User user, Product product, double rating, String message, String photo,
 			byte[] pic) {
 		super();
 		this.user = user;
 		this.product = product;
 		this.rating = rating;
 		this.message = message;
-		this.photoImagePath = photoImagePath;
 		this.photo = photo;
 		this.pic = pic;
 	}
@@ -80,9 +77,6 @@ public class ProductReview {
 	}
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-	public void setPhotoImagePath(String photoImagePath) {
-		this.photoImagePath = photoImagePath;
 	}
 	public String getPhoto() {
 		return photo;
