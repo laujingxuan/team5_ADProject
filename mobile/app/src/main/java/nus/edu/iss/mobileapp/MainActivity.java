@@ -1,7 +1,11 @@
 package nus.edu.iss.mobileapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTextView;
     private JsonProductAPIController jsonProductAPIController;
     MyCustomAdapter adapter;
+    Button login;
+    private int USER_LOGIN_RESPONSE = 1;
+    String username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mTextView = findViewById(R.id.textView);
         Button buttonParse = findViewById(R.id.button);
-
+        login = findViewById(R.id.login);
+        findViewById(R.id.login).setOnClickListener(this);
         //Need to type ipconfig in command prompt to check your ip address
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.126:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
 
 //        JsonHotelAPIController jsonHotelAPIController = retrofit.create(JsonHotelAPIController.class);
         jsonProductAPIController = retrofit.create(JsonProductAPIController.class);
@@ -54,6 +62,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        int id = v.getId();
+
+        if(id == R.id.login){
+            if(login.getText()=="login"){
+                Intent intent = new Intent(this,loginActivity.class);
+                startActivityForResult(intent,USER_LOGIN_RESPONSE);
+            }else{
+                username = "";
+                login.setText("login");
+                SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.remove("username");
+                edit.remove("password");
+                edit.commit();
+            }
+
+        }
+
         adapter = new MyCustomAdapter(this, 0);
         EditText search = findViewById(R.id.search_bar);
         Call<List<Product>> call = jsonProductAPIController.getSearchResults(search.getText().toString());
@@ -90,6 +116,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mTextView.setText(t.getMessage());
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if(resultCode!= RESULT_OK){
+            return;
+        }
+        if(requestCode == USER_LOGIN_RESPONSE){
+            String newQuote = intent.getStringExtra("username");
+            if(newQuote !=null)
+            {
+                username=newQuote;
+                login.setText("logout");
+            }
+        }
     }
 
     // Trying for volley
