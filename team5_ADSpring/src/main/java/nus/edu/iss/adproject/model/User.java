@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
 
@@ -35,19 +38,23 @@ public class User {
 		this.subscribe = subscribe;
 
 	}
-
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Cart> carts;
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Attraction> attraction;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Hotel> hotel;
-
+	
+	@JsonIgnore
 	@Column(name="reset_password_token")
 	private String resetPasswordToken;
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<ProductReview> productReview;
 
