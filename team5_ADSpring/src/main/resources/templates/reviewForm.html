@@ -27,23 +27,25 @@
 	<br/>
 	
 	<form action="#" th:object="${review}" th:action="@{/review/save/}+${review.product.id}" method="Post" enctype="multipart/form-data">
-		<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto">
-		    <tr>
+		<table align="center"  class="review"  style="width: 100%;margin:auto">
+		    <!-- <tr>
 		    	<td><input type="hidden" th:field="*{user.id}"></td>
 		    	<td></td>
-		    </tr>
+		    </tr> -->
 		    <tr>
 		    	<td>Photos:</td>
-		    	<td><input type="file" name="image" accept="image/png, image/jpg, image/jpeg" /></td>
+		        <td><input class="form-control" type="file" name="image" accept="image/png, image/jpg, image/jpeg" /></td>
 		    </tr>
 			<tr>
 				<td>Rating:</td>
-				<td><input type="text" th:field="*{rating}"></td>
+				<td><input type="text" class="form-control" th:field="*{rating}"></td>
 			</tr>
 
 			<tr>
 				<td>Content:</td>
-				<td><input type="text" th:field="*{message}">
+				<td>				
+					<input type="text" rows= "4" class="form-control" th:field="*{message}"> 
+				</td>
 			</tr>
 
 			<tr>
@@ -55,4 +57,22 @@
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
 </body>
+<style>
+body {
+	color: #fff;
+		font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  margin-bottom: -40px;
+  background-color: white;
+ 
+}
+.review{
+	 margin-top: -50px;
+  max-width: 600px;
+  height: 350px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+</style>
 </html>

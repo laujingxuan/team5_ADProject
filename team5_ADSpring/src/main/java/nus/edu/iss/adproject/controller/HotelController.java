@@ -169,11 +169,13 @@ public class HotelController {
 	public String saveHotelForm(@ModelAttribute("hotel") @Valid Hotel hotel, BindingResult bindingResult,
 			Model model, HttpSession session) {
 		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult);
 			if (hotel.getUser()==null) {
 				model.addAttribute("hotel", new Hotel());
-			}else {
-				model.addAttribute("hotel", hotelservice.findById(hotel.getId()));
 			}
+//			else {
+//				model.addAttribute("hotel", hotelservice.findById(hotel.getId()));
+//			}
 			return "editHotel";
 		}
 		User user = (User) session.getAttribute("user");
@@ -217,6 +219,8 @@ public class HotelController {
 	public String saveRoomType(@ModelAttribute("roomtype") @Valid RoomType roomType, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
+			System.out.println(bindingResult);
+			System.out.println(roomType.getProduct());
 			if (roomType.getProduct()==null) {
 				model.addAttribute("room", new RoomType());
 				return "createRoom";

@@ -11,9 +11,7 @@
  <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-
-
-	<div class="container" path="/home">
+	<!-- <div class="container" path="/home"> -->
 		<table class="table table-borderless" style="margin-top: 30px">
 			<tr>
 				<td th:if="${not #lists.isEmpty(hotel)}">
@@ -44,7 +42,7 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table table-borderless" style="margin-top: 170px">
+		<table class="table table-borderless" id="chart-2" style="margin-top: 170px">
 			<tr >
 				<td>
 					<select name="month" class="form-control" id="month" style="width: 150px;margin:0 auto">
@@ -93,7 +91,7 @@
 				
 			</tr>
 		</table>
-	</div>
+	<!-- </div> -->
 
 </body>
 <div th:replace="layout/layout.html :: footer"></div>
@@ -109,7 +107,6 @@ var htmldata_bookingRate = /*[[${data_bookingRate}]]*/{}
 var htmldata_vacancyRate = /*[[${data_vacancyRate}]]*/{}
 var htmldata_cancellationRate = /*[[${data_cancellationRate}]]*/{}
 var hotel_id =/*[[${hotel_id}]]*/{}
-console.log(hotel_id);
 document.getElementById("hotel").value  =hotel_id;
 
 	
@@ -451,4 +448,14 @@ var myChart = new Chart(ctx_bookingRate, {
 
 /*]]>*/
 </script>
+<style>
+body{
+	background-color: white;
+}
+#chart-2{
+	background-color: white;
+	margin-left: 0;
+	margin-bottom: -65px;
+}
+</style>
 </html>

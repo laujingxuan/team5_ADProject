@@ -8,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,9 +21,13 @@ public class Discount {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Min(value = 1)
+	@Digits(integer = 3, fraction = 0, message = "Enter integer value")
 	private int discount_rate;
+	//@NotEmpty
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate from_date;
+	//@NotEmpty
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate to_date;	
 	

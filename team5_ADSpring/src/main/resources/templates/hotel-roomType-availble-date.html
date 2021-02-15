@@ -129,19 +129,19 @@ function submitdayViaAjax(){
 <!--   <input type="hidden" th:field="*{product}">  -->
 <!--   <input type="hidden" th:field="*{user}"> -->
 
-  <table class="table py-5" cellspacing="10px" cellpadding="10px">
+  <table  class="table" style="background-color:white; margin:0 auto">
 	<tr><th colspan="4" class="text-center">select a date</th></tr>
-	<tr><td th:text ="${discount}">id</td></tr>
+	<tr><td th:text ="${discount}" colspan="4">id</td></tr>
 	<tr>
-		<td class="td_left"><label for="startDate">Start Date :</label></td>
-		<td class="td_right"><input type="text"  name="startDate" id="startdate" th:field="*{startDate}"></td>
+		<td class="td_left" style="width: 100px"><label for="startDate">Start Date :</label></td>
+		<td class="td_right" style="width: 150px"><input type="text" class="form-control"  name="startDate" id="startdate" th:field="*{startDate}"></td>
 		
-		<td class = "td_left"> End Date</td>
-		<td class="td_right"><input type="text"  name = "endDate " id="enddate" onselect = "datediff()" th:field="*{endDate}"></td>
+		<td class = "td_left" style="width: 100px"> End Date</td>
+		<td class="td_right" style="width: 150px"><input type="text"  class="form-control"  name = "endDate " id="enddate" onselect = "datediff()" th:field="*{endDate}"></td>
 	</tr>
 	<tr>
 	<td class="td_left"><label for="totalPrice">Total Price :</label></td>
-	<td> <div id="result"></div></td>
+	<td colspan="3"> <div id="result"></div></td>
 	
 	</tr>
 
@@ -152,7 +152,7 @@ function submitdayViaAjax(){
 <!--       </select></td> -->
 <!-- 	</tr> -->
 	<tr>
-		<td><input type="submit" value="add to cart" /></td>
+		<td><input type="submit" class="btn btn-outline-info" value="add to cart" /></td>
 		<!-- <td><a th:href="@{/cart/add/}+${product.id}">add to cart</a></td> -->
 	</tr>
   </table>
