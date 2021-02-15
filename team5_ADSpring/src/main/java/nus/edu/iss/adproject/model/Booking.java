@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Booking {
 	@Id
@@ -18,6 +20,7 @@ public class Booking {
 	private long id ;
 	
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 	
 	@OneToMany(mappedBy = "booking")

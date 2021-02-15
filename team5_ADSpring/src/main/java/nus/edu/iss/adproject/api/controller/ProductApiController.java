@@ -45,15 +45,6 @@ public class ProductApiController {
 	private ProductService pservice;
 	
 	@Autowired
-	private BookingService bookService;
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private SessionService session_svc;
-	
-	@Autowired
 	private AttractionService aservice;
 	
 	@Autowired
@@ -63,7 +54,7 @@ public class ProductApiController {
 	private RoomTypeService roomService;
 	
 	@GetMapping("/search")
-	public ResponseEntity<List<Product>> listProductForm(Model model, @Param("keyword") String keyword) {
+	public ResponseEntity<List<Product>> listProductForm(@Param("keyword") String keyword) {
 		List<Product> listproducts;
 		listproducts = pservice.listAllSearchAttractions(keyword);
 		List<Product> listRoomTypes = pservice.listAllSearchHotels(keyword);
@@ -72,21 +63,21 @@ public class ProductApiController {
 		return new ResponseEntity<List<Product>>(listproducts ,HttpStatus.OK);
 	}
 	
-//	http://localhost:8080/api/product/product/detail/5
-	@GetMapping("/product/detail/{id}")
-	public <T> ResponseEntity<T> viewProductDetail(Model model, @PathVariable("id")Long id) {
-		Product product = pservice.findProductById(id);
-		model.addAttribute("product", product);
-		if(product.getType().equals(ProductType.ATTRACTION)) {
-			Attraction attraction = aservice.findAttractionByProductId(id);
-			//model.addAttribute("attraction", attraction);
-			return new ResponseEntity<T> ( (T)attraction,HttpStatus.OK);
-		}else {
-			Hotel hotel = hotelservice.findHotelByProductId(id);
-			model.addAttribute("hotel", hotel);
-			model.addAttribute("roomType", roomService.findRoomTypesByHotelId(hotel.getId()));
-			return new ResponseEntity<T> ((T) hotel,HttpStatus.OK);
-		}
-	}
+////	http://localhost:8080/api/product/product/detail/5
+//	@GetMapping("/product/detail/{id}")
+//	public <T> ResponseEntity<T> viewProductDetail(Model model, @PathVariable("id")Long id) {
+//		Product product = pservice.findProductById(id);
+//		model.addAttribute("product", product);
+//		if(product.getType().equals(ProductType.ATTRACTION)) {
+//			Attraction attraction = aservice.findAttractionByProductId(id);
+//			//model.addAttribute("attraction", attraction);
+//			return new ResponseEntity<T> ( (T)attraction,HttpStatus.OK);
+//		}else {
+//			Hotel hotel = hotelservice.findHotelByProductId(id);
+//			model.addAttribute("hotel", hotel);
+//			model.addAttribute("roomType", roomService.findRoomTypesByHotelId(hotel.getId()));
+//			return new ResponseEntity<T> ((T) hotel,HttpStatus.OK);
+//		}
+//	}
 
 }

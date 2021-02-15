@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProductDetailsActivity"></activity>
+        <activity android:name=".BookingHistoryActivity"></activity>
+        <activity android:name=".ProductDetailsActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing">

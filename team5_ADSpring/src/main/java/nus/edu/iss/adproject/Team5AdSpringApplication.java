@@ -68,26 +68,7 @@ public class Team5AdSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(Team5AdSpringApplication.class, args);
 	}
-	
-//	//https://howtodoinjava.com/spring-boot2/resttemplate/spring-restful-client-resttemplate-example/
-//	@Bean
-//	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-//	 
-//	    return builder
-//	            .setConnectTimeout(Duration.ofMillis(3000))
-//	            .setReadTimeout(Duration.ofMillis(3000))
-//	            .build();
-//	}
-	
-//	@Configuration
-//	public class DefaultViewConfig implements WebMvcConfigurer {
-//	    @Override
-//	    public void addViewControllers(ViewControllerRegistry registry) {
-//	        registry.addViewController("/").setViewName("/productslist.html");
-//	        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//	    }
-//	}
-	
+		
 
 	//Only run during the first time for data insertion
 	@Bean
@@ -147,9 +128,9 @@ public class Team5AdSpringApplication {
 			productRepo.save(product1);
 			productRepo.save(product10);
 			productRepo.save(product11);
-			Attraction attraction1 = new Attraction("Singapore Zoo", 75, "80 Mandai Lake Rd, 729826", 4, "Zoo with animals", "Singapore", "http://localhost:8081/api/attraction/", attractionM1, product1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPRuo0c4vT4LkTUTsMHQKdPad7unhMWYL68A&usqp=CAU",1.4043,103.7930);
-			Attraction attraction2 = new Attraction("Universal Studios Singapore", 75, "8 Sentosa Gateway, 098269", 4, "Universal Studios Singapore is a theme park located within Resorts World Sentosa on Sentosa Island, Singapore", "Singapore", "NA", attractionM1, product10, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0iNHp4S_BJIGknelmLR-x2obdFa9rb7Gh4w&usqp=CAU", 1.2540, 103.8238);
-			Attraction attraction3 = new Attraction("S.E.A. Aquarium", 75, "8 Sentosa Gateway, Sentosa Island, 098269", 4, "Large aquarium & resort featuring 800 species of marine life in a variety of habitats.", "Singapore", "NA", attractionM1, product11, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlJxOrew9nEOurRCadeDMVZUcCMzLbX4svw&usqp=CAU", 1.2582, 103.8204);
+			Attraction attraction1 = new Attraction("Singapore Zoo", 75, "80 Mandai Lake Rd, 729826", 4, "Set in a rainforest environment, Singapore Zoo is renowned for its 'open concept', which offers visitors from around the world the opportunity to be inspired by the wonders of nature and wildlife.", "Singapore", "http://localhost:8081/api/attraction/", attractionM1, product1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPRuo0c4vT4LkTUTsMHQKdPad7unhMWYL68A&usqp=CAU",1.4043,103.7930);
+			Attraction attraction2 = new Attraction("Universal Studios Singapore", 75, "8 Sentosa Gateway, 098269", 4, "Universal Studios Singapore is a theme park located within Resorts World Sentosa on Sentosa Island, Singapore. It features 28 rides, shows, and attractions in seven themed zones.", "Singapore", "NA", attractionM1, product10, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0iNHp4S_BJIGknelmLR-x2obdFa9rb7Gh4w&usqp=CAU", 1.2540, 103.8238);
+			Attraction attraction3 = new Attraction("S.E.A. Aquarium", 75, "8 Sentosa Gateway, Sentosa Island, 098269", 4, "S.E.A Aquarium Singapore on Sentosa Island is one of Singapore's finest family-friendly, all-weather attractions. It's also one of the largest aquariums in the world, home to over 100,000 aquatic animals. ", "Singapore", "NA", attractionM1, product11, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdlJxOrew9nEOurRCadeDMVZUcCMzLbX4svw&usqp=CAU", 1.2582, 103.8204);
 			attractionRepo.save(attraction1);
 			attractionRepo.save(attraction2);
 			attractionRepo.save(attraction3);
@@ -168,9 +149,9 @@ public class Team5AdSpringApplication {
 			productRepo.save(room3);
 			productRepo.save(room4);
 			productRepo.save(room5);
-			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 5, 8, "Singapore","aa", "best", "we try to be home", "http://localhost:8081/api/hotel/", hotelM1 ,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHWHuNv8X8UXn9KrVrVu4P5zZMn9GWEVotg&usqp=CAU");
-			Hotel hotel2 = new Hotel("Swissôtel The Stamford",  "Singapore ",1.293354,103.853561 , 4, 8,"Singapore","aa", "best", "we try to be home","NA", hotelM1,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ61juiK980qp_59nzk8BZSKCD1LBwLMkrgYg&usqp=CAU");
-			Hotel hotel3 = new Hotel("Hotel Miramar", "Singapore",1.288710,103.837372 , 4, 6, "Singapore","aa", "best", "we try to be home","NA", hotelM1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJQasGWLv85VE--hj4JjvcYvlH6AVu1qpi4A&usqp=CAU");
+			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "10 Bayfront Ave, Singapore 018956",1.282302,103.858528, 5, 8, "Singapore","In-Room Dining. Club Lounge. Fitness Club. Spa. SkyPark Observation Deck.", "Marina Bay Sands is a destination for those who appreciate luxury. An integrated resort notable for transforming Singapore's city skyline, it comprises three 55-storey towers of extravagant hotel rooms and luxury suites with personal butler services.", "http://localhost:8081/api/hotel/", hotelM1 ,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHWHuNv8X8UXn9KrVrVu4P5zZMn9GWEVotg&usqp=CAU");
+			Hotel hotel2 = new Hotel("Swissôtel The Stamford",  "2 Stamford Rd, Singapore 178882",1.293354,103.853561 , 4, 8,"Singapore","Fitness Center, Pool, Internet, Spa, Jacuzzi", "At 73 stories, the upscale Swissotel The Stamford is the tallest hotel in Singapore, situated within Raffles City shopping and entertainment hub in the bustling commercial center.","NA", hotelM1,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ61juiK980qp_59nzk8BZSKCD1LBwLMkrgYg&usqp=CAU");
+			Hotel hotel3 = new Hotel("Hotel Miramar", "401 Havelock Rd, Singapore 169631",1.288710,103.837372 , 4, 6, "Singapore","Swimming pool. Free WiFi. Non-smoking rooms. Free parking. Fitness center.", "Hotel Miramar Singapore is a hotel which prides itself on our impeccable hospitality. The well-equipped hotel focuses on modern comfort living, the deliverance of impeccable friendly service and situated at an unequalled prime location.","NA", hotelM1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJQasGWLv85VE--hj4JjvcYvlH6AVu1qpi4A&usqp=CAU");
 			htRepo.save(hotel1);
 			htRepo.save(hotel2);
 			htRepo.save(hotel3);

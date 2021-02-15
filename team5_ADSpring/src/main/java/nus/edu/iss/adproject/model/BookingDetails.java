@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class BookingDetails {
 	
@@ -17,6 +19,7 @@ public class BookingDetails {
 	private long id;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Booking booking; 
 	
 	@ManyToOne
@@ -32,8 +35,6 @@ public class BookingDetails {
 		super();
 	}
 	
-	
-
 	public BookingDetails(Booking booking, Product product, String aPIBookingId, int numOfGuest,
 			double price) {
 		super();
@@ -43,15 +44,6 @@ public class BookingDetails {
 		this.numOfGuest = numOfGuest;
 		this.price = price;
 	}
-
-
-	/*
-	 * public BookingDetails(Booking booking, Product product, String APIBookingId,
-	 * int numOfGuest, double price) { super(); this.booking = booking; this.product
-	 * = product; this.APIBookingId = APIBookingId; this.numOfGuest = numOfGuest;
-	 * this.price = price; }
-	 */
-	
 	
 	public long getId() {
 		return id;

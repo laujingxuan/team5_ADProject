@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +21,11 @@ import java.net.URL;
 import nus.edu.iss.mobileapp.nonEntityModel.Product;
 import nus.edu.iss.mobileapp.nonEntityModel.ProductType;
 
-public class ProductDetailsActivity extends AppCompatActivity {
+public class ProductDetailsActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Product product;
+    private double lat;
+    private double longi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,38 +36,30 @@ public class ProductDetailsActivity extends AppCompatActivity {
         product = (Product) intent.getSerializableExtra("Product");
         TextView name = findViewById(R.id.name);
         TextView description = findViewById(R.id.Description1);
-//        TextView ratingLeft = findViewById(R.id.Rating1);
-//        TextView rating = findViewById(R.id.Rating2);
-//        TextView address = findViewById(R.id.Address2);
-//        TextView amenities1 = findViewById(R.id.Amenities1);
-//        TextView amenities2 = findViewById(R.id.Amenities2);
+        Button map = findViewById(R.id.map);
+        if (map != null)
+            map.setOnClickListener(this);
 
         if (product.getType().equals(ProductType.ATTRACTION)){
+            lat = product.getAttraction().getLat();
+            longi = product.getAttraction().getLongi();
             name.setText(product.getAttraction().getName());
             String text = "";
-            text += "Description:         " + product.getAttraction().getDescription()+ "\n\n";
-            text += "Rating:                " + product.getAttraction().getRating() + "\n\n";
-            text += "Address:             " + product.getAttraction().getLocation() + "\n\n";
+            text += "Description        : " + product.getAttraction().getDescription()+ "\n\n";
+            text += "Rating               : " + product.getAttraction().getRating() + "\n\n";
+            text += "Address            : " + product.getAttraction().getLocation() + "\n\n";
             description.setText(text);
-//            description.setText(product.getAttraction().getDescription());
-//            rating.setText(String.valueOf(product.getAttraction().getRating()));
-//            address.setText(product.getAttraction().getLocation());
             setImage(product.getAttraction().getImageURL());
         }else{
+            lat = product.getRoomType().getHotel().getLat();
+            longi = product.getRoomType().getHotel().getLongi();
             name.setText(product.getRoomType().getHotel().getName() + ": " + product.getRoomType().getRoomType() + " Room");
-
             String text = "";
-            text += "Description:       " + product.getRoomType().getDescription()+ "\n\n";
-            text += "Hotel Rating:      " + product.getRoomType().getHotel().getRating() + "\n\n";
-            text += "Address:             " + product.getRoomType().getHotel().getLocation() + "\n\n";
-            text += "Amenities:           " + product.getRoomType().getHotel().getEmenities() + "\n\n";
+            text += "Description        : " + product.getRoomType().getDescription()+ "\n\n";
+            text += "Hotel Rating       : " + product.getRoomType().getHotel().getRating() + "\n\n";
+            text += "Address              : " + product.getRoomType().getHotel().getLocation() + "\n\n";
+            text += "Hotel Amenities : " + product.getRoomType().getHotel().getEmenities() + "\n\n";
             description.setText(text);
-//            rating.setText(String.valueOf(product.getRoomType().getHotel().getRating()));
-//            ratingLeft.setText("Hotel Rating:");
-//            address.setText(product.getRoomType().getHotel().getLocation());
-//            amenities2.setVisibility(View.VISIBLE);
-//            amenities1.setVisibility(View.VISIBLE);
-//            amenities2.setText(product.getRoomType().getHotel().getEmenities());
             setImage(product.getRoomType().getImageURL());
         }
     }
@@ -95,5 +91,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
         thread.start();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Uri uri = Uri.parse("geo:" + lat + "," + longi);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (intent.resolveActivity(getPackageManager()) != null){
+            startActivity(intent);
+        }
     }
 }
