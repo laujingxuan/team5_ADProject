@@ -253,6 +253,43 @@ public class Team5AdSpringApplication {
 //			
 
 
+			BookingDetails bookDetail5 = new BookingDetails(booking2, attraction2.getProduct(), "1", 4, 300);
+			BookingDetails bookDetail6 = new BookingDetails(booking2, attraction3.getProduct(), "2", 3, 250);
+			BookingDetails bookDetail7 = new BookingDetails(booking3, DoubleRoom1.getProduct(), "3", 5, 400);
+			BookingDetails bookDetail8 = new BookingDetails(booking4, singleRoom2.getProduct(), "1", 5, 100);
+			bookDetRepo.save(bookDetail5);
+			bookDetRepo.save(bookDetail6);
+			bookDetRepo.save(bookDetail7);
+			bookDetRepo.save(bookDetail8);
+  
+  
+//			ProductReview review1 = new ProductReview(customer1, room1, 4.6, "I think it is comfortable", "pic1");
+//			prrepo.save(review1);
+//			ProductReview review2 = new ProductReview(customer2, room1, 4.8, "I perfectly like what I ordered", "pic1");
+//			prrepo.save(review2);
+//			ProductReview review3 = new ProductReview(customer1, product1, 4.7, "Really enjoy the time in the zoo", "pic1");
+//			prrepo.save(review3);
+//			ProductReview review4 = new ProductReview(customer1, room2, 4.8, "Want to back for several times", "pic1");
+//			prrepo.save(review4);
+//			ProductReview review5 = new ProductReview(customer2, room2, 4.2, "Just so so", "pic1");
+//			prrepo.save(review5);
+//			ProductReview review6 = new ProductReview(customer1, room3, 4.8, "Have a good time in the room", "pic1");
+//			prrepo.save(review6);
+//			ProductReview review7 = new ProductReview(customer2, product1, 4.9, "We had fun!", "pic1");
+//			prrepo.save(review7);
+//			ProductReview review8 = new ProductReview(customer2, room3, 4.1, "Don't want to reorder anymore", "pic1");
+//			prrepo.save(review8);
+//			ProductReview review9 = new ProductReview(customer1, room4, 4.8, "Just order without hesitate, it worth!", "pic1");
+//			prrepo.save(review9);
+//			ProductReview review10 = new ProductReview(customer2, room4, 4.7, "Will live here again the next time to Singapore", "pic1");
+//			prrepo.save(review10);
+//			ProductReview review11 = new ProductReview(customer1, room5, 4.2, "Better to find another hotel...", "pic1");
+//			prrepo.save(review11);
+//			ProductReview review12 = new ProductReview(customer2, room5, 4.3, "It is ok, but not best", "pic1");
+//			prrepo.save(review12);
+//			
+
+
 		};
 	}
 }

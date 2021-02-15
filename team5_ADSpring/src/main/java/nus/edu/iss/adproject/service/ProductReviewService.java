@@ -12,4 +12,6 @@ public interface ProductReviewService {
 	public List<ProductReview> findReviewByProductId(Long id);
 	public void deleteProductReview(ProductReview productReview);
 	
+	public ProductReview findReviewById(Long id);
+	
 }
