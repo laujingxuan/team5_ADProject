@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Attraction {
 	@Id
@@ -42,12 +44,15 @@ public class Attraction {
 	private String imageURL;
 	
 	@ManyToOne
+	@JsonIgnore
 	private User user;
 	
 	@OneToOne (cascade = CascadeType.REMOVE)
+	@JsonIgnore
 	private Product product;
 
 	@OneToMany(mappedBy = "attraction")
+	@JsonIgnore
 	private List<Discount> discount;
 	
 	public Attraction() { }	

@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Hotel {
@@ -22,10 +24,13 @@ public class Hotel {
     public long id;	
 	
 	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
+	@JsonIgnore
 	private List< RoomType> roomType;
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
+    @JsonIgnore
     private List<Discount> discount;
     @ManyToOne
+    @JsonIgnore
     private User user;
 	
     @NotEmpty
