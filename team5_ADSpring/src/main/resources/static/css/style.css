@@ -39,6 +39,8 @@ body {
 	font-family: "Muli", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
+	background-color: #e6e6e6;
+  	/* opacity: 0.3; */
 }
 
 h1,
@@ -416,6 +418,7 @@ ol {
 
 .inner-header {
 	padding: 30px 0;
+	margin-top: -20px;
 }
 
 .inner-header .logo {
@@ -466,7 +469,7 @@ ol {
 }
 
 .inner-header .advanced-search .input-group {
-	max-width: 70%;
+	max-width: 75%;
 	height: 100%;
 }
 
@@ -483,12 +486,13 @@ ol {
 	font-size: 16px;
 	color: #ffffff;
 	position: absolute;
-	right: -3px;
+	right: -1px;
 	top: -1px;
 	border: 1px solid #e7ab3c;
 	background: #e7ab3c;
 	padding: 12px 16px 12px;
 	cursor: pointer;
+	margin-right: -50px;
 }
 
 .inner-header .nav-right {
@@ -1510,6 +1514,11 @@ ol {
 	margin-bottom: 10px;
 }
 
+.footer-right{
+	float:right;
+	margin-bottom: 10px;
+}
+
 .footer-left ul li a {
 	color: #b2b2b2;
 }
@@ -1535,6 +1544,11 @@ ol {
 
 .footer-left .footer-social a:hover:before {
 	opacity: 1;
+}
+
+.whole-body{
+	background-color: lightblue;
+	color:red;
 }
 
 .copyright-reserved {
@@ -4204,4 +4218,5 @@ ol {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
+	
 }

@@ -16,11 +16,11 @@
 		</div>
 		<div th:each="cart:${carts}" class="py-3 row">
 			<form>
-				<div class="card" style="width: 80rem;">
+				<div class="card" style="width: 72rem">
 				  	<div th:if="${cart.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
 					  <h5 class="card-header" th:text = "${cart.key.product.roomType.hotel.name} + ': ' + ${cart.key.product.roomType.roomType} + ' Room'">Hotel</h5>
 					  <div class="card-body">
-						<table class="table">
+						<table class="table" style="margin: 0 auto; padding: 1px">
 							<tr>
 								<td style="width:25%">From: </td>
 								<td style="width:15%" th:text="${cart.key.startDate}">startD</td>
@@ -52,6 +52,7 @@
 								<td></td>
 							</tr>
 						</table>
+						<a class="btn btn-primary" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
 					 </div>
 					</div>
 					<div th:if="${cart.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
@@ -77,6 +78,7 @@
 								<td><input type="hidden" value ="0" class = "numGuest"></td>
 							</tr>					
 						</table>
+						<a class="btn btn-primary" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
 					 </div>
 					</div>
 				</div>

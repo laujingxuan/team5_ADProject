@@ -93,7 +93,8 @@ public class Team5AdSpringApplication {
 	@Bean
 	CommandLineRunner runner() {
 		return args -> { 
-//			
+	
+		
 //			//Creating travel package
 //			TravelPackage tp1 = new TravelPackage(2,3,5);
 //			tpRepo.save(tp1);
@@ -167,7 +168,7 @@ public class Team5AdSpringApplication {
 //			productRepo.save(room3);
 //			productRepo.save(room4);
 //			productRepo.save(room5);
-//			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://localhost:8081/api/hotel/", hotelM1 ,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHWHuNv8X8UXn9KrVrVu4P5zZMn9GWEVotg&usqp=CAU");
+//			Hotel hotel1 = new Hotel("Marina Bay Sands Hotel", "Singapore",1.282302,103.858528, 400.0, 8, "SG","aa", "best", "we try to be home", "http://127.0.01:8081/api/hotel/", hotelM1 ,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlHWHuNv8X8UXn9KrVrVu4P5zZMn9GWEVotg&usqp=CAU");
 //			Hotel hotel2 = new Hotel("Swissôtel The Stamford",  "Singapore ",1.293354,103.853561 , 260.0, 8,"Sg","aa", "best", "we try to be home","NA", hotelM1,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ61juiK980qp_59nzk8BZSKCD1LBwLMkrgYg&usqp=CAU");
 //			Hotel hotel3 = new Hotel("Hotel Miramar", "Singapore",1.288710,103.837372 , 260.0, 8, "SG","aa", "best", "we try to be home","NA", hotelM1, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJQasGWLv85VE--hj4JjvcYvlH6AVu1qpi4A&usqp=CAU");
 //			htRepo.save(hotel1);
@@ -209,7 +210,7 @@ public class Team5AdSpringApplication {
 //			BookingDetails bookDetail1 = new BookingDetails(booking1, singleRoom.getProduct(), "1", 4, 300);
 //			BookingDetails bookDetail2 = new BookingDetails(booking1, singleRoom.getProduct(), "2", 3, 250);
 //			BookingDetails bookDetail3 = new BookingDetails(booking1, doubleRoom.getProduct(), "3", 5, 400);
-//			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "1", 5, 100);
+//			BookingDetails bookDetail4 = new BookingDetails(booking1, attraction1.getProduct(), "2", 2, 100);
 //			bookDetRepo.save(bookDetail1);
 //			bookDetRepo.save(bookDetail2);
 //			bookDetRepo.save(bookDetail3);
@@ -250,6 +251,7 @@ public class Team5AdSpringApplication {
 //			ProductReview review12 = new ProductReview(customer2, room5, 4.3, "It is ok, but not best", "pic1");
 //			prrepo.save(review12);
 //			
+
 
 		};
 	}

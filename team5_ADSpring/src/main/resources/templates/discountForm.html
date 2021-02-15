@@ -12,14 +12,9 @@
 	<form action="#" th:object="${discount}" th:action="@{/discount/save}" method="get" id="form">
 	<div id="datepicker-container">
 		<table  class="table table-borderless">
-			<tr>
-				<td>
-					<input type="hidden" th:field="*{id}">
-				</td>				
-			</tr>
 			<tr>			
 				<td><label th:text="${name}"></label></td>
-				<td th:if="${not #lists.isEmpty(hotel)}" >
+				<td colspan="2" th:if="${not #lists.isEmpty(hotel)}" >
 					<!-- <span th:if="${#lists.size(hotel) == 1} ">
 						<span th:each="hotel : ${hotel}">
 							<span th:text="${hotel.name}" th:field="${hotel}"> Name </span>
@@ -31,7 +26,7 @@
                     	</select>
 					<!-- </span>	 -->				
 			    </td>
-			    <td th:if="${not #lists.isEmpty(attraction)}">
+			    <td colspan="2" th:if="${not #lists.isEmpty(attraction)}">
 			    	<!-- <div th:if="${#lists.size(attraction) == 1} ">
 						<span th:each="attraction : ${attraction}">
 							<span th:text="${attraction.name}"> Name </span>
@@ -44,24 +39,25 @@
                     <!-- </div> -->
                     
 			    </td>
+			    
 			</tr>
 			<tr>
 			
 				<td>Date</td>
 				<td>
 					<input class="form-control datepicker" type="date"  th:field="*{from_date}" name="from_date" id="from_date">
-					<p th:if="${#fields.hasErrors('from_date')}" th:errors="*{from_date}"></p>
+					<p th:if="${#fields.hasErrors('from_date')}" th:errors="*{from_date}" style="color:red"></p>
 				</td>
 				<td>
 					<input class="form-control datepicker" type="date" name="to_date" id="to_date" th:field="*{to_date}">
-					<p th:if="${#fields.hasErrors('to_date')}" th:errors="*{to_date}"></p>
+					<p th:if="${#fields.hasErrors('to_date')}" th:errors="*{to_date}" style="color:red"></p>
 				</td>
 			
 			</tr>
 			<tr>
 				<td>Discount</td>
-				<td ><input class="form-control" th:field="*{discount_rate}" type="text">
-				<p th:if="${#fields.hasErrors('discount_rate')}" th:errors="*{discount_rate}"></p>
+				<td  colspan="2"><input class="form-control" th:field="*{discount_rate}" type="text">
+				<p th:if="${#fields.hasErrors('discount_rate')}" th:errors="*{discount_rate}" style="color:red"></p>
 				</td>
 			</tr>
 			<tr>

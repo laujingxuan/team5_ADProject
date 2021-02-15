@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -128,8 +127,13 @@ public class DiscountController {
 		return "forward:/discount/list";
 	}
 	
-	@GetMapping("/discounts")
+	@GetMapping("/create")
 	public String viewDiscounts(Model model, HttpSession session) {		
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		User user = (User) session.getAttribute("user");
 		if (session_svc.isNotLoggedIn(session))
 			return "redirect:/user/login";
@@ -149,10 +153,16 @@ public class DiscountController {
 		else {
 			return "null";
 		}
+		
 	}
 	
 	@GetMapping("/edit/{id}")
-	public String showEditForm(Model model, @PathVariable("id") Long id) {
+	public String showEditForm(Model model, @PathVariable("id") Long id, HttpSession session) {
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		Discount discount = discount_svc.findById(id);
 		if(discount.getHotel()!=null) {
 			model.addAttribute("name", "Hotel");
@@ -167,6 +177,11 @@ public class DiscountController {
 	
 	@GetMapping("/list")
 	public String listDiscountForm(Model model,HttpSession session) {	
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		User user = (User) session.getAttribute("user");
 		if (session_svc.isNotLoggedIn(session))
 			return "redirect:/user/login";
@@ -186,9 +201,13 @@ public class DiscountController {
 	}
 	
 	@RequestMapping(value = "/delete/{id}")
-	public String deleteSupplier(@PathVariable("id") Long id, HttpSession session) {		
-		
+	public String deleteSupplier(@PathVariable("id") Long id, HttpSession session, Model model) {		
+		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
+		if (session_svc.hasHotelPermission(session) == false && session_svc.hasAttractionPermission(session) == false) {
+			model.addAttribute("error", "No Permission");
+			return "error";
+		}
 		discount_svc.delete(discount_svc.findById(id));
-		return "forward:/discount/list";
+		return "redirect:/discount/list";
 	}
 }

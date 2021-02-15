@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity 
 public class RoomType {
@@ -23,6 +25,7 @@ public class RoomType {
 	private Hotel hotel;
 
 	//roomType is "SINGLE", "DOUBLE", "FAMILY" or etc
+	@NotEmpty
 	private String roomType;
 	private String description;
 	private String imageURL;

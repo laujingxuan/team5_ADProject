@@ -96,15 +96,15 @@
         <td><a href="#" th:href="@{/attraction/available-date/}+*{product.id}">Attraction Available Date</a></td>
       </tr>
       <tr>
-      	<td colspan="2">
-      		<a class="btn btn-primary" href="reviewList.html" 
+      	<td colspan="2" class="comment">
+      		<a class="btn btn-outline-info" href="reviewList.html" 
       		   th:href="@{/review/list/}+${attraction.product.id}" role="button">View Comments
       		</a>
       	</td>
       </tr>
 	  <tr>
-	   	<td colspan="2">
-	   		<a class="btn btn-primary" href="reviewForm.html" 
+	   	<td colspan="2"  class="comment">
+	   		<a class="btn btn-outline-info" href="reviewForm.html" 
 	   			th:href="@{/review/post/}+${attraction.product.id}" role="button">Post Comment
 	   		</a>
 	   	</td>
@@ -113,6 +113,12 @@
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>    
 </body>
+<style>
+.comment{
+			text-align: center;
+			vertical-align: middle;
+		}
+</style>
 </html>
 
 

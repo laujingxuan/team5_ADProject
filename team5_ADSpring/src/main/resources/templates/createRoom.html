@@ -10,32 +10,27 @@
 			<tr>
 				<td>Hotel:</td>
 				<td>
-					<select name="id" id="id" th:field="*{Hotel}">
+					<select name="id" id="id" th:field="*{Hotel}" class="form-control">
                     	<option th:each="hotel : ${Hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
                     </select>
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<input type="hidden" th:field="*{id}">
-				</td>				
-			</tr>
-			<tr>
 				<td>Type</td>
-				<td><input type="text" th:field="*{roomType}">
-				<p th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}"></p></td>
+				<td><input type="text" th:field="*{roomType}" class="form-control">
+				<p th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}" style="color:red"></p></td>
 			</tr>
 			<tr>
 				<td>Description:</td>
-				<td><input type="text" th:field="*{description}">
+				<td><input type="text" th:field="*{description}" class="form-control">
 				<!-- <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p></td> -->
 			</tr>
 			<tr>
 				<td>ImageURL:</td>
-				<td><input type="text" th:field="*{imageURL}"></td>
+				<td><input type="text" th:field="*{imageURL}" class="form-control"></td>
 			</tr>
 			<tr>
-				<td  ><button type="submit">Save</button></td>
+				<td  ><button class="btn btn-primary btn-md" type="submit">Save</button></td>
 			</tr>
 			
 		</table>

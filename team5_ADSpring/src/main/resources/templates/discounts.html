@@ -15,7 +15,7 @@
 	
 	   <!-- Add Hyperlink -->
     <!-- <div th:if="${hasPermission}"><a href="productform.html" th:href="@{/product/add}">New Product</a></div> -->
-	<table  class="table table-sm">
+	<table  class="table table-sm" style="background-color:white">
 		<tr>
 			<!-- <th hidden>ID</th> -->
 			<th>Name</th>
@@ -37,6 +37,7 @@
 		</tr>
 	</table>
 	</form>
+	<a href="hotel-form.html" th:href="@{/discount/create}" >create new</a>
 <div th:replace="layout/layout.html :: footer"></div>
 <div th:replace="layout/layout.html :: javascript"></div>
 </body>

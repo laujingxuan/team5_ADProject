@@ -101,7 +101,7 @@ public class SimulatedApiApplication {
 			HotelBooking booking3 = new HotelBooking("DOUBLE", 2, 4, "4 breakfast", 400, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 4, 15), LocalDate.of(2021, 4, 20));
 			hotelRepo.save(booking3);
 			
-			AttractionBooking attraction1 = new AttractionBooking("Zoo",5,LocalDate.of(2021, 1, 15));
+			AttractionBooking attraction1 = new AttractionBooking("Zoo",2,LocalDate.of(2021, 1, 15));
 			attractionRepo.save(attraction1);
 			
 			DailyAttractionDetail attractDetail1 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 15), 50);

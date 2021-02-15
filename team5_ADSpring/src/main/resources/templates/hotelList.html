@@ -28,10 +28,9 @@ nav {
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 
-	<h3>Hotel List</h3>
-	<table border="1" cellpadding="2" cellspacing="2">
+	<h3>Hotel List</h3><br/>
+	<table class="table table-bordered" style="margin: 0 auto; padding: 1px; background-color: white">
 		<tr>
-
 			<th>ID</th>
 			<th>Name</th>
 			<th>Latitude</th>
@@ -71,7 +70,7 @@ nav {
 		</div>
 		<div th:each="detail:${hotelMap}" class="py-3 row">
 			<div class="card">
-			  <h5 class="card-header" th:text = "${detail.key.name}">Hotel</h5>
+			  <h5 class="card-header" th:text = "${detail.key.name}" style="font-weight: 900;text-shadow: 1px 1px 2px #669999;">Hotel</h5>
 			  <div class="card-body">
 				<table class="table">
 					<tr>
