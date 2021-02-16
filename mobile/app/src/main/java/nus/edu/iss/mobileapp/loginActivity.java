@@ -53,6 +53,9 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(!response.isSuccessful()){
+                    System.out.println("message: " + response.message());
+                    System.out.println("message: " + response.errorBody());
+                    System.out.println("message: " + response.headers());
                     Toast.makeText(getApplicationContext(),"Wrong username and password",Toast.LENGTH_SHORT).show();
                     return;
                 }

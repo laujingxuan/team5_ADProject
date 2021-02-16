@@ -4,7 +4,7 @@
 <title>Cart</title>
 </head>
 <head th:insert="layout/layout.html :: veryTop"></head>
-<meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
+<!-- <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/> -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type = "text/javascript" th:src="@{/js/cart.js}"></script>
@@ -16,7 +16,7 @@
 		</div>
 		<div th:each="cart:${carts}" class="py-3 row">
 			<form>
-				<div class="card" style="width: 72rem">
+				<div class="card" style="width: 64rem">
 				  	<div th:if="${cart.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
 					  <h5 class="card-header" th:text = "${cart.key.product.roomType.hotel.name} + ': ' + ${cart.key.product.roomType.roomType} + ' Room'">Hotel</h5>
 					  <div class="card-body">
