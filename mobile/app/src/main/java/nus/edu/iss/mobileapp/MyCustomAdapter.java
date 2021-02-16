@@ -82,7 +82,7 @@ public class MyCustomAdapter extends ArrayAdapter {
                         if (products.get(pos).getType().equals(ProductType.ATTRACTION)) {
                             textView.setText(products.get(pos).getAttraction().getName());
                         }else{
-                            textView.setText(products.get(pos).getRoomType().getHotel().getName() + ": " + products.get(pos).getRoomType().getRoomType() + " Room");
+                            textView.setText(products.get(pos).getRoomType().getHotel().getName() + "\n" + products.get(pos).getRoomType().getRoomType() + " Room");
                         }
                         imageView.setImageBitmap(finalBmp);
                     }

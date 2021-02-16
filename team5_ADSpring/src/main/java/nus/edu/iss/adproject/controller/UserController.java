@@ -54,17 +54,6 @@ public class UserController {
 		binder.addValidators(userFormValidator);
 	}
 	
-//	@GetMapping("/add")
-//	public String addUser(Model model, HttpSession session) {
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		if (session_svc.hasNoPermission(session)) return "nopermission";
-//		
-//		model.addAttribute("roleType", RoleType.values());
-//		model.addAttribute("path", "/user/validate");
-//		model.addAttribute("userForm", new UserForm());
-//		return "editUser";
-//	}
-	
 	//everyone can login
 	@RequestMapping(path = "/login")
 	public String login(Model model) {
@@ -119,25 +108,8 @@ public class UserController {
 			bindingResult.addError(new FieldError("userForm","email","email is already in use"));
 		}
 		if (bindingResult.hasErrors()) {
-			for (Object object : bindingResult.getAllErrors()) {
-			    if(object instanceof FieldError) {
-			        FieldError fieldError = (FieldError) object;
-
-			        System.out.println(fieldError.getCode());
-			    }
-
-			    if(object instanceof ObjectError) {
-			        ObjectError objectError = (ObjectError) object;
-
-			        System.out.println(objectError.getCode());
-			    }
-			}
-			List<FieldError> errors = bindingResult.getFieldErrors();
-		    for (FieldError error : errors ) {
-		        System.out.println (error.getObjectName() + " - " + error.getDefaultMessage());
-		    }
 		    if(userForm.getRole()==RoleType.CUSTOMER) {
-			return "signUpForm";
+		    	return "signUpForm";
 			}else {
 				return "merchant-signup-form";
 			}

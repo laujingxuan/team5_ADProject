@@ -10,4 +10,7 @@ import retrofit2.http.Query;
 public interface JsonProductAPIController {
     @GET("search")
     Call<List<Product>> getSearchResults(@Query("keyword") String keyword);
+
+    @GET("hotselling")
+    Call<List<Product>> getHotSellingItems();
 }

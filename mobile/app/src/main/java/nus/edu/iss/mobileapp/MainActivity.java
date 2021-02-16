@@ -43,14 +43,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button buttonParse = findViewById(R.id.button);
-        //Need to type ipconfig in command prompt to check your ip address
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
-
-//        JsonHotelAPIController jsonHotelAPIController = retrofit.create(JsonHotelAPIController.class);
-        jsonProductAPIController = retrofit.create(JsonProductAPIController.class);
         buttonParse.setOnClickListener(this);
         pref = getSharedPreferences("user_credentials", MODE_PRIVATE);
         checkLogin();
+
+        //Need to type ipconfig in command prompt to check your ip address
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
+        jsonProductAPIController = retrofit.create(JsonProductAPIController.class);
+        adapter = new MyCustomAdapter(this, 0);
+        Call<List<Product>> call = jsonProductAPIController.getHotSellingItems();
+        queueCall(call);
     }
 
     @Override
@@ -58,17 +60,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new MyCustomAdapter(this, 0);
         EditText search = findViewById(R.id.search_bar);
         Call<List<Product>> call = jsonProductAPIController.getSearchResults(search.getText().toString());
-        //checking path called
-//                System.out.println(jsonHotelAPIController.getHotels().request().url().toString());
+        queueCall(call);
+    }
+
+    public void queueCall(Call<List<Product>> call){
         //.enqueue helps to run at background thread as else will have exception and causing freeze of app
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-
-//                if(!response.isSuccessful()){
-//                    mTextView.setText("Code: " + response.code());
-//                    return;
-//                }
                 //get the result of the API call
                 List<Product> products = response.body();
                 adapter.setData(products);
@@ -150,8 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem item = menu.findItem(R.id.login);
-        String username = pref.getString("username", null);
-        if (username != null){
+        if (isLogin == true){
             item.setTitle("Logout");
         }else{
             item.setTitle("Login");
