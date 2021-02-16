@@ -77,7 +77,7 @@ public class Hotel {
 	}
 	
 	public Hotel(String name, String location, double lat, double longi, double rating,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
+			int numberOfRestaurants, String country_City, String emenities, String description,
 			String aPI_URL, User user, String imageURL) {
 		super();
 		this.roomType = new ArrayList<RoomType>();
@@ -209,8 +209,3 @@ public class Hotel {
 	
 
 }
-//@OneToMany(mappedBy = "hotel")
-	//private List< RoomType> roomType;
-//	Marina Bay Sands Hotel, Singapore (1.282302, 103.858528)
-//	Swissôtel The Stamford, Singapore (1.293354, 103.853561)
-//	Hotel Miramar, Singapore (1.288710, 103.837372

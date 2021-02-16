@@ -1,6 +1,8 @@
 package nus.edu.iss.mobileapp.nonEntityModel;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private Long id;
 
     private ProductType type;

@@ -1,18 +1,15 @@
 package nus.edu.iss.adproject.service;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import nus.edu.iss.adproject.model.User;
-import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.repository.UserRepository;
 
 
@@ -23,6 +20,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepo;
 	
+	@Override
 	public void save(User user) {
 		userRepo.save(user);
 	}
@@ -46,12 +44,6 @@ public class UserServiceImpl implements UserService {
 			return true;
 		}
 	}
-
-//	@Override
-//	public ArrayList<User> findByRoleType(RoleType roleType) {
-//		ArrayList<User> userList = userRepo.findByRole(roleType);
-//		return userList;
-//	}
 
 	@Override
 	public User findByUsername(String userName) {
@@ -79,6 +71,7 @@ public class UserServiceImpl implements UserService {
 		return;
 	}
 	
+	@Override
 	public void updateResetPasswordToken(String token,String email) throws CustomerNotFoundException {
 		User user = userRepo.findByEmail(email);
 		if(user!=null) {
@@ -89,10 +82,12 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	@Override
 	public User get(String resetPasswordToken) {
 		return userRepo.findByResetPasswordToken(resetPasswordToken);
 	}
 	
+	@Override
 	public void updatePassword(User user,String newPassword) {
 //		BCryptPasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 //		String encodePassword = passwordEncoder.encode(newPassword);
@@ -106,7 +101,8 @@ public class UserServiceImpl implements UserService {
 		return findUserByEmail(email).isPresent();
 	}
 
-	private Optional<User> findUserByEmail(String email) {
+	@Override
+	public Optional<User> findUserByEmail(String email) {
 		return userRepo.findUserByEmail(email);
 	}
 
@@ -115,7 +111,8 @@ public class UserServiceImpl implements UserService {
 		return findUserByName(userName).isPresent();
 	}
 
-	private Optional<User> findUserByName(String userName) {
+	@Override
+	public Optional<User> findUserByName(String userName) {
 		return userRepo.findUserByUserName(userName);
 	}
 	

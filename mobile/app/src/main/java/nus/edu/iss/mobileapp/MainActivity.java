@@ -5,13 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
+
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +44,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView mTextView;
     private JsonProductAPIController jsonProductAPIController;
     MyCustomAdapter adapter;
     Button login;
@@ -48,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mTextView = findViewById(R.id.textView);
         Button buttonParse = findViewById(R.id.button);
         login = findViewById(R.id.login);
         findViewById(R.id.login).setOnClickListener(this);
@@ -90,35 +95,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
 
-                if(!response.isSuccessful()){
-                    mTextView.setText("Code: " + response.code());
-                    return;
-                }
+//                if(!response.isSuccessful()){
+//                    mTextView.setText("Code: " + response.code());
+//                    return;
+//                }
                 //get the result of the API call
                 List<Product> products = response.body();
-
-                for (Product product: products){
-                    String content = "";
-                    content += product.toString() + "\n\n";
-                    System.out.println(product);
-                    mTextView.append(content);
-                }
                 adapter.setData(products);
                 ListView listView = findViewById(R.id.listView);
                 if (listView != null) {
                     listView.setAdapter(adapter);
                     listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Context context = getApplicationContext();
+//                            Toast toast = Toast.makeText(context, products.get(position).toString(), Toast.LENGTH_SHORT);
+//                            toast.show();
+                            Intent intent = new Intent(context, ProductDetailsActivity.class);
+                            intent.putExtra("Product", products.get(position));
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-                mTextView.setText(t.getMessage());
+//                mTextView.setText(t.getMessage());
             }
         });
     }
 
     @Override
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.login:
+                //intent to login page
+                break;
+
+            case R.id.bookingHistory:
+                //check if user is login in, if not then redirect to login page
+                Intent intent = new Intent(this, BookingHistoryActivity.class);
+                //hard coded username now, else should be retrieved from session
+                intent.putExtra("username", "customer1");
+                startActivity(intent);
+                break;
+        }
+        return true;
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         if(resultCode!= RESULT_OK){
@@ -134,32 +168,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    // Trying for volley
-//    private void jsonParse(){
-//        EditText search = findViewById(R.id.search_bar);
-//        String url = "http://localhost:8080/api/hotel/hotels";
-//
-//        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try {
-//                    JSONArray jsonArray = response.getJSONArray("employees");
-//
-//                    for (int i = 0; i < jsonArray.length(); i++){
-//                        JSONObject employee = jsonArray.getJSONObject(i);
-//
-//
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                error.printStackTrace();
-//            }
-//        });
-//    }
+
 }

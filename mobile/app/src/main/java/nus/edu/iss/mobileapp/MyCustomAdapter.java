@@ -53,7 +53,6 @@ public class MyCustomAdapter extends ArrayAdapter {
 
         // set the image for ImageView
         ImageView imageView = view.findViewById(R.id.imageView);
-        System.out.println(pos);
         // set the text for TextView
         TextView textView = view.findViewById(R.id.textView);
         Thread thread = new Thread(new Runnable() {
@@ -76,7 +75,6 @@ public class MyCustomAdapter extends ArrayAdapter {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.println(url);
                 Bitmap finalBmp = bmp;
                 activity.runOnUiThread(new Runnable() {
                     @Override
@@ -87,7 +85,6 @@ public class MyCustomAdapter extends ArrayAdapter {
                             textView.setText(products.get(pos).getRoomType().getHotel().getName() + ": " + products.get(pos).getRoomType().getRoomType() + " Room");
                         }
                         imageView.setImageBitmap(finalBmp);
-                        System.out.println("finalBMP");
                     }
                 });
             }
