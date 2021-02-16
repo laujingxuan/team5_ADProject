@@ -31,7 +31,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         findViewById(R.id.login1).setOnClickListener(this);
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.126:8080/api/user/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/user/").addConverterFactory(GsonConverterFactory.create()).build();
         jsonuserAPIController = retrofit.create(JsonUserApiController.class);
 
 

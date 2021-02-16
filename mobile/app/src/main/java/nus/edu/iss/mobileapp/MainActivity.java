@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = findViewById(R.id.login);
         findViewById(R.id.login).setOnClickListener(this);
         //Need to type ipconfig in command prompt to check your ip address
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.126:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
 
 //        JsonHotelAPIController jsonHotelAPIController = retrofit.create(JsonHotelAPIController.class);
         jsonProductAPIController = retrofit.create(JsonProductAPIController.class);
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 edit.remove("password");
                 edit.commit();
             }
-
         }
 
         adapter = new MyCustomAdapter(this, 0);

@@ -98,21 +98,4 @@ public class HotelController {
 		return isCancel;
 	}
 	
-//	@GetMapping("/")
-//	public ResponseEntity<Boolean> testing(){
-//		predictBookingCancellationRate();
-//		return new ResponseEntity<Boolean>
-//		(true,HttpStatus.OK);
-//	}
-	
-//	public int predictBookingCancellationRate() {
-//		//connect to machine learning api
-//		final String uri = "http://127.0.0.1:5000/model";
-//		RestTemplate restTemplate = new RestTemplate();
-//		MLearningVar mLearning = new MLearningVar(12,9,20,102.81,0);
-//		String isCancelled = restTemplate.postForObject( uri, mLearning, String.class);
-//		System.out.println(isCancelled);
-//
-//		return Integer.parseInt(isCancelled);
-//	}
 }
