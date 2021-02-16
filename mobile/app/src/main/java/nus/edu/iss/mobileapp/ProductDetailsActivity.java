@@ -7,8 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,7 +16,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import nus.edu.iss.mobileapp.nonEntityModel.Product;
+import nus.edu.iss.mobileapp.model.Product;
 import nus.edu.iss.mobileapp.nonEntityModel.ProductType;
 
 public class ProductDetailsActivity extends AppCompatActivity implements View.OnClickListener {

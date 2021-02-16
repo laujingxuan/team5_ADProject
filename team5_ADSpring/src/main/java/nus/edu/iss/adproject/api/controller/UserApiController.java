@@ -41,6 +41,7 @@ public class UserApiController {
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<User> authenticate(@RequestBody User user){
+		System.out.println("checking");
 		if(session_svc.authenticate(user)) 
 		{
 			User u = user_svc.findByUsername(user.getUserName());
@@ -50,12 +51,4 @@ public class UserApiController {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		
 	}
-	
-	@GetMapping("/logout")
-	public ResponseEntity<User> logout(HttpSession session){
-		session.invalidate();
-		return new ResponseEntity<User>(HttpStatus.OK);
-	}
-	
-
 }

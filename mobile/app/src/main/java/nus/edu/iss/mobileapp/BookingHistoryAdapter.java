@@ -2,26 +2,18 @@ package nus.edu.iss.mobileapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
-import nus.edu.iss.mobileapp.nonEntityModel.Booking;
-import nus.edu.iss.mobileapp.nonEntityModel.BookingDetails;
-import nus.edu.iss.mobileapp.nonEntityModel.Product;
-import nus.edu.iss.mobileapp.nonEntityModel.ProductType;
+import nus.edu.iss.mobileapp.model.Booking;
+import nus.edu.iss.mobileapp.model.BookingDetails;
 
 public class BookingHistoryAdapter extends ArrayAdapter {
     private final Context context;

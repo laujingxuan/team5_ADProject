@@ -59,10 +59,10 @@ public class SimulatedApiApplication {
 			roomRepo.save(roomTypeDetail3);
 
 			
-			AttractionBooking attractionbooking1 = new AttractionBooking("birdPark",20,LocalDate.of(2021, 2, 23));
+			AttractionBooking attractionbooking1 = new AttractionBooking("Zoo",20,LocalDate.of(2021, 2, 23));
 			attractionRepo.save(attractionbooking1);
 			
-			DailyAttractionDetail dap1 = new DailyAttractionDetail("birdPark",LocalDate.of(2021, 1, 23) , 10);
+			DailyAttractionDetail dap1 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 23) , 10);
 			dapRepo.save(dap1);
 			
 			DailyAttractionDetail dap2 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 21) , 10);

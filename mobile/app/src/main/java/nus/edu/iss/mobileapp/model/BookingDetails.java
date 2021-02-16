@@ -1,6 +1,8 @@
-package nus.edu.iss.mobileapp.nonEntityModel;
+package nus.edu.iss.mobileapp.model;
 
-public class BookingDetails {
+import java.io.Serializable;
+
+public class BookingDetails implements Serializable {
     private long id;
 
     private Product product;

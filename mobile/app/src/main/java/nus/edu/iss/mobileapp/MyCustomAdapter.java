@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import nus.edu.iss.mobileapp.nonEntityModel.Product;
+import nus.edu.iss.mobileapp.model.Product;
 import nus.edu.iss.mobileapp.nonEntityModel.ProductType;
 
 public class MyCustomAdapter extends ArrayAdapter {

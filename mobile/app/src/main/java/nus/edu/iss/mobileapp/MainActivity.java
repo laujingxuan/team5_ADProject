@@ -17,25 +17,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
-import nus.edu.iss.mobileapp.nonEntityModel.Hotel;
-import nus.edu.iss.mobileapp.nonEntityModel.JsonHotelAPIController;
 import nus.edu.iss.mobileapp.nonEntityModel.JsonProductAPIController;
-import nus.edu.iss.mobileapp.nonEntityModel.Product;
+import nus.edu.iss.mobileapp.nonEntityModel.JsonUserApiController;
+import nus.edu.iss.mobileapp.model.Product;
+import nus.edu.iss.mobileapp.model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,45 +33,28 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private JsonProductAPIController jsonProductAPIController;
-    MyCustomAdapter adapter;
-    Button login;
+    private MyCustomAdapter adapter;
     private int USER_LOGIN_RESPONSE = 1;
-    String username = "";
+    private SharedPreferences pref;
+    private boolean isLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button buttonParse = findViewById(R.id.button);
-        login = findViewById(R.id.login);
-        findViewById(R.id.login).setOnClickListener(this);
         //Need to type ipconfig in command prompt to check your ip address
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/product/").addConverterFactory(GsonConverterFactory.create()).build();
 
 //        JsonHotelAPIController jsonHotelAPIController = retrofit.create(JsonHotelAPIController.class);
         jsonProductAPIController = retrofit.create(JsonProductAPIController.class);
         buttonParse.setOnClickListener(this);
+        pref = getSharedPreferences("user_credentials", MODE_PRIVATE);
+        checkLogin();
     }
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-
-        if(id == R.id.login){
-            if(login.getText()=="login"){
-                Intent intent = new Intent(this,loginActivity.class);
-                startActivityForResult(intent,USER_LOGIN_RESPONSE);
-            }else{
-                username = "";
-                login.setText("login");
-                SharedPreferences pref = getPreferences(Context.MODE_PRIVATE);
-                SharedPreferences.Editor edit = pref.edit();
-                edit.remove("username");
-                edit.remove("password");
-                edit.commit();
-            }
-        }
-
         adapter = new MyCustomAdapter(this, 0);
         EditText search = findViewById(R.id.search_bar);
         Call<List<Product>> call = jsonProductAPIController.getSearchResults(search.getText().toString());
@@ -109,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Context context = getApplicationContext();
-//                            Toast toast = Toast.makeText(context, products.get(position).toString(), Toast.LENGTH_SHORT);
-//                            toast.show();
                             Intent intent = new Intent(context, ProductDetailsActivity.class);
                             intent.putExtra("Product", products.get(position));
                             startActivity(intent);
@@ -121,13 +90,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
-//                mTextView.setText(t.getMessage());
+                System.out.println(t.getMessage());
             }
         });
     }
 
     @Override
-
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
@@ -139,15 +107,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(item.getItemId()){
             case R.id.login:
                 //intent to login page
+                if(item.getTitle().equals("Login")){
+                    Intent loginInt = new Intent(this,loginActivity.class);
+                    startActivityForResult(loginInt,USER_LOGIN_RESPONSE);
+                }else{
+                    SharedPreferences.Editor edit = pref.edit();
+                    edit.remove("username");
+                    edit.remove("password");
+                    edit.commit();
+                    isLogin = false;
+                    invalidateOptionsMenu();
+                }
                 break;
 
             case R.id.bookingHistory:
-                //check if user is login in, if not then redirect to login page
-                Intent intent = new Intent(this, BookingHistoryActivity.class);
-                //hard coded username now, else should be retrieved from session
-                intent.putExtra("username", "customer1");
-                startActivity(intent);
-                break;
+                if (isLogin == false){
+                    Intent loginInt = new Intent(this,loginActivity.class);
+                    startActivityForResult(loginInt,USER_LOGIN_RESPONSE);
+                }else{
+                    String username = pref.getString("username", null);
+                    Intent intent = new Intent(this, BookingHistoryActivity.class);
+                    //hard coded username now, else should be retrieved from session
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                    break;
+                }
         }
         return true;
     }
@@ -158,14 +142,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         if(requestCode == USER_LOGIN_RESPONSE){
-            String newQuote = intent.getStringExtra("username");
-            if(newQuote !=null)
-            {
-                username=newQuote;
-                login.setText("logout");
-            }
+            isLogin = true;
+            invalidateOptionsMenu();
         }
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.login);
+        String username = pref.getString("username", null);
+        if (username != null){
+            item.setTitle("Logout");
+        }else{
+            item.setTitle("Login");
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
+    //check if user is login when user started the application
+    public void checkLogin(){
+        if (pref.contains("username") && pref.contains("password")) {
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.10.104:8080/api/user/").addConverterFactory(GsonConverterFactory.create()).build();
+            JsonUserApiController jsonuserAPIController = retrofit.create(JsonUserApiController.class);
+            User user = new User(pref.getString("username", null), pref.getString("password", null));
+            Call<User> call = jsonuserAPIController.login(user);
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (!response.isSuccessful()) {
+                        isLogin = false;
+                        SharedPreferences.Editor edit = pref.edit();
+                        edit.remove("username");
+                        edit.remove("password");
+                        edit.commit();
+                        return;
+                    } else {
+                        isLogin = true;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    System.out.println("fail");
+                }
+            });
+        }
+    }
 }

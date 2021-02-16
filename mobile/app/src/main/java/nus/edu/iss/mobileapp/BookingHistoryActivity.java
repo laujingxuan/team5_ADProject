@@ -11,10 +11,8 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import nus.edu.iss.mobileapp.nonEntityModel.Booking;
+import nus.edu.iss.mobileapp.model.Booking;
 import nus.edu.iss.mobileapp.nonEntityModel.JsonBookingAPIController;
-import nus.edu.iss.mobileapp.nonEntityModel.JsonProductAPIController;
-import nus.edu.iss.mobileapp.nonEntityModel.Product;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BookingHistoryActivity extends AppCompatActivity {
 
     private JsonBookingAPIController jsonBookingAPIController;
-    BookingHistoryAdapter adapter;
+    private BookingHistoryAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +44,15 @@ public class BookingHistoryActivity extends AppCompatActivity {
                 ListView listView = findViewById(R.id.bklistView);
                 if (listView != null) {
                     listView.setAdapter(adapter);
-//                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-//                        @Override
-//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                            Context context = getApplicationContext();
-//                            Intent intent = new Intent(context, ProductDetailsActivity.class);
-//                            intent.putExtra("Product", products.get(position));
-//                            startActivity(intent);
-//                        }
-//                    });
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Context context = getApplicationContext();
+                            Intent intent = new Intent(context, BookingDetailsActivity.class);
+                            intent.putExtra("Booking", bookings.get(position));
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
 

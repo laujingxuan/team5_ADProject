@@ -1,4 +1,4 @@
-package nus.edu.iss.mobileapp.nonEntityModel;
+package nus.edu.iss.mobileapp.model;
 
 import java.io.Serializable;
 
