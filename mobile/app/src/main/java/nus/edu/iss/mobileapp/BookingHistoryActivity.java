@@ -24,6 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BookingHistoryActivity extends AppCompatActivity {
 
     private JsonBookingAPIController jsonBookingAPIController;
+    BookingHistoryAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +35,26 @@ public class BookingHistoryActivity extends AppCompatActivity {
         jsonBookingAPIController = retrofit.create(JsonBookingAPIController.class);
         Intent intent = getIntent();
         Call<List<Booking>> call = jsonBookingAPIController.getBookingHistory(intent.getStringExtra("username"));
-
+        adapter = new BookingHistoryAdapter(this, 0);
         call.enqueue(new Callback<List<Booking>>() {
             @Override
             public void onResponse(Call<List<Booking>> call, Response<List<Booking>> response) {
 
                 //get the result of the API call
                 List<Booking> bookings = response.body();
-                for (Booking booking: bookings){
-                    System.out.println(booking);
+                adapter.setData(bookings);
+                ListView listView = findViewById(R.id.bklistView);
+                if (listView != null) {
+                    listView.setAdapter(adapter);
+//                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                            Context context = getApplicationContext();
+//                            Intent intent = new Intent(context, ProductDetailsActivity.class);
+//                            intent.putExtra("Product", products.get(position));
+//                            startActivity(intent);
+//                        }
+//                    });
                 }
             }
 
