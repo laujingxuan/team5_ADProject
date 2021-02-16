@@ -6,20 +6,26 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="300dp"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="#56A67A28"
         android:gravity="center"
-        android:background="@color/lightgrey"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
 
     <TextView
         android:id="@+id/bookingDetails"
-        android:layout_width="300dp"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="#41E7AB3C"
         android:gravity="left"
-        android:background="@color/whitegrey"
-        android:textSize="15sp" />
+        android:textSize="17sp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingTop="7dp"/>
 
 </LinearLayout>

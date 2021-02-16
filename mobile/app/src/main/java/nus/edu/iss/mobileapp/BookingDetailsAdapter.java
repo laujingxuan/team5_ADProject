@@ -57,20 +57,20 @@ public class BookingDetailsAdapter extends ArrayAdapter {
             name.setText(bkDetails.getProduct().getAttraction().getName());
 
             String infos = "";
-            infos += "  Quantity        : " + attractBook.getQuantity() + "\n";
-            infos += "  Price (S$)     : " + bkDetails.getPrice() + "\n";
-            infos += "  Date               : " + attractBook.getDate() + "\n";
+            infos += "           Quantity             :     " + attractBook.getQuantity() + "\n";
+            infos += "           Price (S$)           :     " + bkDetails.getPrice() + "\n";
+            infos += "           Date                    :     " + attractBook.getDate() + "\n";
             details.setText(infos);
         }else{
             HotelBooking hotelBook = (HotelBooking) bookingMap.get(bkDetails);
             name.setText(bkDetails.getProduct().getRoomType().getHotel().getName() + "\n" + bkDetails.getProduct().getRoomType().getRoomType() + " Room");
 
             String infos = "";
-            infos += "  Number of rooms   : " + hotelBook.getNumRooms() + "\n";
-            infos += "  Price (S$)                 : " + bkDetails.getPrice() + "\n";
-            infos += "  Start Date                 : " + hotelBook.getStartDate() + "\n";
-            infos += "  End Date                   : " + hotelBook.getEndDate() + "\n";
-            infos += "  Special Request      : " + hotelBook.getRemarks() + "\n";
+            infos += "           Number of rooms        :     " + hotelBook.getNumRooms() + "\n";
+            infos += "           Price (S$)                     :     " + bkDetails.getPrice() + "\n";
+            infos += "           Start Date                     :     " + hotelBook.getStartDate() + "\n";
+            infos += "           End Date                       :     " + hotelBook.getEndDate() + "\n";
+            infos += "           Special Request           :     " + hotelBook.getRemarks() + "\n";
             details.setText(infos);
         }
         return view;

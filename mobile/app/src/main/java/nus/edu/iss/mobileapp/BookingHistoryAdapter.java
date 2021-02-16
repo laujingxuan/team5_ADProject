@@ -55,9 +55,9 @@ public class BookingHistoryAdapter extends ArrayAdapter {
         }
 
         String infos = "";
-        infos += "  Amount Paid(S$)              : " + total + "\n";
-        infos += "  Travel Package Discount : " + bookings.get(pos).getTravelPackageDiscount() + "\n";
-        infos += "  Number of items               : " + bookings.get(pos).getBookingDetails().size() + "\n";
+        infos += "            Amount Paid(S$)                   :   " + total + "\n";
+        infos += "            Travel Package Discount      :   " + bookings.get(pos).getTravelPackageDiscount() + "\n";
+        infos += "            Number of items                    :   " + bookings.get(pos).getBookingDetails().size() + "\n";
         info.setText(infos);
 
         return view;
