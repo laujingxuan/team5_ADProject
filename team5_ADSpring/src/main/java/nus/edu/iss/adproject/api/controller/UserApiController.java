@@ -40,11 +40,10 @@ public class UserApiController {
 	}
 	
 	@PostMapping("/authenticate")
-	public ResponseEntity<User> authenticate(@RequestBody User user,HttpSession session){
+	public ResponseEntity<User> authenticate(@RequestBody User user){
 		if(session_svc.authenticate(user)) 
 		{
 			User u = user_svc.findByUsername(user.getUserName());
-			session.setAttribute("user", u);
 			return new ResponseEntity<User>(u,HttpStatus.OK);
 		}
 		else
