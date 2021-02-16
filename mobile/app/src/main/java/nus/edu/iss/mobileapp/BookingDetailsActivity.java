@@ -92,6 +92,6 @@ public class BookingDetailsActivity extends AppCompatActivity {
                     listView.setAdapter(adapter);
                 }
             }
-        }, 1000);
+        }, 500);
     }
 }

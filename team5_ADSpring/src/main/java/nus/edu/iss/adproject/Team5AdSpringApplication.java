@@ -108,10 +108,10 @@ public class Team5AdSpringApplication {
 			Booking booking1 = new Booking(customer1, LocalDate.of(2021, 2, 7), 5);
 			Booking booking2 = new Booking(customer1, LocalDate.of(2021, 2, 1), 5);
 			Booking booking3 = new Booking(customer1, LocalDate.of(2021, 1, 30), 5);
+			Booking booking4 = new Booking(customer2, LocalDate.of(2021, 1, 15), 5);
 			Booking booking5 = new Booking(customer1, LocalDate.of(2020, 1, 15), 5);
 			Booking booking6 = new Booking(customer1, LocalDate.of(2020, 1, 18), 5);
 			Booking booking7 = new Booking(customer1, LocalDate.of(2020, 2, 15), 5);
-			Booking booking4 = new Booking(customer2, LocalDate.of(2021, 1, 15), 5);
 			bookRepo.save(booking1);
 			bookRepo.save(booking2);
 			bookRepo.save(booking3);
@@ -159,15 +159,16 @@ public class Team5AdSpringApplication {
 			
 			
 			//Creating roomType
-			RoomType DoubleRoom1 = new RoomType(room3, hotel2, "DOUBLE", "Double bed room", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhcmJ1X_UaXdgLx7g71aztPspAMs0onNcBw&usqp=CAU");
 			RoomType singleRoom = new RoomType(room1, hotel1, "SINGLE", "Single bed room","https://media-cdn.tripadvisor.com/media/photo-s/0e/e5/f5/d2/small-single-room-at.jpg");
+			RoomType doubleRoom = new RoomType(room2, hotel1, "DOUBLE", "Double bed room", "https://cdn.traveltripper.io/site-assets/512_855_12327/media/2018-02-27-080021/large_ex-double-1.jpg");
+			RoomType doubleRoom1 = new RoomType(room3, hotel2, "DOUBLE", "Double bed room", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfhcmJ1X_UaXdgLx7g71aztPspAMs0onNcBw&usqp=CAU");
 			RoomType singleRoom2 = new RoomType(room4, hotel2, "SINGLE", "Single bed room","https://www.oyster.com/wp-content/uploads/sites/35/2019/05/single-room-v12936474-1440-1024x683.jpg");
 			RoomType singleRoom3 = new RoomType(room5, hotel3, "SINGLE", "Single bed room","https://setupmyhotel.com/images/Room-Type-Single-Room.jpg");
-			RoomType doubleRoom = new RoomType(room2, hotel1, "DOUBLE", "Double bed room", "https://cdn.traveltripper.io/site-assets/512_855_12327/media/2018-02-27-080021/large_ex-double-1.jpg");
+			
 //			RoomType doubleRoom1 = new RoomType(room2, hotel2, "DOUBLE", "Double bed room", "https://www.hotel-solemare.com/photo/diapo1/13/_solemare_hotel_25720180717164604_550xautox75.jpg");
 //			RoomType doubleRoom2 = new RoomType(room2, hotel3, "DOUBLE", "Double bed room", "https://www.pavillon-monceau.com/files/hotel/pavillon-monceau/chambres/chambre_standard_.jpg");
 			roomTypeRepo.save(singleRoom);
-			roomTypeRepo.save(DoubleRoom1);
+			roomTypeRepo.save(doubleRoom1);
 			roomTypeRepo.save(singleRoom2);
 			roomTypeRepo.save(singleRoom3);
 			roomTypeRepo.save(doubleRoom);
@@ -177,10 +178,10 @@ public class Team5AdSpringApplication {
 //		    htRepo.save(new Hotel("Hotel Miramar ","Singapore", 1.288710,103.837372, 260.0, 8, "SG","aa", "best", "we try to be home"));
 			
 			//Creating booking details
-			Cart cart1 = new Cart(product1, 3, LocalDate.of(2021, 1, 15), customer1);
-			Cart cart2 = new Cart(room1, 2, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 1, 17),2, "No lunch", customer1);
-			Cart cart3 = new Cart(room2, 2, LocalDate.of(2021, 12, 15), LocalDate.of(2021, 12, 20),4, "4 lunch", customer1);
-			Cart cart4 = new Cart(room1, 4, LocalDate.of(2021, 1, 19), LocalDate.of(2021, 1, 23),2, "2 lunch",customer1);
+			Cart cart1 = new Cart(product1, 3, LocalDate.of(2021, 2, 25), customer1);
+			Cart cart2 = new Cart(room1, 2, LocalDate.of(2021, 2, 20), LocalDate.of(2021, 2, 24),2, "No lunch", customer1);
+			Cart cart3 = new Cart(room2, 2, LocalDate.of(2021, 2, 22), LocalDate.of(2021, 2, 26),4, "4 lunch", customer1);
+			Cart cart4 = new Cart(room1, 4, LocalDate.of(2021, 2, 27), LocalDate.of(2021, 3, 2),2, "2 lunch",customer1);
 			cartRepo.save(cart1);
 			cartRepo.save(cart2);
 			cartRepo.save(cart3);
@@ -198,15 +199,23 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail4);	
 
 
-			BookingDetails bookDetail5 = new BookingDetails(booking2, attraction2.getProduct(), "1", 4, 300);
-			BookingDetails bookDetail6 = new BookingDetails(booking2, attraction3.getProduct(), "2", 3, 250);
-			BookingDetails bookDetail7 = new BookingDetails(booking3, DoubleRoom1.getProduct(), "3", 5, 400);
-			BookingDetails bookDetail8 = new BookingDetails(booking4, singleRoom2.getProduct(), "1", 5, 100);
+			BookingDetails bookDetail5 = new BookingDetails(booking2, attraction1.getProduct(), "1", 20, 1500);
+			BookingDetails bookDetail6 = new BookingDetails(booking2, attraction1.getProduct(), "3", 3, 225);
+			BookingDetails bookDetail7 = new BookingDetails(booking3, doubleRoom.getProduct(), "4", 5, 4000);
+			BookingDetails bookDetail8 = new BookingDetails(booking4, singleRoom.getProduct(), "5", 5, 7500);
 			bookDetRepo.save(bookDetail5);
 			bookDetRepo.save(bookDetail6);
 			bookDetRepo.save(bookDetail7);
 			bookDetRepo.save(bookDetail8);
   
+			BookingDetails bookDetail9 = new BookingDetails(booking5, attraction2.getProduct(), "1", 20, 1500);
+			BookingDetails bookDetail10 = new BookingDetails(booking6, attraction3.getProduct(), "3", 3, 225);
+			BookingDetails bookDetail11 = new BookingDetails(booking7, doubleRoom1.getProduct(), "4", 5, 400);
+			BookingDetails bookDetail12 = new BookingDetails(booking5, singleRoom2.getProduct(), "5", 5, 100);
+			bookDetRepo.save(bookDetail9);
+			bookDetRepo.save(bookDetail10);
+			bookDetRepo.save(bookDetail11);
+			bookDetRepo.save(bookDetail12);
   
 //			ProductReview review1 = new ProductReview(customer1, room1, 4.6, "I think it is comfortable", "pic1");
 //			prrepo.save(review1);

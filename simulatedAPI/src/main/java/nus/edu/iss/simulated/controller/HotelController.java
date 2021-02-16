@@ -67,7 +67,6 @@ public class HotelController {
 	@PostMapping("/room/period")
 	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypePeriod(@RequestBody MultipleDateQuery input){
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);
-
 	}
 
 	@PostMapping("/room/update")

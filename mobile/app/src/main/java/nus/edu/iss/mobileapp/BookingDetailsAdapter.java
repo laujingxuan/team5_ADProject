@@ -63,7 +63,7 @@ public class BookingDetailsAdapter extends ArrayAdapter {
             details.setText(infos);
         }else{
             HotelBooking hotelBook = (HotelBooking) bookingMap.get(bkDetails);
-            name.setText(bkDetails.getProduct().getRoomType().getHotel().getName() + ": " + bkDetails.getProduct().getRoomType().getRoomType() + " Room");
+            name.setText(bkDetails.getProduct().getRoomType().getHotel().getName() + "\n" + bkDetails.getProduct().getRoomType().getRoomType() + " Room");
 
             String infos = "";
             infos += "  Number of rooms   : " + hotelBook.getNumRooms() + "\n";
