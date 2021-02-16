@@ -182,10 +182,12 @@ public class Team5AdSpringApplication {
 			Cart cart2 = new Cart(room1, 2, LocalDate.of(2021, 2, 20), LocalDate.of(2021, 2, 24),2, "No lunch", customer1);
 			Cart cart3 = new Cart(room2, 2, LocalDate.of(2021, 2, 22), LocalDate.of(2021, 2, 26),4, "4 lunch", customer1);
 			Cart cart4 = new Cart(room1, 4, LocalDate.of(2021, 2, 27), LocalDate.of(2021, 3, 2),2, "2 lunch",customer1);
+			Cart cart5 = new Cart(room2, 2, LocalDate.of(2021, 12, 24), LocalDate.of(2021, 12, 26),5, "2 lunch",customer1);
 			cartRepo.save(cart1);
 			cartRepo.save(cart2);
 			cartRepo.save(cart3);
 			cartRepo.save(cart4);
+			cartRepo.save(cart5);
 			
 			
 			//Creating booking details
