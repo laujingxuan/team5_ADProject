@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MobileApp">
+        <activity android:name=".loginActivity"/>
         <activity android:name=".MainActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing">
             <intent-filter>
