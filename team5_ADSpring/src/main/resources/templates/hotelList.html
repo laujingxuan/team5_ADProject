@@ -27,11 +27,10 @@ nav {
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-
-	<h3>Hotel List</h3><br/>
-	<table class="table table-bordered" style="margin: 0 auto; padding: 1px; background-color: white">
+	<br/>
+	<h3 style="text-align:center">Hotel List</h3><br/>
+	<table class="table table-bordered" style="width:100%; margin:auto; padding: 1px; background-color: white">
 		<tr>
-			<th>ID</th>
 			<th>Name</th>
 			<th>Latitude</th>
 			<th>Longitude</th>
@@ -46,7 +45,6 @@ nav {
 		</tr>
 	
 		<tr th:each="hotel:${hotelMap}" >
-			<td th:text="${hotel.key.id}">ID</td>
 			<td th:text="${hotel.key.name}">ID</td>	
 			<td th:text="${hotel.key.lat}">ID</td>
 			<td th:text="${hotel.key.longi}">ID</td>
@@ -61,15 +59,20 @@ nav {
 			<!-- 			<td ><a href="Map.html" th:href="@{/hotel/map/}+${hotel.key.id}" >location</a></td> -->
 		</tr>
 	</table>
-	<a href="hotel-form.html" th:href="@{/hotel/hotel/create/}" >create</a>
-	<a href="hotel-form.html" th:href="@{/hotel/roomtypes/create/}" >create Rooms</a>
+	<br/>
+	<div style="text-align:center">
+		<a class="btn btn-outline-info" href="hotel-form.html" th:href="@{/hotel/hotel/create/}" role="button" >create</a>
+		<a class="btn btn-outline-info" href="hotel-form.html" th:href="@{/hotel/roomtypes/create/}" role="button" >create Rooms</a>
+	</div>
+	<br/>
+	<br/>
 
+	<div style="text-align:center">
+		<h4>Room Type List</h4>
+	</div>
 	<div class = "container py-3">
-		<div class = "row">
-			<h4 align="center" >Room Type List</h4>
-		</div>
 		<div th:each="detail:${hotelMap}" class="py-3 row">
-			<div class="card">
+			<div class="card" style="width: 150rem">
 			  <h5 class="card-header" th:text = "${detail.key.name}" style="font-weight: 900;text-shadow: 1px 1px 2px #669999;">Hotel</h5>
 			  <div class="card-body">
 				<table class="table">
