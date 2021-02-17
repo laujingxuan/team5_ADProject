@@ -77,8 +77,8 @@ public class UserController {
 			session.setAttribute("user", u);
 			return "redirect:/";
 		}
-		else
-			return "login";
+		model.addAttribute("invalidCredentials", true);
+		return "login";	
 	}
 	
 	@GetMapping("/signup")
@@ -119,84 +119,6 @@ public class UserController {
 		user_svc.save(user);
 		return "signup_success";
 	}
-	
-//	//only admin can retrieve the list
-//	@GetMapping("/users")
-//	public String viewUser(Model model, HttpSession session) {
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		if (session_svc.hasNoPermission(session)) return "nopermission";
-//
-//		// retrieval was done with js 
-//		return "UserList";
-//	}
 		
-	
-//	//only admin can edit
-//	@RequestMapping(value = "/edit/{id}")
-//	public String editUser(@PathVariable("id") long id, Model model, HttpSession session) {
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		if (session_svc.hasNoPermission(session)) return "nopermission";
-//		
-//		User toChange = user_svc.findById(id);
-//		model.addAttribute("roleType", RoleType.values());
-//		UserForm userForm = new UserForm(toChange);
-//		model.addAttribute("userForm", userForm);
-//		model.addAttribute("path", "/user/save");
-//		return "editUser";
-//	}
-//	
-//	@PostMapping("/save")
-//	public String editUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		if (session_svc.hasNoPermission(session)) return "nopermission";
-//		
-//		model.addAttribute("roleType", RoleType.values());
-//		model.addAttribute("path", "/user/save");
-//		if (bindingResult.hasErrors()) return "editUser";
-//		
-//		User user = new User(userForm);
-//		long id = user.getId();
-//		boolean success = user_svc.updateUser(user);
-//		if (success == true) {
-//			return "redirect:/user/users";
-//		} else {
-//			return "error";
-//		}
-//	}
-//	
-//	//everyone can change password
-//	@GetMapping("/update")
-//	public String updateUser(Model model, HttpSession session) {
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		User user = (User) session.getAttribute("user"); 
-//		model.addAttribute("roleType", RoleType.values());
-//		model.addAttribute("path", "/user/update");
-//		model.addAttribute("userForm", new UserForm(user));
-//		return "editUser";
-//	}
-//
-//	@PostMapping("/update")
-//	public String updateUser(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		model.addAttribute("roleType", RoleType.values());
-//		model.addAttribute("path", "/user/update");
-//		if (bindingResult.hasErrors()) return "editUser";
-//		
-//		User user = new User(userForm);
-//		user_svc.updateUser(user);
-//		session.setAttribute("user", user);
-//		return "redirect:/";
-//	}
-//	
-//	//only admin can delete
-//	@PostMapping("/delete")
-//	public String deleteUser(@RequestParam(value = "deleteUser", required = false) String[] deleteUsers, HttpSession session) {
-//		if (session_svc.isNotLoggedIn(session)) return "redirect:/user/login";
-//		if (session_svc.hasNoPermission(session)) return "nopermission";
-//		System.out.println("test");
-//		user_svc.deleteUsers(deleteUsers);
-//		return "redirect:/user/users";
-//	}
-	
 }
 

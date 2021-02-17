@@ -67,11 +67,13 @@
 	</div>
 	<br>
 	<div th:if="${session.user!=null}">
-		<h4 align="center" class = "py-3">Recently Booked Items</h4>
+		<h4 align="center" class = "py-3" th:if="${not #lists.isEmpty(userRecommendation)}">Recently Booked Items</h4>		
 		<div class = "container">
 			<div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 				<div th:each="product:${userRecommendation}">
+				
 					<div th:if="${product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
+						
 						<div class = "cardSection">
 					        <div class = "card text-center py-3 d-flex flex-column" style="width: 14rem; height: 14rem;">
 					          <img height="128" th:src="${product.roomType.imageURL}" width="128"  class="card-img-top py-2 px-2 image-fluid"/>

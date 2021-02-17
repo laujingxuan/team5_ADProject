@@ -7,8 +7,8 @@
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 	<div class = "container py-3">
-		<div class = "row">
-			<h4>Attraction  Detail</h4>
+		<div >
+			<h4 style="text-align:center">Attraction  Detail</h4>
 		</div>
 		<div th:each="attraction:${attractions}" class="py-3 row">
 			<div class="card" style="width: 80rem;">
@@ -52,12 +52,12 @@
 						<td th:text=${attraction.API_URL}>Total</td>
 					</tr>
 				</table>
-				<a class="btn btn-primary" href="BookingDetail.html" th:href="@{/attraction/edit/}+${attraction.id}" role="button">Edit</a>
-			    <a class="btn btn-primary" href="BookingDetail.html" th:href="@{/attraction/delete/}+${attraction.id}" role="button">Delete</a>
+				<a class="btn btn-outline-info" href="BookingDetail.html" th:href="@{/attraction/edit/}+${attraction.id}" role="button">Edit</a>
+			    <a class="btn btn-outline-info" href="BookingDetail.html" th:href="@{/attraction/delete/}+${attraction.id}" role="button">Delete</a>
 			  </div>
 			</div>
 		</div>
-		<a class="btn btn-primary" href="BookingDetail.html" th:href="@{/attraction/create}" role="button">Create</a>
+		<a class="btn btn-outline-info" href="BookingDetail.html" th:href="@{/attraction/create}" role="button">Create</a>
 	</div>	
 
 	<div th:replace="layout/layout.html :: footer"></div>
