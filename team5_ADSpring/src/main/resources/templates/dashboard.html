@@ -47,7 +47,7 @@
 				<td>
 					<select name="month" class="form-control" id="month" style="width: 150px;margin:0 auto">
 					<option
-						th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+						th:each="month : ${T(nus.edu.iss.adproject.nonEntityModel.Month).values()}"
 						th:value="${month}" th:text="${month}"></option>
 				</select>
 				</td>
@@ -61,7 +61,7 @@
 					<select name="month" class="form-control" id="monthly_cancellation"
 					style="width: 150px; margin: 0 auto">
 						<option
-							th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+							th:each="month : ${T(nus.edu.iss.adproject.nonEntityModel.Month).values()}"
 							th:value="${month}" th:text="${month}"></option>
 				</select>
 				</td>
@@ -109,7 +109,7 @@ var htmldata_cancellationRate = /*[[${data_cancellationRate}]]*/{}
 var hotel_id =/*[[${hotel_id}]]*/{}
 document.getElementById("hotel").value  =hotel_id;
 
-	
+console.log(htmldata_vacancyRate);
 $(document).ready(function() {
 	var name = "";
 	
@@ -138,9 +138,14 @@ $(document).ready(function() {
 	    
 	   $.get( "/dashboard/dailyBookingVacancy?month=" + month + '&room=' + room+'&hotel_id='+hotel_id, function( data ) {
 	    	htmldata_vacancyRate = data;
-	    	console.log(htmldata_vacancyRate);
-	    	window.myChart_Vacancy.data.datasets[0].data = [];
-	    	window.myChart_Vacancy.data.datasets[0].data = Object.keys(htmldata_vacancyRate).map(function(key) {return htmldata_vacancyRate[key];});
+	    	console.log(htmldata_vacancyRate);    	
+	    	
+	    	window.myChart_Vacancy.data.datasets[0].data = [];	    	
+	    	window.myChart_Vacancy.data.labels= Object.keys(htmldata_vacancyRate),
+	    	window.myChart_Vacancy.data.datasets[0].data = Object.keys(htmldata_vacancyRate).map(function(key) 
+	    			{return htmldata_vacancyRate[key];});
+	    
+	    	//console.log(window.myChart_Vacancy.data.datasets[0].data);
 	    	window.myChart_Vacancy.update();
 	    }); 
 	}; 	
@@ -154,6 +159,7 @@ $(document).ready(function() {
 	    	
 		   htmldata_cancellationRate = data;
 		   window.myChart_Cancellation.data.datasets[0].data = [];
+		   window.myChart_Cancellation.data.labels= Object.keys(htmldata_cancellationRate),
 	    	window.myChart_Cancellation.data.datasets[0].data = Object.keys(htmldata_cancellationRate).map(function(key) {return htmldata_cancellationRate[key];});
 	    	window.myChart_Cancellation.update();
 		   

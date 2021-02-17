@@ -23,6 +23,12 @@ import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.User;
+
+import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
+import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
+import nus.edu.iss.adproject.nonEntityModel.Month;
+import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
+
 import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.AttractionServiceImpl;

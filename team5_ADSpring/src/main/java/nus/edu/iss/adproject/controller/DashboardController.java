@@ -28,12 +28,12 @@ import org.springframework.web.servlet.view.RedirectView;
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Hotel;
-import nus.edu.iss.adproject.model.Month;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
 import nus.edu.iss.adproject.nonEntityModel.DashboardQuery;
+import nus.edu.iss.adproject.nonEntityModel.Month;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.service.AttractionService;
@@ -86,6 +86,7 @@ public class DashboardController {
 		RestTemplate restTemplate = new RestTemplate();
 		Map<Integer, Integer> data_dailyVacancyRate = new LinkedHashMap<Integer, Integer>();
 		hotel = hotel_svc.findById(hotel_id);
+		System.out.println(hotel.getAPI_URL());
 		System.out.println("URI : " + hotel.getAPI_URL());
 		if(hotel.getAPI_URL()!=null) {
 		uri = hotel.getAPI_URL()+"room/month";
@@ -168,8 +169,8 @@ public class DashboardController {
 	    public String handleRequestFroPlatform (@PathVariable("month") Integer month,Model model, HttpSession session) {
 		 System.out.println(month);
 		 DashboardForPlatform(model, month);
-		 String month_name = "March";
-		 model.addAttribute("month1", month_name);
+		
+		 model.addAttribute("month", Month.values()[month-1]);
 			return "platformDashboard";
 	    }
 
@@ -205,18 +206,21 @@ public class DashboardController {
 			uri = hotel.get(0).getAPI_URL()+"room/month";
 			check_uri = hotel.get(0).getAPI_URL();
 		}
+		System.out.println(uri);
+		System.out.println(check_uri);
 //		if(check_uri != null || check_uri.trim() != "NA" || !check_uri.isEmpty())  {
 		if(check_uri.startsWith(" ")) {
 			check_uri = check_uri.substring(0,1);}
-		if (!check_uri.equals("NA") || !check_uri.isEmpty()) {			
-			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
-			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
-					DailyRoomDetailWrapper.class);
+		if (!check_uri.equals("NA")) {				
+			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());			
+			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery, DailyRoomDetailWrapper.class);
+			System.out.println("HH");
+			System.out.println(result);
 			for (DailyRoomTypeDetail daily : result.getDailyList()) {
+				System.out.println("Eaint");
 				data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
 				data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
 			}
-
 		}
 		
 		
@@ -340,7 +344,6 @@ public class DashboardController {
 		model.addAttribute("hotel_id", hotel_id);
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("roomTypes", room_list);
-		model.addAttribute("month",Month.values());
 		model.addAttribute("data", data);
 		model.addAttribute("data_revenue", data_revenue);
 		model.addAttribute("data_bookingRate", data_bookingRate);
@@ -364,6 +367,7 @@ public class DashboardController {
 		}else if(user.getRole() == RoleType.PLATFORMMANAGER) {
 			
 			DashboardForPlatform(model, 1);
+			
 			return "platformDashboard";
 		}
 		else {
@@ -428,6 +432,7 @@ public class DashboardController {
 		}
 
 		//model.addAttribute("month",month);
+		model.addAttribute("month", Month.JANUARY);
 		model.addAttribute("attractoins", a_list);
 		model.addAttribute("hotels", d_list);
 	}
