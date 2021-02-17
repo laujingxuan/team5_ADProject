@@ -14,8 +14,17 @@
 <div th:replace="layout/layout.html :: menu" ></div>
 	<h3>Dashboard for Platform Owner</h3><br/>
 	<form action="#" method="get">	
+	<div class="row" style="float:left;margin-left: 60px">
+				<select name="month" class="form-control" id="month"
+					style="width: 200px; margin: 0 auto" th:onchange="'window.location.href = \'' + @{/dashboard/showDashboardForPlatformManager} + '?month=\' + this.value'  ">
+						<option
+							th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+							th:value="${month}" th:text="${month}"></option>
+				</select>
+			</div><br/><br/><br/>
 		<div class="row">
 			<div style="margin: 0 auto">
+			
 				<table   class="table table-bordered" id="sort">
 					<thead>
 						<tr>
@@ -67,6 +76,11 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.js"></script>
 <script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+var month =/*[[${month}]]*/{}
+console.log(month);
+document.getElementById("month").value  =month;
+
 $(function() {
 	$('#sort').bootstrapTable({
 		   sortable: true   
@@ -75,6 +89,6 @@ $(function() {
 		   sortable: true   
 	   });
 	});
-	
+/*]]>*/
 </script>
 </html>

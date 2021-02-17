@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
+import nus.edu.iss.adproject.model.ProductReview;
 import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.CartForm;
@@ -34,6 +36,7 @@ import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.service.DiscountService;
 import nus.edu.iss.adproject.service.HotelService;
+import nus.edu.iss.adproject.service.ProductReviewService;
 import nus.edu.iss.adproject.service.ProductService;
 import nus.edu.iss.adproject.service.RoomTypeService;
 import nus.edu.iss.adproject.service.SessionService;
@@ -49,6 +52,9 @@ public class HotelController {
 	
 	@Autowired
 	private SessionService session_svc;
+	
+	@Autowired
+	ProductReviewService prservice;
 	
 	@Autowired
 	private ProductService pservice;
@@ -93,6 +99,22 @@ public class HotelController {
 		model.addAttribute("roomtype", room);
 		List<RoomType> RoomT= rservice.findRoomTypesByHotelId(room.getHotel().getId());
 		model.addAttribute("rooms",RoomT);
+		System.out.println(room.getProduct().getId());
+		
+		
+		  Product product = pservice.findById(room.getProduct().getId()); 
+		  List<ProductReview> reviewList = prservice.findReviewByProductId(room.getProduct().getId()); 
+		  
+		  for (Iterator iterator = reviewList.iterator(); iterator.hasNext();) {
+			ProductReview productReview = (ProductReview) iterator.next();
+			System.out.println(productReview.getRating());
+		}
+		  model.addAttribute("review", reviewList); 
+		  model.addAttribute("product", product);
+		  
+		 // return "reviewList";
+		 
+		
 		return "roomdetail";
 	}
 	

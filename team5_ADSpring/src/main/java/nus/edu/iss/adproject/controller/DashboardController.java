@@ -78,43 +78,52 @@ public class DashboardController {
 	
 	@RequestMapping(value = "/dailyBookingVacancy")
 	@ResponseBody
-	public Map<Integer,Integer> getBookingData(@RequestParam String month,@RequestParam String room, HttpSession session) {
+	public Map<Integer,Integer> getBookingData(@RequestParam String month,@RequestParam String room,@RequestParam Long hotel_id, HttpSession session) {
 		//User user = (User) session.getAttribute("user");
 		int monthValue = Month.valueOf(month).ordinal()+1;			
 		
 		String uri;
 		RestTemplate restTemplate = new RestTemplate();
 		Map<Integer, Integer> data_dailyVacancyRate = new LinkedHashMap<Integer, Integer>();
+		hotel = hotel_svc.findById(hotel_id);
+		System.out.println("URI : " + hotel.getAPI_URL());
+		if(hotel.getAPI_URL()!=null) {
 		uri = hotel.getAPI_URL()+"room/month";
-		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
-		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
-				DailyRoomDetailWrapper.class);
-		for (DailyRoomTypeDetail daily : result.getDailyList()) {
-			data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
-			//data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
-		}
+			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
+			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
+					DailyRoomDetailWrapper.class);
+			for (DailyRoomTypeDetail daily : result.getDailyList()) {
+				data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
+				//data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
+			}
+		}		
 		return data_dailyVacancyRate;
 	}
 	
 	@RequestMapping(value = "/dailyCancellation")
 	@ResponseBody
-	public Map<Integer,Integer> getCancellationData(@RequestParam String month,@RequestParam String room, HttpSession session) {
+	public Map<Integer,Integer> getCancellationData(@RequestParam String month,@RequestParam String room,@RequestParam Long hotel_id, HttpSession session) {
 		
 		int monthValue = Month.valueOf(month).ordinal()+1;
-		System.out.println(room);
+		System.out.println(hotel_id);
 		
 		String uri;
 		RestTemplate restTemplate = new RestTemplate();
 		Map<Integer, Integer> data_dailyCancellationRate = new LinkedHashMap<Integer, Integer>();
-		//uri = roomType.getHotel().getAPI_URL()+ "room/month";
+		
+		User user = (User) session.getAttribute("user");	
+		hotel = hotel_svc.findById(hotel_id);
+		System.out.println("URI : " + hotel.getAPI_URL());
+		if(hotel.getAPI_URL()!=null) {
 		uri = hotel.getAPI_URL()+"room/month";
-		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
-		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
-				DailyRoomDetailWrapper.class);
-		for (DailyRoomTypeDetail daily : result.getDailyList()) {
-			//data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
-			data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
-		}
+			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(monthValue, room);
+			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
+					DailyRoomDetailWrapper.class);
+			for (DailyRoomTypeDetail daily : result.getDailyList()) {
+				//data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
+				data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
+			}
+		}		
 		return data_dailyCancellationRate;
 	}
 	
@@ -140,6 +149,29 @@ public class DashboardController {
 	        return "dashboard";
 	    }
 	
+	 
+	 @RequestMapping(value = "/showDashboardForPlatformManager",method = RequestMethod.GET )	
+		@ResponseBody
+		public RedirectView showDashboardForPlatformManager(Model model, HttpSession session,@RequestParam String month) {
+			System.out.println(month);
+			
+			int monthValue = Month.valueOf(month).ordinal()+1;	
+			 RedirectView rv = new RedirectView();
+		        rv.setContextRelative(true);
+		        rv.setUrl("/dashboard/hotelForPlatform/"+monthValue);
+		        return rv;
+			
+			//return "home";
+		}
+	 
+	 @RequestMapping("hotelForPlatform/{month}")
+	    public String handleRequestFroPlatform (@PathVariable("month") Integer month,Model model, HttpSession session) {
+		 System.out.println(month);
+		 DashboardForPlatform(model, month);
+		 model.addAttribute("month", month);
+			return "platformDashboard";
+	    }
+
 	public void Dashboard(Model model,Long hotel_id, HttpSession session) {
 		User user = (User) session.getAttribute("user");	
 		Map<String, Integer> data = new LinkedHashMap<String, Integer>();
@@ -160,24 +192,29 @@ public class DashboardController {
 			roomType.setRoomType(object.toString());
 			room_list.add(roomType);
 		}		
-		String uri;
-		System.out.println("Dropdown selected is " +hotel_id);
+		String uri,check_uri=null;
+		
 		Hotel h1= new Hotel();
 		if(hotel_id >0) {
 			h1 = hotel_svc.findById(hotel_id);
 			uri = h1.getAPI_URL()+"room/month";
+			check_uri = h1.getAPI_URL();
 		}else {
 			hotel_id = hotel.get(0).getId();
 			uri = hotel.get(0).getAPI_URL()+"room/month";
-		}		
-		
-		MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
-		DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
-				DailyRoomDetailWrapper.class);
-		for (DailyRoomTypeDetail daily : result.getDailyList()) {
-			data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
-			data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
+			check_uri = hotel.get(0).getAPI_URL();
 		}
+//		if(check_uri != null || check_uri.trim() != "NA" || !check_uri.isEmpty())  {
+		if(check_uri.startsWith(" "))  {
+			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
+			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
+					DailyRoomDetailWrapper.class);
+			for (DailyRoomTypeDetail daily : result.getDailyList()) {
+				data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
+				data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
+			}
+		}
+		
 		
 		List<Object> b_details = bookingservice.findMonthlyGuestByHotelId(hotel_id);
 		List<Object> b_revenue = bookingservice.findMonthlyRevenueByHotelId(hotel_id);
@@ -321,68 +358,75 @@ public class DashboardController {
 			
 			return "dashboard";
 		}else if(user.getRole() == RoleType.PLATFORMMANAGER) {
-			List<Hotel> hotel_list = hotel_svc.findAll();
-			List<Attraction> attraction = attraction_svc.findAll();
-			List<Object> dashboard_details = bookingservice.findMonthlyRevenueForAllHotels();
-			List<Object> attraction_details = bookingservice.findMonthlyRevenueForAllAttractions();
 			
-			List<DashboardQuery> d_list = new ArrayList<DashboardQuery>();			
-			for (Hotel h : hotel_list) {
-				DashboardQuery query = new DashboardQuery();
-				Boolean is_exist=false;
-				for (Iterator z = dashboard_details.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-					if(h.getId() == (Long)values[0]) {
-						is_exist=true;
-						query.setHotel_id(h.getId());
-						query.setHotel_name(h.getName());
-						query.setMonthly_revenue(Double.parseDouble(values[1].toString()));
-						query.setMonthly_guest(Integer.parseInt(values[2].toString()));
-						d_list.add(query);						
-					}
-				}
-				if(is_exist == false) {
-					query.setHotel_id(h.getId());
-					query.setHotel_name(h.getName());
-					query.setMonthly_revenue(0.00);
-					query.setMonthly_guest(0.00);
-					d_list.add(query);
-				}
-			}
-			
-			
-			List<DashboardQuery> a_list = new ArrayList<DashboardQuery>();			
-			for (Attraction a : attraction) {
-				DashboardQuery query = new DashboardQuery();
-				Boolean is_exist=false;
-				for (Iterator z = attraction_details.iterator(); z.hasNext();) {
-					Object[] values = (Object[]) z.next();
-					if(a.getId() == (Long)values[0]) {
-						is_exist=true;
-						query.setAttraction_id(a.getId());
-						query.setAttraction_name(a.getName());
-						query.setMonthly_revenue(Double.parseDouble(values[1].toString()));
-						query.setMonthly_guest(Integer.parseInt(values[2].toString()));
-						a_list.add(query);						
-					}
-				}
-				if(is_exist == false) {
-					query.setAttraction_id(a.getId());
-					query.setAttraction_name(a.getName());
-					query.setMonthly_revenue(0.00);
-					query.setMonthly_guest(0.00);
-					a_list.add(query);
-				}
-			}
-
-			model.addAttribute("month",Month.values());
-			model.addAttribute("attractoins", a_list);
-			model.addAttribute("hotels", d_list);
+			DashboardForPlatform(model, 1);
 			return "platformDashboard";
 		}
 		else {
 			return null;
 		}
+	}
+	
+	public void DashboardForPlatform(Model model, int month) {
+		List<Hotel> hotel_list = hotel_svc.findAll();
+		List<Attraction> attraction = attraction_svc.findAll();
+		
+		List<Object> dashboard_details = bookingservice.findMonthlyRevenueForAllHotels(month, 2021);
+		List<Object> attraction_details = bookingservice.findMonthlyRevenueForAllAttractions(month, 2021);
+		
+		List<DashboardQuery> d_list = new ArrayList<DashboardQuery>();			
+		for (Hotel h : hotel_list) {
+			DashboardQuery query = new DashboardQuery();
+			Boolean is_exist=false;
+			for (Iterator z = dashboard_details.iterator(); z.hasNext();) {
+				Object[] values = (Object[]) z.next();
+				if(h.getId() == (Long)values[0]) {
+					is_exist=true;
+					query.setHotel_id(h.getId());
+					query.setHotel_name(h.getName());
+					query.setMonthly_revenue(Double.parseDouble(values[1].toString()));
+					query.setMonthly_guest(Integer.parseInt(values[2].toString()));
+					d_list.add(query);						
+				}
+			}
+			if(is_exist == false) {
+				query.setHotel_id(h.getId());
+				query.setHotel_name(h.getName());
+				query.setMonthly_revenue(0.00);
+				query.setMonthly_guest(0.00);
+				d_list.add(query);
+			}
+		}
+		
+		
+		List<DashboardQuery> a_list = new ArrayList<DashboardQuery>();			
+		for (Attraction a : attraction) {
+			DashboardQuery query = new DashboardQuery();
+			Boolean is_exist=false;
+			for (Iterator z = attraction_details.iterator(); z.hasNext();) {
+				Object[] values = (Object[]) z.next();
+				if(a.getId() == (Long)values[0]) {
+					is_exist=true;
+					query.setAttraction_id(a.getId());
+					query.setAttraction_name(a.getName());
+					query.setMonthly_revenue(Double.parseDouble(values[1].toString()));
+					query.setMonthly_guest(Integer.parseInt(values[2].toString()));
+					a_list.add(query);						
+				}
+			}
+			if(is_exist == false) {
+				query.setAttraction_id(a.getId());
+				query.setAttraction_name(a.getName());
+				query.setMonthly_revenue(0.00);
+				query.setMonthly_guest(0.00);
+				a_list.add(query);
+			}
+		}
+
+		
+		model.addAttribute("month",1);
+		model.addAttribute("attractoins", a_list);
+		model.addAttribute("hotels", d_list);
 	}
 
 	@GetMapping("/view/{hotel_id}")
