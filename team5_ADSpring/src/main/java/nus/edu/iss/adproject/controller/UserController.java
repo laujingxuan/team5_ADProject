@@ -138,7 +138,7 @@ public class UserController {
 		    }
 		    if(userForm.getRole()==RoleType.CUSTOMER) {
 			return "signUpForm";
-			}else {
+			}else if(userForm.getRole()==RoleType.HOTELMANAGER||userForm.getRole()==RoleType.ATTRACTIONMANAGER) {
 				return "merchant-signup-form";
 			}
 		    

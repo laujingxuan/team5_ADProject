@@ -1,49 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Login</title></head>
+<head>
+<title>Login</title>
+</head>
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
-<div th:replace="layout/layout.html :: menu" ></div>
-<br/>
-<div class = "container">
+	<div th:replace="layout/layout.html :: menu"></div>
+	<br />
+	<div class="container">
 
 
-<div id="login">
-        <h3 class="text-center text-white pt-5">Login form</h3>
-        <div class="container">
-            <div id="login-row" class="row justify-content-center align-items-center">
-                <div id="login-column" class="col-md-6">
-                    <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post" th:object="${user}" th:action="@{/user/authenticate}">
-                            <h3 class="text-center text-dark">Login</h3>
-                            <div class="form-group">
-                                <label for="username" class="text-dark">Username:</label><br>
-                                <input type="text" th:field="*{userName}" name="username" id="username" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="text-dark">Password:</label><br>
-                                <input type="password" th:field="*{password}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                            <!--  <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br> -->
-                                <input type="submit" name="submit" class="btn btn-primary btn-md" value="submit">
-                            </div>
-                            <div id="register-link" class="text-right">
-                             	<a th:href="@{/user/signup}">Sign up</a>
-					          	<span class="p-2">|</span>
-					          	<a th:href="@{/forgot_password}">Forgot Password</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div id="login">
+			<h3 class="text-center text-white pt-5">Login form</h3>
+			<div class="container">
+				<div id="login-row"
+					class="row justify-content-center align-items-center">
+					<div id="login-column" class="col-md-6">
+						<div id="login-box" class="col-md-12">
+							<form id="login-form" class="form" action="" method="post"
+								th:object="${user}" th:action="@{/user/authenticate}">
+								<h3 class="text-center text-dark">Log in</h3>
+								<div class="form-group">
+									<label for="username" class="text-dark">Username:</label><br>
+									<input type="text" th:field="*{userName}" name="username"
+										id="username" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="password" class="text-dark">Password:</label><br>
+									<input type="password" th:field="*{password}"
+										class="form-control">
+								</div>
+								<div class="form-group">
+									<!--  <label for="remember-me" class="text-info"><span>Remember me</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br> -->
+									<input type="submit" name="submit"
+										class="btn btn-warning btn-md btn-block" value="Log in">
+								</div>
+								<div class="form-group text-center">
+									<a th:href="@{/user/signup}">Sign up</a> <span class="p-2">|</span>
+									<a th:href="@{/forgot_password}">Forgot Password</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 
 
-<!-- <form class="login-form" action="" th:object="${user}" th:action="@{/user/authenticate}" method="post">
+		<!-- <form class="login-form" action="" th:object="${user}" th:action="@{/user/authenticate}" method="post">
 	<table class="table">
 		<tr>
 			<td>Name:</td>
@@ -61,29 +67,33 @@
           <a th:href="@{/forgot_password}">Forgot Password</a>
     </div>	
 </form> -->
-</div>
-<div th:replace="layout/layout.html :: footer"></div>
-<div th:replace="layout/layout.html :: javascript"></div>
+	</div>
+	<div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>
 </body>
 <style>
 body {
 	color: #fff;
-		font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
 }
+
 #login .container #login-row #login-column #login-box {
-  margin-top: -50px;
-  max-width: 600px;
-  height: 350px;
-  border: 1px solid #9C9C9C;
-  background-color: #EAEAEA;
+	margin-top: -50px;
+	max-width: 600px;
+	height: 400px;
+	border: 1px solid #9C9C9C;
+	background-color: #EAEAEA;
 }
+
 #login .container #login-row #login-column #login-box #login-form {
-  padding: 20px;
+	padding: 20px;
 }
-#login .container #login-row #login-column #login-box #login-form #register-link {
-  margin-top: -65px;
+
+#login .container #login-row #login-column #login-box #login-form #register-link
+	{
+	margin-top: -65px;
 }
 </style>
 </html>

@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>Error</title></head>
-<head th:insert="layout/layout.html :: veryTop"></head>
+<head><title>Error</title>
+<style>
+h3{
+	text-align:center;
+	padding: 100px;
+}
+</style></head>
+<head th:insert="layout/layout.html :: veryTop">
+
+</head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 	<h3 th:text=${error}></h3>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
 </body>
+
 </html>
