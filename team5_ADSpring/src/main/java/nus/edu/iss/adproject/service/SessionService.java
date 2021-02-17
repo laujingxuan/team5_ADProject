@@ -17,4 +17,6 @@ public interface SessionService {
 	boolean hasPlatformPermission(HttpSession session);
 
 	boolean hasAttractionPermission(HttpSession session);
+
+	public String findName(HttpSession session);
 }

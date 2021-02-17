@@ -7,25 +7,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
+import nus.edu.iss.adproject.model.ChatData;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
+import nus.edu.iss.adproject.model.RoomType;
 import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.BookingService;
+import nus.edu.iss.adproject.service.ChatDataService;
 import nus.edu.iss.adproject.service.HotelService;
 import nus.edu.iss.adproject.service.ProductService;
 import nus.edu.iss.adproject.service.RoomTypeService;
@@ -55,6 +62,7 @@ public class ProductController {
 	
 	@Autowired
 	private RoomTypeService roomService;
+
 	
 	@RequestMapping("/")
 	public String listProductForm(Model model, @Param("keyword") String keyword, HttpSession session) {
@@ -159,4 +167,6 @@ public class ProductController {
 		}
 		return hotSellers;
 	}
+
+
 }

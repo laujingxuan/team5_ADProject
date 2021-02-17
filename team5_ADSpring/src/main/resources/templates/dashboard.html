@@ -42,7 +42,7 @@
 				</td>
 			</tr>
 		</table>
-		<table class="table table-borderless" id="chart-2" style="margin-top: 170px">
+		<table class="table table-borderless" style="margin-top: 170px" id="chart-2">
 			<tr >
 				<td>
 					<select name="month" class="form-control" id="month" style="width: 150px;margin:0 auto">
@@ -136,7 +136,7 @@ $(document).ready(function() {
 	    var room = $("#room").val();
 	    
 	    
-	   $.get( "/dashboard/dailyBookingVacancy?month=" + month + '&room=' + room, function( data ) {
+	   $.get( "/dashboard/dailyBookingVacancy?month=" + month + '&room=' + room+'&hotel_id='+hotel_id, function( data ) {
 	    	htmldata_vacancyRate = data;
 	    	console.log(htmldata_vacancyRate);
 	    	window.myChart_Vacancy.data.datasets[0].data = [];
@@ -150,7 +150,7 @@ $(document).ready(function() {
 	    var room = $("#roomtype_cancellation").val();
 	    
 	    
-	   $.get( "/dashboard/dailyCancellation?month=" + month + '&room=' + room, function( data ) {
+	   $.get( "/dashboard/dailyCancellation?month=" + month + '&room=' + room+'&hotel_id='+hotel_id, function( data ) {
 	    	
 		   htmldata_cancellationRate = data;
 		   window.myChart_Cancellation.data.datasets[0].data = [];

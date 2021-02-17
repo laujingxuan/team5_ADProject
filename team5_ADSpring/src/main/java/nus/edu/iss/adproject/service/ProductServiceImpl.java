@@ -47,6 +47,23 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProduct(Product room) {
 		prepo.delete(room);
 	}
+
+	@Override
+	public Product findById(Long id) {
+		return prepo.findById(id).get();
+	}
+
+	@Override
+	public List<Product> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(Product x) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

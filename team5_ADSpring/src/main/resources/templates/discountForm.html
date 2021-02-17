@@ -8,7 +8,7 @@
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 <br/>
-	<h3>Set Discount for <span th:text="${name}"></span></h3><br/>
+	<h3 style="text-align:center">Set Discount for <span th:text="${name}"></span></h3><br/>
 	<form action="#" th:object="${discount}" th:action="@{/discount/save}" method="get" id="form">
 	<div id="datepicker-container">
 		<table  class="table table-borderless">
@@ -61,7 +61,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="3"><button class="btn btn-primary" type="submit">Apply</button></td>
+				<td colspan="3"><button class="btn btn-outline-info" type="submit">Apply</button></td>
 			</tr>
 		</table>
 		</div>
