@@ -3,12 +3,15 @@ package nus.edu.iss.adproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 
@@ -22,14 +25,23 @@ public class Product {
 
 	private ProductType type;
 	
-	@OneToMany(mappedBy = "product")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	@JsonIgnore
 	private List<ProductReview> productReview;
 	
-	@OneToOne(mappedBy = "product")
+	@OneToOne(cascade = CascadeType.REMOVE, mappedBy = "product")
 	private Attraction attraction;
 	
-	@OneToOne(mappedBy = "product")
+	@OneToOne(cascade = CascadeType.REMOVE, mappedBy = "product")
 	private RoomType roomType;
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	@JsonIgnore
+	private List<Cart> carts;
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "product")
+	@JsonIgnore
+	private List<BookingDetails> bookingDetails;
 
 	public Product() {
 		super();

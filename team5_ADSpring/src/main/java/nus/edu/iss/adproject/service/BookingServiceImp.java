@@ -2,6 +2,7 @@ package nus.edu.iss.adproject.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -30,6 +31,11 @@ public class BookingServiceImp implements BookingService {
 	public List<Booking> retrieveUserBooking(User user) {
 		return bookRepo.findBookingsByUserId(user.getId());
 	}
+	
+	public BookingDetails retrieveDetailsByDetailId(Long id) {
+		return bookRepoDet.findDetailsByDetailId(id);
+		
+	}
 
 	@Override
 	public List<BookingDetails> retrieveDetailsByBookingId(Long id) {
@@ -47,28 +53,28 @@ public class BookingServiceImp implements BookingService {
 	}
 
 	@Override
-	public List findGuestByMonth() {
-		return bookRepoDet.findGuestByMonth();
+	public List findGuestByMonth(Long hotel_id) {
+		return bookRepoDet.findGuestByMonth(hotel_id);
 	}
 
 	@Override
-	public List<Object> findMonthlyRevenueByHotel(Long userId) {
-		return bookRepoDet.findMonthlyRevenueByHotel(userId);
+	public List<Object> findMonthlyRevenueByHotel(Long userId,Long hotel_id) {
+		return bookRepoDet.findMonthlyRevenueByHotel(userId, hotel_id);
 	}
 
 	@Override
-	public List<Object> findMonthlyBookingRateByHotel(Long userId) {
-		return bookRepoDet.findMonthlyBookingRateByHotel(userId);
+	public List<Object> findMonthlyBookingRateByHotel(Long userId,Long hotel_id) {
+		return bookRepoDet.findMonthlyBookingRateByHotel(userId, hotel_id);
 	}
 
 	@Override
-	public List<Object> findMonthlyRevenueForAllHotels() {
-		return bookRepoDet.findMonthlyRevenueForAllHotels();
+	public List<Object> findMonthlyRevenueForAllHotels(Integer month, Integer year) {
+		return bookRepoDet.findMonthlyRevenueForAllHotels(month, year);
 	}
 
 	@Override
-	public List<Object> findMonthlyRevenueForAllAttractions() {
-		return bookRepoDet.findMonthlyRevenueForAllAttractions();
+	public List<Object> findMonthlyRevenueForAllAttractions(Integer month, Integer year) {
+		return bookRepoDet.findMonthlyRevenueForAllAttractions(month, year);
 	}
 
 	@Override

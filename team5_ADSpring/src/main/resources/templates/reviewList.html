@@ -17,7 +17,7 @@
 	<h3 align="center">Review List</h3>
 	<br/>
 	
-	<table align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto"> 
+	<table class="table table-striped"  align="center" cellpadding="3" cellspacing="5" style="width: 90%;margin:auto;background-color:white"> 
 		<tr>
 			<td><b>ID</b></td>
 			<td><b>Picture</b></td>
@@ -26,13 +26,20 @@
 		</tr>
 		<tr th:each="review:${review}">
 			<td th:text="${review.id}">ID</td>
-			<td><img height="128" width="168" th:src="${review.photoImagePath}"/></td>
+			<td><img height="128" width="168" th:if="${review.pic!=null}" th:src="@{${'/review/product/image/' + review.id}}"></td>
 			<td th:text="${review.rating}">Rating</td>
 			<td th:text="${review.message}">Content</td>
+		</tr>
+		<tr th:each="review:${photo}">
+			<td th:text="${review}">ID</td>
 		</tr>
 	</table>
 	
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
+	<script>
+		console.log("@{'/review/product/image/' + ${review.id}}");
+	
+	</script>
 </body>
 </html>

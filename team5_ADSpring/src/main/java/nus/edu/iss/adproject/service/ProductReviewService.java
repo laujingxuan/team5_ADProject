@@ -10,5 +10,8 @@ public interface ProductReviewService {
 	
 	void save(@Valid ProductReview review);
 	public List<ProductReview> findReviewByProductId(Long id);
+	public void deleteProductReview(ProductReview productReview);
+	
+	public ProductReview findReviewById(Long id);
 	
 }

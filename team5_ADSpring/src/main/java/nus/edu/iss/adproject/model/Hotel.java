@@ -4,13 +4,17 @@ package nus.edu.iss.adproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -18,38 +22,43 @@ public class Hotel {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
     public long id;	
-	@OneToMany(mappedBy = "hotel")
+	
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
+	@JsonIgnore
 	private List< RoomType> roomType;
-	@NotNull
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "hotel")
+    @JsonIgnore
+    private List<Discount> discount;
+    @ManyToOne
+    @JsonIgnore
+    private User user;
+	
+    @NotEmpty
 	private String name;
-	@NotNull
+    @NotEmpty
     private String location;
-    private double lat;
-    private double longi;
-    private double rate;
-    private int numberOfRestaurants;
     @NotNull
+    private double lat;
+    @NotNull
+    private double longi;
+    private double rating;
+    private int numberOfRestaurants;
+    @NotEmpty
     private String country_City;
     private String emenities;
-    private String quality;
     private String description;
-    @NotNull
+    @NotEmpty
     private String API_URL;
+    @NotEmpty
     private String imageURL;
-    
-    @OneToMany(mappedBy = "hotel")
-    private List<Discount> discount;
-    
-    @ManyToOne
-    private User user;
 
 	public Hotel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 		
-	public Hotel(String name, String location, double lat, double longi, double rate,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
+	public Hotel(String name, String location, double lat, double longi, double rating,
+			int numberOfRestaurants, String country_City, String emenities, String description,
 			String aPI_URL, User user) {
 		super();
 		this.roomType = new ArrayList<RoomType>();
@@ -58,18 +67,17 @@ public class Hotel {
 		this.location = location;
 		this.lat = lat;
 		this.longi = longi;
-		this.rate = rate;
+		this.rating = rating;
 		this.numberOfRestaurants = numberOfRestaurants;
 		this.country_City = country_City;
 		this.emenities = emenities;
-		this.quality = quality;
 		this.description = description;
 		API_URL = aPI_URL;
 		this.user = user;
 	}
 	
-	public Hotel(String name, String location, double lat, double longi, double rate,
-			int numberOfRestaurants, String country_City, String emenities, String quality, String description,
+	public Hotel(String name, String location, double lat, double longi, double rating,
+			int numberOfRestaurants, String country_City, String emenities, String description,
 			String aPI_URL, User user, String imageURL) {
 		super();
 		this.roomType = new ArrayList<RoomType>();
@@ -78,11 +86,10 @@ public class Hotel {
 		this.location = location;
 		this.lat = lat;
 		this.longi = longi;
-		this.rate = rate;
+		this.rating = rating;
 		this.numberOfRestaurants = numberOfRestaurants;
 		this.country_City = country_City;
 		this.emenities = emenities;
-		this.quality = quality;
 		this.description = description;
 		API_URL = aPI_URL;
 		this.user = user;
@@ -145,12 +152,6 @@ public class Hotel {
 	public void setLongi(double longi) {
 		this.longi = longi;
 	}
-	public double getRate() {
-		return rate;
-	}
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
 	public int getNumberOfRestaurants() {
 		return numberOfRestaurants;
 	}
@@ -169,12 +170,6 @@ public class Hotel {
 	public void setEmenities(String emenities) {
 		this.emenities = emenities;
 	}
-	public String getQuality() {
-		return quality;
-	}
-	public void setQuality(String quality) {
-		this.quality = quality;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -188,6 +183,13 @@ public class Hotel {
 		this.discount = discount;
 	}
 
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
 
 	public User getUser() {
 		return user;
@@ -200,15 +202,10 @@ public class Hotel {
 	@Override
 	public String toString() {
 		return "Hotel [id=" + id + ", roomType=" + roomType + ", name=" + name + ", location=" + location + ", lat="
-				+ lat + ", longi=" + longi + ", rate=" + rate + ", numberOfRestaurants=" + numberOfRestaurants
-				+ ", country_City=" + country_City + ", emenities=" + emenities + ", quality=" + quality
+				+ lat + ", longi=" + longi + ", rating=" + rating + ", numberOfRestaurants=" + numberOfRestaurants
+				+ ", country_City=" + country_City + ", emenities=" + emenities
 				+ ", description=" + description + ", API_URL=" + API_URL + "]";
 	}	
 	
 
 }
-//@OneToMany(mappedBy = "hotel")
-	//private List< RoomType> roomType;
-//	Marina Bay Sands Hotel, Singapore (1.282302, 103.858528)
-//	Swissôtel The Stamford, Singapore (1.293354, 103.853561)
-//	Hotel Miramar, Singapore (1.288710, 103.837372

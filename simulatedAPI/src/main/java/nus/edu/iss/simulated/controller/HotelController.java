@@ -38,7 +38,6 @@ public class HotelController {
 	//findBookingById
 	@GetMapping("/booking/{id}")
 	public ResponseEntity<HotelBooking> findBookingById (@PathVariable("id") Long id) {
-		System.out.println(id);
 		return new ResponseEntity<HotelBooking>(hotelBookSer.findBookingById(id), HttpStatus.OK);
 	}
 	
@@ -46,9 +45,13 @@ public class HotelController {
 	@PostMapping("/booking")
 	public ResponseEntity<HotelBooking> newBooking (@RequestBody HotelBooking hotelBooking) {
 		HotelBooking newHotelBooking = hotelBookSer.createBooking(hotelBooking);
+<<<<<<< HEAD
 		//int isCancelled = predictBookingCancellationRate(newHotelBooking);
 		//System.out.println(isCancelled);
 		System.out.println(newHotelBooking);
+=======
+		int isCancelled = predictBookingCancellationRate(newHotelBooking);
+>>>>>>> branch 'master' of https://github.com/laujingxuan/team5_ADProject.git
 		return new ResponseEntity<HotelBooking>(newHotelBooking, HttpStatus.OK);
 	}
 	
@@ -76,7 +79,6 @@ public class HotelController {
 	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypePeriod(@RequestBody MultipleDateQuery input){
 		
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);
-
 	}
 
 	@PostMapping("/room/update")
@@ -102,26 +104,10 @@ public class HotelController {
 				//(risk-averse) in case predicted cancelled rooms are not cancelled.
 				temp.setNumVacancies(temp.getNumVacancies()+0.7*hotelBooking.getNumRooms());
 				temp.setNumCancellations(temp.getNumCancellations()+hotelBooking.getNumRooms());
+				dailyRoomSer.updateDailyRoomTypeDetail(temp);
 			}
 		}
 		return isCancel;
 	}
 	
-//	@GetMapping("/")
-//	public ResponseEntity<Boolean> testing(){
-//		predictBookingCancellationRate();
-//		return new ResponseEntity<Boolean>
-//		(true,HttpStatus.OK);
-//	}
-	
-//	public int predictBookingCancellationRate() {
-//		//connect to machine learning api
-//		final String uri = "http://127.0.0.1:5000/model";
-//		RestTemplate restTemplate = new RestTemplate();
-//		MLearningVar mLearning = new MLearningVar(12,9,20,102.81,0);
-//		String isCancelled = restTemplate.postForObject( uri, mLearning, String.class);
-//		System.out.println(isCancelled);
-//
-//		return Integer.parseInt(isCancelled);
-//	}
 }

@@ -1,10 +1,17 @@
 package nus.edu.iss.adproject.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,38 +25,55 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.model.ProductReview;
-import nus.edu.iss.adproject.nonEntityModel.FileUploadUtil;
-import nus.edu.iss.adproject.repository.ProductRepo;
+import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.service.ProductReviewService;
+import nus.edu.iss.adproject.service.ProductService;
+import nus.edu.iss.adproject.service.SessionService;
 
 @Controller
 @RequestMapping("/review")
 public class ReviewController {
 	
 	@Autowired
-	ProductReviewService prservice;
+	private ProductReviewService prservice;
+	
 	
 	@Autowired
-	ProductRepo prepo;
+	private ProductService productServ;
 	
+	@Autowired
+	private SessionService sessionservice;
 	
 	@GetMapping("/list/{id}")
-	public String listProductReview(Model model, @PathVariable("id")Long id) {
-		Product product = prepo.findById(id).get();
-		List<ProductReview> reviewList = prservice.findReviewByProductId(id);
-		model.addAttribute("review", reviewList); 
-		model.addAttribute("product", product);
+	public String listProductReview(Model model, @PathVariable("id")Long id,HttpServletResponse response)
+			throws IOException {
 		
+		List<ProductReview> products = prservice.findReviewByProductId(id);
+			
+		model.addAttribute("review", products); 
+
 		return "reviewList";
 	}
 	
+	@GetMapping("/product/image/{id}")
+	public void showProductImage(@PathVariable long id,
+	                               HttpServletResponse response) throws IOException {
+		response.setContentType("image/jpeg"); // Or whatever format you wanna use
+		ProductReview products = prservice.findReviewById(id);
+		System.out.println(products.getPic()== null);
+		InputStream is = new ByteArrayInputStream(products.getPic());
+		IOUtils.copy(is, response.getOutputStream());
+	}
 	
 	@GetMapping("/post/{id}")
-	public String postProductReview(Model model, @PathVariable("id")Long id) {
+	public String postProductReview(Model model, HttpSession session, @PathVariable("id")Long id) {
+		if (sessionservice.isNotLoggedIn(session))
+			return "redirect:/user/login";
+		User user = (User) session.getAttribute("user");
 		ProductReview review = new ProductReview();
-		review.setProduct(prepo.findById(id).get());
+		review.setUser(user);
+		review.setProduct(productServ.findProductById(id));
 		model.addAttribute("review", review);
 		return "reviewForm";
 	}
@@ -59,17 +83,25 @@ public class ReviewController {
 	public String postProductReveiw(Model model, @PathVariable("id")Long id, 
 			@ModelAttribute("review")@Valid ProductReview review, 
 			BindingResult bindingResult, @RequestParam("image") MultipartFile multipartFile) throws IOException {
+
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		review.setPhoto(fileName);
-		review.setProduct(prepo.findById(id).get());
+		if (fileName.isEmpty() == false) {
+			File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + fileName);
+			multipartFile.transferTo(convFile);
+			
+			byte[] fileContent = FileUtils.readFileToByteArray(convFile);
+			review.setPic(fileContent);
+			review.setPhoto(fileName);
+		}
+		review.setProduct(productServ.findProductById(id));
+		
 		if(bindingResult.hasErrors()) {
 			return "reviewForm";
 		}
 		prservice.save(review);
-		String uploadDir = "user-photos/" + review.getId();
-		FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-		return "reviewList";
+		return "redirect:/review/list/"+ id;
 	}
+	
 	
 	
 }

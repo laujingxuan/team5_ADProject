@@ -11,9 +11,12 @@ public interface SessionService {
 	public boolean authenticate(User user);
 
 	public boolean isNotLoggedIn(HttpSession session);
-	public boolean hasNoPermission(HttpSession session);
-	public boolean hasPermission(HttpSession session);
-	
-	public long getUserId();
-	public User getUser();
+
+	boolean hasHotelPermission(HttpSession session);
+
+	boolean hasPlatformPermission(HttpSession session);
+
+	boolean hasAttractionPermission(HttpSession session);
+
+	public String findName(HttpSession session);
 }

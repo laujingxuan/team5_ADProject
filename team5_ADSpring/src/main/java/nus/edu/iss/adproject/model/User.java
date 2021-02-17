@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.nonEntityModel.UserForm;
 
@@ -23,48 +26,43 @@ public class User {
 	private String password;
 	private RoleType role;
 	private String email;
-	private long points; 
-	String name;
+	private boolean subscribe;
 	
+	public User(long id, String userName, String password, RoleType role, String email,boolean subscribe) {
+		super();
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
+		this.email = email;
+		this.subscribe = subscribe;
 
-
-	public String getName() {
-		return name;
 	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	@JsonIgnore
 	@OneToMany(mappedBy="user")
 	private List<Cart> carts;
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Attraction> attraction;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Hotel> hotel;
-
+	
+	@JsonIgnore
 	@Column(name="reset_password_token")
 	private String resetPasswordToken;
-
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<ProductReview> productReview;
 
 	
 	public User() { }
 
-	public User(String name, String password, RoleType role, String email, long points) {
-
-		this.userName = name;
-		this.password = password;
-		this.role = role;
-		this.email = email;
-		this.points = points;
-		this.carts = new ArrayList<Cart>();
-	}
-	
 	public User(String name, String password, RoleType role, String email) {
+
 		this.userName = name;
 		this.password = password;
 		this.role = role;
@@ -87,8 +85,24 @@ public class User {
 		this.password=userForm.getPassword();
 		this.role=userForm.getRole();
 		this.carts = new ArrayList<Cart>();
+		this.subscribe=userForm.isSubscribe();
 	}
 	
+	public boolean isSubscribe() {
+		return subscribe;
+	}
+
+	public void setSubscribe(boolean subscribe) {
+		this.subscribe = subscribe;
+	}
+
+	public List<ProductReview> getProductReview() {
+		return productReview;
+	}
+
+	public void setProductReview(List<ProductReview> productReview) {
+		this.productReview = productReview;
+	}
 	
 	public RoleType getRole() {
 		return role;
@@ -133,12 +147,7 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getPoints() {
-		return points;
-	}
-	public void setPoints(long points) {
-		this.points = points;
-	}
+
 	public List<Attraction> getAttraction() {
 		return attraction;
 	}
@@ -155,7 +164,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", role=" + role + ", email="
-				+ email + ", points=" + points + "]";
+				+ email + ", subscribe=" + subscribe + "]";
 	}
 
 	public String getResetPasswordToken() {

@@ -37,48 +37,72 @@ $(function() {
 <title>Insert title here</title>
 </head>
 
+<style type="text/css">
+td{
+	text-align:center;
+	vertical-align:middle;
+	height:50px;
+}
+
+
+body {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  margin-bottom: -40px;
+  background-color: white;
+ 
+}
+
+.available{
+	 margin-top: -50px;
+  max-width: 700px;
+  height: 350px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+</style>
 
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
-<h3>select your date and see attraction/hotel Status </h3>
+	<br/>
+<h3 class="text-center"><b>Select Date And View Availability</b></h3>
+	<br/>
 
 
-<form action="" th:action="@{/stock/report}" method="POST" class="product-item">
-  <table class="table py-5" cellspacing="10px" cellpadding="10px">
-	<tr><th colspan="4" class="text-center">select a date</th></tr>
-	<tr th:text ="${discount}">id</tr>
-	
+<form action="" th:object="${cartitem}" th:action="@{/cart/add/}+${productId}" method="POST" class="product-item">
+  <table align="center"  class="available"  style="width: 100%;margin:auto">
+	<tr th:each="discountItem:${discountList}"><td th:text ="${discountItem}" colspan="4" style="color: black ">id</td></tr>
 	<tr>
-		<td class="td_left"><label for="startDate">Start date</label></td>
-		<td class="td_right"><input type="text" id="date"></td>
+		<td class="td_left" style="color: black "><label for="startDate">Start date</label></td>
+		<td class="td_right"><input type="text" id="date" th:field="*{startDate}"></td>
 	</tr>
-		<tr>
-		<td class="td_left">Price </td>
-
-		<td>
-		  <input type="hidden" th:value="${price}" name="price">
+	<tr>
+		<td class="td_left" style="color: black ">Price (S$)</td>
+		<td style="color: black ">
+		  <input type="hidden"  th:value="${price}" name="price">
   			<div class="total-price"  th:text="${price}"th:value ="${price}"></div>
 		</td>
 	</tr>
-	
 	<tr>
-		<td>Quantity</td>
-		<td>  <select name="quantity" class="product-select" tabindex="1">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-    <option value="6">6</option>
-    <option value="7">7</option>
-    <option value="8">8</option>
-    <option value="9">9</option>
-  </select></td>
+		<td style="color: black ">Quantity</td>
+		<td>  
+			<select  class= "form-control" style="width: 100px; margin-left:150px " name="quantity" id="product-select" tabindex="1">
+			    <option value="1">1</option>
+			    <option value="2">2</option>
+			    <option value="3">3</option>
+			    <option value="4">4</option>
+			    <option value="5">5</option>
+			    <option value="6">6</option>
+			    <option value="7">7</option>
+			    <option value="8">8</option>
+			    <option value="9">9</option>
+			 </select>
+		</td>
 	</tr>
-	
-	
 	<tr>
-		<td><input type="submit" value="add to cart" /></td>
+		<td colspan="4"><input type="submit"  class="btn btn-outline-info" value="Add To Cart"/></td>
 	</tr>
   </table>
 </form>  
@@ -93,7 +117,7 @@ $(function() {
 </html>
 
 <script>
-  jQuery('.product-select').on('change', function () {
+  jQuery('#product-select').on('change', function () {
     var el = $(this);
     var quantity = parseInt(el.val());
     var price = parseInt(el.closest('.product-item').find('[name="price"]').val());

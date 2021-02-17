@@ -12,37 +12,59 @@ import nus.edu.iss.adproject.model.Product;
 import nus.edu.iss.adproject.repository.ProductRepo;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
 	ProductRepo prepo;
 	
+	@Override
 	public void save(Product x) {
 		prepo.save(x);
 	}
 	
-	@Transactional
+	@Override
 	public Product findProductById(Long id) {
 		return prepo.findById(id).get();
 	}
 		
 	
-	@Transactional
+	@Override
 	public List<Product> listAllSearchAttractions(String keyword){
-		System.out.println(keyword);
-		if(keyword!=null) {
+//		if(keyword!=null) {
 			return prepo.search1(keyword);
-		}
-		return new ArrayList<Product>();
+//		}
+//		return new ArrayList<Product>();
 	}
 	
-	@Transactional
+	@Override
 	public List<Product> listAllSearchHotels(String keyword){
-		System.out.println(keyword);
-		if(keyword!=null) {
+//		if(keyword!=null) {
 			return prepo.search2(keyword);
-		}
-		return prepo.findAll();
+//		}
+//		return prepo.findAll();
+	}
+
+	@Override
+	public void deleteProduct(Product room) {
+		prepo.delete(room);
+	}
+
+	@Override
+	public Product findById(Long id) {
+		return prepo.findById(id).get();
+	}
+
+	@Override
+	public List<Product> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(Product x) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

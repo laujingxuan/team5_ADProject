@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>Information for Administrative Members</title>
+      <link rel="stylesheet" th:href="@{/css/chat.css}" />
+       
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+      <script  src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+       
+<head th:insert="layout/layout.html :: veryTop"></head>
+<body>
+	<div th:replace="layout/layout.html :: menu" ></div>
+      <div id="chat-container">
+         <div class="chat-header">
+            <div class="user-container">
+               <span id="username" th:utext="${username}"></span>            
+            </div>
+            <div style ="text-align: center;"><h3>Platform Group Chat</h3></div>
+            
+         </div>
+          
+         <hr/>
+          
+         <div id="connecting">Connecting...</div>
+         
+  			     
+         <ul id="messageArea">
+			<table> 
+  				<tr th:each="cData:${chatDATA}">
+					<td th:text="${cData.Sender}">ID</td>
+					<td th:text="${cData.Message}">ID</td> 
+				</tr>
+			</table> 
+		         
+         </ul>
+ 		<form id="messageForm" name="messageForm"  >                
+            <div class="input-message">
+               <input type="text" id="message" autocomplete="off"
+                  placeholder="Type a message..." />
+               <button type="submit">Send</button>
+            </div>
+         </form> 
+      </div>
+    <div th:replace="layout/layout.html :: footer"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>
+    <script th:src="@{/js/chatmain.js}"></script>
+
+</body>
+</html>

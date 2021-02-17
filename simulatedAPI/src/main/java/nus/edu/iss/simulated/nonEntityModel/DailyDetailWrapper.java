@@ -7,13 +7,6 @@ import nus.edu.iss.simulated.model.DailyAttractionDetail;
 public class DailyDetailWrapper {
 	private List<DailyAttractionDetail> dailyDetails;
 
-	
-//	
-//	public DailyDetailWrapper() {
-//		super();
-//		dailyDetails = new ArrayList<DailyAttractionDetail>();
-//	}
-
 	public DailyDetailWrapper(List<DailyAttractionDetail> dailyDetails) {
 		super();
 		this.dailyDetails = dailyDetails;

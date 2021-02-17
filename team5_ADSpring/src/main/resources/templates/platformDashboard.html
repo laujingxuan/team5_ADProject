@@ -8,18 +8,29 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<body>	
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.css">
+ 
+ <body>	
 <div th:replace="layout/layout.html :: menu" ></div>
 	<h3>Dashboard for Platform Owner</h3><br/>
 	<form action="#" method="get">	
+	<div class="row" style="float:left;margin-left: 60px">
+				<select name="month" class="form-control" id="month"
+					style="width: 200px; margin: 0 auto" th:onchange="'window.location.href = \'' + @{/dashboard/showDashboardForPlatformManager} + '?month=\' + this.value'  ">
+						<option
+							th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+							th:value="${month}" th:text="${month}"></option>
+				</select>
+			</div><br/><br/><br/>
 		<div class="row">
 			<div style="margin: 0 auto">
-				<table class="table table-bordered" >
+			
+				<table   class="table table-bordered" id="sort">
 					<thead>
 						<tr>
-							<th>Hotel Name</th>
-							<th>Monthly Revenue</th>
-							<th>Monthly Guest</th>
+							<th data-sortable="true">Hotel Name</th>
+							<th data-sortable="true">Monthly Revenue</th>
+							<th data-sortable="true">Monthly Guest</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -36,12 +47,12 @@
 			</div>
 			
 			<div style="margin: 0 auto">
-				<table class="table table-bordered">
+				<table class="table table-bordered"  id="sortAttraction">
 					<thead>
 						<tr>
-							<th>Hotel Name</th>
-							<th>Monthly Revenue</th>
-							<th>Monthly Guest</th>
+							<th data-sortable="true">Hotel Name</th>
+							<th data-sortable="true">Monthly Revenue</th>
+							<th data-sortable="true">Monthly Guest</th>
 							<!-- <th></th> -->
 						</tr>
 					</thead>
@@ -60,6 +71,29 @@
 	</form>
 
 	<div th:replace="layout/layout.html :: footer"></div>
-	<div th:replace="layout/layout.html :: javascript"></div>
+	<div th:replace="layout/layout.html :: javascript"></div>	
 </body>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.js"></script>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+var month =/*[[${month1}]]*/{}
+console.log(month);
+//$("#month").val(month);
+
+
+$("#month").change(function() {
+	document.getElementById("month").value  =month;
+});
+
+$(function() {
+	$('#sort').bootstrapTable({
+		   sortable: true   
+	   });
+	$('#sortAttraction').bootstrapTable({
+		   sortable: true   
+	   });
+	});
+/*]]>*/
+</script>
 </html>

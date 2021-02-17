@@ -53,8 +53,6 @@ public class AttractionServiceImpl implements AttractionService{
 	public List<Attraction> findByUserId(Long userId) {
 		return arepo.findByUserId(userId);
 	}
-	
-	
 
 
 }
