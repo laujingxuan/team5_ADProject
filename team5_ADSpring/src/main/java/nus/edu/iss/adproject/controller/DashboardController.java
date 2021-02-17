@@ -168,7 +168,8 @@ public class DashboardController {
 	    public String handleRequestFroPlatform (@PathVariable("month") Integer month,Model model, HttpSession session) {
 		 System.out.println(month);
 		 DashboardForPlatform(model, month);
-		 model.addAttribute("month", month);
+		 String month_name = "March";
+		 model.addAttribute("month1", month_name);
 			return "platformDashboard";
 	    }
 
@@ -205,7 +206,9 @@ public class DashboardController {
 			check_uri = hotel.get(0).getAPI_URL();
 		}
 //		if(check_uri != null || check_uri.trim() != "NA" || !check_uri.isEmpty())  {
-		if(check_uri.startsWith(" "))  {
+		if(check_uri.startsWith(" ")) {
+			check_uri = check_uri.substring(0,1);}
+		if (!check_uri.equals("NA") || !check_uri.isEmpty()) {			
 			MonthTypeQuery monthTypeQuery = new MonthTypeQuery(1, room_list.get(0).getRoomType());
 			DailyRoomDetailWrapper result = restTemplate.postForObject(uri, monthTypeQuery,
 					DailyRoomDetailWrapper.class);
@@ -213,6 +216,7 @@ public class DashboardController {
 				data_dailyVacancyRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumVacancies());
 				data_dailyCancellationRate.put(daily.getDate().getDayOfMonth(), (int) daily.getNumCancellations());
 			}
+
 		}
 		
 		
@@ -423,8 +427,7 @@ public class DashboardController {
 			}
 		}
 
-		
-		model.addAttribute("month",1);
+		//model.addAttribute("month",month);
 		model.addAttribute("attractoins", a_list);
 		model.addAttribute("hotels", d_list);
 	}

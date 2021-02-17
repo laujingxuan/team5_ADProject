@@ -278,11 +278,11 @@ body {
 
 			</div>
 			<br />
-			<div>
-				<a class="btn btn-outline-info" id="comment" href="reviewList.html" th:href="@{/review/list/}+${review[0].product.id}" role="button">View
+			<div  th:object="${roomtype}">
+				<a class="btn btn-outline-info" id="comment" href="reviewList.html" th:href="@{/review/list/}+${roomtype.product.id}" role="button">View
 					Comments Detail </a> 
 				<a class="btn btn-outline-info"  id="comment" href="reviewList.html"
-					th:href="@{/review/post/}+${review[0].product.id}" role="button">Post Comment </a>
+					th:href="@{/review/post/}+${roomtype.product.id}" role="button">Post Comment </a>
 			</div>
 		</div>
 	</div>

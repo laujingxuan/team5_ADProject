@@ -77,9 +77,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.js"></script>
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
-var month =/*[[${month}]]*/{}
+var month =/*[[${month1}]]*/{}
 console.log(month);
-document.getElementById("month").value  =month;
+//$("#month").val(month);
+
+
+$("#month").change(function() {
+	document.getElementById("month").value  =month;
+});
 
 $(function() {
 	$('#sort').bootstrapTable({
