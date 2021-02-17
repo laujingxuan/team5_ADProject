@@ -1,20 +1,12 @@
 package nus.edu.iss.adproject.controller;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,19 +16,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.client.RestTemplate;
 
 import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
-import nus.edu.iss.adproject.model.Month;
 import nus.edu.iss.adproject.model.User;
-import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
-import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
-import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
 import nus.edu.iss.adproject.nonEntityModel.RoleType;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.AttractionServiceImpl;
@@ -78,7 +64,7 @@ public class DiscountController {
 		
 	}
 	
-	@GetMapping("/save")
+	@PostMapping("/save")
 	public String saveDiscountForm(@ModelAttribute("discount") @Valid Discount discount, BindingResult bindingResult,
 			Model model,HttpSession session)  {
 		User user = (User) session.getAttribute("user");
@@ -114,17 +100,7 @@ public class DiscountController {
 		}
 		discount_svc.save(discount);
 		
-		/*
-		 * User user = (User) session.getAttribute("user"); if(user.getRole().toString()
-		 * == "HOTELMANAGER") { model.addAttribute("name", "Hotel");
-		 * model.addAttribute("product", hotel_svc.findAll()); } else
-		 * if(user.getRole().toString() == "ATTRACTIONMANAGER") {
-		 * model.addAttribute("name", "Attraction"); model.addAttribute("product",
-		 * attraction_svc.findAll()); }
-		 * 
-		 * model.addAttribute("discount", new Discount());
-		 */
-		return "forward:/discount/list";
+		return "redirect:/discount/list";
 	}
 	
 	@GetMapping("/create")

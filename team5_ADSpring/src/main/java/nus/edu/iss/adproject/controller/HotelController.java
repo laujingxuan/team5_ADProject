@@ -125,10 +125,10 @@ public class HotelController {
 		String APIURL = p.getRoomType().getHotel().getAPI_URL()+"room/period";
 		String RoomType = p.getRoomType().getRoomType();
 		List<Discount> discountlist= p.getRoomType().getHotel().getDiscount();
-		String discount = "";
+		List<String>discountList = new ArrayList<>();
 		for(Discount d : discountlist) {
-			discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
-					+ " the discount is " + d.getDiscount_rate() + "%";
+			discountList.add("Discount from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
+					+ ": " + d.getDiscount_rate() + "%");
 		}
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -148,8 +148,7 @@ public class HotelController {
 		model.addAttribute("dates1", dates);
 		model.addAttribute("RoomType",RoomType);
 		model.addAttribute("APIURL",APIURL);
-		model.addAttribute("discount",discount);
-
+		model.addAttribute("discountList",discountList);
 		model.addAttribute("cartitem", new CartForm());
 		model.addAttribute("productId", id);
 		return "hotel-roomType-availble-date";

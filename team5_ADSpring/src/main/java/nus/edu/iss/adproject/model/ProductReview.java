@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class ProductReview {
@@ -21,8 +23,10 @@ public class ProductReview {
 	@ManyToOne
 	private Product product;
 	
+	@NotNull
 	private double rating;
 	
+	@NotEmpty
 	private String message;
 	
 	private String photo;

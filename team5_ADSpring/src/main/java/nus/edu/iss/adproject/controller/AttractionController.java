@@ -88,10 +88,10 @@ public class AttractionController {
 			String URL = p.getAttraction().getAPI_URL()+ "booking/period";
 			double price = p.getAttraction().getPrice();
 			List<Discount> discountlist= p.getAttraction().getDiscount();
-			String discount = "";
+			List<String>discountList = new ArrayList<>();
 			for(Discount d : discountlist) {
-				discount += "Discount start from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
-						+ " the discount is " + d.getDiscount_rate() + "%";
+				discountList.add("Discount from "+d.getFrom_date().toString() + " to " + d.getTo_date().toString()
+						+ ": " + d.getDiscount_rate() + "%");
 			}
 			RestTemplate restTemplate = new RestTemplate();
 			//showing next 3 months availability, can changed the period accordingly
@@ -108,8 +108,7 @@ public class AttractionController {
 			}		
 			model.addAttribute("price",price);
 			model.addAttribute("dates1", dates);
-			model.addAttribute("discount",discount);
-		
+			model.addAttribute("discountList",discountList);
 			model.addAttribute("cartitem", new CartForm());
 			model.addAttribute("productId", productId);
 		return "Attraction-available-date";

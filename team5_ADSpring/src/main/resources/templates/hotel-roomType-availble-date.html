@@ -124,16 +124,14 @@ function submitdayViaAjax(){
 <div th:replace="layout/layout.html :: menu" ></div>
 
 	<br/>
-<h3 class="text-center"><b>select your date and see hotel Status</b></h3>
+<h3 class="text-center"><b>Select Dates And View Availability</b></h3>
 	<br/>
 
 <form action="" th:object="${cartitem}" th:action="@{/cart/add/}+${productId}" method="POST" class="form-horizontal">
 
   <table  class="table" style="background-color:white; margin:0 auto">
-  
-	<tr><th colspan="4" class="text-center">select a date</th></tr>
 
-	<tr><td th:text ="${discount}" colspan="4">id</td></tr>
+	<tr th:each="discountItem:${discountList}"><td th:text ="${discountItem}" colspan="4" style="color: black ">id</td></tr>
 	<tr>
 		<td  style="width: 100px; color: black " ><label for="startDate">Start Date :</label></td>
 		<td  style="width: 150px"><input type="text" class="form-control"  name="startDate" id="startdate" th:field="*{startDate}"></td>
@@ -147,7 +145,7 @@ function submitdayViaAjax(){
 	
 	</tr>
 	<tr>
-		<td colspan="4"><input type="submit"  class="btn btn-outline-info" value="add to cart"/></td>
+		<td colspan="4"><input type="submit"  class="btn btn-outline-info" value="Add To Cart"/></td>
 	</tr>
     </table>
 </form>  

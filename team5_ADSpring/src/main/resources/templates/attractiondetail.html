@@ -237,7 +237,7 @@ body {
 		</div>
 	</form>
 	
-	<form align="center" class="form-attraction">
+	<!-- <form align="center" class="form-attraction">
 	<div class="container">
 		<div th:object="${attraction}">
 			<div class="row">
@@ -258,7 +258,7 @@ body {
 						class="icon-desc" data-v-0fe9c1f1=""> No cancellation </span>
 				</div>
 				<div class="icon-content" data-v-0fe9c1f1="">
-					<!---->
+					
 					<img
 						src="https://res.klook.com/image/upload/icon_voucher-900_jpa51y.png"
 						alt="icon" class="img-icon icon" data-v-0fe9c1f1=""> <span
@@ -266,18 +266,18 @@ body {
 						printed voucher </span>
 				</div>
 				<div class="icon-content" data-v-0fe9c1f1="">
-					<!---->
+					
 					<img
 						src="https://res.klook.com/image/upload/v1597921637/Activity%20Icon/icon_language_color-gray-900_iiwq13.png"
 						alt="icon" class="img-icon icon" data-v-0fe9c1f1=""> <span
 						class="icon-desc" data-v-0fe9c1f1=""> English/Mandarin </span>
 				</div>
-				<!---->
+				
 			</div>
 			
 			<div class="row" id="listgroup">
 			 	<div class="col-12 col-md-6">
-				 	<!-- <div class="shadow-lg p-3 mb-5 bg-white rounded"> -->
+				 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
 				 		<ul class="list-group" id="list">
 						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{description}"></span></li>
 						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{country_city}"></span></li>
@@ -288,7 +288,7 @@ body {
 						  <a class="btn btn-outline-info" id="comment" href="reviewForm.html" th:href="@{/review/post/}+${attraction.product.id}" role="button">Post Comment</a></span></li>
 						 
 						</ul>
-				 	<!-- </div> -->
+				 	</div>
 			 	</div>
 			 	
 			 	<div class="col-12 col-md-6">
@@ -300,7 +300,7 @@ body {
 			</div>			
 		</div>
 		</div>
-	</form>
+	</form> -->
 	
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>    

@@ -26,7 +26,7 @@
 		</tr>
 		<tr th:each="review:${review}">
 			<td th:text="${review.id}">ID</td>
-			<td><img height="128" width="168" th:src="@{${'/review/product/image/' + review.id}}"></td>
+			<td><img height="128" width="168" th:if="${review.pic!=null}" th:src="@{${'/review/product/image/' + review.id}}"></td>
 			<td th:text="${review.rating}">Rating</td>
 			<td th:text="${review.message}">Content</td>
 		</tr>
