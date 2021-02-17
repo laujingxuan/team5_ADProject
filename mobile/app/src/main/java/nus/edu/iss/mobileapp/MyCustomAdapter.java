@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import nus.edu.iss.mobileapp.nonEntityModel.Product;
+import nus.edu.iss.mobileapp.model.Product;
 import nus.edu.iss.mobileapp.nonEntityModel.ProductType;
 
 public class MyCustomAdapter extends ArrayAdapter {
@@ -53,7 +53,6 @@ public class MyCustomAdapter extends ArrayAdapter {
 
         // set the image for ImageView
         ImageView imageView = view.findViewById(R.id.imageView);
-        System.out.println(pos);
         // set the text for TextView
         TextView textView = view.findViewById(R.id.textView);
         Thread thread = new Thread(new Runnable() {
@@ -76,7 +75,6 @@ public class MyCustomAdapter extends ArrayAdapter {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.println(url);
                 Bitmap finalBmp = bmp;
                 activity.runOnUiThread(new Runnable() {
                     @Override
@@ -84,10 +82,9 @@ public class MyCustomAdapter extends ArrayAdapter {
                         if (products.get(pos).getType().equals(ProductType.ATTRACTION)) {
                             textView.setText(products.get(pos).getAttraction().getName());
                         }else{
-                            textView.setText(products.get(pos).getRoomType().getHotel().getName() + ": " + products.get(pos).getRoomType().getRoomType() + " Room");
+                            textView.setText(products.get(pos).getRoomType().getHotel().getName() + "\n" + products.get(pos).getRoomType().getRoomType() + " Room");
                         }
                         imageView.setImageBitmap(finalBmp);
-                        System.out.println("finalBMP");
                     }
                 });
             }

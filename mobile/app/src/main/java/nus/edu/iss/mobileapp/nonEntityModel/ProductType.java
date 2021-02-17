@@ -1,5 +1,7 @@
 package nus.edu.iss.mobileapp.nonEntityModel;
 
-public enum ProductType {
+import java.io.Serializable;
+
+public enum ProductType implements Serializable {
     ATTRACTION,HOTEL
 }

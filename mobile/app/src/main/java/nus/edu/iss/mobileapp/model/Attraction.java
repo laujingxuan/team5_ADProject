@@ -1,6 +1,8 @@
-package nus.edu.iss.mobileapp.nonEntityModel;
+package nus.edu.iss.mobileapp.model;
 
-public class Attraction {
+import java.io.Serializable;
+
+public class Attraction implements Serializable {
 
     private long id;
 

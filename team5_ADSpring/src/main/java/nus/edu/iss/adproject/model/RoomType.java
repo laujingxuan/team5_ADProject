@@ -30,7 +30,9 @@ public class RoomType {
 	//roomType is "SINGLE", "DOUBLE", "FAMILY" or etc
 	@NotEmpty
 	private String roomType;
+	@NotEmpty
 	private String description;
+	@NotEmpty
 	private String imageURL;
 
 

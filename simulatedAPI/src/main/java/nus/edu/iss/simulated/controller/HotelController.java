@@ -67,7 +67,6 @@ public class HotelController {
 	@PostMapping("/room/period")
 	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypePeriod(@RequestBody MultipleDateQuery input){
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);
-
 	}
 
 	@PostMapping("/room/update")
@@ -88,31 +87,16 @@ public class HotelController {
 		//need to update the database on vacancy and number of cancellations
 		if (isCancel == 1) {
 			for (LocalDate date = hotelBooking.getStartDate(); date.isBefore(hotelBooking.getEndDate()); date = date.plusDays(1)) {
+				System.out.println(date);
 				DailyRoomTypeDetail temp = dailyRoomSer.findRoomDetailByDateAndType(date, hotelBooking.getRoomType());
 				//increase 0.7*number of booked rooms for vacancy and number of cancellations because only 70% accuracy
 				//(risk-averse) in case predicted cancelled rooms are not cancelled.
 				temp.setNumVacancies(temp.getNumVacancies()+0.7*hotelBooking.getNumRooms());
 				temp.setNumCancellations(temp.getNumCancellations()+hotelBooking.getNumRooms());
+				dailyRoomSer.updateDailyRoomTypeDetail(temp);
 			}
 		}
 		return isCancel;
 	}
 	
-//	@GetMapping("/")
-//	public ResponseEntity<Boolean> testing(){
-//		predictBookingCancellationRate();
-//		return new ResponseEntity<Boolean>
-//		(true,HttpStatus.OK);
-//	}
-	
-//	public int predictBookingCancellationRate() {
-//		//connect to machine learning api
-//		final String uri = "http://127.0.0.1:5000/model";
-//		RestTemplate restTemplate = new RestTemplate();
-//		MLearningVar mLearning = new MLearningVar(12,9,20,102.81,0);
-//		String isCancelled = restTemplate.postForObject( uri, mLearning, String.class);
-//		System.out.println(isCancelled);
-//
-//		return Integer.parseInt(isCancelled);
-//	}
 }

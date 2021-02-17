@@ -50,9 +50,9 @@ public interface BookingDetailsRepo  extends JpaRepository<BookingDetails, Long>
 		  public List<Object> findMonthlyBookingRateByHotelId(@Param("hotel_id")Long hotel_id);
 	 
 	  
-	  @Query("SELECT b.product.roomType.hotel.id as hotel_id, sum(b.price) as monthly_revenue, sum(b.numOfGuest) as monthly_guest FROM BookingDetails b where month(b.booking.bookingDate)=1 and year(b.booking.bookingDate)=2021 Group By month(b.booking.bookingDate), year(b.booking.bookingDate) order by month(b.booking.bookingDate)") 
-	  public List<Object> findMonthlyRevenueForAllHotels();
+	  @Query("SELECT b.product.roomType.hotel.id as hotel_id, sum(b.price) as monthly_revenue, sum(b.numOfGuest) as monthly_guest FROM BookingDetails b where month(b.booking.bookingDate)=:month and year(b.booking.bookingDate)=:year Group By month(b.booking.bookingDate), year(b.booking.bookingDate) order by month(b.booking.bookingDate)") 
+	  public List<Object> findMonthlyRevenueForAllHotels(@Param("month")Integer month,@Param("year")Integer year);
 	  
-	  @Query("SELECT b.product.attraction.id, sum(b.price) as monthly_revenue, sum(b.numOfGuest) as monthly_guest FROM BookingDetails b where month(b.booking.bookingDate)=1 and year(b.booking.bookingDate)=2021 Group By month(b.booking.bookingDate), year(b.booking.bookingDate) order by month(b.booking.bookingDate)") 
-	  public List<Object> findMonthlyRevenueForAllAttractions();
+	  @Query("SELECT b.product.attraction.id, sum(b.price) as monthly_revenue, sum(b.numOfGuest) as monthly_guest FROM BookingDetails b where month(b.booking.bookingDate)=:month and year(b.booking.bookingDate)=:year Group By month(b.booking.bookingDate), year(b.booking.bookingDate) order by month(b.booking.bookingDate)") 
+	  public List<Object> findMonthlyRevenueForAllAttractions(@Param("month")Integer month,@Param("year")Integer year);
 }

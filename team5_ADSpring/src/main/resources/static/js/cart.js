@@ -40,11 +40,11 @@ function sendChange(cartId, value, remarks, numGuest) {
       "remarks" : remarks,
       "numGuest" : numGuest
 	}
-	var token = $("meta[name='_csrf']").attr("content");
+//	var token = $("meta[name='_csrf']").attr("content");
     $.ajax({
        type: "POST",
        contentType : 'application/json; charset=utf-8',
-       headers: {"X-CSRF-TOKEN": token}, 
+//       headers: {"X-CSRF-TOKEN": token}, 
        dataType : 'json',
        url: "/cart/update",
        data: JSON.stringify(wrapper),

@@ -93,7 +93,6 @@ public class ForgotPasswordController {
 		String password = request.getParameter("password");
 		
 		User user = userService.get(token);
-		System.out.println(8888);
 		if(user==null) {
 			model.addAttribute("message","Invalid Token");
 			return "message";
