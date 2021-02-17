@@ -163,18 +163,6 @@ public class CartController {
 		return cart.getProduct().getAttraction().getPrice() * (100-discount_rate)/100;
 	}
 	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @GetMapping("/getQuantityByUserId") public JSONObject CartitemTotalQuantity(
-	 * Model model, HttpSession session) {​​​​​​​ if
-	 * (session_svc.isNotLoggedIn(session)) { return null; } User user =
-	 * (User)session.getAttribute("user"); Long userId = user.getId(); int quantity
-	 * = cart_svc.getQuantityByUserId(userId); Map<String, Object> map=new
-	 * HashMap<String,Object>(); map.put("status", "success"); map.put("total",
-	 * quantity); JSONObject jsonObj=new JSONObject(map); return jsonObj; }
-	 */
-	
 	@ResponseBody
 	@GetMapping("/getQuantityByUserId")
 	public JSONObject CartItemTotalQuantity (Model model, HttpSession session) {

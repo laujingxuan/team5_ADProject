@@ -90,7 +90,6 @@ public class ProductApiController {
 			map.remove(maxEntry.getKey());
 			i+=1;
 		}
-		System.out.println(hotSellers);
 		return new ResponseEntity<List<Product>>(hotSellers ,HttpStatus.OK);
 	}
 }

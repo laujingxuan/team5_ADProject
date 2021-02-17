@@ -40,42 +40,6 @@
 			</form>
 			
 		</div>
-
-		<!-- <h3>Sign Up</h3> -->
-
-<!-- 	<form action="" th:object="${userForm}" th:action="${path}" method="POST" class="form-horizontal">
-		<input type="hidden" th:field="*{role}" th:value="*{role}">
-      	<table class="table">	
-			<tr>
-				<td style="width:30%">User Name:</td>
-				<td style="width:30%"><input type="text" th:field="*{userName}" value="*{userName}" placeholder="User Name"></td>	
-				<td style="width:30%"><div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div></td>		
-			</tr>
-			
-			<tr>
-				<td>Email:</td>
-				<td><input type="text" th:field="*{email}" value="*{email}" placeholder="Email"></td>
-				<td><div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div></td>
-			</tr>
-			
-			<tr>
-				<td>Password:</td>
-				<td><input type="password" th:field="*{password}" placeholder="Password"></td>
-				<td><div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div></td>
-			</tr>
-			<tr>
-				<td>Confirm Password:</td>
-				<td><input type="password" th:field="*{confPassword}" placeholder="Password"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td colspan="3"><button type="submit" value="Sign Up" class="btn btn-primary">Sign Up</button>  
-				<small>&nbsp&nbspAlready registered?&nbsp<a href="/" th:href="@{/user/login}">Login here</a></small></td>
-				
-			</tr>
-			
-		</table>
-	</form> -->
 </div>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>

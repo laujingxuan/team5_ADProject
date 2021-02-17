@@ -119,6 +119,5 @@ public class UserController {
 		user_svc.save(user);
 		return "signup_success";
 	}
-		
 }
 

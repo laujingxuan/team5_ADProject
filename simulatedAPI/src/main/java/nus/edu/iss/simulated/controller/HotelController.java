@@ -38,7 +38,6 @@ public class HotelController {
 	//findBookingById
 	@GetMapping("/booking/{id}")
 	public ResponseEntity<HotelBooking> findBookingById (@PathVariable("id") Long id) {
-		System.out.println(id);
 		return new ResponseEntity<HotelBooking>(hotelBookSer.findBookingById(id), HttpStatus.OK);
 	}
 	
@@ -47,8 +46,6 @@ public class HotelController {
 	public ResponseEntity<HotelBooking> newBooking (@RequestBody HotelBooking hotelBooking) {
 		HotelBooking newHotelBooking = hotelBookSer.createBooking(hotelBooking);
 		int isCancelled = predictBookingCancellationRate(newHotelBooking);
-		System.out.println(isCancelled);
-		System.out.println(newHotelBooking);
 		return new ResponseEntity<HotelBooking>(newHotelBooking, HttpStatus.OK);
 	}
 	
@@ -87,7 +84,6 @@ public class HotelController {
 		//need to update the database on vacancy and number of cancellations
 		if (isCancel == 1) {
 			for (LocalDate date = hotelBooking.getStartDate(); date.isBefore(hotelBooking.getEndDate()); date = date.plusDays(1)) {
-				System.out.println(date);
 				DailyRoomTypeDetail temp = dailyRoomSer.findRoomDetailByDateAndType(date, hotelBooking.getRoomType());
 				//increase 0.7*number of booked rooms for vacancy and number of cancellations because only 70% accuracy
 				//(risk-averse) in case predicted cancelled rooms are not cancelled.
