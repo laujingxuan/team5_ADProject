@@ -1,15 +1,19 @@
 package nus.edu.iss.adproject.api.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import nus.edu.iss.adproject.model.User;
@@ -38,7 +42,7 @@ public class UserApiController {
 		User u = new User();
 		return new ResponseEntity<User>(u,HttpStatus.OK);
 	}
-	
+	@CrossOrigin
 	@PostMapping("/authenticate")
 	public ResponseEntity<User> authenticate(@RequestBody User user){
 		if(session_svc.authenticate(user)) 
@@ -55,6 +59,12 @@ public class UserApiController {
 	public ResponseEntity<User> logout(HttpSession session){
 		session.invalidate();
 		return new ResponseEntity<User>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/csrf-token", method=RequestMethod.GET)
+	public @ResponseBody String getCsrfToken(HttpServletRequest request) {
+	    CsrfToken token = (CsrfToken)request.getAttribute(CsrfToken.class.getName());
+	    return token.getToken();
 	}
 	
 

@@ -7,7 +7,7 @@
             font-family: verdana,arial,sans-serif;
             font-size:15px;
             color:#333333;
-            border-width: 1px;
+            border-width: 10px;
             border-color: #d1d1d1;
             border-collapse: collapse;
             width:100%
@@ -30,6 +30,17 @@
         .evenrowcolor{
             background-color:#f0f0f0;
         }
+        .img-container{
+                text-align: center;
+		}
+		.attraction-detail{
+		text-align: center;
+		}
+		
+		.altrowstable{
+    		  width: 50%;
+		}
+		
     </style>
     <script type="text/javascript">
         function altRows(id){
@@ -56,12 +67,15 @@
 <head th:insert="layout/layout.html :: veryTop"></head>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
+	<div class = "attraction-detail">
 	<h3>Attraction Detail</h3>
+	</div>
+
 	
 	
 	<table class="altrowstable" id="alternatecolor" th:object="${attraction}">
 	  <tr>
-        <td colspan = "2"><img th:src="*{imageURL}"></td>
+	          <td colspan = "2" class = "img-container"><img th:src="*{imageURL}"></td>
       </tr>
 	  <tr>
         <th>Name</th>

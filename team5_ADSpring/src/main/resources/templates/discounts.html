@@ -2,6 +2,9 @@
 <html xmlns:th="https://www.thymeleaf.org/">
 <head><title>Discount List</title></head>
 <head th:insert="layout/layout.html :: veryTop"></head>
+<style>
+
+</style>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
 <br/>
@@ -15,7 +18,7 @@
 	
 	   <!-- Add Hyperlink -->
     <!-- <div th:if="${hasPermission}"><a href="productform.html" th:href="@{/product/add}">New Product</a></div> -->
-	<table  class="table table-sm" style="background-color:white">
+	<table  class="table table table-hover" style="background-color:white">
 		<tr>
 			<!-- <th hidden>ID</th> -->
 			<th>Name</th>
