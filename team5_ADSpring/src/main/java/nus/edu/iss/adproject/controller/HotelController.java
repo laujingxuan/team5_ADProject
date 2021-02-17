@@ -32,7 +32,7 @@ import nus.edu.iss.adproject.model.User;
 import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.DailyRoomTypeDetail;
-import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
+import nus.edu.iss.adproject.nonEntityModel.MultipleDateQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.service.DiscountService;
 import nus.edu.iss.adproject.service.HotelService;
@@ -121,7 +121,7 @@ public class HotelController {
 	@RequestMapping(value = "/room-available-date/{id}")
 	public String gethotelRoomTypeAvailibleDate(Model model,@PathVariable("id")Long id)  {
 		Product p = pservice.findProductById(id);
-		String URL = p.getRoomType().getHotel().getAPI_URL()+"room/month";
+		String URL = p.getRoomType().getHotel().getAPI_URL()+"room/period";
 		String APIURL = p.getRoomType().getHotel().getAPI_URL()+"room/period";
 		String RoomType = p.getRoomType().getRoomType();
 		List<Discount> discountlist= p.getRoomType().getHotel().getDiscount();
@@ -132,14 +132,14 @@ public class HotelController {
 		}
 		
 		RestTemplate restTemplate = new RestTemplate();
-		MonthTypeQuery roomtype = new MonthTypeQuery(1,RoomType);
-		
+		//showing next 3 months availability, can changed the period accordingly
+		MultipleDateQuery roomtype = new MultipleDateQuery(LocalDate.now(),LocalDate.now().plusMonths(3),RoomType);
 		DailyRoomDetailWrapper result =  restTemplate.postForObject(URL, roomtype, DailyRoomDetailWrapper.class);
 		List<String> dates = new ArrayList<>() ;
 		
 		List<DailyRoomTypeDetail> list = result.getDailyList();
 		for(DailyRoomTypeDetail d : list) {
-			if(d.getNumVacancies()> 0) {
+			if(d != null && d.getNumVacancies()> 0) {
 				LocalDate date = d.getDate();
 				String date1 = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				dates.add(date1);
@@ -239,11 +239,11 @@ public class HotelController {
 	//save changes on roomType editing
 	@PostMapping("/saveRoom")
 	public String saveRoomType(@ModelAttribute("roomtype") @Valid RoomType roomType, BindingResult bindingResult,
-			Model model) {
+			Model model, HttpSession session) {
+		User user = (User) session.getAttribute("user");
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult);
-			System.out.println(roomType.getProduct());
 			if (roomType.getProduct()==null) {
+				model.addAttribute("Hotels", hotelservice.findByUserId(user.getId()));
 				model.addAttribute("room", new RoomType());
 				return "createRoom";
 			}else{

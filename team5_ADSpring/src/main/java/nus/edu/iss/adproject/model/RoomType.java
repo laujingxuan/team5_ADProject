@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity 
 public class RoomType {
 	@Id 
@@ -19,6 +21,7 @@ public class RoomType {
 	private long id;
 	
 	@OneToOne (cascade = CascadeType.REMOVE)
+	@JsonIgnore
 	private Product product;
 
 	@ManyToOne
@@ -27,7 +30,9 @@ public class RoomType {
 	//roomType is "SINGLE", "DOUBLE", "FAMILY" or etc
 	@NotEmpty
 	private String roomType;
+	@NotEmpty
 	private String description;
+	@NotEmpty
 	private String imageURL;
 
 

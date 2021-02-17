@@ -32,11 +32,7 @@ public class SimulatedApiApplication {
 	private AttractionBookingRepo attractionRepo;
 	
 	@Autowired
-	private DailyAttractionDetailRepo dailyAttractRepo;
-
-	
-	@Autowired
-	DailyAttractionDetailRepo dapRepo;
+	private DailyAttractionDetailRepo dapRepo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SimulatedApiApplication.class, args);
@@ -49,50 +45,65 @@ public class SimulatedApiApplication {
 
 			//Single room from 15/1/2021 to 30/1/2021 created
 
-			DailyRoomTypeDetail roomTypeDetail = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 30), 300, 20, 1);
+			DailyRoomTypeDetail roomTypeDetail = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 7), 300, 20, 1);
 			roomRepo.save(roomTypeDetail);
-			DailyRoomTypeDetail roomTypeDetail1 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 25), 300, 15, 1);
+			DailyRoomTypeDetail roomTypeDetail1 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 8), 300, 15, 1);
 			roomRepo.save(roomTypeDetail1);
-			DailyRoomTypeDetail roomTypeDetail2 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 23), 300, 28, 1);
+			DailyRoomTypeDetail roomTypeDetail2 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 9), 300, 28, 1);
 			roomRepo.save(roomTypeDetail2);
-			DailyRoomTypeDetail roomTypeDetail3 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 23), 300, 7, 1);
+			DailyRoomTypeDetail roomTypeDetail3 = new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 10), 300, 7, 1);
 			roomRepo.save(roomTypeDetail3);
 
 			
-			AttractionBooking attractionbooking1 = new AttractionBooking("birdPark",20,LocalDate.of(2021, 2, 23));
+			AttractionBooking attractionbooking1 = new AttractionBooking("Zoo",20,LocalDate.of(2021, 2, 23));
 			attractionRepo.save(attractionbooking1);
 			
-			DailyAttractionDetail dap1 = new DailyAttractionDetail("birdPark",LocalDate.of(2021, 1, 23) , 10);
+			AttractionBooking attraction1 = new AttractionBooking("Zoo",2,LocalDate.of(2021, 1, 15));
+			attractionRepo.save(attraction1);
+			
+			AttractionBooking attraction3 = new AttractionBooking("Zoo",3,LocalDate.of(2021, 1, 15));
+			attractionRepo.save(attraction3);
+			
+			DailyAttractionDetail dap1 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 2, 23) , 10);
 			dapRepo.save(dap1);
 			
-			DailyAttractionDetail dap2 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 21) , 10);
+			DailyAttractionDetail dap2 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 2, 21) , 10);
 			dapRepo.save(dap2);
 			
-			DailyAttractionDetail dap3 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 22) , 10);
+			DailyAttractionDetail dap3 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 2, 22) , 10);
 			dapRepo.save(dap3);
 			
-		
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 15), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 16), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 17), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 18), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 19), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 20), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 21), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 22), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 24), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 26), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 27), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 28), 300, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 1, 29), 300, 7, 1));
+			DailyAttractionDetail attractDetail1 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 2, 25), 50);
+			dapRepo.save(attractDetail1);
 			
-			//Double room from 15/1/2021 to 20/1/2021 created
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 15), 400, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 16), 400, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 17), 400, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 18), 400, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 19), 400, 7, 1));
-			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 20), 400, 7, 1));
+		
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 1), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 2), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 3), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 4), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 5), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 3, 6), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 20), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 21), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 22), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 23), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 24), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 25), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 26), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 27), 300, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("SINGLE", LocalDate.of(2021, 2, 28), 300, 7, 1));
+			
+			
+			//Double room from 15/2/2021 to 20/2/2021 created
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 2, 21), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 2, 22), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 2, 23), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 2, 24), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 2, 25), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 2, 26), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 24), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 25), 400, 7, 1));
+			roomRepo.save(new DailyRoomTypeDetail("DOUBLE", LocalDate.of(2021, 12, 26), 400, 7, 1));
 			
 			HotelBooking booking1 = new HotelBooking("SINGLE", 1, 3, "No breakfast", 300, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 2, 15), LocalDate.of(2021, 2, 20));
 			hotelRepo.save(booking1);
@@ -100,16 +111,11 @@ public class SimulatedApiApplication {
 			hotelRepo.save(booking2);
 			HotelBooking booking3 = new HotelBooking("DOUBLE", 2, 4, "4 breakfast", 400, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 4, 15), LocalDate.of(2021, 4, 20));
 			hotelRepo.save(booking3);
-			
-			AttractionBooking attraction1 = new AttractionBooking("Zoo",2,LocalDate.of(2021, 1, 15));
-			attractionRepo.save(attraction1);
-			
-			DailyAttractionDetail attractDetail1 = new DailyAttractionDetail("Zoo",LocalDate.of(2021, 1, 15), 50);
-			dailyAttractRepo.save(attractDetail1);
-		};
-//			BookingDetails bookDetail1 = new BookingDetails(booking1, attraction1.getProduct(), "1", "23456", 4, 300);
-//			BookingDetails bookDetail2 = new BookingDetails(booking1, attraction1.getProduct(), "2", "23457", 3, 250);
-//			BookingDetails bookDetail3 = new BookingDetails(booking1, attraction1.getProduct(), "3", "23458", 5, 400);
+			HotelBooking booking4 = new HotelBooking("DOUBLE", 2, 5, "Check in at 12pm", 4000, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 4, 15), LocalDate.of(2021, 4, 20));
+			hotelRepo.save(booking4);
+			HotelBooking booking5 = new HotelBooking("SINGLE", 5, 5, "Check in at 6pm", 7500, LocalDate.of(2021, 1, 15), LocalDate.of(2021, 4, 15), LocalDate.of(2021, 4, 20));
+			hotelRepo.save(booking5);
 
+		};
 	}
 }

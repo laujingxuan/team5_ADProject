@@ -29,18 +29,18 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Transactional
 	public List<Product> listAllSearchAttractions(String keyword){
-		if(keyword!=null) {
+//		if(keyword!=null) {
 			return prepo.search1(keyword);
-		}
-		return new ArrayList<Product>();
+//		}
+//		return new ArrayList<Product>();
 	}
 	
 	@Transactional
 	public List<Product> listAllSearchHotels(String keyword){
-		if(keyword!=null) {
+//		if(keyword!=null) {
 			return prepo.search2(keyword);
-		}
-		return prepo.findAll();
+//		}
+//		return prepo.findAll();
 	}
 
 	@Override

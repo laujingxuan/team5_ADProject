@@ -19,4 +19,6 @@ public interface DailyAttractionDetailService {
 
 	
 	public Boolean UpdateTicketQuantity(DailyAttractionDetail updated);
+
+	List<DailyAttractionDetail> findAttractionByPeriod(LocalDate startD, LocalDate endD);
 }

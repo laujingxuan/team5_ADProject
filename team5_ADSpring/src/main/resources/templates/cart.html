@@ -4,19 +4,19 @@
 <title>Cart</title>
 </head>
 <head th:insert="layout/layout.html :: veryTop"></head>
-<meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/>
+<!-- <meta th:name="${_csrf.parameterName}" th:content="${_csrf.token}"/> -->
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type = "text/javascript" th:src="@{/js/cart.js}"></script>
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>     
 	<div class = "container py-3">
-		<div class = "row">
+		<div class = "row" style="text-align:center">
 			<h4>Cart</h4>
 		</div>
 		<div th:each="cart:${carts}" class="py-3 row">
 			<form>
-				<div class="card" style="width: 72rem">
+				<div class="card" style="width: 64rem">
 				  	<div th:if="${cart.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).HOTEL}">
 					  <h5 class="card-header" th:text = "${cart.key.product.roomType.hotel.name} + ': ' + ${cart.key.product.roomType.roomType} + ' Room'">Hotel</h5>
 					  <div class="card-body">
@@ -52,7 +52,9 @@
 								<td></td>
 							</tr>
 						</table>
-						<a class="btn btn-primary" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
+						<div style="text-align:center">
+						<a class="btn btn-outline-info" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
+						</div>
 					 </div>
 					</div>
 					<div th:if="${cart.key.product.type == T(nus.edu.iss.adproject.nonEntityModel.ProductType).ATTRACTION}">
@@ -78,30 +80,48 @@
 								<td><input type="hidden" value ="0" class = "numGuest"></td>
 							</tr>					
 						</table>
-						<a class="btn btn-primary" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
+					<div style="text-align:center">
+						<a class="btn btn-outline-info" href="productslist.html" th:href="@{/cart/delete/}+${cart.key.id}" role="button">Delete</a>
+					</div>
+			
+			  		
 					 </div>
 					</div>
 				</div>
 			</form>
 		</div>
 		<div class = "py-5">
-			<div th:each="tp:${tpList}">
-				<h6 th:text ="'Total ' + ${tp.numNights} + ' nights of hotels and ' + ${tp.numAttractions} + ' attraction tickets can enjoy ' + ${tp.discountPercent} + '% of discount'"></h6>
-			</div>
+		<div class="row" id="listgroup">
+			 	<div class="col-12 col-md-10">
+				 	<div class="shadow-lg p-3 mb-5 bg-white rounded">
+				 		<ul class="list-group" id="list" th:each="tp:${tpList}">
+						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text ="'Total ' + ${tp.numNights} + ' nights of hotels and ' + ${tp.numAttractions} + ' attraction tickets can enjoy ' + ${tp.discountPercent} + '% of discount'"></span></li>
+						 
+						</ul>
+				 	</div>
+			 	</div>
+			 	</div>
+			<!-- <div th:each="tp:${tpList}">
+				<h5 th:text ="'Total ' + ${tp.numNights} + ' nights of hotels and ' + ${tp.numAttractions} + ' attraction tickets can enjoy ' + ${tp.discountPercent} + '% of discount'"></h5>
+			</div> -->
 		</div>
 		<table>
 			<tr>
 				<td>Total Price (Before Applying Travel Package Discount) (SGD): </td>
-				<td class = "total">Total</td>
+				<td class = "total" style="font-weight:bold;font-size: 20px">Total</td>
 			</tr>
 		</table>
-		<div class = "float-right">
+		<div>
 			<form action="" th:action="@{/booking/makeBook}" method="post" class="form-horizontal">
-				<input class="btn btn-primary" type="submit" value="Make Booking" />
+				<input style="float:right;margin-right: 100px" class="btn btn-outline-info" type="submit" value="Make Booking" />
 			</form>
 		</div>
 	</div>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
 </body>
+ <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/popper.min.js"></script>
 </html>

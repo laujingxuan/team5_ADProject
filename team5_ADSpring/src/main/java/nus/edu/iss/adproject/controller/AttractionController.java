@@ -28,6 +28,7 @@ import nus.edu.iss.adproject.nonEntityModel.CartForm;
 import nus.edu.iss.adproject.nonEntityModel.DailyAttractionDetail;
 import nus.edu.iss.adproject.nonEntityModel.DailyDetailWrapper;
 import nus.edu.iss.adproject.nonEntityModel.MonthTypeQuery;
+import nus.edu.iss.adproject.nonEntityModel.MultipleDateQuery;
 import nus.edu.iss.adproject.nonEntityModel.ProductType;
 import nus.edu.iss.adproject.service.AttractionService;
 import nus.edu.iss.adproject.service.DiscountService;
@@ -84,7 +85,7 @@ public class AttractionController {
 	@RequestMapping(value = "/available-date/{id}")
 	public String getAttractionAvailibleDate(Model model,@PathVariable("id")Long productId)  {
 			Product p = pservice.findProductById(productId);
-			String URL = p.getAttraction().getAPI_URL()+ "booking/month";
+			String URL = p.getAttraction().getAPI_URL()+ "booking/period";
 			double price = p.getAttraction().getPrice();
 			List<Discount> discountlist= p.getAttraction().getDiscount();
 			String discount = "";
@@ -93,12 +94,13 @@ public class AttractionController {
 						+ " the discount is " + d.getDiscount_rate() + "%";
 			}
 			RestTemplate restTemplate = new RestTemplate();
-			MonthTypeQuery month = new MonthTypeQuery(1);	
-			DailyDetailWrapper result =  restTemplate.postForObject(URL, month,DailyDetailWrapper.class);
+			//showing next 3 months availability, can changed the period accordingly
+			MultipleDateQuery period = new MultipleDateQuery(LocalDate.now(),LocalDate.now().plusMonths(3));
+			DailyDetailWrapper result =  restTemplate.postForObject(URL, period, DailyDetailWrapper.class);
 			List<String> dates = new ArrayList<>() ;
 			List<DailyAttractionDetail> list = result.getDailyDetails();
 			for(DailyAttractionDetail d : list) {
-				if(d.getQuantityLeft()>0) {
+				if(d != null && d.getQuantityLeft()>0) {
 					LocalDate date = d.getDate();
 					String date1 = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 					dates.add(date1);
