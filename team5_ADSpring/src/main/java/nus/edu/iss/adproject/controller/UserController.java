@@ -88,8 +88,8 @@ public class UserController {
 			session.setAttribute("user", u);
 			return "redirect:/";
 		}
-		else
-			return "login";
+		model.addAttribute("invalidCredentials", true);
+		return "login";	
 	}
 	
 	@GetMapping("/signup")
