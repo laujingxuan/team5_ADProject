@@ -130,7 +130,6 @@ public class BookingController {
 				//hotel side will be storing before package discount price while our side storing after package discount price;
 				HotelBooking hotelBook = new HotelBooking(cart.getProduct().getRoomType().getRoomType(),cart.getQuantity(),cart.getNumGuests(),cart.getRemarks(), beforeDiscountPrice, newBooking.getBookingDate(), cart.getStartDate(), cart.getEndDate());
 				final String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL() + "booking";
-				System.out.println(uri);
 				RestTemplate restTemplate = new RestTemplate();
 				HotelBooking returnBooking = restTemplate.postForObject( uri, hotelBook, HotelBooking.class);
 				BookingDetails newDetail = new BookingDetails(newBooking, cart.getProduct(), Long.toString(returnBooking.getId()), cart.getNumGuests(), afterDiscountPrice);//cart.getStartDate(),cart.getEndDate(),cart.getQuantity(),cart.getRemarks()

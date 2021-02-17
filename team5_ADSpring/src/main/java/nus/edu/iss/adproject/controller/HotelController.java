@@ -169,7 +169,6 @@ public class HotelController {
 	public String saveHotelForm(@ModelAttribute("hotel") @Valid Hotel hotel, BindingResult bindingResult,
 			Model model, HttpSession session) {
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult);
 			if (hotel.getUser()==null) {
 				model.addAttribute("hotel", new Hotel());
 			}
