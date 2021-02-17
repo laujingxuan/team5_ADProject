@@ -89,6 +89,15 @@ public class SessionServiceImpl implements SessionService {
 		else 
 			return false;
 	}
+	public String findName(HttpSession session)
+	{
+		String realname;
+		User user = (User) session.getAttribute("user");
+		if (user == null)
+			return realname="Visitor";
+		else 
+			return realname=user.getUserName();
+	}
 	
 	@Override
 	public boolean hasHotelPermission(HttpSession session) {

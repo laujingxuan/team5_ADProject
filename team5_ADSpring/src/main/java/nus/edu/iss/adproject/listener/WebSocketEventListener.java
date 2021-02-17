@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import nus.edu.iss.adproject.model.ChatMessage;
+import nus.edu.iss.adproject.nonEntityModel.ChatMessage;
  
 @Component
 public class WebSocketEventListener {

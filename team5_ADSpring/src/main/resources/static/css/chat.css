@@ -6,7 +6,7 @@
  
 html, body {
     height: 100%;
-    overflow: hidden;
+/*     overflow: hidden; */
 }
   
 #login-page {
@@ -55,8 +55,8 @@ html, body {
 }
  
 #chat-container {
-    border: 2px solid #d5dbdb;
-    background-color:  #d5dbdb ;
+    border: 2px solid #e7ab3c;
+    background-color:  #e7ab3c ;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
