@@ -56,13 +56,12 @@ nav {
 			<td th:text="${hotel.key.location}">Location</td>
 			<td ><a href="hotel-form.html" th:href="@{/hotel/hotel/edit/}+${hotel.key.id}" >Edit</a></td>
 			<td ><a href="hotel-form.html" th:href="@{/hotel/hotel/delete/}+${hotel.key.id}" >Delete</a></td>
-			<!-- 			<td ><a href="Map.html" th:href="@{/hotel/map/}+${hotel.key.id}" >location</a></td> -->
 		</tr>
 	</table>
 	<br/>
 	<div style="padding:10px  ">
-		<a class="btn btn-outline-info" href="hotel-form.html" th:href="@{/hotel/hotel/create/}" role="button" >create</a>
-		<a class="btn btn-outline-info" href="hotel-form.html" th:href="@{/hotel/roomtypes/create/}" role="button" >create Rooms</a>
+		<a class="btn btn-outline-info" href="hotel-form.html" th:href="@{/hotel/hotel/create/}" role="button" >New Hotel</a>
+		<a class="btn btn-outline-info" href="hotel-form.html" th:href="@{/hotel/roomtypes/create/}" role="button" >New Room Type</a>
 	</div>
 	<br/>
 	<br/>

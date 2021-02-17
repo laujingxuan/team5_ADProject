@@ -10,19 +10,23 @@
             border-width: 1px;
             border-color: #d1d1d1;
             border-collapse: collapse;
-            width:100%
+            width:68%;
+            margin-left: auto;
+ 			margin-right: auto;
         }
         table.altrowstable th {
             border-width: 1px;
             padding: 8px;
             border-style: solid;
             border-color: #d1d1d1;
+            width:18%
         }
         table.altrowstable td {
             border-width: 1px;
             padding: 8px;
             border-style: solid;
             border-color: #d1d1d1;
+            width:50%
         }
         .oddrowcolor{
             background-color:#fafafa;
@@ -30,11 +34,11 @@
         .evenrowcolor{
             background-color:#f0f0f0;
         }
-        td{
-   			text-align:center;
-   			vertical-align:middle;
-   			height:50px;
-		}
+/*         td{ */
+/*    			text-align:center; */
+/*    			vertical-align:middle; */
+/*    			height:50px; */
+/* 		} */
 		
     </style>
     <script type="text/javascript">
@@ -68,11 +72,11 @@
 	
 	<table class="altrowstable" id="alternatecolor" th:object="${hotel}">
       <tr>
-        <th>Name</th>
+        <th>Hotel Name</th>
         <td><b th:text="*{name}">Name</b></td>
       </tr>
       <tr>
-        <th>Location</th>
+        <th>Address</th>
         <td th:text="*{location}">Location</td>
       </tr>
       <tr>
@@ -80,11 +84,11 @@
         <td th:text="*{rating}">Rating</td>
       </tr>
       <tr>
-        <th>NumberofRestaurants</th>
+        <th>No of Restaurants</th>
         <td th:text="*{numberOfRestaurants}">NumberofRestaurants</td>
       </tr>
       <tr>
-        <th>Country_City</th>
+        <th>Country</th>
         <td th:text="*{country_City}">Country_City</td>
       </tr>
       <tr>
@@ -97,7 +101,7 @@
       </tr>
       <tr>
         <th>Location</th>
-        <td><a href="Map.html" th:href="@{/hotel/map/}+*{id}" >Location</a></td>
+        <td><a href="Map.html" th:href="@{/hotel/map/}+*{id}" >Map</a></td>
       </tr>
     </table>
     

@@ -61,7 +61,6 @@ public class ReviewController {
 	                               HttpServletResponse response) throws IOException {
 		response.setContentType("image/jpeg"); // Or whatever format you wanna use
 		ProductReview products = prservice.findReviewById(id);
-		System.out.println(products.getPic()== null);
 		InputStream is = new ByteArrayInputStream(products.getPic());
 		IOUtils.copy(is, response.getOutputStream());
 	}

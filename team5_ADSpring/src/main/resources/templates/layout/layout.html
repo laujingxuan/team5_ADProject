@@ -80,12 +80,7 @@
                     <ul>
                         <li><a href="#" th:href="@{/}">Home</a></li>
                         <li><a href="#" th:href="@{/dashboard/reports}" th:if="${session.user!= null && (session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).HOTELMANAGER || session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).PLATFORMMANAGER)}">Dash board</a></li>
-                         <li><a href="#" th:href="@{/booking/list}">View Booking History</a></li>
-                       <!--  <li><a href="#">Booking</a>
-                            <ul class="dropdown">
-                                <li><a href="#" th:href="@{/booking/list}">View Booking History</a></li>
-                            </ul>
-                        </li> -->
+                        <li><a href="#" th:href="@{/booking/list}">View Booking History</a></li>
                     </ul>
                     <ul>
                         <li><a href="#" th:href="@{/discount/list}" th:if="${session.user!= null && (session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).HOTELMANAGER || session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).ATTRACTIONMANAGER)}">Discount List</a></li>

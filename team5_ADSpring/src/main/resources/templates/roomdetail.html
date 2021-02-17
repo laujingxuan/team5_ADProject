@@ -215,8 +215,6 @@ body {
 				</h2>
 			</div>
 			<div>
-				<!-- <svg id="activity-common-star" viewBox="0 0 32 32"><path d="M17.55 1.178l3.025 10.458h9.792c1.58 0 2.234 2.112.957 3.084l-7.921 5.3 3.025 9.742c.489 1.568-1.231 2.874-2.508 1.905l-7.921-6.022-7.921 6.022c-1.277.969-2.993-.337-2.508-1.905l3.025-9.742-7.921-5.3c-1.277-.972-.62-3.084.957-3.084h9.792l3.028-10.458a1.607 1.607 0 013.098 0z"></path></svg> -->
-				<!-- <img src=""> <b th:text="*{hotel.rating}">RoomType</b> -->
 			</div>
 			<div class="activity-package-icons" data-v-0fe9c1f1="">
 				<div class="icon-content" data-v-0fe9c1f1="">
@@ -249,8 +247,7 @@ body {
 						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{description}"></span></li>
 						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{hotel.rating}"></span></li>
 						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{hotel.location}"></span></li>
-						  <!-- <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i>Porta ac consectetur ac</li>
-						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i>Vestibulum at eros</li> -->
+						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span><a href="hoteldetail.html" th:href="@{/product/detail/}+*{product.id}" >Hotel Details</a></span></li>
 						</ul>
 				 	</div>
 			 	</div>
@@ -268,7 +265,7 @@ body {
 	<div class="container">
 		<div class='shadow p-3 mb-5 bg-white rounded' id="review-form">
 			<h3 id="review1">
-				<i>Some Reviews</i>
+				<i>Reviews</i>
 			</h3>
 			<div th:each="review:${review}">
 				<ul class="list-group" id="list1">
@@ -279,7 +276,6 @@ body {
 			</div>
 			<br />
 			<div  th:object="${roomtype}">
-
 				<a class="btn btn-outline-info" id="comment" href="reviewList.html" th:href="@{/review/list/}+${roomtype.product.id}" role="button">View
 					Comments Detail </a> 
 				<a class="btn btn-outline-info"  id="comment" href="reviewList.html"
@@ -288,7 +284,7 @@ body {
 		</div>
 	</div>
     
-   	<h4 align="center" class = "py-3">Hotel's Available Room Type</h4>
+   	<h4 align="center" class = "py-3">Hotel's Room Type</h4>
 	<div class = "container">
 		<div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 			<div th:each="room:${rooms}">

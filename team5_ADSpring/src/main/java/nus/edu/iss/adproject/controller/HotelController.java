@@ -99,22 +99,13 @@ public class HotelController {
 		model.addAttribute("roomtype", room);
 		List<RoomType> RoomT= rservice.findRoomTypesByHotelId(room.getHotel().getId());
 		model.addAttribute("rooms",RoomT);
-		System.out.println(room.getProduct().getId());
-		
-		
-		  Product product = pservice.findById(room.getProduct().getId()); 
-		  List<ProductReview> reviewList = prservice.findReviewByProductId(room.getProduct().getId()); 
-		  
-		  for (Iterator iterator = reviewList.iterator(); iterator.hasNext();) {
+		Product product = pservice.findById(room.getProduct().getId()); 
+		List<ProductReview> reviewList = prservice.findReviewByProductId(room.getProduct().getId()); 
+		for (Iterator iterator = reviewList.iterator(); iterator.hasNext();) {
 			ProductReview productReview = (ProductReview) iterator.next();
-			System.out.println(productReview.getRating());
 		}
-		  model.addAttribute("review", reviewList); 
-		  model.addAttribute("product", product);
-		  
-		 // return "reviewList";
-		 
-		
+		model.addAttribute("review", reviewList); 
+		model.addAttribute("product", product);	
 		return "roomdetail";
 	}
 	
