@@ -50,42 +50,13 @@ public class WebSocketControler {
 	       
 	      return "redirect:/";
 	  }
-	  
-//	  @GetMapping("/chatsave")
-//	  public String saveChat(@ModelAttribute("userchat") @Valid ChatData chatData,Model model, BindingResult bindingResult,HttpSession session)
-//	  {
-//		  if (bindingResult.hasErrors()) {
-//				return "/";
-//		  }
-//		  else {
-//			  String urName= session_svc.findName(session);
-//				 String  username = urName.trim();
-//				 
-//			  CD_svc.save(chatData);
-//			  model.addAttribute("sender", username);
-//		      
-//		      model.addAttribute("chatDATA",CD_svc.findAll());
-//		      model.addAttribute("username", username); 
-//		      model.addAttribute("userchat",new ChatData());
-//		      
-//		      return "chat";
-//		  }
-//			 
-//		  
-//		  
-//	  }
  
     @MessageMapping("/chat.sendMessage")
     @SendTo("/topic/publicChatRoom")
-    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
-    	//System.out.println("this is chatmesage"+chatMessage);
-    	//System.out.println("EEEE"+ chatMessage.getContent());
-    	//System.out.println("FFFF"+chatMessage.getSender());
-    	
+    public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {    	
     	ChatData dc=new ChatData();
     	dc.setSender(chatMessage.getSender());
     	dc.setMessage(chatMessage.getContent());
-    	System.out.println(dc.getMessage());
     	CD_svc.save(dc);
 //		  model.addAttribute("sender", username);
 //	      

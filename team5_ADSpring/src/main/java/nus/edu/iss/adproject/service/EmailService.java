@@ -64,15 +64,11 @@ public class EmailService {
     		int quantity ,String Remarks)
     		throws MessagingException {
     	User user = userimpl.findById(userId);
- //   	List<BookingDetails> bookingdetail = bookingservice.retrieveDetailsByBookingId(id);
     	BookingDetails details = bookingservice.retrieveDetailsByDetailId(detailid);
     	
-    		//System.out.println(b.getProduct().getType());
     		ProductType producttype = details.getProduct().getType();
     		
-    		if(producttype == ProductType.ATTRACTION) {
-    			//System.out.print(details.getProduct().getAttraction().toString());
-    			
+    		if(producttype == ProductType.ATTRACTION) {    			
     	        Context context = new Context();
     	        context.setVariable("startdate", startDate);
     	        context.setVariable("enddate",endDate);
@@ -89,7 +85,6 @@ public class EmailService {
     			
     		}
     		else {
-    			//System.out.print(b.getProduct().getRoomType().getClass().toString());
     	        Context context = new Context();
     	        
     	        context.setVariable("bookingdetail", details);
