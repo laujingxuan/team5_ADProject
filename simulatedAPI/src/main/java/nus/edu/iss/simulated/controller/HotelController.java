@@ -67,7 +67,6 @@ public class HotelController {
 	@PostMapping("/room/period")
 	public ResponseEntity<DailyRoomDetailWrapper>findRoomDetailsByTypePeriod(@RequestBody MultipleDateQuery input){
 		return new ResponseEntity<DailyRoomDetailWrapper>(new DailyRoomDetailWrapper(dailyRoomSer.findRoomDetailsByPeriodAndType(input.getStartDate(), input.getEndDate(), input.getRoomType())), HttpStatus.OK);
-
 	}
 
 	@PostMapping("/room/update")
@@ -88,11 +87,13 @@ public class HotelController {
 		//need to update the database on vacancy and number of cancellations
 		if (isCancel == 1) {
 			for (LocalDate date = hotelBooking.getStartDate(); date.isBefore(hotelBooking.getEndDate()); date = date.plusDays(1)) {
+				System.out.println(date);
 				DailyRoomTypeDetail temp = dailyRoomSer.findRoomDetailByDateAndType(date, hotelBooking.getRoomType());
 				//increase 0.7*number of booked rooms for vacancy and number of cancellations because only 70% accuracy
 				//(risk-averse) in case predicted cancelled rooms are not cancelled.
 				temp.setNumVacancies(temp.getNumVacancies()+0.7*hotelBooking.getNumRooms());
 				temp.setNumCancellations(temp.getNumCancellations()+hotelBooking.getNumRooms());
+				dailyRoomSer.updateDailyRoomTypeDetail(temp);
 			}
 		}
 		return isCancel;

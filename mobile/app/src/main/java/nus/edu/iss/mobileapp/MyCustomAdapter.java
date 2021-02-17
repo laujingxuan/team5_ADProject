@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import nus.edu.iss.mobileapp.nonEntityModel.Product;
+import nus.edu.iss.mobileapp.model.Product;
 import nus.edu.iss.mobileapp.nonEntityModel.ProductType;
 
 public class MyCustomAdapter extends ArrayAdapter {
@@ -82,7 +82,7 @@ public class MyCustomAdapter extends ArrayAdapter {
                         if (products.get(pos).getType().equals(ProductType.ATTRACTION)) {
                             textView.setText(products.get(pos).getAttraction().getName());
                         }else{
-                            textView.setText(products.get(pos).getRoomType().getHotel().getName() + ": " + products.get(pos).getRoomType().getRoomType() + " Room");
+                            textView.setText(products.get(pos).getRoomType().getHotel().getName() + "\n" + products.get(pos).getRoomType().getRoomType() + " Room");
                         }
                         imageView.setImageBitmap(finalBmp);
                     }

@@ -11,13 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MobileApp"
-        android:usesCleartextTraffic="true">
-      
-          <activity android:name=".loginActivity"/>
-        <activity android:name=".BookingHistoryActivity"></activity>
-        <activity android:name=".ProductDetailsActivity" />
-       <activity android:name=".MainActivity"
 
+        android:usesCleartextTraffic="true">
+        <activity android:name=".BookingDetailsActivity"></activity>
+        <activity android:name=".loginActivity" />
+        <activity android:name=".BookingHistoryActivity" />
+        <activity android:name=".ProductDetailsActivity" />
+        <activity
+            android:name=".MainActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

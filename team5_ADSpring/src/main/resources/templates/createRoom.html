@@ -3,13 +3,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head><title>Login</title></head>
 <head th:insert="layout/layout.html :: veryTop"></head>
+
+<style type="text/css">
+td{
+	color:black;
+	text-align:center;
+	vertical-align:middle;
+	height:50px;
+}
+
+
+body {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  margin-bottom: -40px;
+  background-color: white;
+ 
+}
+
+.available{
+	margin-top: -50px;
+  max-width: 700px;
+  height: 350px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+</style>
+
 <body>
 <div th:replace="layout/layout.html :: menu" ></div>
+
+	<br/>
+<h3 class="text-center"><b>Create RoomType</b></h3>
+	<br/>
 <form action="" th:object="${room}" th:action="@{/hotel/saveRoom}" method="post">	
-		<table class="table">
+		 <table align="center"  class="available"  style="width: 80%;margin:auto">
 			<tr>
-				<td>Hotel:</td>
-				<td>
+				<td >Hotel:</td>
+				<td style="width: 400px; padding-right: 90px">
 					<select name="id" id="id" th:field="*{Hotel}" class="form-control">
                     	<option th:each="hotel : ${Hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
                     </select>
@@ -17,20 +50,23 @@
 			</tr>
 			<tr>
 				<td>Type</td>
-				<td><input type="text" th:field="*{roomType}" class="form-control">
+				<td style="width: 400px; padding-right: 90px">
+					<input type="text" th:field="*{roomType}" class="form-control">
 				<p th:if="${#fields.hasErrors('roomType')}" th:errors="*{roomType}" style="color:red"></p></td>
 			</tr>
 			<tr>
 				<td>Description:</td>
-				<td><input type="text" th:field="*{description}" class="form-control">
+				<td style="width: 400px; padding-right: 90px">
+					<input type="text" th:field="*{description}" class="form-control">
 				<!-- <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p></td> -->
 			</tr>
 			<tr>
 				<td>ImageURL:</td>
-				<td><input type="text" th:field="*{imageURL}" class="form-control"></td>
+				<td style="width: 400px; padding-right: 90px">
+					<input type="text" th:field="*{imageURL}" class="form-control"></td>
 			</tr>
 			<tr>
-				<td  ><button class="btn btn-primary btn-md" type="submit">Save</button></td>
+				<td colspan ="2" ><button class="btn btn-outline-info btn-md" type="submit">Save</button></td>
 			</tr>
 			
 		</table>

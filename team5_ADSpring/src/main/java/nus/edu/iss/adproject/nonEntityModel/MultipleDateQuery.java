@@ -16,6 +16,12 @@ public class MultipleDateQuery {
 		this.roomType = roomType;
 	}
 
+	public MultipleDateQuery(LocalDate startDate, LocalDate endDate) {
+		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
 	public LocalDate getStartDate() {
 		return startDate;
 	}

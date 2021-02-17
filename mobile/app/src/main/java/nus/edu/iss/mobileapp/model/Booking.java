@@ -1,9 +1,9 @@
-package nus.edu.iss.mobileapp.nonEntityModel;
+package nus.edu.iss.mobileapp.model;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.util.List;
 
-public class Booking {
+public class Booking implements Serializable {
     private long id ;
 
     private List<BookingDetails> bookingDetails;

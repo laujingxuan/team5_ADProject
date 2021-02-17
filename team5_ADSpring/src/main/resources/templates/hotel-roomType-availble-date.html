@@ -117,45 +117,36 @@ function submitdayViaAjax(){
 
 </script>
 </head>
+
+
 <body>
 
 <div th:replace="layout/layout.html :: menu" ></div>
-<h3>select your date and see attraction/hotel Status </h3>
 
+	<br/>
+<h3 class="text-center"><b>select your date and see hotel Status</b></h3>
+	<br/>
 
-<!-- <form action="" th:action="@{/stock/report}" method="POST" class="form-horizontal"> -->
 <form action="" th:object="${cartitem}" th:action="@{/cart/add/}+${productId}" method="POST" class="form-horizontal">
-  
-<!--   <input type="hidden" th:field="*{product}">  -->
-<!--   <input type="hidden" th:field="*{user}"> -->
 
-  <table  class="table" style="background-color:white; margin:0 auto">
-	<tr><th colspan="4" class="text-center">select a date</th></tr>
+	<table align="center"  class="available"  style="width: 100%;margin:auto">
 	<tr><td th:text ="${discount}" colspan="4">id</td></tr>
 	<tr>
-		<td class="td_left" style="width: 100px"><label for="startDate">Start Date :</label></td>
-		<td class="td_right" style="width: 150px"><input type="text" class="form-control"  name="startDate" id="startdate" th:field="*{startDate}"></td>
-		
-		<td class = "td_left" style="width: 100px"> End Date</td>
-		<td class="td_right" style="width: 150px"><input type="text"  class="form-control"  name = "endDate " id="enddate" onselect = "datediff()" th:field="*{endDate}"></td>
+		<td  style="width: 100px; color: black " ><label for="startDate">Start Date :</label></td>
+		<td  style="width: 150px"><input type="text" class="form-control"  name="startDate" id="startdate" th:field="*{startDate}"></td>
+	
+		<td style="width: 100px ; color: black"> End Date</td>
+		<td style="width: 150px"><input type="text"  class="form-control"  name = "endDate " id="enddate" onselect = "datediff()" th:field="*{endDate}"></td>
 	</tr>
 	<tr>
-	<td class="td_left"><label for="totalPrice">Total Price :</label></td>
-	<td colspan="3"> <div id="result"></div></td>
+	<td style="color: black"><label for="totalPrice">Total Price :</label></td>
+	<td> <div style="color: black" id="result"></div></td>
 	
 	</tr>
-
-<!-- 		<td>duration</td> -->
-<!-- 		<td><select name =""> -->
-<!-- 		    <option th:each="i : ${#numbers.sequence(0, 10)}" th:value="${i}" th:text="${i}"  -->
-<!--       th:selected="${i==75}"></option> -->
-<!--       </select></td> -->
-<!-- 	</tr> -->
 	<tr>
-		<td><input type="submit" class="btn btn-outline-info" value="add to cart" /></td>
-		<!-- <td><a th:href="@{/cart/add/}+${product.id}">add to cart</a></td> -->
+		<td colspan="4"><input type="submit"  class="btn btn-outline-info" value="add to cart"/></td>
 	</tr>
-  </table>
+    </table>
 </form>  
 
 
@@ -164,4 +155,33 @@ function submitdayViaAjax(){
 <!-- 	<div th:replace="layout/layout.html :: javascript"></div> -->
 
 </body>
+
+
+
+<style type="text/css">
+td{
+	text-align:center;
+	vertical-align:middle;
+	height:50px;
+}
+
+
+body {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  margin-bottom: -40px;
+  background-color: white;
+ 
+}
+
+.available{
+	 margin-top: -50px;
+  max-width: 700px;
+  height: 350px;
+  border: 1px solid #9C9C9C;
+  background-color: #EAEAEA;
+}
+</style>
 </html>

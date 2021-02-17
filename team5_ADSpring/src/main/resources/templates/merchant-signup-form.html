@@ -4,54 +4,146 @@
 <title>Merchant SignUp</title>
 </head>
 <head th:insert="layout/layout.html :: veryTop"></head>
+<style>
+	body {
+	    color: #fff;
+		background-color: #e6e6e6;
+		font-family: 'Roboto', sans-serif;
+	}
+    .form-control{
+		height: 40px;
+		box-shadow: none;
+		color: #969fa4;
+	}
+	.form-control:focus{
+		border-color: #5cb85c;
+	}
+    .form-control, .btn{        
+        border-radius: 3px;
+    }
+	.signup-form{
+		width: 500px;
+		margin: 0 auto;
+		padding: 30px 0;
+	}
+	.signup-form h2{
+		color: #636363;
+        margin: 0 0 15px;
+		position: relative;
+		text-align: center;
+    }
+	.signup-form h2:before, .signup-form h2:after{
+		content: "";
+		height: 2px;
+		width: 15%;
+		background: #d4d4d4;
+		position: absolute;
+		top: 50%;
+		z-index: 2;
+	}	
+	.signup-form h2:before{
+		left: 0;
+	}
+	.signup-form h2:after{
+		right: 0;
+	}
+    .signup-form .hint-text{
+		color: #999;
+		margin-bottom: 30px;
+		text-align: center;
+	}
+    .signup-form form{
+		color: #999;
+		border-radius: 3px;
+    	margin-bottom: -25px;
+        background: #f2f3f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+    }
+	.signup-form .form-group{
+		margin-bottom: 20px;
+	}
+	.signup-form .btn{        
+        font-size: 16px;
+        font-weight: bold;		
+		min-width: 140px;
+        outline: none !important;
+    }
+	.signup-form .row div:first-child{
+		padding-right: 10px;
+	}
+	.signup-form .row div:last-child{
+		padding-left: 10px;
+	}    	
+    .signup-form a{
+		color: #fff;
+		text-decoration: underline;
+	}
+    .signup-form a:hover{
+		text-decoration: none;
+	}
+	.signup-form form a{
+		color: #5cb85c;
+		text-decoration: none;
+	}	
+	.signup-form form a:hover{
+		text-decoration: underline;
+	}  
+</style>
 <body>
 	<div th:replace="layout/layout.html :: menu"></div>
 	<br />
 	<div class="container">
-
-		<h3>Merchant Sign Up</h3>
+		<div class="signup-form">
 
 		<form action="" th:object="${userForm}" th:action="${path}"
 			method="POST" class="form-horizontal">
+			<h2>Merchant Sign Up</h2>
 			<table class="table">
 				<tr>
-					<td>Product Category:</td>
-					<td><input type="radio" th:name="role" th:value=HOTELMANAGER
-						checked="checked" onclick="toggleSubscribe()">Hotel 
-						<input type="radio" th:name="role"
+					<td><input type="radio" th:name="role" th:value=HOTELMANAGER 
+						checked="checked" onclick="toggleSubscribe()">Hotel &nbsp;&nbsp;&nbsp;
+						<input type="radio" th:name="role" style="padding-left:10px"
 						th:value=ATTRACTIONMANAGER onclick="toggleSubscribe()">Attraction</td>
-				</tr>
-				<tr>
-					<td style="width: 30%">User Name:</td>
-					<td style="width: 30%"><input type="text"
-						th:field="*{userName}" value="*{userName}" placeholder="User Name"></td>
-					<td style="width: 30%"><div
-							th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></div></td>
 				</tr>
 
 				<tr>
-					<td>Email:</td>
-					<td><input type="text" th:field="*{email}" value="*{email}"
+					<td ><input type="text" style="width: 100%"  class="form-control"
+						th:field="*{userName}" value="*{userName}" placeholder="User Name"></td>
+					
+				</tr>
+				<tr th:if="${#fields.hasErrors('userName')}">
+				<td style="width: 30%;color:red">
+				<div th:errors="*{userName}"></div>
+				</td>
+
+				<tr>
+					<td><input type="text" th:field="*{email}"  class="form-control" value="*{email}" style="width: 100%"
 						placeholder="Email"></td>
 					<td><div th:if="${#fields.hasErrors('email')}"
 							th:errors="*{email}"></div></td>
 				</tr>
 
 				<tr>
-					<td>Password:</td>
-					<td><input type="password" th:field="*{password}"
-						placeholder="Password"></td>
-					<td><div th:if="${#fields.hasErrors('password')}"
-							th:errors="*{password}"></div></td>
+					<td><input type="password" th:field="*{password}"  class="form-control"
+						placeholder="Password" style="width: 100%"></td>
+				
 				</tr>
+					<tr  th:if="${#fields.hasErrors('password')}">
+					<td><div style="color:red" th:errors="*{password}"></div></td>
+				</tr>				
+				
 				<tr>
-					<td>Confirm Password:</td>
-					<td><input type="password" th:field="*{confPassword}"
-						placeholder="Password"></td>
-					<td></td>
+					<td><input type="password" th:field="*{confPassword}"  class="form-control" value="*{confPassword}" style="width: 100%"
+						placeholder="Confirm Password"></td>
+					
 				</tr>
+				<tr  th:if="${#fields.hasErrors('confPassword')}">
+					<td><div style="color:red" th:errors="*{confPassword}"></div></td>
+				</tr>
+				
 				<tr id="checkbox">
-					<td ><input type="hidden" th:name="*{subscribe}"
+					<td style="width:100%"><input type="hidden" th:name="*{subscribe}"
 						th:value="*{subscribe}" /> <input type="checkbox" 
 						th:name="*{subscribe}" th:checked="*{subscribe}"
 						th:value="*{subscribe}" th:field="*{subscribe}" />I want to
@@ -59,13 +151,16 @@
 				</tr>
 				<tr>
 					<td colspan="3"><input type="submit" value="Sign Up"
-						class="btn btn-primary" /> <small>&nbsp&nbspAlready
-							registered?&nbsp<a href="/" th:href="@{/user/login}">Login
-								here</a>
-					</small></td>
+						class="btn btn-success btn-lg btn-block" /> 
+</td>
 				</tr>
+				<tr  class="text-center">
+				<td>Already have an account? <a href="/" th:href="@{/user/login}">Sign in</a></td>
+				</tr>
+		
 			</table>
 		</form>
+		</div>
 	</div>
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>
@@ -79,6 +174,11 @@
 			}
 		}
 	</script>
+
+
+</html>
+
 </body>
+
 
 </html>

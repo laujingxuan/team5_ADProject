@@ -16,6 +16,7 @@ import nus.edu.iss.simulated.model.DailyAttractionDetail;
 import nus.edu.iss.simulated.nonEntityModel.DailyDetailWrapper;
 import nus.edu.iss.simulated.nonEntityModel.DateTypeQuery;
 import nus.edu.iss.simulated.nonEntityModel.MonthTypeQuery;
+import nus.edu.iss.simulated.nonEntityModel.MultipleDateQuery;
 import nus.edu.iss.simulated.service.AttractionBookingService;
 import nus.edu.iss.simulated.service.DailyAttractionDetailService;
 
@@ -42,29 +43,12 @@ public class AttractionController {
 		return new ResponseEntity<AttractionBooking>(attractionBookingServ.createBooking(attractionBooking),HttpStatus.OK);
 	}
 	
-
-	
-//	{for date postman request body 
-//	    "date" : "23/01/2021",
-//	    "attractionName": "birdPark"
-//	}
-	
-//	@PostMapping( value = "/booking/date")
-//	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
-//		return new ResponseEntity<DailyAttractionDetail>
-//		(dailyAttractionDetailServ.findAttractionDetailByDateAndAttractionName(input.getDate(),input.getAttractionName()),HttpStatus.OK);
-//	}
-	
 	@PostMapping("/booking/date")
 	public ResponseEntity<DailyAttractionDetail> findAttractionDetailByDate(@RequestBody DateTypeQuery input ){
 		return new ResponseEntity<DailyAttractionDetail>
 		(dailyAttractionDetailServ.findAttractionDetailByDate(input.getDate()),HttpStatus.OK);
 	}
 	
-//	{ for month postman request body 
-//	    "month" : 1,
-//	    "attractionName": "birdPark"
-//	}
 	@PostMapping(value = "/booking/month")
 	public ResponseEntity<DailyDetailWrapper> findAttractionDetailByMonth(@RequestBody MonthTypeQuery input){
 		return new ResponseEntity<DailyDetailWrapper>
@@ -76,6 +60,11 @@ public class AttractionController {
 	public ResponseEntity<Boolean> updateTicketQuantity(@RequestBody DailyAttractionDetail updated){
 		return new ResponseEntity<Boolean>
 		(dailyAttractionDetailServ.UpdateTicketQuantity(updated),HttpStatus.OK);
+	}
+	
+	@PostMapping("/booking/period")
+	public ResponseEntity<DailyDetailWrapper>findAttractionByTypePeriod(@RequestBody MultipleDateQuery input){
+		return new ResponseEntity<DailyDetailWrapper>(new DailyDetailWrapper(dailyAttractionDetailServ.findAttractionByPeriod(input.getStartDate(), input.getEndDate())), HttpStatus.OK);
 	}
 
 }

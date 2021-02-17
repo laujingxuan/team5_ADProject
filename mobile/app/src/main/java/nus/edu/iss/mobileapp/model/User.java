@@ -1,4 +1,6 @@
-package nus.edu.iss.mobileapp.nonEntityModel;
+package nus.edu.iss.mobileapp.model;
+
+import nus.edu.iss.mobileapp.nonEntityModel.RoleType;
 
 public class User {
 
