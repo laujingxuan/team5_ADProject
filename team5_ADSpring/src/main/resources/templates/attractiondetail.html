@@ -237,58 +237,71 @@ body {
 		</div>
 	</form>
 	
+	<form align="center" class="form-attraction">
+	<div class="container">
+		<div th:object="${attraction}">
+			<div class="row">
+				<img class="img-thumbnail" alt="Responsive image"  id="room-image" th:src="*{imageURL}">
+			</div>
+
+			<div>
+				<h2>
+					<b th:text="*{name}">RoomType</b>
+				</h2>
+			</div>
+			
+			<div class="activity-package-icons" data-v-0fe9c1f1="">
+				<div class="icon-content" data-v-0fe9c1f1="">
+					<img
+						src="https://res.klook.com/image/upload/icon_cancellation_oe139y.png"
+						alt="icon" class="img-icon icon" data-v-0fe9c1f1=""> <span
+						class="icon-desc" data-v-0fe9c1f1=""> No cancellation </span>
+				</div>
+				<div class="icon-content" data-v-0fe9c1f1="">
+					<!---->
+					<img
+						src="https://res.klook.com/image/upload/icon_voucher-900_jpa51y.png"
+						alt="icon" class="img-icon icon" data-v-0fe9c1f1=""> <span
+						class="icon-desc" data-v-0fe9c1f1=""> Show mobile or
+						printed voucher </span>
+				</div>
+				<div class="icon-content" data-v-0fe9c1f1="">
+					<!---->
+					<img
+						src="https://res.klook.com/image/upload/v1597921637/Activity%20Icon/icon_language_color-gray-900_iiwq13.png"
+						alt="icon" class="img-icon icon" data-v-0fe9c1f1=""> <span
+						class="icon-desc" data-v-0fe9c1f1=""> English/Mandarin </span>
+				</div>
+				<!---->
+			</div>
+			
+			<div class="row" id="listgroup">
+			 	<div class="col-12 col-md-6">
+				 	<!-- <div class="shadow-lg p-3 mb-5 bg-white rounded"> -->
+				 		<ul class="list-group" id="list">
+						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{description}"></span></li>
+						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{country_city}"></span></li>
+						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="Rating  + *{rating}"></span></li>
+						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span th:text="*{price}"></span></li>
+						  <li class="list-group-item"><i class="fa fa-check" aria-hidden="true"></i><span><a href="Map.html" th:href="@{/attraction/map/}+*{id}" >Location</a></span></li>
+						  <li class="list-group-item"><span><a class="btn btn-outline-info" id="comment" href="reviewList.html" th:href="@{/review/list/}+${attraction.product.id}" role="button">View Comments</a>
+						  <a class="btn btn-outline-info" id="comment" href="reviewForm.html" th:href="@{/review/post/}+${attraction.product.id}" role="button">Post Comment</a></span></li>
+						 
+						</ul>
+				 	<!-- </div> -->
+			 	</div>
+			 	
+			 	<div class="col-12 col-md-6">
+				 	<div class="shadow-lg p-3 mb-5 bg-white rounded" id="available-date">
+				 		<h3><i>Check room available date</i></h3>
+				 		<a href="#" id="date-btn" class="btn btn-outline-info" role="button" th:href="@{/attraction/available-date/}+*{product.id}">Room Available Date</a>
+				 	</div>
+			 	</div>
+			</div>			
+		</div>
+		</div>
+	</form>
 	
-	<!-- <table class="altrowstable" id="alternatecolor" th:object="${attraction}">
-	  <tr>
-        <td colspan = "2"><img th:src="*{imageURL}"></td>
-      </tr>
-	  <tr>
-        <th>Name</th>
-        <td th:text="*{name}"><b>Name</b></td>
-      </tr>
-      <tr>
-        <th>Price</th>
-        <td th:text="*{price}">Price</td>
-      </tr>
-      <tr>
-        <th>Address</th>
-        <td th:text="*{location}">Location</td>
-      </tr>
-      <tr>
-        <th>Rating</th>
-        <td th:text="*{rating}">Rating</td>
-      </tr>
-      <tr>
-        <th>Description</th>
-        <td th:text="*{description}">Description</td>
-      </tr>
-      <tr>
-        <th>Country_city</th>
-        <td th:text="*{country_city}">Country_city</td>
-      </tr>
-      <tr>
-        <th>Location</th>
-        <td><a href="Map.html" th:href="@{/attraction/map/}+*{id}" >Location</a></td>
-      </tr>
-      <tr>
-        <th>Select Date</th>
-        <td><a href="#" th:href="@{/attraction/available-date/}+*{product.id}">Attraction Available Date</a></td>
-      </tr>
-      <tr>
-      	<td colspan="2" class="comment">
-      		<a class="btn btn-outline-info" href="reviewList.html" 
-      		   th:href="@{/review/list/}+${attraction.product.id}" role="button">View Comments
-      		</a>
-      	</td>
-      </tr>
-	  <tr>
-	   	<td colspan="2"  class="comment">
-	   		<a class="btn btn-outline-info" href="reviewForm.html" 
-	   			th:href="@{/review/post/}+${attraction.product.id}" role="button">Post Comment
-	   		</a>
-	   	</td>
-	  </tr>
-    </table> -->
 	<div th:replace="layout/layout.html :: footer"></div>
 	<div th:replace="layout/layout.html :: javascript"></div>    
 </body>

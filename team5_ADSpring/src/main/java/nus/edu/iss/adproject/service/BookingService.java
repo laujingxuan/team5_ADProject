@@ -30,9 +30,9 @@ public interface BookingService {
 	
 	public List<Object> findMonthlyBookingRateByHotel(Long userId, Long hotel_id);
 	
-	public List<Object> findMonthlyRevenueForAllHotels();
+	public List<Object> findMonthlyRevenueForAllHotels(Integer month, Integer year);
 	
-	public List<Object> findMonthlyRevenueForAllAttractions();
+	public List<Object> findMonthlyRevenueForAllAttractions(Integer month, Integer year);
 	
 	public List<Object> findMonthlyGuestByHotelId(Long hotel_id);
 	

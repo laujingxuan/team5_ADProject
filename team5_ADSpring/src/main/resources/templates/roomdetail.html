@@ -279,47 +279,14 @@ body {
 			</div>
 			<br />
 			<div  th:object="${roomtype}">
-                <a class="btn btn-outline-info" id="comment" href="reviewList.html" th:href="@{/review/list/}+${roomtype.product.id}" role="button">View
-                    Comments Detail </a>
-                <a class="btn btn-outline-info"  id="comment" href="reviewList.html"
-                    th:href="@{/review/post/}+${roomtype.product.id}" role="button">Post Comment </a>
-            </div>
+
+				<a class="btn btn-outline-info" id="comment" href="reviewList.html" th:href="@{/review/list/}+${roomtype.product.id}" role="button">View
+					Comments Detail </a> 
+				<a class="btn btn-outline-info"  id="comment" href="reviewList.html"
+					th:href="@{/review/post/}+${roomtype.product.id}" role="button">Post Comment </a>
+			</div>
 		</div>
 	</div>
-
-	<!-- <table class="altrowstable" id="alternatecolor" th:object="${roomtype}">
-	
-	  <tr>
-        <th>Picture</th>
-        <td><img th:src="*{imageURL}" class="img-responsive" style="height: 250px"></td>
-	  </tr>
-      <tr>
-        <th>RoomType</th>
-        <td><b th:text="*{roomType}">RoomType</b></td>
-      </tr>
-      <tr>
-        <th>Description</th>
-        <td th:text="*{description}">Description</td>
-      </tr>
-      <tr>
-        <th>Select Dates</th>
-        <td><a href="#" th:href="@{/hotel/room-available-date/}+*{product.id}">Room Available Date</a></td>
-      </tr>
-      <tr>
-      	<td colspan="2" class="comment">
-      		<a class="btn btn-outline-info" href="reviewList.html" 
-      		   th:href="@{/review/list/}+${roomtype.product.id}" role="button">View Comments
-      		</a>
-      	</td>
-      </tr>
-	  <tr>
-	   	<td colspan="2" class="comment">
-	   		<a class="btn btn-outline-info" href="reviewForm.html" 
-	   			th:href="@{/review/post/}+${roomtype.product.id}" role="button">Post Comment
-	   		</a>
-	   	</td>
-	  </tr>
-    </table> -->
     
    	<h4 align="center" class = "py-3">Hotel's Available Room Type</h4>
 	<div class = "container">
@@ -344,4 +311,6 @@ body {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/popper.min.js"></script>
+
 </html>
+

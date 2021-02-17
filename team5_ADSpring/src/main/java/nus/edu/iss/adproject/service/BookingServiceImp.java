@@ -68,13 +68,13 @@ public class BookingServiceImp implements BookingService {
 	}
 
 	@Override
-	public List<Object> findMonthlyRevenueForAllHotels() {
-		return bookRepoDet.findMonthlyRevenueForAllHotels();
+	public List<Object> findMonthlyRevenueForAllHotels(Integer month, Integer year) {
+		return bookRepoDet.findMonthlyRevenueForAllHotels(month, year);
 	}
 
 	@Override
-	public List<Object> findMonthlyRevenueForAllAttractions() {
-		return bookRepoDet.findMonthlyRevenueForAllAttractions();
+	public List<Object> findMonthlyRevenueForAllAttractions(Integer month, Integer year) {
+		return bookRepoDet.findMonthlyRevenueForAllAttractions(month, year);
 	}
 
 	@Override

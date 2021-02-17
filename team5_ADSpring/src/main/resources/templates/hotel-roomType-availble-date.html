@@ -129,7 +129,10 @@ function submitdayViaAjax(){
 
 <form action="" th:object="${cartitem}" th:action="@{/cart/add/}+${productId}" method="POST" class="form-horizontal">
 
-	<table align="center"  class="available"  style="width: 100%;margin:auto">
+  <table  class="table" style="background-color:white; margin:0 auto">
+  
+	<tr><th colspan="4" class="text-center">select a date</th></tr>
+
 	<tr><td th:text ="${discount}" colspan="4">id</td></tr>
 	<tr>
 		<td  style="width: 100px; color: black " ><label for="startDate">Start Date :</label></td>
