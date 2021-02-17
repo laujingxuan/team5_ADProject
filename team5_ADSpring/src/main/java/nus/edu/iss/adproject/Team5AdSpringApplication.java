@@ -12,6 +12,7 @@ import nus.edu.iss.adproject.model.Attraction;
 import nus.edu.iss.adproject.model.Booking;
 import nus.edu.iss.adproject.model.BookingDetails;
 import nus.edu.iss.adproject.model.Cart;
+import nus.edu.iss.adproject.model.ChatData;
 import nus.edu.iss.adproject.model.Discount;
 import nus.edu.iss.adproject.model.Hotel;
 import nus.edu.iss.adproject.model.Product;
@@ -25,6 +26,7 @@ import nus.edu.iss.adproject.repository.AttractionRepository;
 import nus.edu.iss.adproject.repository.BookingDetailsRepo;
 import nus.edu.iss.adproject.repository.BookingRepo;
 import nus.edu.iss.adproject.repository.CartRepository;
+import nus.edu.iss.adproject.repository.ChatDataRepository;
 import nus.edu.iss.adproject.repository.HotelRepository;
 import nus.edu.iss.adproject.repository.ProductRepo;
 import nus.edu.iss.adproject.repository.ProductReviewRepo;
@@ -64,6 +66,9 @@ public class Team5AdSpringApplication {
 	
 	@Autowired
 	private ProductReviewRepo prrepo;
+	
+	@Autowired
+	private ChatDataRepository cd_Repo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(Team5AdSpringApplication.class, args);
@@ -105,9 +110,14 @@ public class Team5AdSpringApplication {
 			
 			
 			//creating User
+			ChatData cd= new ChatData("Hello Everyone ","Welcome");
+			
+			cd_Repo.save(cd);
+			
 			User customer1 = new User("customer1","customer1",RoleType.CUSTOMER,"tanfeng95@hotmail.com");
 			User customer2 = new User("customer2","customer2",RoleType.CUSTOMER,"customer2@gmail.com");
 			User platform1 = new User("platform1","platform1",RoleType.PLATFORMMANAGER,"platform1@gmail.com");
+			User platform2 = new User("platform2","platform2",RoleType.PLATFORMMANAGER,"platform2@gmail.com");
 			User hotelM1 = new User("hotel1","hotel1",RoleType.HOTELMANAGER,"hotel1@gmail.com");
 			User hotelM2 = new User("hotel2","hotel2",RoleType.HOTELMANAGER,"hotel2@gmail.com");
 			User attractionM1 = new User("attraction1","attraction1",RoleType.ATTRACTIONMANAGER,"attraction1@gmail.com");
@@ -116,6 +126,7 @@ public class Team5AdSpringApplication {
 			userRepo.save(customer1);
 			userRepo.save(customer2);
 			userRepo.save(platform1);
+			userRepo.save(platform2);
 			userRepo.save(hotelM1);
 			userRepo.save(hotelM2);
 			userRepo.save(attractionM1);

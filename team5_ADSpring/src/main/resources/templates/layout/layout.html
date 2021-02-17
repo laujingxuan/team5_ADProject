@@ -92,6 +92,9 @@
                     <ul>    
                         <li><a href="#" th:href="@{/package/list}" th:if="${session.user!= null && session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).PLATFORMMANAGER}">Travel Packages</a></li>
                     </ul>
+                    <ul>    
+                        <li><a href="#" th:href="@{/chat}" th:if="${session.user!= null && session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).PLATFORMMANAGER}">Group Chat</a></li>
+                    </ul>
                     <ul>
                     	<li><a href="#" th:href="@{/hotel/hotels}" th:if="${session.user!= null && session.user.role==T(nus.edu.iss.adproject.nonEntityModel.RoleType).HOTELMANAGER}">Hotels</a></li>
                     </ul>
