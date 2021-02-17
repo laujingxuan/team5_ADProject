@@ -46,8 +46,8 @@ public class HotelController {
 	@PostMapping("/booking")
 	public ResponseEntity<HotelBooking> newBooking (@RequestBody HotelBooking hotelBooking) {
 		HotelBooking newHotelBooking = hotelBookSer.createBooking(hotelBooking);
-		int isCancelled = predictBookingCancellationRate(newHotelBooking);
-		System.out.println(isCancelled);
+		//int isCancelled = predictBookingCancellationRate(newHotelBooking);
+		//System.out.println(isCancelled);
 		System.out.println(newHotelBooking);
 		return new ResponseEntity<HotelBooking>(newHotelBooking, HttpStatus.OK);
 	}
