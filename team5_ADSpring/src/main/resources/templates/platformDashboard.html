@@ -18,7 +18,7 @@
 				<select name="month" class="form-control" id="month"
 					style="width: 200px; margin: 0 auto" th:onchange="'window.location.href = \'' + @{/dashboard/showDashboardForPlatformManager} + '?month=\' + this.value'  ">
 						<option
-							th:each="month : ${T(nus.edu.iss.adproject.model.Month).values()}"
+							th:each="month :${T(nus.edu.iss.adproject.nonEntityModel.Month).values()}"
 							th:value="${month}" th:text="${month}"></option>
 				</select>
 			</div><br/><br/><br/>
@@ -77,14 +77,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/bootstrap-table.js"></script>
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
-var month =/*[[${month1}]]*/{}
+var month =/*[[${month}]]*/{}
 console.log(month);
-//$("#month").val(month);
-
-
-$("#month").change(function() {
-	document.getElementById("month").value  =month;
-});
+//$(".month").val(month);
+document.getElementById("month").value  =month;
+ 
 
 $(function() {
 	$('#sort').bootstrapTable({
