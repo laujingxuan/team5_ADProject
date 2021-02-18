@@ -1,7 +1,5 @@
 package nus.edu.iss.adproject.api.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +39,6 @@ public class UserApiController {
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<User> authenticate(@RequestBody User user){
-		System.out.println("checking");
 		if(session_svc.authenticate(user)) 
 		{
 			User u = user_svc.findByUsername(user.getUserName());

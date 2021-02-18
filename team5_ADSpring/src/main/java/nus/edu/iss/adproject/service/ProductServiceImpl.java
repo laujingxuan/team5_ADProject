@@ -1,6 +1,5 @@
 package nus.edu.iss.adproject.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -31,18 +30,12 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public List<Product> listAllSearchAttractions(String keyword){
-//		if(keyword!=null) {
 			return prepo.search1(keyword);
-//		}
-//		return new ArrayList<Product>();
 	}
 	
 	@Override
 	public List<Product> listAllSearchHotels(String keyword){
-//		if(keyword!=null) {
 			return prepo.search2(keyword);
-//		}
-//		return prepo.findAll();
 	}
 
 	@Override

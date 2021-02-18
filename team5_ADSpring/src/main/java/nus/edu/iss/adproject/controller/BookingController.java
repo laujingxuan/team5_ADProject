@@ -150,10 +150,7 @@ public class BookingController {
 			}
 			//remove from cart since alr added into booking
 			cartService.deleteCart(cart);
-		}
-		
-//		emailService.sendMail(newBooking.getId());
-		
+		}		
 		return "redirect:/booking/list";
 	}
 	
@@ -211,8 +208,6 @@ public class BookingController {
 	public double updateHotelAPIAndGetTotalNightPrice(Cart cart) {
 		final String uri = cart.getProduct().getRoomType().getHotel().getAPI_URL()+ "room/period";	
 	    RestTemplate restTemplate = new RestTemplate();
-//	    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//	    DateTypeQuery query = new DateTypeQuery(LocalDate.parse("25/01/2021", df),"SINGLE");
 	    MultipleDateQuery query = new MultipleDateQuery(cart.getStartDate(), cart.getEndDate(), cart.getProduct().getRoomType().getRoomType());
 	    DailyRoomDetailWrapper result = restTemplate.postForObject( uri, query, DailyRoomDetailWrapper.class);
 	    double total = 0;

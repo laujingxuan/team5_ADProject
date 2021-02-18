@@ -133,6 +133,7 @@ public class Team5AdSpringApplication {
 			
 			
 			//Creating Attraction
+			//Only attraction 1 singapore zoo has API
 			Product product1 = new Product(ProductType.ATTRACTION);
 			Product product10 = new Product(ProductType.ATTRACTION);
 			Product product11 = new Product(ProductType.ATTRACTION);
@@ -176,17 +177,11 @@ public class Team5AdSpringApplication {
 			RoomType singleRoom2 = new RoomType(room4, hotel2, "SINGLE", "Single bed room","https://www.oyster.com/wp-content/uploads/sites/35/2019/05/single-room-v12936474-1440-1024x683.jpg");
 			RoomType singleRoom3 = new RoomType(room5, hotel3, "SINGLE", "Single bed room","https://setupmyhotel.com/images/Room-Type-Single-Room.jpg");
 			
-//			RoomType doubleRoom1 = new RoomType(room2, hotel2, "DOUBLE", "Double bed room", "https://www.hotel-solemare.com/photo/diapo1/13/_solemare_hotel_25720180717164604_550xautox75.jpg");
-//			RoomType doubleRoom2 = new RoomType(room2, hotel3, "DOUBLE", "Double bed room", "https://www.pavillon-monceau.com/files/hotel/pavillon-monceau/chambres/chambre_standard_.jpg");
 			roomTypeRepo.save(singleRoom);
 			roomTypeRepo.save(doubleRoom1);
 			roomTypeRepo.save(singleRoom2);
 			roomTypeRepo.save(singleRoom3);
 			roomTypeRepo.save(doubleRoom);
-//			roomTypeRepo.save(doubleRoom1);
-//			roomTypeRepo.save(doubleRoom2);
-////		    htRepo.save(new Hotel("Swissôtel The Stamford ","Singapore", 1.293354,103.853561, 260.0, 8, "SG","aa", "best", "we try to be home"));
-//		    htRepo.save(new Hotel("Hotel Miramar ","Singapore", 1.288710,103.837372, 260.0, 8, "SG","aa", "best", "we try to be home"));
 			
 			//Creating booking details
 			Cart cart1 = new Cart(product1, 3, LocalDate.of(2021, 2, 25), customer1);
@@ -229,33 +224,6 @@ public class Team5AdSpringApplication {
 			bookDetRepo.save(bookDetail10);
 			bookDetRepo.save(bookDetail11);
 			bookDetRepo.save(bookDetail12);
-  
-//			ProductReview review1 = new ProductReview(customer1, room1, 4.6, "I think it is comfortable", "pic1");
-//			prrepo.save(review1);
-//			ProductReview review2 = new ProductReview(customer2, room1, 4.8, "I perfectly like what I ordered", "pic1");
-//			prrepo.save(review2);
-//			ProductReview review3 = new ProductReview(customer1, product1, 4.7, "Really enjoy the time in the zoo", "pic1");
-//			prrepo.save(review3);
-//			ProductReview review4 = new ProductReview(customer1, room2, 4.8, "Want to back for several times", "pic1");
-//			prrepo.save(review4);
-//			ProductReview review5 = new ProductReview(customer2, room2, 4.2, "Just so so", "pic1");
-//			prrepo.save(review5);
-//			ProductReview review6 = new ProductReview(customer1, room3, 4.8, "Have a good time in the room", "pic1");
-//			prrepo.save(review6);
-//			ProductReview review7 = new ProductReview(customer2, product1, 4.9, "We had fun!", "pic1");
-//			prrepo.save(review7);
-//			ProductReview review8 = new ProductReview(customer2, room3, 4.1, "Don't want to reorder anymore", "pic1");
-//			prrepo.save(review8);
-//			ProductReview review9 = new ProductReview(customer1, room4, 4.8, "Just order without hesitate, it worth!", "pic1");
-//			prrepo.save(review9);
-//			ProductReview review10 = new ProductReview(customer2, room4, 4.7, "Will live here again the next time to Singapore", "pic1");
-//			prrepo.save(review10);
-//			ProductReview review11 = new ProductReview(customer1, room5, 4.2, "Better to find another hotel...", "pic1");
-//			prrepo.save(review11);
-//			ProductReview review12 = new ProductReview(customer2, room5, 4.3, "It is ok, but not best", "pic1");
-//			prrepo.save(review12);
-//			
-
 
 		};
 	}
