@@ -58,11 +58,6 @@ public class WebSocketControler {
     	dc.setSender(chatMessage.getSender());
     	dc.setMessage(chatMessage.getContent());
     	CD_svc.save(dc);
-//		  model.addAttribute("sender", username);
-//	      
-//	      model.addAttribute("chatDATA",CD_svc.findAll());
-//	      model.addAttribute("username", username); 
-//	      model.addAttribute("userchat",new ChatData());
     	return chatMessage;
     }
  

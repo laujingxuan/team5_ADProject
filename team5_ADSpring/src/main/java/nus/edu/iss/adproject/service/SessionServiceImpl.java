@@ -52,35 +52,6 @@ public class SessionServiceImpl implements SessionService {
 			return false;
 	}
 	
-//	@Override
-//	public long getUserId() {
-//		//User user = (User) session.getAttribute("user");
-//		User user = user_svc.findById((long) 1);
-//		if (user == null)
-//			return getDeviceHashCode();
-//		else 
-//			return user.getId();
-//	}
-//	
-//	public long getDeviceHashCode() {
-//		long userId = -1; // invalid userId by default 
-//		
-//        try {
-//            InetAddress myHost = InetAddress.getLocalHost();
-//            userId = (long) myHost.getHostName().hashCode();
-//        } catch (UnknownHostException ex) {
-//            ex.printStackTrace();
-//        }
-//        
-//		return userId;
-//	}
-	
-	
-//	public User getUser() {
-//		//return (User) session.getAttribute("user");
-//		return (User) user_svc.findById((long) 1);
-//	}
-	
 	@Override
 	public boolean hasPlatformPermission(HttpSession session) {
 		User user = (User) session.getAttribute("user");

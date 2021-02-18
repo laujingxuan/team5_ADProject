@@ -23,12 +23,6 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private CartRepository crepo;
 
-//	@Autowired
-//	private CartRepository cartRepo;
-
-//	@Autowired
-//	private BookingService booking_svc;
-
 	@Autowired
 	private UserServiceImpl user_svcimpl;
 
@@ -40,29 +34,23 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public List<Cart> retrieveByUserId(Long userId) {
-		// return cartRepo.findCartsByUserId(userId);
 		return crepo.findCartsByUserId(userId);
 	}
 
 	@Override
 	public int getQuantityByUserId(long userId) {
-		// return cartRepo.findCartsByUserId(userId);
 		return crepo.getQuantityByUserId(userId);
-		// System.out.println(retrieveByUserId(userId).size());
 	}
 
 
 	 @Override 
 	 public int getProductQuantity(long productId,long userId, LocalDate startDate) {
-	 //return cartRepo.findCartsByUserId(userId); 
 	 return crepo.getProductQuantity(productId, userId, startDate); 
-	 //System.out.print();
 	 }
 	 
 
 	@Override
 	public void deleteCart(Cart cart) {
-		// cartRepo.delete(cart);
 		crepo.delete(cart);
 		return;
 
@@ -97,25 +85,4 @@ public class CartServiceImpl implements CartService {
 	public void delete(Cart x) {
 		crepo.delete(x);
 	}
-
-	/*
-	 * public void checkout(List<Cart> carts) { // Cart(long id, Product product,
-	 * int quantity, User user) // Booking(User user, int amountPaid, Date
-	 * bookingDate, int travelPackageDiscount) // BookingDetails(long id, int
-	 * numOfGuest, int price)
-	 * 
-	 * for (Cart item : carts) { Booking booking = new Booking( item.getUser(),
-	 * this.amountPaid = amountPaid this.bookingDate = bookingDate;
-	 * this.travelPackageDiscount = travelPackageDiscount; );
-	 * booking_svc.save(booking);
-	 * 
-	 * BookingDetails booking_details = new BookingDetails( item.getUser(),
-	 * this.amountPaid = amountPaid this.bookingDate = bookingDate;
-	 * this.travelPackageDiscount = travelPackageDiscount; );
-	 * 
-	 * bookingdetails_svc.save(booking_details);
-	 * 
-	 * delete(item); } }
-	 */
-
 }

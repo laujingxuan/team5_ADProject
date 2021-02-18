@@ -50,12 +50,6 @@ public class AttractionController {
 	@Autowired
 	private SessionService session_svc;
 	
-	@Autowired
-	private DiscountService discountService;
-	
-	@Autowired
-	private ProductReviewService reviewService;
-	
 	//done
 	//show list of attractions
 	@GetMapping("/attractions")
